@@ -1,0 +1,121 @@
+
+### https://www.capital.gr/finance/allstocks -> 200 len=474006 links=399
+   /Finance/StocksPerformance
+   /finance/allstocks
+   /finance/cy/allstocks/
+   /finance/el/allstocks/
+   /finance/el/allstocks/1/
+   /finance/el/allstocks/3/
+   /finance/el/allstocks/4/
+   /finance/quote/%ce%91%ce%91%ce%91%ce%9a/
+   /finance/quote/%ce%91%ce%91%ce%91%ce%a0/
+   /finance/quote/%ce%91%ce%92%ce%91%ce%9e/
+   /finance/quote/%ce%91%ce%92%ce%95%ce%9d%ce%99%ce%a1/
+   /finance/quote/%ce%91%ce%92%ce%95/
+   /finance/quote/%ce%91%ce%93%ce%9a%ce%a1%ce%99/
+   /finance/quote/%ce%91%ce%94%ce%9c%ce%97%ce%95/
+   /finance/quote/%ce%91%ce%95%ce%93%ce%95%ce%9a/
+   /finance/quote/%ce%91%ce%98%ce%97%ce%9d%ce%91/
+   /finance/quote/%ce%91%ce%9a%ce%a1%ce%99%ce%a4/
+   /finance/quote/%ce%91%ce%9b%ce%9a%ce%91%ce%a4/
+   /finance/quote/%ce%91%ce%9b%ce%9a%ce%9f/
+   /finance/quote/%ce%91%ce%9b%ce%9c%ce%a5/
+   /finance/quote/%ce%91%ce%9b%ce%a3%ce%99%ce%9d/
+   /finance/quote/%ce%91%ce%9b%ce%a4%ce%95%ce%9a/
+   /finance/quote/%ce%91%ce%9b%ce%a6%ce%91/
+   /finance/quote/%ce%91%ce%9d%ce%94%ce%a1%ce%9f/
+   /finance/quote/%ce%91%ce%9d%ce%95%ce%9a/
+   /finance/quote/%ce%91%ce%9d%ce%95%ce%9c%ce%9f%ce%a3/
+   /finance/quote/%ce%91%ce%9d%ce%95%ce%a0%ce%9f/
+   /finance/quote/%ce%91%ce%9d%ce%95%ce%a0/
+   /finance/quote/%ce%91%ce%a1%ce%91%ce%99%ce%93/
+   /finance/quote/%ce%91%ce%a3%ce%9a%ce%9f/
+   /finance/quote/%ce%91%ce%a3%ce%a4%ce%91%ce%9a/
+   /finance/quote/%ce%91%ce%a3%ce%a4%ce%97%ce%a1/
+   /finance/quote/%ce%91%ce%a4%ce%95%ce%9a/
+   /finance/quote/%ce%91%ce%a4%ce%95%ce%a1%ce%9c/
+   /finance/quote/%ce%91%ce%a4%ce%95/
+   /finance/quote/%ce%91%ce%a4%ce%a1%ce%91%ce%a3%ce%a4/
+   /finance/quote/%ce%91%ce%a4%ce%a4%ce%99%ce%9a%ce%91/
+   /finance/quote/%ce%91%ce%a4%ce%a4%ce%99%ce%9a/
+   /finance/quote/%ce%91%ce%a7%ce%9f%ce%9d/
+   /finance/quote/%ce%92%ce%91%ce%9b%ce%9a/
+   /finance/quote/%ce%92%ce%91%ce%a1%ce%93/
+   /finance/quote/%ce%92%ce%91%ce%a1%ce%9d%ce%97/
+   /finance/quote/%ce%92%ce%99%ce%9d%ce%a4%ce%91/
+   /finance/quote/%ce%92%ce%99%ce%9f%ce%9a%ce%91/
+   /finance/quote/%ce%92%ce%99%ce%9f%ce%a3%ce%9a/
+   /finance/quote/%ce%92%ce%99%ce%9f%ce%a4/
+   /finance/quote/%ce%92%ce%99%ce%9f/
+   /finance/quote/%ce%92%ce%99%ce%a3/
+   /finance/quote/%ce%92%ce%9f%ce%a3%ce%a5%ce%a3/
+   /finance/quote/%ce%92%ce%a5%ce%a4%ce%95/
+   /finance/quote/%ce%92%ce%a9%ce%92%ce%9f%ce%a3/
+   /finance/quote/%ce%93%ce%91%ce%9b%ce%91%ce%9e/
+   /finance/quote/%ce%93%ce%94/
+   /finance/quote/%ce%93%ce%95%ce%92%ce%9a%ce%91/
+   /finance/quote/%ce%93%ce%95%ce%94/
+   /finance/quote/%ce%93%ce%95%ce%9a%ce%a4%ce%95%ce%a1%ce%9d%ce%91/
+   /finance/quote/%ce%93%ce%9a%ce%9c%ce%95%ce%96%ce%96/
+   /finance/quote/%ce%93%ce%a1%ce%99%ce%92/
+   /finance/quote/%ce%94%ce%91%ce%91/
+   /finance/quote/%ce%94%ce%91%ce%99%ce%9f%ce%a3/
+
+### https://www.capital.gr/ -> 200 len=301320 links=258
+   /Finance/IndexComponents
+   /Finance/StocksPerformance
+   /Finance/packets
+   /finance/allstocks
+   /finance/comodities
+   /finance/marketstats
+   /finance/paragoga
+   /finance/quote/%ce%93%ce%94/
+   /finance/sectors
+   /finance/worldmarkets
+   javascript: window.open(&quot;/finance/realtimeticker/?standAlone=true&amp;countPageView=True&quot;, &quot;RealtimeTicker&quot;, &quot;fullscreeen=0, height=680, location=0, menubar=0, resizable=0, scrollbars=0, status=0, toolbar=0, width=650&quot;); void(0)
+
+### https://www.euro2day.gr/ -> 200 len=172066 links=370
+   /AseAccountReports.aspx
+   /AseAllTransactions.aspx
+   /AseMarketAnnouncements.aspx
+   /AseMarketsView.aspx
+   /AseNewHigh.aspx
+   /AseNewLow.aspx
+   /AsePackets.aspx
+   /AseQuotesCapitalization.aspx
+   /AseRealTime.aspx
+   /AseRealTime.aspx?c=-1
+   /AseSearchQuotes.aspx
+   /AseTopDown.aspx
+   /AseTopHilow.aspx
+   /AseTopMarket.aspx
+   /AseTopUp.aspx
+   /AseTopValue.aspx
+   /AseTopVolume.aspx
+   /ase/market_comment/151/list.html
+   /ase/market_comment/article-market/2375289/hrhmatisthrio-epiheirhsh-anakampshs-me-trapezikh-a.html
+   /investments/ase/201/list.html
+   /members/MyStocks.aspx
+   /news/economy/article/2375298/oi-treis-kyriarhes-taseis-sthn-ellhnikh-agora-exoh.html
+   /news/world/article/2375273/bofa-poy-krinontai-oi-apofaseis-fed-ekt-kai-boj-gi.html
+   http://www.stocklearning.gr/
+   https://www.iatronet.gr/article/143691/mikres-diatrofikes-symvoyles-na-dokimasete
+   https://www.iatronet.gr/article/143700/idiotes-parohoi-pfy-anatimologhsh-exetaseon-amoivh-episkepshs-clawback-zhtoyn-lyseis
+
+### https://www.naftemporiki.gr/finance/ -> 200 len=276326 links=350
+   /symbols/ALPHA.ATH/news/2131515
+   /symbols/BRIQ.ATH/news/2131511
+   /symbols/BYLOT.ATH/news/2131589
+   /symbols/ELHA.ATH/news/2131499
+   /symbols/FAIS.ATH/news/2131552
+   /symbols/FOYRK.ATH/news/2131573
+   /symbols/GEKTERNA.ATH/news/2131498
+   /symbols/MTLN.ATH/news/2131553
+   /symbols/PPC.ATH/news/2131539
+   /symbols/TRESTATES.ATH/news/2131584
+   https://www.naftemporiki.gr/finance/economy/2179077/palia-diamerismata-me-eos-800-eyro-psachnoyn-oi-enoikiastes-stin-attiki-ti-ischyei-stis-ypoloipes-perioches/
+   https://www.naftemporiki.gr/finance/markets/2179315/chrimatistirio-kovei-to-merisma-i-papoytsanis/
+
+### https://www.naftemporiki.gr/symbols/OPAP.ATH/ -> 404 len=171666
+
+### https://www.naftemporiki.gr/symbols/OPAP.ATH/news/ -> 404 len=171677
