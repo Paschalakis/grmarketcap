@@ -1,38 +1,7 @@
 yahoo quotes: 155
-news: 78
-γράφτηκε extras.json 161
-size 148652
-ΑΛΦΑ {"pe": 11.5722, "fpe": 8.3982, "pb": 1.041, "eps": 0.36, "h52": 4.94, "l52": 2.95, "sh": 2256243315, "dr": 0.113, "ret1y": 17.4885, "earn": "2026-10-30", "exd": "2026-11-30", "payd": "2025-11-02", "dy": 0.0278, "pay": 0.3164, "beta": 0.833, "fl": 2027663305, "divs": [["2026-07-01", 0.0656], ["2025-12-01", 0.0485]]}
-ΔΕΗ {"pe": 17.5659, "fpe": 15.6148, "pb": 1.4184, "eps": 1.29, "h52": 25.46, "l52": 14.7, "sh": 587364308, "dr": 0.6, "ret1y": 49.0249, "earn": "2026-11-16", "exd": "2026-07-20", "payd": "2001-12-12", "dy": 0.0271, "pay": 0.3101, "beta": 0.584, "fl": 382902792, "divs": [["2026-07-20", 0.6], ["2025-07-21", 0.4], ["2024-07-22", 0.25]]}
-ALWN {"pe": 11.625, "fpe": 11.0807, "pb": -0.0096, "eps": 0.96, "h52": 19.1, "l52": 11.02, "sh": 771045909, "dr": 0.0, "ret1y": -36.8207, "earn": "2026-11-19", "exd": "2026-10-21", "dy": 0.0602, "pay": 0.5219, "beta": 0.253, "fl": 286674, "divs": [["2026-10-21", 0.2], ["2026-04-08", 0.8], ["2025-11-03", 0.5], ["2025-05-07", 0.8], ["2024-11-04", 0.6029], ["2024-06-25", 0.25], ["2024-04-29", 0.6105], ["2023-11-02", 1.0018], ["2023-06-19", 0.45], ["2023-06-06", 0.7], ["2022-10-19", 0.3], ["2022-07-29", 0.9]], "news": [{"t": "Eurobank Equities για Allwyn: Ενδεχόμενη νίκη Μπολσονάρου στη Βραζιλία βελτιώνει τις προοπτικές", "u": "https://www.capital.gr/epixeiriseis/4021434/eurobank-equities-gia-allwyn-endexomeni-niki-mpolsonarou-sti-brazilia-beltionei-tis-prooptikes/", "d": "2026-10-05 11:03"}, {"t": "Διευρυμένες απώλειες για τις ευρωπαϊκές στοιχηματικές μετά την απαγόρευση στην Βραζιλία - Τι βλέπε
-ΟΤΕ {"pe": 10.7222, "fpe": 11.367, "pb": 3.8301, "eps": 1.8, "h52": 20.48, "l52": 15.38, "sh": 389733414, "dr": 0.878, "ret1y": 20.9114, "earn": "2026-10-30", "exd": "2026-07-01", "dy": 0.0466, "pay": 0.5013, "beta": 0.179, "fl": 171521673, "divs": [["2026-07-01", 0.9021], ["2025-07-03", 0.7415], ["2024-07-04", 0.7216], ["2023-07-05", 0.5888], ["2022-07-01", 0.571], ["2021-11-15", 0.2521]], "news": [{"t": "Εδώ υπάρχει μια προίκα €3 δισ.", "u": "https://www.capital.gr/analusi/4023802/edo-uparxei-mia-proika-3-dis/", "d": "2026-10-16 00:05"}, {"t": "ΟΤΕ: Τα νέα \"καύσιμα\" του ICT μετά το Ταμείο Ανάκαμψης", "u": "https://www.capital.gr/epixeiriseis/4008168/ote-ta-nea-kausima-tou-ict-meta-to-tameio-anakampsis/", "d": "2026-07-30 07:30"}, {"t": "ΟΤΕ: Οπτικές ίνες, κινητή, ICT και AI στηρίζουν την ανάπτυξη – Η απάντηση στον ανταγωνισμό", "u": "https://www.capital.gr/epixeiriseis/4008101/ote-optike
-ΜΟΗ {"pe": 6.3312, "fpe": 7.2006, "pb": 1.9104, "eps": 10.78, "h52": 70.0, "l52": 25.2, "sh": 108623183, "dr": 2.8, "ret1y": 169.8039, "exd": "2026-06-26", "payd": "2001-08-06", "dy": 0.026, "pay": 0.1657, "beta": 0.168, "fl": 63279521, "divs": [["2026-06-26", 1.4278], ["2025-12-23", 0.3579], ["2025-06-25", 1.1249], ["2024-12-23", 0.3088], ["2024-06-26", 1.4324], ["2023-12-18", 0.4091], ["2023-06-26", 1.2241], ["2022-11-21", 0.4058], ["2022-07-07", 0.7047], ["2021-11-08", 0.2007]]}
-ΕΤΕ {"pe": 12.4146, "fpe": 9.1872, "pb": 1.4879, "eps": 1.23, "h52": 18.025, "l52": 12.06, "sh": 896140638, "dr": 0.286, "ret1y": 18.4397, "earn": "2026-11-05", "exd": "2026-06-10", "payd": "2005-02-22", "dy": 0.0343, "pay": 0.4153, "beta": 0.524, "fl": 818006136, "divs": [["2026-06-10", 0.294], ["2025-11-10", 0.221], ["2025-06-03", 0.4442], ["2024-07-29", 0.3643]]}
-with pe 107 exd 135 news 78 nodate 223
-CTX   <img alt="Alpha Bank: Xρηματοδοτική παρουσία πίσω από δύο εμβληματικές επενδύσεις στην ενεργειακή και ψηφιακή μετάβαση της χώρας" height="140" src="https://www.capital.gr/Content/ImagesDatabase/p/180x140/crop/both/70/70132892cd2442dfb6ef14fb3e3e54ab.jpg?quality=60&amp;404=default&amp;v=8" width="180" />
-        </a>
-    </div>
-
-
-    <div class="item__infos has__image">
-        <h5 class="category bold">
-                    <span class="time">20:00</span>
-                    <span class="date">19/10</span>
-        </h5>
-                        <h3 class="bold">
-                        <a href="/epixeiriseis/4024493/alpha-bank-xrimatodotiki-parousia-piso-apo-duo-emblimatikes-ependuseis-stin-energeiaki-kai-psifiaki-metabasi-tis-xoras/"  title="Alpha Bank: Xρηματοδοτική παρουσία πίσω από δύο εμβληματικές επενδύσεις στην ενεργειακή και ψηφιακή μετάβαση της χώρας">Alpha Bank: Xρηματοδοτική παρουσία πίσω από δύο εμβληματικές επενδύσεις στην ενεργειακή και ψηφιακή μετάβαση της χώρας</a>
-                </h3>
-        <div class="item__description">
-            <p>
-Δύο εμβληματικές επενδύσεις στους τομείς της ενέργειας και της τεχνολογίας, που εγκαινιάστηκαν πρόσφατα παρουσία του Πρωθυπουργού, αναδεικνύουν τον ενεργό ρόλο της Alpha Bank στη χρηματοδότηση...            </p>
-        </div>
-
-    </div>
-</div>
-
-
-<div class="article snip tag__alpha-bank category__epixeiriseis" data-article="4023811">
-
-    <div class="image__wrapper">
-        <a href="/epixeiriseis/4023811/alpha-bank-stis-19-oktobriou-xekina-i-diapragmateusi-140-300-metoxon-apo-to-stock-options-rights/" title="Alpha Bank: Στις 19 Οκτωβρίου ξεκινά η διαπραγμάτευση 140.300 μετοχών από το stock options rights">
-            <img alt="Alpha Bank: Στις 19 Οκτωβρίου ξεκινά η διαπραγμάτευση 140.300 
+news: 142
+γράφτηκε extras.json 162
+ΑΛΦΑ [{"t": "Ευρώπη Holdings: Πώληση ακινήτου στην Alpha Bank έναντι 21,8 εκατ. ευρώ", "u": "https://www.capital.gr/epixeiriseis/4025398/europi-holdings-polisi-akinitou-stin-alpha-bank-enanti-21-8-ekat-euro/", "d": "2026-10-23 18:16"}, {"t": "CrediaPantelakis: Έρχεται ράλι έως και 30% στις ελληνικές τράπεζες, οι νέες υψηλότερες τιμές-στόχοι – Προσοχή στον γαλλικό κίνδυνο", "u": "https://www.capital.gr/agores/4025021/crediapantelakis-erxetai-rali-eos-kai-30-stis-ellinikes-trapezes-oi-nees-upsiloteres-times-stoxoi-prosoxi-ston-galliko-kinduno/", "d": "2026-10-22 10:43"}, {"t": "DBRS: Ισχυρά τα κεφαλαιακά μαξιλάρια των ελληνικών τραπεζών", "u": "https://www.capital.gr/epixeiriseis/4024828/dbrs-isxura-ta-kefalaiaka-maxilaria-ton-ellinikon-trapezon/", "d": "2026-10-21 12:16"}, {"t": "Alpha Bank: Xρηματοδοτική παρουσία πίσω από δύο εμβληματικές επενδύσεις στην ενεργειακή και ψηφιακή μετάβαση της χώρας", "u": "https://www.capital.gr/epixeiriseis/4024493/alpha-bank-xrimatodotiki-parousia-piso-apo-duo-emblimatikes-ependuseis-stin-energeiaki-kai-psifiaki-metabasi-tis-xoras/", "d": "2026-10-19 20:00"}, {"t": "Alpha Bank: Στις 19 Οκτωβρίου ξεκινά η διαπραγμάτευση 140.300 μετοχών από το stock option
+ΔΕΗ [{"t": "ΔΕΗ: Νέα διατλαντική ενεργειακή πρωτοβουλία με GMF και CSIS", "u": "https://www.capital.gr/epixeiriseis/4021543/dei-nea-diatlantiki-energeiaki-protoboulia-me-gmf-kai-csis/", "d": "2026-10-05 17:17"}, {"t": "ΔΕΗ: Στα 15,9 λεπτά το πράσινο τιμολόγιο τον Οκτώβριο - Στα 11,5 λεπτά το μπλε σταθερό", "u": "https://www.capital.gr/epixeiriseis/4020965/dei-sta-15-9-lepta-to-prasino-timologio-ton-oktobrio-sta-11-5-lepta-to-mple-stathero/", "d": "2026-10-01 23:42"}, {"t": "ΔΕΗ: Ολοκληρώθηκε η απόκτηση χαρτοφυλακίου ΑΠΕ 277,3 MW στην Πολωνία", "u": "https://www.capital.gr/epixeiriseis/4020901/dei-oloklirothike-i-apoktisi-xartofulakiou-ape-277-3-mw-stin-polonia/", "d": "2026-10-01 17:53"}, {"t": "ΔΕΗ: Τιτλοποίηση απαιτήσεων €675 εκατ. – Ποιοι είναι οι επενδυτές", "u": "https://www.capital.gr/epixeiriseis/4020481/dei-titlopoiisi-apaitiseon-675-ekat-poioi-einai-oi-ependutes/", "d": "2026-09-30 10:47"}, {"t": "Το κρυφό ελληνικό στοίχημα της AI", "u": "https://www.capital.gr/analusi/4019792/to-krufo-elliniko-stoixima-tis-ai/", "d": "2026-09-28 00:05"}, {"t": "Wood: Η κατάσταση της ελληνικής αγοράς ενέργειας - Τι σημαίνει το ακριβό φυσικό αέριο για την πορεία των ελληνικών μετοχών, οκτώ τίτλ
+ALWN [{"t": "Allwyn: Χωρίς το δικαίωμα στη διανομή των €0,20 οι μετοχές από 21 Οκτωβρίου", "u": "https://www.capital.gr/epixeiriseis/4023907/allwyn-xoris-to-dikaioma-sti-dianomi-ton-0-20-oi-metoxes-apo-21-oktobriou/", "d": "2026-10-16 10:44"}, {"t": "Eurobank Equities για Allwyn: Ενδεχόμενη νίκη Μπολσονάρου στη Βραζιλία βελτιώνει τις προοπτικές", "u": "https://www.capital.gr/epixeiriseis/4021434/eurobank-equities-gia-allwyn-endexomeni-niki-mpolsonarou-sti-brazilia-beltionei-tis-prooptikes/", "d": "2026-10-05 11:03"}, {"t": "Διευρυμένες απώλειες για τις ευρωπαϊκές στοιχηματικές μετά την απαγόρευση στην Βραζιλία - Τι βλέπει η Citi για την Allwyn", "u": "https://www.capital.gr/agores/4020019/dieurumenes-apoleies-gia-tis-europaikes-stoiximatikes-meta-tin-apagoreusi-stin-brazilia-ti-blepei-i-citi-gia-tin-allwyn/", "d": "2026-09-28 13:56"}, {"t": "Allwyn: Προσωρινό \"φρένο\" στο online betting στη Βραζιλία - Τι σημαίνει για την Betano", "u": "https://www.capital.gr/epixeiriseis/4019929/allwyn-prosorino-freno-sto-online-betting-sti-brazilia-ti-simainei-gia-tin-betano/", "d": "2026-09-28 09:20"}, {"t": "Allwyn – Όσα δεν λέει η πρώτη ματιά", "u": "https://www.capital.gr/analusi/4012820/allwyn-os
+with pe 107 exd 135 news 142 nodate 0
