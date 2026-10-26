@@ -1,12 +1,43 @@
+##### https://www.capital.gr/finance/quote/%ce%91%ce%9b%ce%a6%ce%91/ 200 168654
+LINKS: ['/Finance/IndexComponents', '/Finance/StocksPerformance', '/Finance/WatchList', '/Finance/packets', '/bloomberg-news', '/finance/IndexComponents', '/finance/allstocks', '/finance/announcements/%ce%91%ce%9b%ce%a6%ce%91/', '/finance/buysell/%ce%91%ce%9b%ce%a6%ce%91/', '/finance/chart/history/%ce%91%ce%9b%ce%a6%ce%91/', '/finance/chart/history/%ce%91%ce%9b%ce%a6%ce%91/?interval=1m', '/finance/chart/history/%ce%91%ce%9b%ce%a6%ce%91/?interval=1w', '/finance/chart/history/%ce%91%ce%9b%ce%a6%ce%91/?interval=1y', '/finance/chart/history/%ce%91%ce%9b%ce%a6%ce%91/?interval=5y', '/finance/chart/history/%ce%91%ce%9b%ce%a6%ce%91/?interval=6m', '/finance/comodities', '/finance/historycloses/%ce%91%ce%9b%ce%a6%ce%91/', '/finance/marketstats', '/finance/news/%ce%91%ce%9b%ce%a6%ce%91/', '/finance/paragoga', '/finance/profile/%ce%91%ce%9b%ce%a6%ce%91/', '/finance/quote/%ce%91%ce%9b%ce%a6%ce%91/', '/finance/quote/%ce%93%ce%94/', '/finance/sectors', '/finance/ticks/%ce%91%ce%9b%ce%a6%ce%91/', '/finance/worldmarkets', '/market-news', 'https://www.capital.gr/finance/quote/%ce%91%ce%9b%ce%a6%ce%91/', 'javascript: window.open(&quot;/finance/realtimeticker/?standAlone=true&amp;countPageView=True&quot;, &quot;RealtimeTicker&quot;, &quot;fullscreeen=0, height=680, location=0, menubar=0, resizable=0, scrollbars=0, status=0, toolbar=0, width=650&quot;); void(0)']
+APIS: ['/api/quotes/gdm/', '/api/quotes/headerstocks', '/api/quotes/intradaychartdata/', '/api/quotes/intradaychartdata/%ce%91%ce%9b%ce%a6%ce%91/', '/api/quotes/ΑΛΦΑ/full/?langCd=el', '/api/searchquote/']
+TEXT:  ALPHA ΤΡΑΠΕΖΑ Α.Ε. (ΑΛΦΑ): τιμές μετοχής | Capital ΕΙΔΗΣΕΙΣ Ροή Ειδήσεων Επικαιρότητα Φορολογικό Νομοσχέδιο Συνεντεύξεις Αγορά Ακινήτων Πρωτοσέλιδα Εφημερίδων Εταιρική Κοινωνική Ευθύνη Brand Voice ΠΟ
+.. Κεφαλαιοποίηση :: c: l})() + ' x ' + as.extend({numeric: { precision: 0}})(): '', flashBackground: a"> 4,1680 x 3.010 Κεφαλαιοποίηση 9.402.350.524 &euro; Υψηλό Εβδ. 4,5050 Υψηλό Μήνα 4,9400 Υψηλό 52 εβδ. 4,9400 Χαμηλό Εβδ. 4,0040 Χαμηλό Μήνα 4,0040 Χαμηλό 52 εβδ. 2,9500 Αρ. Μετοχών 2.256.383.615 Σύγκριση με σύμβολα: Intraday 1 Εβδ
+.. μετοχών :: Bank στη χρηματοδότηση... 19:04 15/10 Alpha Bank: Στις 19 Οκτωβρίου ξεκινά η διαπραγμάτευση 140.300 μετοχών από το stock options rights Μετά την πρόσφατη αύξηση του μετοχικού της κεφαλαίου. 12:20 14/10 Eurobank Equities: &quot;Ανεβάζει&quot; σημαντικά τις τιμές-στόχους των ελληνικών τραπεζών – Ο κίνδυνος α
+.. μετοχών :: ν προσδοκιών. Όλες οι ειδήσεις για την εταιρεία 10:10 26/10 Alpha Bank: Απόκτηση ή μεταβίβαση ιδίων μετοχών Ανακοίνωση 19:04 15/10 Alpha Bank: Ανακοίνωση Εισαγωγή προς διαπραγμάτευση νέων μετοχών προερχόμενων από αύξηση μετοχικού κεφαλαίου μετά από άσκηση δικαιωμάτων προαίρεσης επί μετοχών (stock options..
+.. 52 :: της Χρονιάς&#187; 2025 Η Νέα Ιατρική Real Estate DAX 25.343,13 +0,64% CAC 7.839,10 +0,72% Dow Jones 52.215,00 -1,24% Nikkei 62.189,65 -0,80% EUR / USD 1,12120 EUR / CHF 0,92607 ΓΕΝΙΚΟΣ ΔΕΙΚΤΗΣ: 11:54 2.549,10 +0,74 +18,64 &nbsp;Τζίρος: 55,19 εκ € Συνεχης ενημερωση Όλες οι Μετοχές Τιμές ανά Κλάδο Οι με
+.. 52 :: end({numeric: { precision: 0}})(): '', flashBackground: a"> 4,1680 x 3.010 Κεφαλαιοποίηση 9.402.350.524 &euro; Υψηλό Εβδ. 4,5050 Υψηλό Μήνα 4,9400 Υψηλό 52 εβδ. 4,9400 Χαμηλό Εβδ. 4,0040 Χαμηλό Μήνα 4,0040 Χαμηλό 52 εβδ. 2,9500 Αρ. Μετοχών 2.256.383.615 Σύγκριση με σύμβολα: Intraday 1 Εβδ. 1 Μην. 6 Μη
+.. Υψηλό ::  Ειδήσεις Προφίλ Εταιρείας Συζητήσεις 4,1670 € 0,0690 ( 1,68 %) Τελ. Ενημέρωση 11:40 Άνοιγμα 4,1600 Υψηλό 4,1800 Χαμηλό 4,1200 Όγκος 0? tv.extend({numeric: { precision: 0}})(): '', flashBackground: tv">807.748 Τζίρος 0? to.extend({numeric: { precision: 0 }})() + ' €': '', flashBackground: to"> 3.365.292 
+.. Υψηλό :: c: { precision: 0}})(): '', flashBackground: a"> 4,1680 x 3.010 Κεφαλαιοποίηση 9.402.350.524 &euro; Υψηλό Εβδ. 4,5050 Υψηλό Μήνα 4,9400 Υψηλό 52 εβδ. 4,9400 Χαμηλό Εβδ. 4,0040 Χαμηλό Μήνα 4,0040 Χαμηλό 52 εβδ. 2,9500 Αρ. Μετοχών 2.256.383.615 Σύγκριση με σύμβολα: Intraday 1 Εβδ. 1 Μην. 6 Μην. 1 Ετος 5 Ετ
+.. Χαμηλό :: φίλ Εταιρείας Συζητήσεις 4,1670 € 0,0690 ( 1,68 %) Τελ. Ενημέρωση 11:40 Άνοιγμα 4,1600 Υψηλό 4,1800 Χαμηλό 4,1200 Όγκος 0? tv.extend({numeric: { precision: 0}})(): '', flashBackground: tv">807.748 Τζίρος 0? to.extend({numeric: { precision: 0 }})() + ' €': '', flashBackground: to"> 3.365.292 € Πράξεις 0? t
+.. Χαμηλό ::  3.010 Κεφαλαιοποίηση 9.402.350.524 &euro; Υψηλό Εβδ. 4,5050 Υψηλό Μήνα 4,9400 Υψηλό 52 εβδ. 4,9400 Χαμηλό Εβδ. 4,0040 Χαμηλό Μήνα 4,0040 Χαμηλό 52 εβδ. 2,9500 Αρ. Μετοχών 2.256.383.615 Σύγκριση με σύμβολα: Intraday 1 Εβδ. 1 Μην. 6 Μην. 1 Ετος 5 Ετη Φόρτωση Γραφήματος Το γράφημα δεν είναι διαθέσιμο Δείτε 
 
-##### https://www.capital.gr/finance/quote/%ce%9f%ce%a0%ce%91%ce%a0/ 404 29435
-
-##### https://www.euro2day.gr/AseSearchQuotesAllCodes.aspx 200 148120
-LINKS: ['/AseQuotesCapitalization.aspx', '/AseSearchQuotes.aspx', '/DerivativesFutures.aspx?t=1', '/DerivativesFutures.aspx?t=2', '/DerivativesOptions.aspx?t=1', '/DerivativesOptions.aspx?t=2', '/IndicesDetail.aspx?i=2', '/IndicesDetail.aspx?i=252', '/IndicesDetail.aspx?i=254', '/IndicesDetail.aspx?i=255', '/IndicesDetail.aspx?i=256', '/IndicesDetail.aspx?i=257', '/IndicesDetail.aspx?i=258', '/IndicesDetail.aspx?i=259', '/IndicesDetail.aspx?i=26', '/IndicesDetail.aspx?i=260', '/IndicesDetail.aspx?i=261', '/IndicesDetail.aspx?i=262', '/IndicesDetail.aspx?i=43', '/IndicesDetail.aspx?i=47', '/IndicesDetail.aspx?i=48', '/IndicesDetail.aspx?i=49', '/IndicesDetail.aspx?i=59', '/IndicesDetail.aspx?i=60', '/IndicesDetail.aspx?i=61', '/IndicesDetail.aspx?i=62', '/IndicesInteractiveCharts.aspx?i=-2', '/QuotesDetail.aspx?q=1', '/QuotesDetail.aspx?q=100', '/QuotesDetail.aspx?q=108', '/QuotesDetail.aspx?q=113', '/QuotesDetail.aspx?q=118', '/QuotesDetail.aspx?q=121', '/QuotesDetail.aspx?q=124', '/QuotesDetail.aspx?q=134', '/QuotesDetail.aspx?q=141', '/QuotesDetail.aspx?q=144', '/QuotesDetail.aspx?q=152', '/QuotesDetail.aspx?q=153', '/QuotesDetail.aspx?q=158']
-APIS: []
-OPAP links []
-NAFT symbol links ['/symbols/ALPHA.ATH/news/2124321', '/symbols/ALPHA.ATH/news/2125165', '/symbols/ALPHA.ATH/news/2127283', '/symbols/ALPHA.ATH/news/2127909', '/symbols/ALPHA.ATH/news/2128659', '/symbols/ALPHA.ATH/news/2128910', '/symbols/ALPHA.ATH/news/2129969', '/symbols/ALPHA.ATH/news/2131515']
-https://www.naftemporiki.gr/symbols/ALPHA.ATH/ 404 171537
-https://www.naftemporiki.gr/symbols/ALPHA.ATH/news 404 171547
-https://www.naftemporiki.gr/finance/symbols/ALPHA.ATH/ 404 171554
-https://www.naftemporiki.gr/finance/stock/ALPHA.ATH 404 171549
+E2D around ΑΛΦΑ: ΑΒΕ</a></td>
+                                                    <td><a href="/QuotesDetail.aspx?q=441">AVE (ΚΟ)</a></td>
+                                                </tr>
+                                            
+                                                <tr>
+                                                    <td><a href="/QuotesDetail.aspx?q=808">ΑΔΑΚ</a></td>
+                                                    <td><a href="/QuotesDetail.aspx?q=808">ALPHA ETF FTSE Athex Large Cap</a></td>
+                                                </tr>
+                                            
+                                                <tr>
+                                                    <td><a href="/QuotesDetail.aspx?q=860">ΑΔΜΗΕ</a></td>
+                                                    <td><a href="/QuotesDetail.aspx?q=860">ΑΔΜΗΕ ΣΥΜΜΕΤΟΧΩΝ (KO)</a></td>
+                                                </tr>
+                                            
+                                                <tr>
+                                                    <td><a href="/QuotesDetail.aspx?q=24">ΑΛΜΥ</a></td>
+                                                    <td><a href="/QuotesDetail.aspx?q=24">ΑΛΟΥΜΥΛ (ΚΟ)</a></td>
+                                                </tr>
+                                            
+                                                <tr>
+                                                    <td><a href="/QuotesDetail.aspx?q=30">ΑΛΦΑ</a></td>
+                                                    <td><a href="/QuotesDetail.aspx?q=30">ALPHA ΤΡΑΠΕΖΑ (ΚΟ)</a></td>
+                                                </tr>
+                                            
+                                                <tr>
+                                                    <td><a href="/QuotesDetail.aspx?q=31">ΑΝΔΡΟ</a></td>
+                                                    <td><a href="/QuotesDetail.aspx?q=31">ΑΝΔΡΟΜΕΔΑ (ΚΟ)</a></td>
+                                                </tr>
+                                           
