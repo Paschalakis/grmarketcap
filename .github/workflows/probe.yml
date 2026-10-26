@@ -6,5 +6,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: pip install requests && python probe/probe.py > probe/out.txt 2>&1 || true
-      - run: git config user.name bot && git config user.email b@x && git add probe/out.txt && git commit -qm out && git push -q
+      - run: pip install requests && python probe/probe.py > probe/out.txt 2>&1 || true; cp extras.json probe/ 2>/dev/null || true
+      - run: git config user.name bot && git config user.email b@x && git add probe/ && git commit -qm out && git push -q
