@@ -78,11 +78,14 @@ try:
             res = (r.json().get("quoteSummary", {}).get("result") or [{}])[0]
             sd, ks, ce = res.get("summaryDetail", {}), res.get("defaultKeyStatistics", {}), res.get("calendarEvents", {})
             if raw(sd, "exDividendDate"): e["exd"] = day(raw(sd, "exDividendDate"))
-            if raw(ce, "dividendDate"): e["payd"] = day(raw(ce, "dividendDate"))
+            pd = day(raw(ce, "dividendDate"))
+            if pd and e.get("exd") and pd >= e["exd"]: e["payd"] = pd
             for k, o, src in [("dy", sd, "dividendYield"), ("pay", sd, "payoutRatio"), ("beta", sd, "beta"),
                               ("fl", ks, "floatShares")]:
                 v = raw(o, src)
                 if isinstance(v, (int, float)): e[k] = round(v, 4)
+            if e.get("pb") is not None and e["pb"] <= 0: e.pop("pb")
+            if e.get("fl") and e.get("sh") and not (0.03 * e["sh"] <= e["fl"] <= 1.01 * e["sh"]): e.pop("fl")
             if e.get("dr") or e.get("dy") or e.get("exd"):
                 r = y.get("https://query1.finance.yahoo.com/v8/finance/chart/" + code,
                           params={"range": "5y", "interval": "1mo", "events": "div"}, timeout=25)
@@ -96,34 +99,38 @@ except Exception as ex:
 
 # ---------- capital.gr ειδήσεις
 c = requests.Session(); c.headers.update({"User-Agent": UA, "Accept-Language": "el-GR,el;q=0.9"})
-DT = re.compile(r"(\d{1,2}:\d{2})\s*(?:<[^>]+>\s*)*(\d{1,2}/\d{1,2}(?:/\d{2,4})?)")
 def news(sym):
-    u = "https://www.capital.gr/finance/news/" + quote(sym.lower()) + "/"
+    u = "https://www.capital.gr/finance/news/" + quote(sym).lower() + "/"
     r = c.get(u, timeout=25)
     if r.status_code != 200: return None
     t = r.text
-    i = t.find("finance-news"); t2 = t
+    now = datetime.now(ATH)
     items, seen = [], set()
-    for m in re.finditer(r'<a[^>]+href="(/[a-z\-]+/(\d{6,})/[^"]+)"[^>]*>(.*?)</a>', t2, re.S):
+    # κάθε είδηση είναι ένα <div class="article snip ..." data-article="id">
+    for b in re.split(r'<div class="article snip', t)[1:]:
+        b = b[:6000]
+        m = re.search(r'<h3[^>]*>\s*<a[^>]+href="(/[a-z\-]+/(\d{6,})/[^"]+)"[^>]*>(.*?)</a>', b, re.S)
+        if not m or m.group(2) in seen: continue
         title = html.unescape(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", m.group(3)))).strip()
-        if len(title) < 15 or m.group(2) in seen: continue
-        if m.group(1).startswith(("/forex/", "/finance/")): continue
+        if len(title) < 10: continue
         seen.add(m.group(2))
-        ctx = t2[max(0, m.start() - 600): m.start()]
-        dm = list(DT.finditer(ctx))
+        tm = re.search(r'class="time">\s*(\d{1,2}:\d{2})', b)
+        dm = re.search(r'class="date">\s*(\d{1,2})/(\d{1,2})(?:/(\d{2,4}))?', b)
         when = None
-        if dm:
-            hm, dd = dm[-1].group(1), dm[-1].group(2)
-            p = dd.split("/"); yr = int(p[2]) if len(p) > 2 else datetime.now(ATH).year
-            if yr < 100: yr += 2000
-            try:
-                dt = datetime(yr, int(p[1]), int(p[0]))
-                if dt > datetime.now() + timedelta(days=2): dt = dt.replace(year=yr - 1)
-                when = dt.strftime("%Y-%m-%d") + " " + hm
-            except ValueError: pass
+        try:
+            if dm:
+                yr = int(dm.group(3)) if dm.group(3) else now.year
+                if yr < 100: yr += 2000
+                dt = datetime(yr, int(dm.group(2)), int(dm.group(1)))
+                if not dm.group(3) and dt.date() > (now + timedelta(days=1)).date(): dt = dt.replace(year=yr - 1)
+            else:
+                dt = now
+            when = dt.strftime("%Y-%m-%d") + (" " + tm.group(1) if tm else "")
+        except ValueError:
+            pass
         items.append({"t": title, "u": "https://www.capital.gr" + m.group(1), "d": when})
-        if len(items) >= 6: break
-    return items
+    items.sort(key=lambda x: x["d"] or "", reverse=True)
+    return items[:6]
 
 ranked = sorted(stocks, key=lambda s: -(s.get("mcap") or 0))
 nn = 0
