@@ -277,6 +277,31 @@ tbody tr:hover { background: var(--bg); }
 .setrow { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 4px 0; }
 .setrow > span { font-weight: 600; }
 .iconbtn { padding: 0; width: 36px; justify-content: center; }
+.dsub { margin: 4px 0 -4px; font-size: 15px; }
+.rng { display: flex; flex-direction: column; gap: 6px; padding: 10px 0 4px; }
+.rng .bar { position: relative; height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--down), var(--muted), var(--up)); opacity: .85; }
+.rng .bar i { position: absolute; top: -4px; width: 4px; height: 14px; margin-left: -2px; border-radius: 2px; background: var(--fg); box-shadow: 0 0 0 2px var(--surface); }
+.rng .ends { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+.divhist { display: flex; flex-wrap: wrap; gap: 6px; }
+.divhist span { font-size: 12px; padding: 4px 8px; border-radius: 999px; background: var(--accent-soft); }
+.newsl { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.newsl li { border-top: 1px solid var(--line); padding: 10px 0; display: flex; flex-direction: column; gap: 3px; }
+.newsl a { color: var(--fg); text-decoration: none; font-weight: 500; line-height: 1.35; }
+.newsl a:hover { color: var(--accent); text-decoration: underline; }
+.newsl span { font-size: 12px; color: var(--muted); }
+.divcal { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 760px) { .divcal { grid-template-columns: minmax(0, 1fr); } }
+.divcal .empty2 { padding: 14px 16px; color: var(--muted); border-top: 1px solid var(--line); }
+.heat { position: relative; width: 100%; border-radius: 12px; overflow: hidden; background: var(--line); }
+.heat .hs { position: absolute; }
+.heat .hs > b { position: absolute; left: 0; right: 0; top: 0; height: 18px; padding: 2px 6px; font-size: 11px; font-weight: 600; color: var(--muted); background: var(--surface); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: .02em; }
+.heat .ht { position: absolute; border: 1px solid var(--surface); padding: 0; margin: 0; cursor: pointer; color: #fff; font: inherit; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; text-align: center; line-height: 1.15; }
+.heat .ht:hover, .heat .ht:focus-visible { outline: 2px solid #fff; outline-offset: -2px; z-index: 1; }
+.heat .ht .s { font-weight: 700; }
+.heat .ht .c { opacity: .92; font-variant-numeric: tabular-nums; }
+.heatleg { display: flex; align-items: center; gap: 3px; justify-content: center; font-size: 12px; color: var(--muted); }
+.heatleg i { width: 28px; height: 10px; border-radius: 2px; display: inline-block; }
+.heatleg span { margin: 0 6px; }
 .viewbtn .cnt { display: inline-block; margin-left: 6px; min-width: 20px; padding: 1px 6px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 12px; font-family: var(--font-body); }
 .tvbox { height: 460px; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); }
 @media (max-width: 640px) { .tvbox { height: 360px; } }
@@ -345,6 +370,7 @@ button.acct:hover { border-color: var(--accent); }
 
   <nav class="views" role="tablist" aria-label="Ενότητες">
     <button type="button" class="viewbtn" role="tab" id="tab-market" data-view="market" aria-selected="true" aria-controls="view-market">Μετοχές</button>
+    <button type="button" class="viewbtn" role="tab" id="tab-heat" data-view="heat" aria-selected="false" aria-controls="view-heat">Χάρτης</button>
     <button type="button" class="viewbtn" role="tab" id="tab-favs" data-view="favs" aria-selected="false" aria-controls="view-favs">Αγαπημένα<span class="cnt" id="favcnt" hidden></span></button>
     <button type="button" class="viewbtn" role="tab" id="tab-portfolio" data-view="portfolio" aria-selected="false" aria-controls="view-portfolio">Χαρτοφυλάκιο</button>
   </nav>
@@ -361,6 +387,14 @@ button.acct:hover { border-color: var(--accent); }
   <section style="display:flex;flex-direction:column;gap:10px" aria-label="Κλάδοι">
     <div class="sechead"><h2>Κλάδοι</h2><span class="note">Η κατηγοριοποίηση είναι δική μου και όχι η επίσημη του ATHEX.</span></div>
     <div class="sectors" id="sectors"></div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:10px" aria-label="Ημερολόγιο μερισμάτων" id="divsec" hidden>
+    <div class="sechead"><h2>Ημερολόγιο μερισμάτων</h2><span class="note" id="divnote"></span></div>
+    <div class="divcal">
+      <div class="panel"><h2>Επόμενες αποκοπές</h2><div id="divnext"></div></div>
+      <div class="panel"><h2>Πρόσφατες αποκοπές</h2><div id="divrecent"></div></div>
+    </div>
   </section>
 
   <section style="display:flex;flex-direction:column;gap:12px" aria-label="Όλες οι μετοχές">
@@ -394,6 +428,14 @@ button.acct:hover { border-color: var(--accent); }
     <p class="foot" id="histnote"></p>
     <p class="foot">Η λίστα περιλαμβάνει και μετοχές με μηδενική κίνηση, χαμηλής εμπορευσιμότητας ή σε αναστολή. Η κεφαλαιοποίηση υπάρχει για τις εταιρείες της λίστας του euro2day και λείπει (—) από τις υπόλοιπες. Ο όγκος είναι τα τεμάχια που άλλαξαν χέρια σήμερα. Έλεγξε τιμές στις πηγές πριν στηριχτείς σε αυτές.</p>
   </section>
+  </div>
+
+  <div class="view" id="view-heat" role="tabpanel" aria-labelledby="tab-heat" hidden>
+    <div class="phead"><div><h2>Χάρτης αγοράς</h2><div class="storage">Το μέγεθος κάθε κουτιού είναι η κεφαλαιοποίηση και το χρώμα η μεταβολή. Πάτα σε μια μετοχή για λεπτομέρειες.</div></div>
+      <div class="seg2" id="heatPer" role="group" aria-label="Διάστημα"><button type="button" data-v="d" aria-pressed="true">Ημέρα</button><button type="button" data-v="w" aria-pressed="false">7 ημέρες</button></div></div>
+    <div class="heat" id="heat"></div>
+    <div class="heatleg" aria-hidden="true"><span>−4%</span><i style="background:#b8333a"></i><i style="background:#8e3a3f"></i><i style="background:#5e3a3f"></i><i style="background:#4a5060"></i><i style="background:#2f5e47"></i><i style="background:#2b8257"></i><i style="background:#21a36a"></i><span>+4%</span></div>
+    <p class="foot">Εμφανίζονται οι εταιρείες με γνωστή κεφαλαιοποίηση, ομαδοποιημένες ανά κλάδο.</p>
   </div>
 
   <div class="view" id="view-favs" role="tabpanel" aria-labelledby="tab-favs" hidden>
@@ -1001,6 +1043,36 @@ var EN_EXACT = {
   "Διάλεξε «Προσθήκη στην οθόνη Αφετηρίας» και πάτα «Προσθήκη».": "Choose “Add to Home Screen” and tap “Add”.",
   "Εντάξει": "OK",
   "Γραμμή": "Line",
+  "Χάρτης": "Heatmap",
+  "Ημερολόγιο μερισμάτων": "Dividend calendar",
+  "Επόμενες αποκοπές": "Upcoming ex-dividend dates",
+  "Πρόσφατες αποκοπές": "Recent ex-dividend dates",
+  "Δεν έχουν ανακοινωθεί προσεχείς αποκοπές.": "No upcoming ex-dividend dates announced.",
+  "Καμία αποκοπή τις τελευταίες 45 ημέρες.": "No ex-dividend dates in the last 45 days.",
+  "Ημερομηνία αποκοπής: από αυτή τη μέρα η μετοχή διαπραγματεύεται χωρίς το μέρισμα. Πηγή: Yahoo Finance.": "Ex-dividend date: from this day the stock trades without the dividend. Source: Yahoo Finance.",
+  "Θεμελιώδη": "Fundamentals",
+  "Μερίσματα": "Dividends",
+  "Ειδήσεις": "News",
+  "Εύρος 52 εβδομάδων": "52-week range",
+  "P/E (12 μήνες)": "P/E (TTM)",
+  "P/E εκτίμησης": "Forward P/E",
+  "Τιμή / λογιστική αξία": "Price / book",
+  "Κέρδη ανά μετοχή": "EPS (TTM)",
+  "Απόδοση 1 έτους": "1-year return",
+  "Αριθμός μετοχών": "Shares outstanding",
+  "Ελεύθερη διασπορά": "Free float",
+  "Επόμενα αποτελέσματα": "Next earnings",
+  "Απόδοση μερίσματος": "Dividend yield",
+  "Μέρισμα 12 μηνών": "Dividends (12 months)",
+  "Επόμενη αποκοπή": "Next ex-dividend",
+  "Τελευταία αποκοπή": "Last ex-dividend",
+  "Πληρωμή": "Payment",
+  "Ποσοστό διανομής κερδών": "Payout ratio",
+  "Χάρτης αγοράς": "Market heatmap",
+  "Το μέγεθος κάθε κουτιού είναι η κεφαλαιοποίηση και το χρώμα η μεταβολή. Πάτα σε μια μετοχή για λεπτομέρειες.": "Each tile is sized by market cap and coloured by price change. Tap a stock for details.",
+  "Ημέρα": "Day",
+  "7 ημέρες": "7 days",
+  "Εμφανίζονται οι εταιρείες με γνωστή κεφαλαιοποίηση, ομαδοποιημένες ανά κλάδο.": "Showing companies with known market cap, grouped by sector.",
   "Ρυθμίσεις": "Settings",
   "Γλώσσα": "Language",
   "Νόμισμα": "Currency",
@@ -1027,6 +1099,10 @@ var EN_EXACT = {
 };
 var EN_RX = [
   [/^Ενημέρωση: (.+)$/, "Updated: $1"],
+  [/^(.+)% από το χαμηλό$/, "$1% above the low"],
+  [/^Απόδοση (.+%)$/, "Yield $1"],
+  [/^(.+) ανά μετοχή$/, "$1 per share"],
+  [/^Θεμελιώδη και μερίσματα από Yahoo Finance, ειδήσεις από capital\.gr(?: \(ενημέρωση (.+)\))?\.$/, function (m, a) { return "Fundamentals and dividends from Yahoo Finance, news from capital.gr" + (a ? " (updated " + a + ")" : "") + "."; }],
   [/^Οι τιμές σε \$ και CHF υπολογίζονται με την ισοτιμία της τελευταίας ενημέρωσης \((.+)\)\.$/, "Prices in $ and CHF use the exchange rate of the last update ($1)."],
   [/^Εμφάνιση περισσότερων \((\d+) ακόμα\)$/, "Show more ($1 more)"],
   [/^Το ιστορικό τιμών καταγράφεται από (\S+) \((\d+) ημέρ(?:α|ες)\)\. Η στήλη «7 ημέρες» γεμίζει μόλις συμπληρωθεί μία εβδομάδα\.$/, "Price history is recorded since $1 ($2 day(s)). The “7d” column fills once a week has passed."],
@@ -1304,6 +1380,68 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   document.getElementById("losers").innerHTML = bigMovers.slice(-5).reverse().map(function (s) { return mrow(s); }).join("");
   document.getElementById("biggest").innerHTML = byCap.slice(0, 5).map(function (s) { return mrow(s, "cap"); }).join("");
 
+  /* συμπληρωματικά στοιχεία: θεμελιώδη, μερίσματα, ειδήσεις (extras.json) */
+  var EXD = window.__EXTRA || null, EX = (EXD && EXD.stocks) || {};
+  var TODAY = (function () { var d = new Date(); return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); })();
+  function daysAgo(n) { var d = new Date(Date.now() - n * 864e5); return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
+  function div12(e) { var c = daysAgo(365), t = 0; (e.divs || []).forEach(function (d) { if (d[0] >= c) t += d[1]; }); return t; }
+  function pct(v, d) { return nf2.format(v) + "%"; }
+  (function () {
+    var bySym = {}; rows.forEach(function (s) { bySym[s.sym] = s; });
+    var next = [], recent = [], cut = daysAgo(45);
+    Object.keys(EX).forEach(function (k) {
+      var e = EX[k], s = bySym[k]; if (!s) return;
+      if (e.exd && e.exd >= TODAY) next.push({ s: s, d: e.exd, e: e });
+      (e.divs || []).forEach(function (d) { if (d[0] >= cut && d[0] < TODAY) recent.push({ s: s, d: d[0], a: d[1], e: e }); });
+    });
+    if (!next.length && !recent.length) return;
+    next.sort(function (a, b) { return a.d < b.d ? -1 : a.d > b.d ? 1 : (b.s.mcap || 0) - (a.s.mcap || 0); });
+    recent.sort(function (a, b) { return a.d > b.d ? -1 : a.d < b.d ? 1 : 0; });
+    function drow(x, right) {
+      return '<button type="button" class="mrow" data-s="' + esc(x.s.sym) + '">' + monoHtml(x.s.dsym) + '<div class="nm"><b>' + esc(x.s.dsym) + "</b><span>" + esc(x.s.name || "—") + '</span></div><div class="px num"><div class="price">' + fmtDate(x.d) + '</div><div style="font-size:12px;color:var(--muted)">' + right + "</div></div></button>";
+    }
+    document.getElementById("divnext").innerHTML = next.length ? next.slice(0, 8).map(function (x) { return drow(x, x.e.dy ? "Απόδοση " + pct(x.e.dy * 100) : ""); }).join("") : '<div class="empty2">Δεν έχουν ανακοινωθεί προσεχείς αποκοπές.</div>';
+    document.getElementById("divrecent").innerHTML = recent.length ? recent.slice(0, 8).map(function (x) { return drow(x, fmtC(x.a) + " ανά μετοχή"); }).join("") : '<div class="empty2">Καμία αποκοπή τις τελευταίες 45 ημέρες.</div>';
+    document.getElementById("divnote").textContent = "Ημερομηνία αποκοπής: από αυτή τη μέρα η μετοχή διαπραγματεύεται χωρίς το μέρισμα. Πηγή: Yahoo Finance.";
+    document.getElementById("divsec").hidden = false;
+  })();
+  function exHtml(s) {
+    var e = EX[s.sym]; if (!e) return "";
+    var h = "", k = "";
+    if (e.h52 && e.l52 && e.h52 > e.l52) {
+      var p = Math.max(0, Math.min(100, (s.price - e.l52) / (e.h52 - e.l52) * 100));
+      h += '<div class="rng"><div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Εύρος 52 εβδομάδων</span><b class="num">' + nf0.format(p) + '% από το χαμηλό</b></div><div class="bar"><i style="left:' + p + '%"></i></div><div class="ends num"><span>' + fmtC(e.l52) + "</span><span>" + fmtC(e.h52) + "</span></div></div>";
+    }
+    if (e.pe != null && e.pe > 0) k += kv("P/E (12 μήνες)", nf2.format(e.pe));
+    if (e.fpe != null && e.fpe > 0) k += kv("P/E εκτίμησης", nf2.format(e.fpe));
+    if (e.pb != null) k += kv("Τιμή / λογιστική αξία", nf2.format(e.pb));
+    if (e.eps != null) k += kv("Κέρδη ανά μετοχή", fmtC(e.eps));
+    if (e.ret1y != null) k += kv("Απόδοση 1 έτους", sgn(e.ret1y) + nf2.format(Math.abs(e.ret1y)) + "%");
+    if (e.beta != null) k += kv("Beta", nf2.format(e.beta));
+    if (e.sh) k += kv("Αριθμός μετοχών", compactN(e.sh));
+    if (e.fl && e.sh) k += kv("Ελεύθερη διασπορά", nf0.format(Math.min(100, e.fl / e.sh * 100)) + "%");
+    if (e.earn) k += kv("Επόμενα αποτελέσματα", fmtDate(e.earn));
+    if (h || k) h = '<h3 class="dsub">Θεμελιώδη</h3>' + h + (k ? '<dl class="kv num">' + k + "</dl>" : "");
+    var d = "", t12 = div12(e);
+    if (e.dy) d += kv("Απόδοση μερίσματος", pct(e.dy * 100));
+    if (t12) d += kv("Μέρισμα 12 μηνών", fmtC(t12));
+    if (e.exd) d += kv(e.exd >= TODAY ? "Επόμενη αποκοπή" : "Τελευταία αποκοπή", fmtDate(e.exd));
+    if (e.payd) d += kv("Πληρωμή", fmtDate(e.payd));
+    if (e.pay) d += kv("Ποσοστό διανομής κερδών", pct(e.pay * 100));
+    if (d || (e.divs && e.divs.length)) {
+      h += '<h3 class="dsub">Μερίσματα</h3>' + (d ? '<dl class="kv num">' + d + "</dl>" : "");
+      if (e.divs && e.divs.length) h += '<div class="divhist num">' + e.divs.slice(0, 8).map(function (x) { return "<span>" + fmtDate(x[0]) + " · " + fmtC(x[1]) + "</span>"; }).join("") + "</div>";
+    }
+    if (e.news && e.news.length) {
+      h += '<h3 class="dsub">Ειδήσεις</h3><ul class="newsl">' + e.news.map(function (n) {
+        var dt = n.d ? fmtDate(n.d.slice(0, 10)) + (n.d.length > 10 ? " " + n.d.slice(11) : "") : "";
+        return '<li><a href="' + esc(n.u) + '" target="_blank" rel="noopener">' + esc(n.t) + "</a><span>capital.gr" + (dt ? " · " + dt : "") + "</span></li>";
+      }).join("") + "</ul>";
+    }
+    if (h) h += '<p class="note" style="margin:0">Θεμελιώδη και μερίσματα από Yahoo Finance, ειδήσεις από capital.gr' + (EXD.updated ? " (ενημέρωση " + fmtDate(EXD.updated.slice(0, 10)) + " " + EXD.updated.slice(11, 16) + ")" : "") + ".</p>";
+    return h;
+  }
+
   /* table */
   var PAGE = 50;
   var state = { f: "all", q: "", sector: "", key: "mcap", dir: -1, shown: PAGE, active: HAS_VOL };
@@ -1425,7 +1563,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   favRowsEl.addEventListener("keydown", function (e) {
     if ((e.key === "Enter" || e.key === " ") && !e.target.closest("[data-star]")) { var tr = e.target.closest("tr"); if (tr) { e.preventDefault(); openStock(tr.getAttribute("data-s"), tr); } }
   });
-  ["gainers", "losers", "biggest"].forEach(function (id) {
+  ["gainers", "losers", "biggest", "divnext", "divrecent"].forEach(function (id) {
     document.getElementById(id).addEventListener("click", function (e) { var b = e.target.closest(".mrow"); if (b) openStock(b.getAttribute("data-s"), b); });
   });
   function toggleFav(sym) {
@@ -1552,6 +1690,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       (s.w7 != null ? kv("7 ημέρες", sgn(s.w7) + nf2.format(Math.abs(s.w7)) + "%") : "") +
       (s.mcap ? kv("Κεφαλαιοποίηση", money(s.mcap)) + kv("Μερίδιο αγοράς", nf2.format(s.mcap / totalCap * 100) + "%") + kv("Θέση ως προς την αξία", s.rank + " από " + withCap.length) : kv("Κεφαλαιοποίηση", "—")) + kv("Θέση ως προς τη μεταβολή", rc + " από " + N) + "</dl>" +
       (holdingLine(s.sym)) +
+      exHtml(s) +
       '<div style="display:flex;flex-wrap:wrap;gap:8px"><button type="button" class="btn primary" id="pfbtn">+ Στο χαρτοφυλάκιο</button>' +
       '<button type="button" class="favbtn" id="favbtn" aria-pressed="' + !!favs[s.sym] + '">' + (favs[s.sym] ? "★ Στα αγαπημένα" : "☆ Προσθήκη στα αγαπημένα") + "</button></div>" +
       '<p class="note">Τιμές με καθυστέρηση 15 λεπτών. Δεν αποτελεί επενδυτική πληροφόρηση.</p>';
@@ -2003,13 +2142,67 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
 
   /* views */
   function showView(v) {
-    ["market", "favs", "portfolio"].forEach(function (k) {
+    ["market", "heat", "favs", "portfolio"].forEach(function (k) {
       document.getElementById("view-" + k).hidden = k !== v;
       document.getElementById("tab-" + k).setAttribute("aria-selected", k === v);
     });
     if (v === "portfolio") renderPortfolio();
     if (v === "favs") renderFavs();
+    if (v === "heat") renderHeat();
   }
+
+  /* χάρτης αγοράς (treemap) */
+  var heatPer = "d";
+  function heatColor(c) {
+    if (c == null || isNaN(c)) return "#4a5060";
+    var t = Math.max(-1, Math.min(1, c / 4)), a = Math.abs(t);
+    if (Math.abs(c) < 0.05) return "#4a5060";
+    function mix(x, y) { return Math.round(x + (y - x) * a); }
+    return t > 0 ? "rgb(" + mix(58, 24) + "," + mix(92, 170) + "," + mix(80, 105) + ")" : "rgb(" + mix(100, 196) + "," + mix(70, 46) + "," + mix(78, 56) + ")";
+  }
+  function squarify(items, x, y, w, h) {
+    /* items: [{v}], ταξινομημένα φθίνοντα. Επιστρέφει items με x,y,w,h */
+    var out = [], total = 0; items.forEach(function (i) { total += i.v; });
+    if (!total) return out;
+    var scale = w * h / total, rest = items.map(function (i) { return { it: i, a: i.v * scale }; });
+    function worst(row, side) { var s = 0, mx = 0, mn = Infinity; row.forEach(function (r) { s += r.a; mx = Math.max(mx, r.a); mn = Math.min(mn, r.a); }); return Math.max(side * side * mx / (s * s), s * s / (side * side * mn)); }
+    while (rest.length) {
+      var side = Math.min(w, h), row = [rest[0]], k = 1;
+      while (k < rest.length && worst(row.concat([rest[k]]), side) <= worst(row, side)) { row.push(rest[k]); k++; }
+      rest = rest.slice(k);
+      var s = 0; row.forEach(function (r) { s += r.a; });
+      if (w >= h) { var cw = s / h, yy = y; row.forEach(function (r) { var rh = r.a / cw; out.push({ it: r.it, x: x, y: yy, w: cw, h: rh }); yy += rh; }); x += cw; w -= cw; }
+      else { var rh2 = s / w, xx = x; row.forEach(function (r) { var rw = r.a / rh2; out.push({ it: r.it, x: xx, y: y, w: rw, h: rh2 }); xx += rw; }); y += rh2; h -= rh2; }
+    }
+    return out;
+  }
+  function renderHeat() {
+    var box = document.getElementById("heat"); if (!box || document.getElementById("view-heat").hidden) return;
+    var W = box.clientWidth || 800, H = Math.round(W < 640 ? W * 1.7 : Math.min(W * 0.62, 760));
+    box.style.height = H + "px";
+    var groups = {};
+    rows.forEach(function (s) { if (!s.mcap) return; (groups[s.sector] = groups[s.sector] || []).push(s); });
+    var gl = Object.keys(groups).map(function (k) { var v = 0; groups[k].forEach(function (s) { v += s.mcap; }); return { k: k, v: v, list: groups[k].sort(function (a, b) { return b.mcap - a.mcap; }) }; }).sort(function (a, b) { return b.v - a.v; });
+    var html = "";
+    squarify(gl, 0, 0, W, H).forEach(function (g) {
+      var head = g.w > 70 && g.h > 50 ? 18 : 0;
+      html += '<div class="hs" style="left:' + g.x + "px;top:" + g.y + "px;width:" + g.w + "px;height:" + g.h + 'px">' + (head ? "<b>" + esc(g.it.k) + "</b>" : "");
+      squarify(g.it.list.map(function (s) { return { v: s.mcap, s: s }; }), 0, head, g.w, g.h - head).forEach(function (t) {
+        var s = t.it.s, c = heatPer === "w" ? s.w7 : s.chg, m = Math.min(t.w, t.h), fs = Math.max(8, Math.min(22, Math.sqrt(t.w * t.h) / 5, (t.w - 6) / (s.dsym.length * 0.68)));
+        var lab = t.w > 34 && t.h > 22 ? '<span class="s" style="font-size:' + fs + 'px">' + esc(s.dsym) + "</span>" + (t.h > 36 && t.w > 40 ? '<span class="c" style="font-size:' + Math.max(9, fs * 0.7) + 'px">' + (c == null ? "—" : (c > 0 ? "+" : c < 0 ? "−" : "") + nf2.format(Math.abs(c)) + "%") + "</span>" : "") : "";
+        html += '<button type="button" class="ht" data-s="' + esc(s.sym) + '" style="left:' + t.x + "px;top:" + t.y + "px;width:" + t.w + "px;height:" + t.h + "px;background:" + heatColor(c) + '" title="' + esc(s.dsym + " · " + (s.name || "") + " · " + (c == null ? "—" : nf2.format(c) + "%")) + '" aria-label="' + esc(s.dsym + " " + (c == null ? "" : nf2.format(c) + "%")) + '">' + lab + "</button>";
+      });
+      html += "</div>";
+    });
+    box.innerHTML = html;
+  }
+  document.getElementById("heat").addEventListener("click", function (e) { var t = e.target.closest(".ht"); if (t) openStock(t.getAttribute("data-s"), t); });
+  document.getElementById("heatPer").addEventListener("click", function (e) {
+    var x = e.target.closest("button"); if (!x) return; heatPer = x.getAttribute("data-v");
+    Array.prototype.forEach.call(this.querySelectorAll("button"), function (y) { y.setAttribute("aria-pressed", y === x); });
+    renderHeat();
+  });
+  var heatRT = 0; window.addEventListener("resize", function () { clearTimeout(heatRT); heatRT = setTimeout(renderHeat, 150); });
   document.getElementById("favgo").addEventListener("click", function () { showView("market"); });
 
   /* ρυθμίσεις */
@@ -2043,6 +2236,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   renderPortfolio();
   if (location.hash === "#portfolio") showView("portfolio");
   if (location.hash === "#favorites") showView("favs");
+  if (location.hash === "#heatmap") showView("heat");
 
   /* εφαρμογή: εγκατάσταση και λειτουργία χωρίς internet (μόνο στο δημόσιο site) */
   (function () {
@@ -2114,9 +2308,10 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
       .catch(function (e) { if (required) throw e; return null; });
   }
-  Promise.all([getJSON(u("data.json"), true), getJSON(u("history.json")), getJSON(u("intraday.json"))])
+  Promise.all([getJSON(u("data.json"), true), getJSON(u("history.json")), getJSON(u("intraday.json")), getJSON(u("extras.json"))])
     .then(function (res) {
       clearTimeout(timer);
+      window.__EXTRA = res[3];
       var d = res[0];
       if (!d || !Array.isArray(d.stocks) || d.stocks.length < 50) throw new Error("bad data");
       go(d.stocks.map(function (s) {
