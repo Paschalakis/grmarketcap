@@ -1,43 +1,77 @@
-##### https://www.capital.gr/finance/quote/%ce%91%ce%9b%ce%a6%ce%91/ 200 168654
-LINKS: ['/Finance/IndexComponents', '/Finance/StocksPerformance', '/Finance/WatchList', '/Finance/packets', '/bloomberg-news', '/finance/IndexComponents', '/finance/allstocks', '/finance/announcements/%ce%91%ce%9b%ce%a6%ce%91/', '/finance/buysell/%ce%91%ce%9b%ce%a6%ce%91/', '/finance/chart/history/%ce%91%ce%9b%ce%a6%ce%91/', '/finance/chart/history/%ce%91%ce%9b%ce%a6%ce%91/?interval=1m', '/finance/chart/history/%ce%91%ce%9b%ce%a6%ce%91/?interval=1w', '/finance/chart/history/%ce%91%ce%9b%ce%a6%ce%91/?interval=1y', '/finance/chart/history/%ce%91%ce%9b%ce%a6%ce%91/?interval=5y', '/finance/chart/history/%ce%91%ce%9b%ce%a6%ce%91/?interval=6m', '/finance/comodities', '/finance/historycloses/%ce%91%ce%9b%ce%a6%ce%91/', '/finance/marketstats', '/finance/news/%ce%91%ce%9b%ce%a6%ce%91/', '/finance/paragoga', '/finance/profile/%ce%91%ce%9b%ce%a6%ce%91/', '/finance/quote/%ce%91%ce%9b%ce%a6%ce%91/', '/finance/quote/%ce%93%ce%94/', '/finance/sectors', '/finance/ticks/%ce%91%ce%9b%ce%a6%ce%91/', '/finance/worldmarkets', '/market-news', 'https://www.capital.gr/finance/quote/%ce%91%ce%9b%ce%a6%ce%91/', 'javascript: window.open(&quot;/finance/realtimeticker/?standAlone=true&amp;countPageView=True&quot;, &quot;RealtimeTicker&quot;, &quot;fullscreeen=0, height=680, location=0, menubar=0, resizable=0, scrollbars=0, status=0, toolbar=0, width=650&quot;); void(0)']
-APIS: ['/api/quotes/gdm/', '/api/quotes/headerstocks', '/api/quotes/intradaychartdata/', '/api/quotes/intradaychartdata/%ce%91%ce%9b%ce%a6%ce%91/', '/api/quotes/ΑΛΦΑ/full/?langCd=el', '/api/searchquote/']
-TEXT:  ALPHA ΤΡΑΠΕΖΑ Α.Ε. (ΑΛΦΑ): τιμές μετοχής | Capital ΕΙΔΗΣΕΙΣ Ροή Ειδήσεων Επικαιρότητα Φορολογικό Νομοσχέδιο Συνεντεύξεις Αγορά Ακινήτων Πρωτοσέλιδα Εφημερίδων Εταιρική Κοινωνική Ευθύνη Brand Voice ΠΟ
-.. Κεφαλαιοποίηση :: c: l})() + ' x ' + as.extend({numeric: { precision: 0}})(): '', flashBackground: a"> 4,1680 x 3.010 Κεφαλαιοποίηση 9.402.350.524 &euro; Υψηλό Εβδ. 4,5050 Υψηλό Μήνα 4,9400 Υψηλό 52 εβδ. 4,9400 Χαμηλό Εβδ. 4,0040 Χαμηλό Μήνα 4,0040 Χαμηλό 52 εβδ. 2,9500 Αρ. Μετοχών 2.256.383.615 Σύγκριση με σύμβολα: Intraday 1 Εβδ
-.. μετοχών :: Bank στη χρηματοδότηση... 19:04 15/10 Alpha Bank: Στις 19 Οκτωβρίου ξεκινά η διαπραγμάτευση 140.300 μετοχών από το stock options rights Μετά την πρόσφατη αύξηση του μετοχικού της κεφαλαίου. 12:20 14/10 Eurobank Equities: &quot;Ανεβάζει&quot; σημαντικά τις τιμές-στόχους των ελληνικών τραπεζών – Ο κίνδυνος α
-.. μετοχών :: ν προσδοκιών. Όλες οι ειδήσεις για την εταιρεία 10:10 26/10 Alpha Bank: Απόκτηση ή μεταβίβαση ιδίων μετοχών Ανακοίνωση 19:04 15/10 Alpha Bank: Ανακοίνωση Εισαγωγή προς διαπραγμάτευση νέων μετοχών προερχόμενων από αύξηση μετοχικού κεφαλαίου μετά από άσκηση δικαιωμάτων προαίρεσης επί μετοχών (stock options..
-.. 52 :: της Χρονιάς&#187; 2025 Η Νέα Ιατρική Real Estate DAX 25.343,13 +0,64% CAC 7.839,10 +0,72% Dow Jones 52.215,00 -1,24% Nikkei 62.189,65 -0,80% EUR / USD 1,12120 EUR / CHF 0,92607 ΓΕΝΙΚΟΣ ΔΕΙΚΤΗΣ: 11:54 2.549,10 +0,74 +18,64 &nbsp;Τζίρος: 55,19 εκ € Συνεχης ενημερωση Όλες οι Μετοχές Τιμές ανά Κλάδο Οι με
-.. 52 :: end({numeric: { precision: 0}})(): '', flashBackground: a"> 4,1680 x 3.010 Κεφαλαιοποίηση 9.402.350.524 &euro; Υψηλό Εβδ. 4,5050 Υψηλό Μήνα 4,9400 Υψηλό 52 εβδ. 4,9400 Χαμηλό Εβδ. 4,0040 Χαμηλό Μήνα 4,0040 Χαμηλό 52 εβδ. 2,9500 Αρ. Μετοχών 2.256.383.615 Σύγκριση με σύμβολα: Intraday 1 Εβδ. 1 Μην. 6 Μη
-.. Υψηλό ::  Ειδήσεις Προφίλ Εταιρείας Συζητήσεις 4,1670 € 0,0690 ( 1,68 %) Τελ. Ενημέρωση 11:40 Άνοιγμα 4,1600 Υψηλό 4,1800 Χαμηλό 4,1200 Όγκος 0? tv.extend({numeric: { precision: 0}})(): '', flashBackground: tv">807.748 Τζίρος 0? to.extend({numeric: { precision: 0 }})() + ' €': '', flashBackground: to"> 3.365.292 
-.. Υψηλό :: c: { precision: 0}})(): '', flashBackground: a"> 4,1680 x 3.010 Κεφαλαιοποίηση 9.402.350.524 &euro; Υψηλό Εβδ. 4,5050 Υψηλό Μήνα 4,9400 Υψηλό 52 εβδ. 4,9400 Χαμηλό Εβδ. 4,0040 Χαμηλό Μήνα 4,0040 Χαμηλό 52 εβδ. 2,9500 Αρ. Μετοχών 2.256.383.615 Σύγκριση με σύμβολα: Intraday 1 Εβδ. 1 Μην. 6 Μην. 1 Ετος 5 Ετ
-.. Χαμηλό :: φίλ Εταιρείας Συζητήσεις 4,1670 € 0,0690 ( 1,68 %) Τελ. Ενημέρωση 11:40 Άνοιγμα 4,1600 Υψηλό 4,1800 Χαμηλό 4,1200 Όγκος 0? tv.extend({numeric: { precision: 0}})(): '', flashBackground: tv">807.748 Τζίρος 0? to.extend({numeric: { precision: 0 }})() + ' €': '', flashBackground: to"> 3.365.292 € Πράξεις 0? t
-.. Χαμηλό ::  3.010 Κεφαλαιοποίηση 9.402.350.524 &euro; Υψηλό Εβδ. 4,5050 Υψηλό Μήνα 4,9400 Υψηλό 52 εβδ. 4,9400 Χαμηλό Εβδ. 4,0040 Χαμηλό Μήνα 4,0040 Χαμηλό 52 εβδ. 2,9500 Αρ. Μετοχών 2.256.383.615 Σύγκριση με σύμβολα: Intraday 1 Εβδ. 1 Μην. 6 Μην. 1 Ετος 5 Ετη Φόρτωση Γραφήματος Το γράφημα δεν είναι διαθέσιμο Δείτε 
+FULL 200 1038
+{"ResultData":[{"a":4.174,"as":8665,"b":4.171,"bs":5884,"v":400,"tv":1338201,"to":5576186.0,"t":1975,"cl":4.098,"o":4.16,"hp":4.18,"lp":4.12,"wh":4.505,"whd":"21/10/2026","wl":4.004,"wld":"23/10/2026","mh":4.94,"mhd":"30/09/2026","ml":4.004,"mld":"23/10/2026","yh":4.94,"yhd":"30/09/2026","yl":2.95,"yld":"23/03/2026","m":0.0,"f":0.0,"sid":0,"ns":null,"si":2256383615,"cp":9418145209.01,"PeBtAt":"4,13 / 3,22","PBv":"1,13","Strike":0,"InstType":0,"nu":"/Api/Quotes/news/ΑΛΦΑ","au":"/Api/Quotes/announcements/ΑΛΦΑ","bsu":"/Api/Quotes/buysell/ΑΛΦΑ","s":"ΑΛΦΑ","n":"ALPHA ΤΡΑΠΕΖΑ Α.Ε.","sn":null,"country":null,"region":null,"ps":"€","l":4.174,"c":0.076,"pc":1.85,"lu":"12:52","qt":1,"r":0,"d":"/finance/quote/%ce%91%ce%9b%ce%a6%ce%91/","rtu":"/finance/realtimeticker/%ce%91%ce%9b%ce%a6%ce%91/?countPageView=True&countryCode=el","cu":"https://www.capital.gr/services/stockGraph.ashx?leftOffset=2&gp=forumSideBar&height=165&width=290&symbol=ΑΛΦΑ","fid":34}],"Error":false,"ErrorMessage":null,"ModelStateErrors":null,"ServerIdentifier":"Web1"}
 
-E2D around ΑΛΦΑ: ΑΒΕ</a></td>
-                                                    <td><a href="/QuotesDetail.aspx?q=441">AVE (ΚΟ)</a></td>
-                                                </tr>
-                                            
-                                                <tr>
-                                                    <td><a href="/QuotesDetail.aspx?q=808">ΑΔΑΚ</a></td>
-                                                    <td><a href="/QuotesDetail.aspx?q=808">ALPHA ETF FTSE Athex Large Cap</a></td>
-                                                </tr>
-                                            
-                                                <tr>
-                                                    <td><a href="/QuotesDetail.aspx?q=860">ΑΔΜΗΕ</a></td>
-                                                    <td><a href="/QuotesDetail.aspx?q=860">ΑΔΜΗΕ ΣΥΜΜΕΤΟΧΩΝ (KO)</a></td>
-                                                </tr>
-                                            
-                                                <tr>
-                                                    <td><a href="/QuotesDetail.aspx?q=24">ΑΛΜΥ</a></td>
-                                                    <td><a href="/QuotesDetail.aspx?q=24">ΑΛΟΥΜΥΛ (ΚΟ)</a></td>
-                                                </tr>
-                                            
-                                                <tr>
-                                                    <td><a href="/QuotesDetail.aspx?q=30">ΑΛΦΑ</a></td>
-                                                    <td><a href="/QuotesDetail.aspx?q=30">ALPHA ΤΡΑΠΕΖΑ (ΚΟ)</a></td>
-                                                </tr>
-                                            
-                                                <tr>
-                                                    <td><a href="/QuotesDetail.aspx?q=31">ΑΝΔΡΟ</a></td>
-                                                    <td><a href="/QuotesDetail.aspx?q=31">ΑΝΔΡΟΜΕΔΑ (ΚΟ)</a></td>
-                                                </tr>
-                                           
+NEWS 200 146581
+86
+   /forex/3165226/isotimia-eur-usd |  EUR / USD 1,12163 
+   /forex/3165234/isotimia-eur-chf |  EUR / CHF 0,92638 
+   /epixeiriseis/4023811/alpha-bank-stis-19-oktobriou-xekina-i-diapragmateusi-140-300-metoxon-apo-to-stock-options-rights/ |  
+   /epixeiriseis/4023811/alpha-bank-stis-19-oktobriou-xekina-i-diapragmateusi-140-300-metoxon-apo-to-stock-options-rights/ | Alpha Bank: Στις 19 Οκτωβρίου ξεκινά η διαπραγμάτευση 140.300 μετοχών από το stock options rights
+   /agores/4023455/eurobank-equities-anebazei-simantika-tis-times-stoxous-ton-ellinikon-trapezon-o-kindunos-apo-ekloges-kai-gallia/ |  
+   /agores/4023455/eurobank-equities-anebazei-simantika-tis-times-stoxous-ton-ellinikon-trapezon-o-kindunos-apo-ekloges-kai-gallia/ | Eurobank Equities: &quot;Ανεβάζει&quot; σημαντικά τις τιμές-στόχους των ελληνικών τραπεζών – Ο κίνδυνος από εκλογές και 
+   /epixeiriseis/4023379/b-psaltis-i-anaxrimatodotisi-lusi-gia-to-gordio-desmo-ton-kokkinon-daneion/ |  
+   /epixeiriseis/4023379/b-psaltis-i-anaxrimatodotisi-lusi-gia-to-gordio-desmo-ton-kokkinon-daneion/ | Β. Ψάλτης: Η αναχρηματοδότηση λύση για το γόρδιο δεσμό των κόκκινων δανείων
+   /epixeiriseis/4023242/alpha-bank-nea-tautotita-gia-mia-trapeza-pou-exei-idi-allaxei/ |  
+   /epixeiriseis/4023242/alpha-bank-nea-tautotita-gia-mia-trapeza-pou-exei-idi-allaxei/ | Alpha Bank: Νέα ταυτότητα για μια Τράπεζα που έχει ήδη αλλάξει
+   /epixeiriseis/4022107/poso-ektetheimenes-einai-oi-ellinikes-trapezes-sto-galliko-xreos-ta-omologa-pou-exoun-sto-xartofulakio-tous/ |  
+   /epixeiriseis/4022107/poso-ektetheimenes-einai-oi-ellinikes-trapezes-sto-galliko-xreos-ta-omologa-pou-exoun-sto-xartofulakio-tous/ | Πόσο εκτεθειμένες είναι οι ελληνικές τράπεζες στο γαλλικό χρέος- Τα ομόλογα που έχουν στο χαρτοφυλάκιό τους
+   /epixeiriseis/4021729/alpha-bank-diethneis-agores-omologon-anatheorisi-prosdokion-gia-ta-epitokia-kai-prooptikes-gia-tin-eurozoni/ |  
+   /epixeiriseis/4021729/alpha-bank-diethneis-agores-omologon-anatheorisi-prosdokion-gia-ta-epitokia-kai-prooptikes-gia-tin-eurozoni/ | Alpha Bank: Διεθνείς αγορές ομολόγων, αναθεώρηση προσδοκιών για τα επιτόκια και προοπτικές για την Ευρωζώνη
+   /epixeiriseis/4020610/alpha-bank-apo-4-dekembriou-i-kataboli-katharou-promerismatos-0-05251-metoxi/ |  
+   /epixeiriseis/4020610/alpha-bank-apo-4-dekembriou-i-kataboli-katharou-promerismatos-0-05251-metoxi/ | Alpha Bank: Από 4 Δεκεμβρίου η καταβολή καθαρού προμερίσματος €0,05251/μετοχή
+   /epixeiriseis/4020214/moody-s-anabathmise-se-thetikes-tis-prooptikes-tis-alpha-bank-kai-tis-trapezas-peiraios/ |  
+   /epixeiriseis/4020214/moody-s-anabathmise-se-thetikes-tis-prooptikes-tis-alpha-bank-kai-tis-trapezas-peiraios/ | Moody’s: Αναβάθμισε σε θετικές τις προοπτικές της Alpha Bank και της Τράπεζας Πειραιώς
+   /market-news/4019965/alpha-bank-pliris-trapeziki-sxesi-ex-apostaseos-gia-katoikous-inomenou-basileiou-ipa-kai-israil/ |  
+   /market-news/4019965/alpha-bank-pliris-trapeziki-sxesi-ex-apostaseos-gia-katoikous-inomenou-basileiou-ipa-kai-israil/ | Alpha Bank: Πλήρης τραπεζική σχέση εξ αποστάσεως για κατοίκους Ηνωμένου Βασιλείου, ΗΠΑ και Ισραήλ
+   /epixeiriseis/4018660/alpha-bank-sta-5-10-euro-anebazei-tin-timi-stoxo-i-deutsche-bank/ |  
+   /epixeiriseis/4018660/alpha-bank-sta-5-10-euro-anebazei-tin-timi-stoxo-i-deutsche-bank/ | Alpha Bank: Στα 5,10 ευρώ ανεβάζει την τιμή-στόχο η Deutsche Bank
+   /epixeiriseis/4018638/alpha-bank-foit-it-is-apo-tin-proti-mera-sti-sxoli-mexri-tin-proti-ergasia/ |  
+   /epixeiriseis/4018638/alpha-bank-foit-it-is-apo-tin-proti-mera-sti-sxoli-mexri-tin-proti-ergasia/ | Alpha Bank &quot;ΦΟΙΤ it is&quot;: Από την πρώτη μέρα στη σχολή μέχρι την πρώτη εργασία
+   /epixeiriseis/4018205/alpha-bank-se-xenous-ependutes-to-79-tis-senior-preferred-ekdosis-ton-700-ekat/ |  
+CTX: '(' + pc.extend({numeric: { precision: 2, forceSign: true } })() + '%)', css: displayClass" class="loser">-0,10%</span>
+        </div>
+    </li>
+    <li class="bullet"></li>
+
+            <li data-bind="with: getQuote('NIK,TY02')">
+        <div data-bind="flashBackground: { dependOn: l, indentifier: s }">
+            <span data-bind="text: sn">Nikkei</span>
+            <span data-bind="text: l.extend({priceNumeric: { dependOn: l, precision: 2 }}), css: displayClass" class="loser">64.916,70</span>
+            <span data-bind="text: '(' + pc.extend({numeric: { precision: 2, forceSign: true } })() + '%)', css: displayClass" class="loser">-0,62%</span>
+        </div>
+    </li>
+    <li class="bullet"></li>
+
+                <li data-bind="with: getQuote('EUR/USD')">
+            <a href="/forex/3165226/isotimia-eur-usd" data-bind="flashBackground: { dependOn: l, indentifier: s }">
+                <span data-bind="text: sn">EUR / USD</span>
+                <span data-bind="text: b.extend({numeric: { precision: 5, forceSign: false } })">1,12163</span>
+            </a>
+        </li>
+        <li class="bullet"></li>
+
+                <li data-bind="with: getQuote('EUR/CHF')">
+            <a href="/forex/3165234/isotimia-eur-chf" data-bind="flashBackground: { dependOn: l, indentifier: s }">
+                <span data-bind="text: sn">EUR / CHF</span>
+                <span data-bind="text: b.extend({numeric: { precision: 5, forceSign: false } })">0,92638</span>
+            </a>
+        </li>
+        <li class="bullet"></li>
+
+
+    </ul>
+</div>
+
+
+        <div class="header__controls">
+            <div class="inner">
+                
+<form action="/sear
+
+PROFILE 200 90377
+
+E2D 200 108270
+.. P/E :: S Αριθμός εκτιμήσεων 1 16 15 EPS (Median) 0,36 0,42 0,49 EPS GROWTH (Median) 2,86 % 16,67 % 16,67 % P/E (Median) 11,88 10,19 8,73 D/Y (Μερισμ Απόδοση) 2,57 % 3,04 % 4,21 % Λήξη Χρήσης 31/12/2025 31/12/2026 31/12/2027 Τελευταία ενημέρωση: 25/10/2026 03:09 powered by ΧΡΗΜΑΤΙΣΤΗΡΙΑΚΕΣ ΑΝΑΚΟΙΝΩΣΕΙΣ ...περισσότερα ALPHA ΤΡΑΠΕΖΑ (ΚΟ): ΑΝΑΚΟΙΝΩΣΗ ΓΙΑ ΑΠΟΚΤΗΣ
+.. Απόδοση :: 0,36 0,42 0,49 EPS GROWTH (Median) 2,86 % 16,67 % 16,67 % P/E (Median) 11,88 10,19 8,73 D/Y (Μερισμ Απόδοση) 2,57 % 3,04 % 4,21 % Λήξη Χρήσης 31/12/2025 31/12/2026 31/12/2027 Τελευταία ενημέρωση: 25/10/2026 03:09 powered by ΧΡΗΜΑΤΙΣΤΗΡΙΑΚΕΣ ΑΝΑΚΟΙΝΩΣΕΙΣ ...περισσότερα ALPHA ΤΡΑΠΕΖΑ (ΚΟ): ΑΝΑΚΟΙΝΩΣΗ ΓΙΑ ΑΠΟΚΤΗΣΗ Ή ΜΕΤΑΒΙΒΑΣΗ ΙΔΙΩΝ ΜΕΤΟΧΩΝ (10:40 26/10/2026
+.. EPS ::  Κύπρο ΣΥΓΚΛΙΝΟΥΣΕΣ ΕΚΤΙΜΗΣΕΙΣ ΑΝΑΛΥΤΩΝ FACTSET Τιμές με εβδομαδιαία ενημέρωση Χρήση 2025 2026 2027 EPS Αριθμός εκτιμήσεων 1 16 15 EPS (Median) 0,36 0,42 0,49 EPS GROWTH (Median) 2,86 % 16,67 % 16,67 % P/E (Median) 11,88 10,19 8,73 D/Y (Μερισμ Απόδοση) 2,57 % 3,04 % 4,21 % Λήξη Χρήσης 31/12/2025 31/12/2026 31/12/2027 Τελευταία ενημέρωση: 25/10/2026 03
+.. EPS :: ΑΝΑΛΥΤΩΝ FACTSET Τιμές με εβδομαδιαία ενημέρωση Χρήση 2025 2026 2027 EPS Αριθμός εκτιμήσεων 1 16 15 EPS (Median) 0,36 0,42 0,49 EPS GROWTH (Median) 2,86 % 16,67 % 16,67 % P/E (Median) 11,88 10,19 8,73 D/Y (Μερισμ Απόδοση) 2,57 % 3,04 % 4,21 % Λήξη Χρήσης 31/12/2025 31/12/2026 31/12/2027 Τελευταία ενημέρωση: 25/10/2026 03:09 powered by ΧΡΗΜΑΤΙΣΤΗΡΙΑΚΕΣ
