@@ -14,7 +14,8 @@ import requests
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/124.0 Safari/537.36")
 OUT = "extras.json"
-ATH = timezone(timedelta(hours=2))
+from zoneinfo import ZoneInfo
+ATH = ZoneInfo("Europe/Athens")
 
 def load(p, d):
     try:
