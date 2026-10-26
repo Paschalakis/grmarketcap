@@ -21,3 +21,4 @@ links("https://www.euro2day.gr/", r"Ase|merism|dividend|stock|quote")
 links("https://www.naftemporiki.gr/finance/", r"symbol|merism|dividend")
 show("https://www.naftemporiki.gr/symbols/OPAP.ATH/", find=[r"P/E", r"Μέρισμα", r"Απόδοση"])
 show("https://www.naftemporiki.gr/symbols/OPAP.ATH/news/", find=[r"<article", r"href=\"/[a-z]+/\d+"])
+# r2
