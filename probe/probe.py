@@ -5,20 +5,12 @@ def get(u):
     except Exception as e: return 0, str(e)
 def txt(t):
     t=re.sub(r"<script.*?</script>|<style.*?</style>","",t,flags=re.S); return re.sub(r"\s+"," ",re.sub(r"<[^>]+>"," ",t))
-def scan(u, keys, linkpat, n=200):
-    c,t=get(u); print("\n#####",u,c,len(t))
-    if c!=200: return t
-    hs=sorted(set(re.findall(r'href="([^"]+)"',t))); print("LINKS:",[h for h in hs if re.search(linkpat,h,re.I)][:40])
-    print("APIS:", sorted(set(re.findall(r'["\']((?:https?://[^"\']*)?/api/[^"\']+)',t)))[:30])
-    T=txt(t)
-    for k in keys:
-        for m in list(re.finditer(re.escape(k),T))[:2]: print("..",k,"::",T[max(0,m.start()-100):m.end()+n])
-    return t
-K=["P/E","Μέρισμα","Απόδοση","Κεφαλαιοποίηση","Αριθμός μετοχών","Μετοχές","EPS","Κέρδη ανά","52","Ελεύθερη","Free","Αποκοπή","Ειδήσεις"]
-scan("https://www.capital.gr/finance/quote/%ce%9f%ce%a0%ce%91%ce%a0/",K,r"quote/|merism|dividend|news|/api")
-t=scan("https://www.euro2day.gr/AseSearchQuotesAllCodes.aspx",[],r"\.aspx\?|Ase.*s=|quote|stock")
-m=re.findall(r'href="([^"]*(?:OPAP|%CE%9F%CE%A0%CE%91%CE%A0|ΟΠΑΠ)[^"]*)"',t,re.I); print("OPAP links",m[:10])
-c,t=get("https://www.naftemporiki.gr/symbols/ALPHA.ATH/news/2131515")
-print("NAFT symbol links", sorted(set(re.findall(r'href="(/symbols/[^"]+|/finance/[^"]*symbol[^"]*|/[a-z/]*ALPHA[^"]*)"',t)))[:30])
-for u in ["https://www.naftemporiki.gr/symbols/ALPHA.ATH/","https://www.naftemporiki.gr/symbols/ALPHA.ATH/news","https://www.naftemporiki.gr/finance/symbols/ALPHA.ATH/","https://www.naftemporiki.gr/finance/stock/ALPHA.ATH"]:
-    c,t=get(u); print(u,c,len(t))
+u="https://www.capital.gr/finance/quote/%ce%91%ce%9b%ce%a6%ce%91/"
+c,t=get(u); print("#####",u,c,len(t))
+hs=sorted(set(re.findall(r'href="([^"]+)"',t))); print("LINKS:",[h for h in hs if re.search(r"quote|merism|dividend|news|finance",h,re.I)][:60])
+print("APIS:", sorted(set(re.findall(r'["\']((?:https?:)?[^"\']*/api/[^"\']+)',t)))[:30])
+T=txt(t); print("TEXT:", T[:200])
+for k in ["P/E","Μέρισμα","Απόδοση","Κεφαλαιοποίηση","μετοχών","EPS","Κέρδη","52","Ελεύθερη","Αποκοπή","Beta","Υψηλό","Χαμηλό"]:
+    for m in list(re.finditer(re.escape(k),T))[:2]: print("..",k,"::",T[max(0,m.start()-100):m.end()+200])
+c,t=get("https://www.euro2day.gr/AseSearchQuotesAllCodes.aspx")
+i=t.find("ΑΛΦΑ"); print("\nE2D around ΑΛΦΑ:", t[max(0,i-1500):i+600])
