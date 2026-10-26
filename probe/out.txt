@@ -1,30 +1,12 @@
-QUOTE 404 29435
-LINKS:
-   /agores
-   /bloomberg-news
-   /diethni/epixeiriseis
-   /epixeiriseis
-   /market-news
+
+##### https://www.capital.gr/finance/quote/%ce%9f%ce%a0%ce%91%ce%a0/ 404 29435
+
+##### https://www.euro2day.gr/AseSearchQuotesAllCodes.aspx 200 148120
+LINKS: ['/AseQuotesCapitalization.aspx', '/AseSearchQuotes.aspx', '/DerivativesFutures.aspx?t=1', '/DerivativesFutures.aspx?t=2', '/DerivativesOptions.aspx?t=1', '/DerivativesOptions.aspx?t=2', '/IndicesDetail.aspx?i=2', '/IndicesDetail.aspx?i=252', '/IndicesDetail.aspx?i=254', '/IndicesDetail.aspx?i=255', '/IndicesDetail.aspx?i=256', '/IndicesDetail.aspx?i=257', '/IndicesDetail.aspx?i=258', '/IndicesDetail.aspx?i=259', '/IndicesDetail.aspx?i=26', '/IndicesDetail.aspx?i=260', '/IndicesDetail.aspx?i=261', '/IndicesDetail.aspx?i=262', '/IndicesDetail.aspx?i=43', '/IndicesDetail.aspx?i=47', '/IndicesDetail.aspx?i=48', '/IndicesDetail.aspx?i=49', '/IndicesDetail.aspx?i=59', '/IndicesDetail.aspx?i=60', '/IndicesDetail.aspx?i=61', '/IndicesDetail.aspx?i=62', '/IndicesInteractiveCharts.aspx?i=-2', '/QuotesDetail.aspx?q=1', '/QuotesDetail.aspx?q=100', '/QuotesDetail.aspx?q=108', '/QuotesDetail.aspx?q=113', '/QuotesDetail.aspx?q=118', '/QuotesDetail.aspx?q=121', '/QuotesDetail.aspx?q=124', '/QuotesDetail.aspx?q=134', '/QuotesDetail.aspx?q=141', '/QuotesDetail.aspx?q=144', '/QuotesDetail.aspx?q=152', '/QuotesDetail.aspx?q=153', '/QuotesDetail.aspx?q=158']
 APIS: []
-
-### https://www.capital.gr/finance/dividends 404 29435
-
-### https://www.capital.gr/finance/merismata 404 29435
-
-### https://www.capital.gr/finance/quote/%CE%9F%CE%A0%CE%91%CE%A0/news 404 29435
-
-### https://www.capital.gr/finance/quotenews/%CE%9F%CE%A0%CE%91%CE%A0 404 29435
-
-### https://www.euro2day.gr/AseDividends.aspx 404 72672
-
-### https://www.euro2day.gr/AseSearchQuotes.aspx 200 109664
- Εύρεση Μετοχής Τελ. ενημ.:26/10/2026 12:56 Είσοδος/Εγγραφή Μελών ΠΡΟΦΙΛ Ελληνικά &bull; English Σύμβολο Εικόνα Μετοχής Γραφήματα Χρηματ/κες Ανακ. Λογιστ. Καταστ. Όλες οι Πράξεις Σύμβολο Εικόνα Μετοχής Γραφήματα Χρηματ/κες Ανακ. Λογιστ. Καταστ. Όλες οι Πράξεις #ΜΕΣΗ ΑΝΑΤΟΛΗ #ΤΙΜΕΣ-ΣΤΟΧΟΙ ΜΕΤΟΧΩΝ #ΕΞΑΓΟΡΕΣ-ΣΥΓΧΩΝΕΥΣΕΙΣ #ΟΥΚΡΑΝΙΑ #ΜΕΤΑΚΙΝΗΣΗ ΣΤΕΛΕΧΩΝ #ΔΑΣΜΟΙ #ΥΠΟΚΛΟΠΕΣ #ΠΛΗΘΩΡΙΣΜΟΣ-ΑΚΡΙΒΕΙΑ Είσοδος Μελών Προφίλ Αποσύνδεση Αρχική Σελίδα ΣΟΦΟΚΛΕΟΥΣ Real Time ΧΑ Real Time ΧΠΑ Real Time Ομόλογα Σχόλιο Αγοράς Εύρεση Συμβόλου Στατιστικά Πακέτα Πράξεις Κεφαλαιοποιήσεις Ανακοινώσεις ΧΠΑ Σχόλιο Αγοράς Real Time ΧΠΑ Futures Δεικτών Options Δεικτών Futures Μετοχών Options Μετοχών ΕΙΔΗΣΕΙΣ Newswire Οικονομία Αγορά Κόσμος Επίκαιρα Επιχειρήσεις Πολιτική Κύπρος ΑΓΟΡΕΣ Σε 1 Λεπτό ΗΠΑ Ευρώπη Ασία Χρήμα Εμπορ
-['/AseQuotesCapitalization.aspx', '/AseSearchQuotes.aspx', '/AseSearchQuotesAllCodes.aspx', 'https://www.euro2day.gr/AseSearchQuotes.aspx']
-
-### https://www.naftemporiki.gr/finance/markets/merismata/ 404 171554
-
-### https://www.naftemporiki.gr/symbols/OPAP.ATH 404 171534
-
-### https://www.naftemporiki.gr/symbols/OPAP.ATH/news/2131515 200 194651
- ΑΛΦΑ - ΑΝΑΚΟΙΝΩΣΗ ΓΙΑ ΑΠΟΚΤΗΣΗ Ή ΜΕΤΑΒΙΒΑΣΗ ΙΔΙΩΝ ΜΕΤΟΧΩΝ | Η ΝΑΥΤΕΜΠΟΡΙΚΗ Skip to main content Αγορές Χρηματιστήριο Ταμπλό ΧΑ Real Time Παράγωγα Αμοιβαία κεφάλαια Ομόλογα Κύπρος Ξένοι Δείκτες Ισοτιμιίες Μέταλλα Excel Utilities Metastock Τεχνική Ανάλυση Expand top bar N Realtime ΓΔ 19,61 0,78% 2.550,07 Τζίρος 81,10 εκ Τελ. Ενημ. 13:05 Με μία ματιά REAL TIME ΤΑΜΠΛΟ SPX 7623.68 -0.5187% DAX 25398.03 0.8593% SXXP 635.77 -0.3089% Όλοι οι Ξένοι Δείκτες EUR/USD 1.11991 EUR/CHF 0.92473 USD/ZAR 16.6434 Όλες οι Ισοτιμίες BTC/USD 80248.1 Χρυσός 4015.44 Real Time ACAG 9,7100 0,00% ADPS 2,8400 1,07% AEM 6,4500 0,78% AKTR 9,9600 0,10% ALWN 11,1850 -3,78% BOCHGR 10,2400 1,39% BYLOT 1,1070 -0,98% CENER 21,4200 1,23% CMFC 7,5600 0,40% CNLCAP 7,7000 0,00% CREDIA 0,9300 1,09% DIMAND 13,9500 -0,71% EIS 1,73
-['/symbols/ALPHA.ATH/news/2124321', '/symbols/ALPHA.ATH/news/2125165', '/symbols/ALPHA.ATH/news/2127283', '/symbols/ALPHA.ATH/news/2127909', '/symbols/ALPHA.ATH/news/2128659', '/symbols/ALPHA.ATH/news/2128910', '/symbols/ALPHA.ATH/news/2129969', '/symbols/ALPHA.ATH/news/2131515']
+OPAP links []
+NAFT symbol links ['/symbols/ALPHA.ATH/news/2124321', '/symbols/ALPHA.ATH/news/2125165', '/symbols/ALPHA.ATH/news/2127283', '/symbols/ALPHA.ATH/news/2127909', '/symbols/ALPHA.ATH/news/2128659', '/symbols/ALPHA.ATH/news/2128910', '/symbols/ALPHA.ATH/news/2129969', '/symbols/ALPHA.ATH/news/2131515']
+https://www.naftemporiki.gr/symbols/ALPHA.ATH/ 404 171537
+https://www.naftemporiki.gr/symbols/ALPHA.ATH/news 404 171547
+https://www.naftemporiki.gr/finance/symbols/ALPHA.ATH/ 404 171554
+https://www.naftemporiki.gr/finance/stock/ALPHA.ATH 404 171549
