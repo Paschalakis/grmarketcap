@@ -1,0 +1,39 @@
+name: Πλήρες ιστορικό τιμών
+
+# Μία φορά τον μήνα (και χειροκίνητα). Τις ενδιάμεσες μέρες τις καλύπτει το history.json.
+on:
+  schedule:
+    - cron: "15 4 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-longhist
+  cancel-in-progress: false
+
+jobs:
+  hist:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - name: Λήψη ιστορικού
+        run: python scripts/fetch_longhist.py
+      - name: Αποθήκευση
+        run: |
+          git config user.name "price-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add hist
+          if git diff --cached --quiet; then echo "Καμία αλλαγή."; exit 0; fi
+          git commit -qm "Πλήρες ιστορικό τιμών $(date -u +'%Y-%m-%d')"
+          for i in 1 2 3 4 5; do
+            git pull -q --rebase origin main && git push -q && exit 0
+            sleep 15
+          done
+          exit 1
