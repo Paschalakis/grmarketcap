@@ -1044,6 +1044,11 @@ var EN_EXACT = {
   "Εντάξει": "OK",
   "Γραμμή": "Line",
   "Χάρτης": "Heatmap",
+  "1Χ": "1Y",
+  "5Χ": "5Y",
+  "1 χρόνος": "1 year",
+  "5 χρόνια": "5 years",
+  "Φόρτωση ιστορικού…": "Loading history…",
   "Ημερολόγιο μερισμάτων": "Dividend calendar",
   "Επόμενες αποκοπές": "Upcoming ex-dividend dates",
   "Πρόσφατες αποκοπές": "Recent ex-dividend dates",
@@ -1582,16 +1587,48 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   var TV_ON = !window.claude && !!FIREBASE_CONFIG;
   var ICON_LINE = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/></svg>';
   var ICON_CANDLE = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 3v4M7 17v4M17 3v6M17 17v4"/><rect x="5" y="7" width="4" height="10" rx="1"/><rect x="15" y="9" width="4" height="8" rx="1"/></svg>';
+  /* πλήρες ιστορικό ανά μετοχή (hist/ΚΩΔΙΚΟΣ.json), φορτώνεται όταν χρειαστεί */
+  var LONG = {};
+  function longCode(sym) { return SYM_EN[sym] || (/^[A-Z0-9]+$/.test(sym) ? sym : null); }
+  function canLong() { return !!(DATA_URL && DATA_URL.indexOf("__") !== 0 && typeof fetch === "function" && location.protocol !== "file:"); }
+  function loadLong(s) {
+    var sym = s.sym, c = longCode(sym);
+    if (LONG[sym] !== undefined) return;
+    if (!c || !canLong()) { LONG[sym] = null; return; }
+    LONG[sym] = "loading";
+    fetch(DATA_URL.replace(/data\.json(\?.*)?$/, "hist/" + encodeURIComponent(c) + ".json"), { cache: "no-cache" })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (j) {
+        var d = new Date(j.d0 + "T12:00:00Z").getTime(), out = [{ x: j.d0, y: j.c[0] }];
+        for (var i = 0; i < j.dd.length; i++) { d += j.dd[i] * 864e5; out.push({ x: new Date(d).toISOString().slice(0, 10), y: j.c[i + 1] }); }
+        LONG[sym] = out;
+      })
+      .catch(function () { LONG[sym] = null; })
+      .then(function () { if (!drawer.hidden && cur && cur.sym === sym && chartKind === "line" && chartRange !== "today") paint(); });
+  }
+  function fullSeries(s) {
+    var mine = dailySeries(s), lg = LONG[s.sym];
+    if (!lg || typeof lg === "string" || !lg.length) return mine;
+    var lastLong = lg[lg.length - 1].x, out = lg.slice();
+    mine.forEach(function (p) { if (p.x > lastLong) out.push(p); });
+    if (out.length && out[out.length - 1].x <= lastLong && HDAYS.length && HDAYS[HDAYS.length - 1] > lastLong) out.push({ x: HDAYS[HDAYS.length - 1], y: s.price });
+    return out;
+  }
   function rangeSeries(s) {
     var pts;
     if (chartRange === "today") pts = todaySeries(s);
     else {
-      pts = dailySeries(s);
+      pts = fullSeries(s);
       if (chartRange !== "all" && pts.length) {
-        var days = chartRange === "1w" ? 7 : 31;
+        var days = { "1w": 7, "1m": 31, "1y": 366, "5y": 1827 }[chartRange] || 31;
         var last = new Date(pts[pts.length - 1].x + "T12:00:00Z").getTime();
         pts = pts.filter(function (p) { return last - new Date(p.x + "T12:00:00Z").getTime() <= days * 86400000; });
       }
+    }
+    if (pts.length > 700) {
+      var k = Math.ceil(pts.length / 600), ds = [];
+      for (var q = 0; q < pts.length - 1; q += k) ds.push(pts[q]);
+      ds.push(pts[pts.length - 1]); pts = ds;
     }
     if (chartMetric === "mcap" && s.mcap && s.price) {
       var shares = s.mcap / s.price;
@@ -1600,7 +1637,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     return pts;
   }
   function fmtY(v) { return chartMetric === "mcap" ? money(v) : fmtC(v); }
-  function fmtAxis(v) { return chartMetric === "mcap" ? (v * RATE >= 1e9 ? nf2.format(v * RATE / 1e9) + " δισ." : nf2.format(v * RATE / 1e6) + " εκ.") : nf.format(v * RATE); }
+  function fmtAxis(v) { return chartMetric === "mcap" ? (v * RATE >= 1e9 ? nf2.format(v * RATE / 1e9) + " δισ." : nf2.format(v * RATE / 1e6) + " εκ.") : (Math.abs(v * RATE) >= 1 ? nf2 : nf).format(v * RATE); }
   var CH = { W: 560, H: 280, L: 6, R: 70, T: 12, B: 26 };
   function chartSvg(pts) {
     var W = CH.W, H = CH.H, L = CH.L, R = CH.R, T = CH.T, B = CH.B;
@@ -1615,7 +1652,8 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     for (var g = 0; g < 5; g++) { var v = lo + (hi - lo) * (g / 4), y = Y(v).toFixed(1); grid += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y + '" y2="' + y + '" stroke="var(--line)" stroke-width="1"/><text x="' + (W - R + 6) + '" y="' + (+y + 4) + '">' + fmtAxis(v) + "</text>"; }
     var lastY = Y(ys[ys.length - 1]);
     var tag = '<rect x="' + (W - R + 2) + '" y="' + (lastY - 9).toFixed(1) + '" width="' + (R - 4) + '" height="18" rx="3" fill="currentColor"/><text x="' + (W - R + 6) + '" y="' + (lastY + 4).toFixed(1) + '" style="fill:var(--surface);font-weight:600">' + fmtAxis(ys[ys.length - 1]) + "</text>";
-    var lab = function (i, a) { var x = pts[i].x; if (/^\d{4}-/.test(x)) x = x.slice(8, 10) + "/" + x.slice(5, 7); return '<text x="' + X(i).toFixed(1) + '" y="' + (H - 7) + '" text-anchor="' + a + '">' + esc(x) + "</text>"; };
+    var longSpan = /^\d{4}-/.test(pts[0].x) && (new Date(pts[pts.length - 1].x) - new Date(pts[0].x)) > 300 * 864e5;
+    var lab = function (i, a) { var x = pts[i].x; if (/^\d{4}-/.test(x)) x = longSpan ? x.slice(5, 7) + "/" + x.slice(0, 4) : x.slice(8, 10) + "/" + x.slice(5, 7); return '<text x="' + X(i).toFixed(1) + '" y="' + (H - 7) + '" text-anchor="' + a + '">' + esc(x) + "</text>"; };
     var xl = lab(0, "start") + (pts.length > 2 ? lab(Math.floor((pts.length - 1) / 2), "middle") : "") + lab(pts.length - 1, "end");
     return '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Γράφημα τιμής" style="color:' + (up ? "var(--up)" : "var(--down)") + '" data-lo="' + lo + '" data-hi="' + hi + '">' +
       '<defs><linearGradient id="dg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".25"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs>' +
@@ -1635,9 +1673,11 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var bar = '<div class="ctool">' +
       (chartKind === "line" ? seg("data-cmet", [["price", "Τιμή"], ["mcap", "Κεφαλαιοποίηση", "", !s.mcap]], chartMetric, "Μέγεθος") : "") +
       seg("data-ckind", [["line", ICON_LINE, "Γραμμή"]].concat(tv ? [["tv", ICON_CANDLE + "<span>TradingView</span>"]] : []), chartKind, "Τύπος γραφήματος") +
-      (chartKind === "line" ? seg("data-crange", [["today", "Σήμερα"], ["1w", "1Ε"], ["1m", "1Μ"], ["all", "Όλο"]], chartRange, "Διάστημα", " right") : "") +
+      (chartKind === "line" ? seg("data-crange", [["today", "Σήμερα"], ["1w", "1Ε"], ["1m", "1Μ"], ["1y", "1Χ", "1 χρόνος"], ["5y", "5Χ", "5 χρόνια"], ["all", "Όλο"]], chartRange, "Διάστημα", " right") : "") +
       "</div>";
     if (chartKind === "tv") return bar + '<div class="tvbox" id="tvbox"></div>';
+    if (chartRange !== "today") loadLong(s);
+    if (chartRange !== "today" && LONG[s.sym] === "loading") return bar + '<div class="chartempty">Φόρτωση ιστορικού…</div>';
     var pts = rangeSeries(s);
     if (pts.length < 2) return bar + '<div class="chartempty">' + (chartRange === "today" ? "Το γράφημα της ημέρας εμφανίζεται μετά από δύο ενημερώσεις τιμών." : "Δεν υπάρχουν ακόμα αρκετά στοιχεία για αυτό το διάστημα. Το ιστορικό συλλέγεται καθημερινά.") + "</div>";
     return bar + '<div class="readout num" id="readout"></div><div class="chartbox" id="chartbox">' + chartSvg(pts) + "</div>";
