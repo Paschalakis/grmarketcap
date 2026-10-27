@@ -37,7 +37,7 @@ for st in stocks:
     if not c: continue
     try:
         r = s.get("https://query1.finance.yahoo.com/v8/finance/chart/" + c + ".AT",
-                  params={"range": "max", "interval": "1d", "events": "split"}, timeout=30)
+                  params={"period1": 0, "period2": int(time.time()) + 86400, "interval": "1d", "events": "split"}, timeout=30)
         res = (r.json().get("chart", {}).get("result") or [None])[0]
         if not res or not res.get("timestamp"): continue
         ts = res["timestamp"]; cl = res["indicators"]["quote"][0].get("close") or []
