@@ -292,6 +292,49 @@ tbody tr:hover { background: var(--bg); }
 .divcal { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 @media (max-width: 760px) { .divcal { grid-template-columns: minmax(0, 1fr); } }
 .divcal .empty2 { padding: 14px 16px; color: var(--muted); border-top: 1px solid var(--line); }
+.viewbtn .vi { display: none; }
+.viewbtn .vl { display: inline; }
+.viewbtn .vi .cnt, .viewbtn .cnt { margin-left: 6px; }
+button.pill { border: 0; font: inherit; cursor: default; }
+.seg2.mvtabs { display: none; }
+@media (max-width: 900px) {
+  .seg2.mvtabs { display: flex; align-self: flex-start; }
+  .mvtabs button { flex: 1; }
+  .movers > .panel { display: none; }
+  .movers[data-mv="0"] > .panel:nth-child(1), .movers[data-mv="1"] > .panel:nth-child(2), .movers[data-mv="2"] > .panel:nth-child(3) { display: block; }
+  .movers > .panel > h2 { display: none; }
+}
+@media (max-width: 640px) {
+  /* κεφαλίδα σε μία γραμμή */
+  header.top { flex-wrap: nowrap; align-items: center; padding-top: 14px; gap: 8px; }
+  header.top .brand { flex-direction: column; align-items: flex-start; gap: 4px; min-width: 0; }
+  header.top h1 { font-size: 22px; }
+  .topright { flex: none; }
+  .toprow { flex-wrap: nowrap; gap: 6px; }
+  .toprow .langbtn { padding: 0 9px; height: 36px; }
+  #installbtn span { display: none; }
+  #asof { display: none; }
+  .acct { padding: 3px; border-radius: 999px; }
+  .acct .an, .acct .as, .acct > span:not(.ic) { display: none; }
+  .acct .ic, .acct img { width: 28px; height: 28px; }
+  /* η ειδοποίηση ανοίγει από το σήμα */
+  button.pill { cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+  button.pill::after { content: ""; width: 6px; height: 6px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg) translateY(-2px); }
+  button.pill[aria-expanded="true"]::after { transform: rotate(-135deg) translateY(-1px); }
+  .demo-band:not(.warn) { display: none; }
+  body.showband .demo-band { display: block; }
+  /* κάτω μπάρα πλοήγησης */
+  .views { position: fixed; left: 0; right: 0; bottom: 0; z-index: 15; gap: 0; border: 0; border-top: 1px solid var(--line); background: var(--surface); box-shadow: 0 -6px 24px rgba(0, 0, 0, .18); padding: 4px max(6px, env(safe-area-inset-left, 0px)) calc(4px + env(safe-area-inset-bottom, 0px)) max(6px, env(safe-area-inset-right, 0px)); }
+  .viewbtn { flex: 1; margin: 0; padding: 6px 2px 4px; border: 0; display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 11px; font-weight: 600; border-radius: 10px; min-width: 0; }
+  .viewbtn .vi { display: block; position: relative; height: 20px; }
+  .viewbtn .vl { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .viewbtn[aria-selected="true"] { color: var(--accent); border: 0; }
+  .viewbtn[aria-selected="true"] .vi::before { content: ""; position: absolute; inset: -4px -14px; border-radius: 999px; background: var(--accent-soft); z-index: -1; }
+  .viewbtn .vi { z-index: 0; }
+  .viewbtn .cnt { position: absolute; top: -6px; left: 14px; margin: 0; font-size: 10px; min-width: 16px; height: 16px; line-height: 16px; padding: 0 4px; }
+  .wrap { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+  .toast { bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+}
 .heat { position: relative; width: 100%; border-radius: 12px; overflow: hidden; background: var(--line); }
 .heat .hs { position: absolute; }
 .heat .hs > b { position: absolute; left: 0; right: 0; top: 0; height: 18px; padding: 2px 6px; font-size: 11px; font-weight: 600; color: var(--muted); background: var(--surface); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: .02em; }
@@ -355,7 +398,7 @@ button.acct:hover { border-color: var(--accent); }
   <header class="top">
     <div class="brand">
       <h1>GRmarketcap</h1>
-      <span class="pill" id="pill">Στιγμιότυπο</span>
+      <button type="button" class="pill" id="pill" aria-controls="banner" aria-expanded="false">Στιγμιότυπο</button>
     </div>
     <div class="topright">
       <div class="toprow">
@@ -369,16 +412,17 @@ button.acct:hover { border-color: var(--accent); }
   </header>
 
   <nav class="views" role="tablist" aria-label="Ενότητες">
-    <button type="button" class="viewbtn" role="tab" id="tab-market" data-view="market" aria-selected="true" aria-controls="view-market">Μετοχές</button>
-    <button type="button" class="viewbtn" role="tab" id="tab-heat" data-view="heat" aria-selected="false" aria-controls="view-heat">Χάρτης</button>
-    <button type="button" class="viewbtn" role="tab" id="tab-favs" data-view="favs" aria-selected="false" aria-controls="view-favs">Αγαπημένα<span class="cnt" id="favcnt" hidden></span></button>
-    <button type="button" class="viewbtn" role="tab" id="tab-portfolio" data-view="portfolio" aria-selected="false" aria-controls="view-portfolio">Χαρτοφυλάκιο</button>
+    <button type="button" class="viewbtn" role="tab" id="tab-market" data-view="market" aria-selected="true" aria-controls="view-market"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V10"/><path d="M10 19V5"/><path d="M16 19v-7"/><path d="M22 19H2"/></svg></span><span class="vl">Μετοχές</span></button>
+    <button type="button" class="viewbtn" role="tab" id="tab-heat" data-view="heat" aria-selected="false" aria-controls="view-heat"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="10" height="11" rx="1.5"/><rect x="15" y="3" width="6" height="6" rx="1.5"/><rect x="15" y="11" width="6" height="10" rx="1.5"/><rect x="3" y="16" width="10" height="5" rx="1.5"/></svg></span><span class="vl">Χάρτης</span></button>
+    <button type="button" class="viewbtn" role="tab" id="tab-favs" data-view="favs" aria-selected="false" aria-controls="view-favs"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg><span class="cnt" id="favcnt" hidden></span></span><span class="vl">Αγαπημένα</span></button>
+    <button type="button" class="viewbtn" role="tab" id="tab-portfolio" data-view="portfolio" aria-selected="false" aria-controls="view-portfolio"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></span><span class="vl">Χαρτοφυλάκιο</span></button>
   </nav>
 
   <div class="view" id="view-market" role="tabpanel" aria-labelledby="tab-market">
   <section class="stats" aria-label="Σύνοψη αγοράς" id="stats"></section>
 
-  <section class="movers" aria-label="Κορυφαίες κινήσεις">
+  <div class="seg2 mvtabs" id="mvtabs" role="group" aria-label="Κορυφαίες κινήσεις"><button type="button" data-mv="0" aria-pressed="true">Άνοδοι</button><button type="button" data-mv="1" aria-pressed="false">Πτώσεις</button><button type="button" data-mv="2" aria-pressed="false">Μεγαλύτερες</button></div>
+  <section class="movers" id="movers" data-mv="0" aria-label="Κορυφαίες κινήσεις">
     <div class="panel"><h2>Κορυφαίες άνοδοι (αξία από 50 εκ. €)</h2><div id="gainers"></div></div>
     <div class="panel"><h2>Κορυφαίες πτώσεις (αξία από 50 εκ. €)</h2><div id="losers"></div></div>
     <div class="panel"><h2>Μεγαλύτερες εταιρείες</h2><div id="biggest"></div></div>
@@ -1044,6 +1088,9 @@ var EN_EXACT = {
   "Εντάξει": "OK",
   "Γραμμή": "Line",
   "Χάρτης": "Heatmap",
+  "Άνοδοι": "Gainers",
+  "Πτώσεις": "Losers",
+  "Μεγαλύτερες": "Largest",
   "1Χ": "1Y",
   "5Χ": "5Y",
   "1 χρόνος": "1 year",
@@ -2181,7 +2228,21 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   function toast(msg) { toastEl.textContent = msg; toastEl.hidden = false; clearTimeout(toastT); toastT = setTimeout(function () { toastEl.hidden = true; }, 2600); }
 
   /* views */
+  (function () {
+    var pill = document.getElementById("pill");
+    pill.addEventListener("click", function () {
+      var on = document.body.classList.toggle("showband");
+      pill.setAttribute("aria-expanded", on);
+      if (on) window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    document.getElementById("mvtabs").addEventListener("click", function (e) {
+      var x = e.target.closest("button"); if (!x) return;
+      document.getElementById("movers").setAttribute("data-mv", x.getAttribute("data-mv"));
+      Array.prototype.forEach.call(this.querySelectorAll("button"), function (y) { y.setAttribute("aria-pressed", y === x); });
+    });
+  })();
   function showView(v) {
+    if (window.matchMedia && matchMedia("(max-width: 640px)").matches) window.scrollTo(0, 0);
     ["market", "heat", "favs", "portfolio"].forEach(function (k) {
       document.getElementById("view-" + k).hidden = k !== v;
       document.getElementById("tab-" + k).setAttribute("aria-selected", k === v);
