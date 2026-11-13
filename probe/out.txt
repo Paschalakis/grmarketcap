@@ -1,36 +1,5 @@
-## layerzero
-{"id": "layerzero", "name": "LayerZero", "symbol": "ZRO", "market_cap_rank": 89, "large": "https://coin-images.coingecko.com/coins/images/28206/large/ftxG9_TJ_400x400.jpeg"}
-{"id": "layerzero-bridged-sei", "name": "LayerZero Bridged Sei", "symbol": "SEI", "market_cap_rank": null, "large": "https://coin-images.coingecko.com/coins/images/54862/large/sei.jpg"}
-{"id": "layerzero-bridged-swell", "name": "Layerzero Bridged Swell", "symbol": "SWELL", "market_cap_rank": null, "large": "https://coin-images.coingecko.com/coins/images/53670/large/66ff8288d441ad252025f769_swellToken.png"}
-{"id": "layerzero-bridged-usdt-aptos", "name": "LayerZero Bridged USDT (Aptos)", "symbol": "LZUSDT", "market_cap_rank": null, "large": "https://coin-images.coingecko.com/coins/images/39751/large/lzusdt.png"}
-{"id": "layerzero-bridged-usdc-aptos", "name": "LayerZero Bridged USDC (Aptos)", "symbol": "USDC", "market_cap_rank": null, "large": "https://coin-images.coingecko.com/coins/images/35261/large/USDC_Icon.png"}
-{"id": "layerzero-usdc", "name": "LayerZero Bridged USDC (Fantom)", "symbol": "LZUSDC", "market_cap_rank": null, "large": "https://coin-images.coingecko.com/coins/images/31134/large/USDC-icon.png"}
-## octaspace
-{"id": "octaspace", "name": "OctaSpace", "symbol": "OCTA", "market_cap_rank": 1933, "large": "https://coin-images.coingecko.com/coins/images/29687/large/logo-256x256.png"}
-## anyone protocol
-{"id": "airtor-protocol", "name": "ANyONe Protocol", "symbol": "ANYONE", "market_cap_rank": 1114, "large": "https://coin-images.coingecko.com/coins/images/29690/large/AirTor.png"}
-## plasma
-{"id": "plasma", "name": "Plasma", "symbol": "XPL", "market_cap_rank": 146, "large": "https://coin-images.coingecko.com/coins/images/66489/large/Plasma-symbol-green-1.png"}
-{"id": "plasma-finance", "name": "Plasma Finance", "symbol": "PPAY", "market_cap_rank": 10019, "large": "https://coin-images.coingecko.com/coins/images/13340/large/Hi9sEGAD.png"}
-{"id": "unit-plasma", "name": "Unit Plasma", "symbol": "UXPL", "market_cap_rank": null, "large": "https://coin-images.coingecko.com/coins/images/69561/large/plasma.png"}
-{"id": "wrapped-aave-plasma-usdt0", "name": "Wrapped Aave Plasma USDT0", "symbol": "WAPLAUSDT0", "market_cap_rank": null, "large": "https://coin-images.coingecko.com/coins/images/69597/large/waplasusdt0.png"}
-## monad
-{"id": "monad", "name": "Monad", "symbol": "MON", "market_cap_rank": 164, "large": "https://coin-images.coingecko.com/coins/images/38927/large/mon.png"}
-{"id": "shmonad", "name": "ShMonad", "symbol": "SHMON", "market_cap_rank": 1567, "large": "https://coin-images.coingecko.com/coins/images/70837/large/SHMONAD_ICON_%281%29.png"}
-{"id": "emonad", "name": "emonad", "symbol": "EMO", "market_cap_rank": 3919, "large": "https://coin-images.coingecko.com/coins/images/102172808/large/wi13repazwee6wximmko4nk8jfbo."}
-{"id": "lemonade-stand-duck", "name": "Lemonade Stand Duck", "symbol": "DUCK", "market_cap_rank": 11216, "large": "https://coin-images.coingecko.com/coins/images/52818/large/2ru7VX6NnaZ78znCtgGmYs2PdcAQRCr3UaPfRkDUpump.webp"}
-{"id": "half-orange-drinking-lemonade", "name": "Half Orange Drinking Lemonade", "symbol": "HODL", "market_cap_rank": 11363, "large": "https://coin-images.coingecko.com/coins/images/50747/large/Untitled-1.png"}
-{"id": "gmonad", "name": "GMONAD", "symbol": "GMONAD", "market_cap_rank": 11811, "large": "https://coin-images.coingecko.com/coins/images/70814/large/gmonad-logo.jpg"}
-## based
-{"id": "basedhype", "name": "BasedHype", "symbol": "BASEDHYPE", "market_cap_rank": 556, "large": "https://coin-images.coingecko.com/coins/images/68733/large/BasedHype_Logo.png"}
-{"id": "based-one", "name": "Based", "symbol": "BASED", "market_cap_rank": 1218, "large": "https://coin-images.coingecko.com/coins/images/71361/large/based-logo-200x200.png"}
-{"id": "based-pepe", "name": "Based Pepe", "symbol": "PEPE", "market_cap_rank": 2251, "large": "https://coin-images.coingecko.com/coins/images/39763/large/based_pepe_transparent.png"}
-{"id": "based-fartcoin", "name": "Based Fartcoin", "symbol": "FARTCOIN", "market_cap_rank": 4520, "large": "https://coin-images.coingecko.com/coins/images/53113/large/farrtcoin_logo.png"}
-{"id": "based-coin", "name": "Based Coin", "symbol": "BASED", "market_cap_rank": 4755, "large": "https://coin-images.coingecko.com/coins/images/69790/large/based_coin.png"}
-{"id": "based-chad", "name": "Based Chad", "symbol": "CHAD", "market_cap_rank": 4767, "large": "https://coin-images.coingecko.com/coins/images/36285/large/logo_200_200_square.jpg"}
-## star atlas
-{"id": "star-atlas", "name": "Star Atlas", "symbol": "ATLAS", "market_cap_rank": 2017, "large": "https://coin-images.coingecko.com/coins/images/17659/large/Icon_Reverse.png"}
-{"id": "star-atlas-dao", "name": "Star Atlas DAO", "symbol": "POLIS", "market_cap_rank": 2181, "large": "https://coin-images.coingecko.com/coins/images/17789/large/POLIS.jpg"}
-## araistotle
-{"id": "araistotle", "name": "ArAIstotle", "symbol": "FACY", "market_cap_rank": 3781, "large": "https://coin-images.coingecko.com/coins/images/68121/large/fnho0s0oz5m2lie56vly5oxdx2fn."}
-{"layerzero":{"usd":1.58},"octaspace":{"usd":0.070323},"plasma":{"usd":0.04941359},"monad":{"usd":0.01623563},"star-atlas":{"usd":0.00010763}}
+OPTIONS 200 {'access-control-allow-origin': '*', 'access-control-allow-methods': '*', 'access-control-allow-headers': '*'}
+POST 200 {'access-control-expose-headers': '*', 'access-control-allow-origin': '*'} 25278
+{'#114910': '0.5', '#114911': '0.5', '#114920': '0.142335', '#114921': '0.857665', '#114930': '0.219275'} True
+STATE 200 {"marginSummary": {"accountValue": "10751264.0508169997", "totalNtlPos": "0.0", "totalRawUsd": "10751264.0508169997", "totalMarginUsed": "477.867397"}, "crossMarginSummary": {"accountValue": "10750786.1834200006", "totalNtlPos": "0.0", "totalRawUsd": "10750786.1834200006", "totalMarginUsed": "0.0"}, "crossMaintenanceMarginUsed": "0.0", "withdrawable": "10750786.1834200006", "assetPositions": [], "time": 1794603237385}
+META {"universe": [{"szDecimals": 5, "name": "BTC", "maxLeverage": 40, "marginTableId": 56}, {"szDecimals": 4, "name": "ETH", "maxLeverage": 25, "marginTableId": 55}, {"szDecimals": 2, "name": "ATOM", "maxLeverage": 5, "marginTableId": 5}, {"szDecimals": 1, "name": "MATIC", "maxLeverage": 20, "marginTabl
