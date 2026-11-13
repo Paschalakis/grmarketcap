@@ -50,24 +50,31 @@ jobs:
           in_session() {
             dow=$(TZ=Europe/Athens date +%u)
             hm=$(TZ=Europe/Athens date +%H%M)
-            [ "$dow" -le 5 ] && [ "$((10#$hm))" -ge 930 ] && [ "$((10#$hm))" -le 1735 ]
+            [ "$dow" -le 5 ] && [ "$((10#$hm))" -ge 930 ] && [ "$((10#$hm))" -le 1750 ]
+          }
+
+          # Κάθε προσπάθεια ξεκινά από την πιο πρόσφατη έκδοση του repo, ώστε να
+          # μην «κολλάει» σε σύγκρουση αν κάποια άλλη εκτέλεση έγραψε στο μεταξύ.
+          publish() {
+            for i in 1 2 3; do
+              git rebase --abort >/dev/null 2>&1 || true
+              git fetch -q origin main && git reset -q --hard origin/main || { sleep 10; continue; }
+              python scripts/fetch_data.py || return 1
+              git add data.json history.json intraday.json
+              if git diff --cached --quiet; then echo "Καμία αλλαγή."; return 0; fi
+              git commit -qm "Ενημέρωση τιμών $(date -u +'%Y-%m-%d %H:%M') UTC"
+              git push -q origin HEAD:main && return 0
+              echo "Η αποθήκευση δεν πέρασε (προσπάθεια $i)· ξαναδοκιμάζω."
+              sleep 10
+            done
+            return 1
           }
 
           while :; do
             if { [ $first -eq 1 ] && [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; } || in_session; then
               echo "=== $(TZ=Europe/Athens date '+%d/%m %H:%M') ώρα Ελλάδας ==="
-              if python scripts/fetch_data.py; then
+              if publish; then
                 last_ok=1
-                git add data.json history.json intraday.json
-                if git diff --cached --quiet; then
-                  echo "Καμία αλλαγή."
-                else
-                  git commit -qm "Ενημέρωση τιμών $(date -u +'%Y-%m-%d %H:%M') UTC"
-                  for i in 1 2 3; do
-                    git pull -q --rebase origin main && git push -q && break
-                    sleep 10
-                  done
-                fi
               else
                 last_ok=0
                 echo "Η ενημέρωση απέτυχε σε αυτόν τον γύρο· ξαναδοκιμάζω σε 15 λεπτά."
