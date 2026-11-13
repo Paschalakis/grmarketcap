@@ -416,6 +416,9 @@ button.pill { border: 0; font: inherit; cursor: default; }
 @media (max-width: 640px) { .dktable .sub2.show-s { display: block; } }
 body.pfhide .sens { filter: blur(9px); user-select: none; }
 .sens { transition: filter .2s; }
+.mono { position: relative; overflow: hidden; }
+.mono img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.mono.haslogo { border-radius: 50%; background: #fff; }
 .pfkind { justify-self: start; flex-wrap: wrap; }
 .pfsymwrap { position: relative; }
 .sugg { position: absolute; left: 0; right: 0; top: 100%; margin-top: 4px; z-index: 30; background: var(--surface); border: 1px solid var(--dk-line); border-radius: 12px; box-shadow: 0 16px 40px rgba(0, 0, 0, .35); max-height: 320px; overflow-y: auto; padding: 4px; }
@@ -1531,6 +1534,15 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   var SYM_BACK = {}; Object.keys(SYM_EN).forEach(function (k) { SYM_BACK[SYM_EN[k]] = k; });
   var EXTMETA = {};
   function isExt(s) { return /^[cfm]:/.test(s || ""); }
+  /* λογότυπα (TradingView), με κλειδί και το ελληνικό και το λατινικό σύμβολο */
+  var LOGO_D = {};
+  (function () {
+    var L = window.__LOGOS || {};
+    Object.keys(L).forEach(function (k) {
+      if (/^f:/.test(k)) { LOGO_D[k] = L[k]; LOGO_D[k.slice(2)] = LOGO_D[k.slice(2)] || L[k]; return; }
+      LOGO_D[k] = L[k]; if (SYM_EN[k]) LOGO_D[SYM_EN[k]] = L[k];
+    });
+  })();
   function DS(s) { if (isExt(s)) return (EXTMETA[s] && EXTMETA[s].s) || s.slice(2).toUpperCase(); return (LANG === "en" && SYM_EN[s]) || s; }
   /* σύμβολα που υπάρχουν στο TradingView (ATHEX), ελεγμένα */
   var TV_OK = {}; ["AAAK", "ACAG", "ADMIE", "ADPS", "AEGN", "AEM", "AIA", "AKTR", "ALMY", "ALPHA", "ALWN", "ANDRO", "ASCO", "ASTAK", "ATEK", "ATTICA", "AVAX", "AVE", "BELA", "BIOKA", "BIOSK", "BLEKEDROS", "BOCHGR", "BRIQ", "BYLOT", "CAIROMEZ", "CENER", "CENTR", "CMFC", "CNLCAP", "CPI", "CREDIA", "DAIOS", "DIMAND", "DOMIK", "DOTSOFT", "DROME", "EEE", "EIS", "EKTER", "ELBE", "ELHA", "ELIN", "ELLAKTOR", "ELPE", "ELSTR", "ELTON", "ETE", "EUROB", "EVR", "EVROF", "EXAE", "EYAPS", "EYDAP", "FAIS", "FLEXO", "FOODL", "FOYRK", "FRIGO", "GCMEZZ", "GEBKA", "GEKTERNA", "HAIDE", "HTO", "IATR", "IKTIN", "ILYDA", "INLIF", "INTEK", "INTET", "INTRK", "KARE", "KEKR", "KORDE", "KRI", "KYLO", "LAMDA", "LAMPS", "LANAC", "LAVI", "LEBEK", "LEBEP", "LOGISMOS", "MATHIO", "MEDIC", "MERKO", "MEVA", "MIG", "MIN", "MODA", "MOH", "MOTO", "MOYZK", "MTLN", "NAKAS", "NAYP", "NOVAL", "OLTH", "OLYMP", "ONYX", "OPTIMA", "ORILINA", "OTOEL", "PAIR", "PAP", "PERF", "PETRO", "PLAKR", "PLAT", "PPA", "PPC", "PRD", "PREMIA", "PRODEA", "PROF", "PROFK", "PVMEZZ", "QLCO", "QUAL", "QUEST", "REALCONS", "REVOIL", "SAR", "SB", "SBLK", "SIDMA", "SPACE", "SPIR", "SUNMEZZ", "TELL", "TITC", "TPEIR", "TRASTOR", "TREK", "TRESTATES", "VIDAVO", "VIO", "VOSYS", "VRLS", "XYLEK", "XYLEP", "YALCO", "YKNOT"].forEach(function (c) { TV_OK[c] = 1; });
@@ -1597,7 +1609,8 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
   function monoHtml(sym) {
     var h = 0; for (var i = 0; i < sym.length; i++) h = (h * 31 + sym.charCodeAt(i)) % 360;
-    return '<div class="mono hc" style="--h:' + h + '" aria-hidden="true">' + esc(sym.slice(0, 2)) + "</div>";
+    var lg = LOGO_D[sym];
+    return '<div class="mono hc' + (lg ? " haslogo" : "") + '" style="--h:' + h + '" aria-hidden="true">' + esc(sym.slice(0, 2)) + (lg ? '<img src="https://s3-symbol-logo.tradingview.com/' + encodeURIComponent(lg) + '.svg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.classList.remove(\'haslogo\');this.remove()">' : "") + "</div>";
   }
   function barPos(v) {
     var w = Math.min(Math.abs(v), 10) / 10 * 50;
@@ -2404,6 +2417,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   });
   function assetIcon(sym, label) {
     var m = EXTMETA[sym];
+    if (LOGO_D[sym] && !(m && m.img)) return monoHtml(DS(sym));
     if (m && m.img) return '<img class="cimg" src="' + esc(m.img) + '" alt="" loading="lazy" referrerpolicy="no-referrer">';
     return monoHtml(label || DS(sym));
   }
@@ -3082,11 +3096,12 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
       .catch(function (e) { if (required) throw e; return null; });
   }
-  Promise.all([getJSON(u("data.json"), true), getJSON(u("history.json")), getJSON(u("intraday.json")), getJSON(u("extras.json")), getJSON(u("foreign.json"))])
+  Promise.all([getJSON(u("data.json"), true), getJSON(u("history.json")), getJSON(u("intraday.json")), getJSON(u("extras.json")), getJSON(u("foreign.json")), getJSON(u("logos.json"))])
     .then(function (res) {
       clearTimeout(timer);
       window.__EXTRA = res[3];
       window.__FOREIGN = res[4];
+      window.__LOGOS = res[5];
       var d = res[0];
       if (!d || !Array.isArray(d.stocks) || d.stocks.length < 50) throw new Error("bad data");
       go(d.stocks.map(function (s) {
