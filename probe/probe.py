@@ -1,11 +1,11 @@
-import requests, json, time
-H={"User-Agent":"Mozilla/5.0 Chrome/124","Accept":"application/json"}
-for q in ["layerzero","octaspace","anyone protocol","plasma","monad","based","star atlas","araistotle"]:
-    r=requests.get("https://api.coingecko.com/api/v3/search",params={"query":q},headers=H,timeout=30)
-    try: coins=r.json().get("coins",[])[:6]
-    except Exception: coins=[]; print(q, r.status_code, r.text[:200])
-    print("##",q)
-    for c in coins: print(json.dumps({k:c.get(k) for k in ["id","name","symbol","market_cap_rank","large"]}))
-    time.sleep(3)
-ids="layerzero,octaspace,anyone-protocol,plasma,monad,star-atlas"
-r=requests.get("https://api.coingecko.com/api/v3/simple/price",params={"ids":ids,"vs_currencies":"usd"},headers=H,timeout=30); print(r.text)
+import requests, json
+U="https://api.hyperliquid.xyz/info"
+r=requests.options(U,headers={"Origin":"https://paschalakis.github.io","Access-Control-Request-Method":"POST","Access-Control-Request-Headers":"content-type"},timeout=20)
+print("OPTIONS",r.status_code,{k:v for k,v in r.headers.items() if k.lower().startswith("access-control")})
+r=requests.post(U,json={"type":"allMids"},headers={"Origin":"https://paschalakis.github.io"},timeout=20)
+print("POST",r.status_code,{k:v for k,v in r.headers.items() if k.lower().startswith("access-control")}, len(r.text))
+m=r.json(); print({k:m[k] for k in list(m)[:5]}, "HYPE" in m)
+# a known public vault address to see structure
+r=requests.post(U,json={"type":"clearinghouseState","user":"0xdfc24b077bc1425ad1dea75bcb6f8158e10df303"},timeout=20)
+print("STATE",r.status_code,json.dumps(r.json())[:1500])
+r=requests.post(U,json={"type":"meta"},timeout=20); print("META",json.dumps(r.json())[:300])
