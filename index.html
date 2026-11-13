@@ -2315,6 +2315,9 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       });
   }
 
+  /* τιμή συναλλαγής σε €: αν το νόμισμα εμφάνισης είναι το ίδιο με αυτό που
+     γράφτηκε η τιμή, χρησιμοποιούμε ακριβώς την τιμή που πληκτρολογήθηκε */
+  function effP(t) { return t.pn != null && t.pc && t.pc === CUR ? t.pn / RATE : t.price; }
   function holdings(src) {
     syncExt();
     var map = {}, realized = 0;
@@ -2322,10 +2325,10 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       var h = map[t.sym] || (map[t.sym] = { sym: t.sym, qty: 0, cost: 0, realized: 0 });
       if (t.side === "sell") {
         var q = Math.min(t.qty, h.qty), avg = h.qty ? h.cost / h.qty : 0;
-        h.realized += q * (t.price - avg); realized += q * (t.price - avg);
+        h.realized += q * (effP(t) - avg); realized += q * (effP(t) - avg);
         h.cost -= q * avg; h.qty -= q;
         if (h.qty < 1e-9) { h.qty = 0; h.cost = 0; }
-      } else { h.qty += t.qty; h.cost += t.qty * t.price; }
+      } else { h.qty += t.qty; h.cost += t.qty * effP(t); }
     });
     var list = Object.keys(map).map(function (k) {
       var h = map[k], r = BYSYM[k];
@@ -2364,7 +2367,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   /* ----- crypto, ξένες μετοχές, «άλλο» ----- */
   var FOREIGN = window.__FOREIGN || null, CGP = {}, cgAt = 0, cgBusy = false;
   var KIND_SEC = { c: "Crypto", f: "Ξένες μετοχές", m: "Άλλο" };
-  function fxTo(cur) { if (!cur || cur === "EUR") return 1; var r = (FOREIGN && FOREIGN.fx && FOREIGN.fx[cur]) || FX[cur]; return r || null; }
+  function fxTo(cur) { if (!cur || cur === "EUR") return 1; if (cur === CUR) return RATE; var r = FX[cur] || (FOREIGN && FOREIGN.fx && FOREIGN.fx[cur]); return r || null; }
   function syncExt() {
     var seen = {};
     txns.forEach(function (t) {
@@ -2483,7 +2486,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       while (ti < tx.length && tx[ti].date <= d) {
         var t = tx[ti++], q = qty[t.sym] || 0, c = cost[t.sym] || 0;
         if (t.side === "sell") { var s = Math.min(t.qty, q), avg = q ? c / q : 0; qty[t.sym] = q - s; cost[t.sym] = c - s * avg; if (qty[t.sym] < 1e-9) { qty[t.sym] = 0; cost[t.sym] = 0; } }
-        else { qty[t.sym] = q + t.qty; cost[t.sym] = c + t.qty * t.price; }
+        else { qty[t.sym] = q + t.qty; cost[t.sym] = c + t.qty * effP(t); }
         if (!(t.sym in last) || d === t.date) { if (last[t.sym] == null) last[t.sym] = t.price; }
       }
       var v = 0, c2 = 0;
@@ -2756,7 +2759,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var stats = fbar + '<section class="dkrow">' + hero + alloc + "</section>" + kpis;
     var hist = '<div class="dk dktable tablewrap pf-panel"><h2>Συναλλαγές</h2><table><thead><tr><th class="l hide-s">Ημερομηνία</th><th class="l">Είδος</th><th class="l">Μετοχή</th><th class="hide-s">Τεμάχια</th><th class="hide-s">Τιμή</th><th>Σύνολο</th><th><span style="position:absolute;left:-9999px">Ενέργειες</span></th></tr></thead><tbody>' +
       pfTx().sort(function (a, b) { return (b.date || "").localeCompare(a.date || "") || (b.ts || 0) - (a.ts || 0); }).map(function (t) {
-        return '<tr><td class="l num hide-s">' + fmtDate(t.date) + '</td><td class="l"><span class="side ' + (t.side === "sell" ? "sell" : "buy") + '">' + (t.side === "sell" ? "Πώληση" : "Αγορά") + '</span></td><td class="l"><b>' + esc(DS(t.sym)) + '</b></td><td class="num hide-s sens">' + fmtQty(t.qty) + '</td><td class="num hide-s">' + fmtC(t.price) + '</td><td class="num sens">' + eur(t.qty * t.price) + '</td><td style="white-space:nowrap"><button type="button" class="xbtn" data-edit="' + esc(t.id) + '" aria-label="Επεξεργασία συναλλαγής ' + esc(DS(t.sym)) + " " + fmtDate(t.date) + '">Επεξεργασία</button><button type="button" class="xbtn" data-del="' + esc(t.id) + '" aria-label="Διαγραφή συναλλαγής ' + esc(DS(t.sym)) + " " + fmtDate(t.date) + '">Διαγραφή</button></td></tr>';
+        return '<tr><td class="l num hide-s">' + fmtDate(t.date) + '</td><td class="l"><span class="side ' + (t.side === "sell" ? "sell" : "buy") + '">' + (t.side === "sell" ? "Πώληση" : "Αγορά") + '</span></td><td class="l"><b>' + esc(DS(t.sym)) + '</b></td><td class="num hide-s sens">' + fmtQty(t.qty) + '</td><td class="num hide-s">' + fmtC(effP(t)) + '</td><td class="num sens">' + eur(t.qty * effP(t)) + '</td><td style="white-space:nowrap"><button type="button" class="xbtn" data-edit="' + esc(t.id) + '" aria-label="Επεξεργασία συναλλαγής ' + esc(DS(t.sym)) + " " + fmtDate(t.date) + '">Επεξεργασία</button><button type="button" class="xbtn" data-del="' + esc(t.id) + '" aria-label="Διαγραφή συναλλαγής ' + esc(DS(t.sym)) + " " + fmtDate(t.date) + '">Διαγραφή</button></td></tr>';
       }).join("") + "</tbody></table></div>";
     pfBody.innerHTML = stats + table + hist + '<p class="foot">Το κόστος υπολογίζεται με τη μέση τιμή αγοράς. Οι αξίες υπολογίζονται με τις τιμές της σελίδας (καθυστέρηση 15 λεπτών). Είναι εικονικό χαρτοφυλάκιο για παρακολούθηση, όχι επενδυτική συμβουλή.</p>';
     if (H.list.length) { H.list.forEach(function (h) { if (h.row) loadLong(h.row); }); pfDraw(H); }
@@ -2794,7 +2797,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     return '<option value="' + esc(r.dsym) + (r.name ? " — " + esc(r.name) : "") + '"></option>';
   }).join("");
   function today() { var d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
-  function num(v) { v = String(v || "").trim().replace(/\s/g, ""); if (LANG === "en") { v = v.replace(/,/g, ""); return /^-?\d*\.?\d+$/.test(v) ? parseFloat(v) : NaN; } if (/^\d{1,3}(\.\d{3})+(,\d+)?$/.test(v)) v = v.replace(/\./g, ""); v = v.replace(",", "."); var n = parseFloat(v); return /^-?\d*\.?\d+$/.test(v) ? n : NaN; }
+  function num(v) { v = String(v || "").trim().replace(/\s/g, ""); if (LANG === "en") { v = v.replace(/,/g, ""); return /^-?\d*\.?\d+$/.test(v) ? parseFloat(v) : NaN; } if (/^[1-9]\d{0,2}(\.\d{3})+(,\d+)?$/.test(v)) v = v.replace(/\./g, ""); v = v.replace(",", "."); var n = parseFloat(v); return /^-?\d*\.?\d+$/.test(v) ? n : NaN; }
   var pcs = document.getElementById("pf-pcs");
   Array.prototype.forEach.call(pcs.options, function (o) { if (o.value !== "EUR" && !FX[o.value]) o.remove(); });
   pcs.value = pcs.querySelector('option[value="' + CUR + '"]') ? CUR : "EUR";
@@ -2958,8 +2961,9 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     editId = id; setSide(t.side);
     if (kind === "m") fSym.value = (t.m && t.m.n) || DS(t.sym);
     fQty.value = LANG === "en" ? String(t.qty) : String(t.qty).replace(".", ",");
-    fPrice.value = pfx(t.price);
-    if (kind === "f") { var fx = fxTo(priceCur()) || 1, x = String(+(t.price * fx).toFixed(4)); fPrice.value = LANG === "en" ? x : x.replace(".", ","); }
+    if (t.pc && kind !== "f" && pcs.querySelector('option[value="' + t.pc + '"]')) { pcs.value = t.pc; pcsPrev = t.pc; syncPcs(); }
+    var fx0 = fxTo(priceCur()) || 1, pv = t.pn != null && t.pc === priceCur() ? t.pn : t.price * fx0, xs = String(+pv.toFixed(pv < 1 ? 6 : 4));
+    fPrice.value = LANG === "en" ? xs : xs.replace(".", ",");
     fDate.value = t.date || today();
     if (kind === "m" && t.mp != null) document.getElementById("pf-mp").value = pfx(t.mp);
     updTotal();
@@ -2994,7 +2998,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     }
     var old = editId ? txns.filter(function (t) { return t.id === editId; })[0] : null;
     var tx = old || { id: "t" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), ts: Date.now() };
-    tx.side = side; tx.sym = r.sym; tx.qty = q; tx.price = p / rate; tx.date = d;
+    tx.side = side; tx.sym = r.sym; tx.qty = q; tx.price = p / rate; tx.date = d; tx.pn = p; tx.pc = priceCur();
     if (meta) tx.m = { s: meta.s, n: meta.n || meta.s, img: meta.img || null, ex: meta.ex || null, cur: meta.cur || null };
     else if (!isExt(r.sym)) delete tx.m;
     if (kind === "m") { var mpv = num(document.getElementById("pf-mp").value); if (mpv > 0) { tx.mp = mpv / prate(); tx.mpTs = Date.now(); } }
