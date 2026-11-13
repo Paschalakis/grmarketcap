@@ -419,6 +419,9 @@ body.pfhide .sens { filter: blur(9px); user-select: none; }
 .mono { position: relative; overflow: hidden; }
 .mono img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .mono.haslogo { border-radius: 50%; background: #fff; }
+.pffilter { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.pffilter .note { margin-right: 4px; }
+.pffilter .cnt2 { font-size: 11px; opacity: .75; margin-left: 2px; }
 .pfkind { justify-self: start; flex-wrap: wrap; }
 .pfsymwrap { position: relative; }
 .sugg { position: absolute; left: 0; right: 0; top: 100%; margin-top: 4px; z-index: 30; background: var(--surface); border: 1px solid var(--dk-line); border-radius: 12px; box-shadow: 0 16px 40px rgba(0, 0, 0, .35); max-height: 320px; overflow-y: auto; padding: 4px; }
@@ -1264,6 +1267,11 @@ var EN_EXACT = {
   "Εντάξει": "OK",
   "Γραμμή": "Line",
   "Χάρτης": "Heatmap",
+  "Συμμετέχουν:": "Included:",
+  "Όλα": "All",
+  "Κατηγορίες που συμμετέχουν": "Included categories",
+  "Καμία θέση σε αυτές τις κατηγορίες": "No holdings in these categories",
+  "Ενεργοποίησε κάποια από τις κατηγορίες παραπάνω.": "Turn on one of the categories above.",
   "Χ.Α.": "Athens",
   "Ξένες μετοχές": "Foreign stocks",
   "Άλλο": "Other",
@@ -2289,10 +2297,10 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       });
   }
 
-  function holdings() {
+  function holdings(src) {
     syncExt();
     var map = {}, realized = 0;
-    txns.slice().sort(function (a, b) { return (a.date || "").localeCompare(b.date || "") || (a.ts || 0) - (b.ts || 0); }).forEach(function (t) {
+    (src || txns).slice().sort(function (a, b) { return (a.date || "").localeCompare(b.date || "") || (a.ts || 0) - (b.ts || 0); }).forEach(function (t) {
       var h = map[t.sym] || (map[t.sym] = { sym: t.sym, qty: 0, cost: 0, realized: 0 });
       if (t.side === "sell") {
         var q = Math.min(t.qty, h.qty), avg = h.qty ? h.cost / h.qty : 0;
@@ -2422,6 +2430,22 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     return monoHtml(label || DS(sym));
   }
 
+  /* ----- φίλτρο κατηγοριών χαρτοφυλακίου ----- */
+  var PF_KINDS = [["gr", "Χ.Α."], ["f", "Ξένες μετοχές"], ["c", "Crypto"], ["m", "Άλλο"]];
+  function kindOf(sym) { return isExt(sym) ? sym.charAt(0) : "gr"; }
+  var pfOff = (function () { try { return JSON.parse(localStorage.getItem("agora-pfoff") || "{}") || {}; } catch (e) { return {}; } })();
+  function pfTx() { return txns.filter(function (t) { return !pfOff[kindOf(t.sym)]; }); }
+  function pfH() { return holdings(pfTx()); }
+  function filterBar() {
+    var cnt = {}; holdings().list.forEach(function (h) { var k = kindOf(h.sym); cnt[k] = (cnt[k] || 0) + 1; });
+    var present = PF_KINDS.filter(function (k) { return cnt[k[0]] || txns.some(function (t) { return kindOf(t.sym) === k[0]; }); });
+    if (present.length < 2) return "";
+    var allOn = present.every(function (k) { return !pfOff[k[0]]; });
+    return '<div class="pffilter" role="group" aria-label="Κατηγορίες που συμμετέχουν"><span class="note">Συμμετέχουν:</span>' +
+      '<button type="button" class="tab" data-pfk="all" aria-pressed="' + allOn + '">Όλα</button>' +
+      present.map(function (k) { return '<button type="button" class="tab" data-pfk="' + k[0] + '" aria-pressed="' + !pfOff[k[0]] + '">' + k[1] + ' <span class="cnt2">' + (cnt[k[0]] || 0) + "</span></button>"; }).join("") + "</div>";
+  }
+
   /* ----- χαρτοφυλάκιο: ιστορικό αξίας, διαγράμματα, κατανομή ----- */
   var pfRange = (function () { try { return localStorage.getItem("agora-pfrange") || "1M"; } catch (e) { return "1M"; } })();
   var pfSort = { k: "value", d: -1 };
@@ -2429,7 +2453,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   var PF_COLORS = ["#5b7cfa", "#8b5cf6", "#22a6b3", "#f08a5d", "#e3628f", "#3fb67f", "#d9a63c", "#6f8fd8", "#b07cf0", "#4aa3d8", "#9aa5b8"];
   function pfColor(i) { return PF_COLORS[Math.min(i, PF_COLORS.length - 1)]; }
   function pfDaily(H) {
-    var tx = txns.filter(function (t) { return t.date && t.date <= TODAY; }).sort(function (a, b) { return a.date.localeCompare(b.date) || (a.ts || 0) - (b.ts || 0); });
+    var tx = pfTx().filter(function (t) { return t.date && t.date <= TODAY; }).sort(function (a, b) { return a.date.localeCompare(b.date) || (a.ts || 0) - (b.ts || 0); });
     if (!tx.length) return [];
     var syms = [], seen = {}, firstPx = {};
     tx.forEach(function (t) { if (!seen[t.sym]) { seen[t.sym] = 1; syms.push(t.sym); firstPx[t.sym] = t.price; } });
@@ -2564,7 +2588,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
         (lab ? "<b>" + esc(DS(h.sym)) + "</b><span>" + nf2.format(h.weight) + "%</span>" : "") + (big && lab && t.h > 60 ? '<span class="sens" style="opacity:.85">' + eur(h.value) + "</span>" : "") + "</div>";
     }).join("");
   }
-  window.__pfRefresh = (function () { var tm = 0; return function () { clearTimeout(tm); tm = setTimeout(function () { if (!document.getElementById("view-portfolio").hidden && txns.length) pfDraw(holdings()); }, 120); }; })();
+  window.__pfRefresh = (function () { var tm = 0; return function () { clearTimeout(tm); tm = setTimeout(function () { if (!document.getElementById("view-portfolio").hidden && txns.length) pfDraw(pfH()); }, 120); }; })();
   window.addEventListener("resize", function () { if (window.__pfRefresh) window.__pfRefresh(); });
   /* απόκρυψη ποσών */
   var pfHide = (function () { try { return localStorage.getItem("agora-hide") === "1"; } catch (e) { return false; } })();
@@ -2577,14 +2601,14 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var en = LANG === "en", sep = en ? "," : ";";
     function n(v, d) { var s = (+v).toFixed(d == null ? 4 : d).replace(/\.?0+$/, ""); if (s === "" || s === "-") s = "0"; return en ? s : s.replace(".", ","); }
     function q(s) { s = String(s == null ? "" : s); return (s.indexOf(sep) > -1 || /["\n]/.test(s)) ? '"' + s.replace(/"/g, '""') + '"' : s; }
-    var H = holdings(), L = [];
+    var H = pfH(), L = [];
     L.push([en ? "HOLDINGS" : "ΘΕΣΕΙΣ"]);
     L.push(en ? ["Symbol", "Name", "Shares", "Avg cost (EUR)", "Price (EUR)", "Value (EUR)", "P/L (EUR)", "P/L %", "Share %"] : ["Σύμβολο", "Όνομα", "Τεμάχια", "Μέση τιμή (€)", "Τιμή (€)", "Αξία (€)", "Κ/Ζ (€)", "Κ/Ζ %", "Μερίδιο %"]);
     H.list.forEach(function (h) { L.push([DS(h.sym), h.row ? h.row.name : "", n(h.qty), n(h.avg), n(h.price), n(h.value, 2), n(h.pl, 2), n(h.plPct, 2), n(h.weight, 2)]); });
     L.push([]);
     L.push([en ? "TRANSACTIONS" : "ΣΥΝΑΛΛΑΓΕΣ"]);
     L.push(en ? ["Date", "Type", "Symbol", "Shares", "Price (EUR)", "Total (EUR)"] : ["Ημερομηνία", "Είδος", "Σύμβολο", "Τεμάχια", "Τιμή (€)", "Σύνολο (€)"]);
-    txns.slice().sort(function (a, b) { return (a.date || "").localeCompare(b.date || ""); }).forEach(function (t) { L.push([t.date, t.side === "sell" ? (en ? "Sell" : "Πώληση") : (en ? "Buy" : "Αγορά"), DS(t.sym), n(t.qty), n(t.price), n(t.qty * t.price, 2)]); });
+    pfTx().sort(function (a, b) { return (a.date || "").localeCompare(b.date || ""); }).forEach(function (t) { L.push([t.date, t.side === "sell" ? (en ? "Sell" : "Πώληση") : (en ? "Buy" : "Αγορά"), DS(t.sym), n(t.qty), n(t.price), n(t.qty * t.price, 2)]); });
     var csv = "﻿" + L.map(function (r) { return r.map(q).join(sep); }).join("\r\n");
     try {
       var a = document.createElement("a");
@@ -2598,7 +2622,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   (function () {
     var box = document.getElementById("allocBox"), scr = document.getElementById("allocScrim"), last = null;
     function open() {
-      var H = holdings(); last = document.activeElement;
+      var H = pfH(); last = document.activeElement;
       box.hidden = false; scr.hidden = false;
       document.getElementById("allocList").innerHTML = H.list.map(function (h, i) { return '<li><i style="background:' + pfColor(i) + '"></i><span>' + esc(DS(h.sym)) + (h.row && h.row.name ? " · " + esc(h.row.name) : "") + "</span><b>" + nf2.format(h.weight) + "%</b></li>"; }).join("");
       pfTreemap(document.getElementById("allocMap"), H.list, true);
@@ -2607,8 +2631,19 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     function close() { box.hidden = true; scr.hidden = true; if (last && last.focus) last.focus(); }
     pfBody.addEventListener("click", function (e) {
       if (e.target.closest("#dkexp")) { open(); return; }
+      var fk = e.target.closest("[data-pfk]");
+      if (fk) {
+        var k = fk.getAttribute("data-pfk");
+        if (k === "all") pfOff = {};
+        else {
+          var on = PF_KINDS.filter(function (x) { return !pfOff[x[0]] && txns.some(function (t) { return kindOf(t.sym) === x[0]; }); });
+          if (pfOff[k]) delete pfOff[k]; else if (on.length > 1) pfOff[k] = true;
+        }
+        try { localStorage.setItem("agora-pfoff", JSON.stringify(pfOff)); } catch (er) {}
+        renderPortfolio(); return;
+      }
       var r = e.target.closest("#dkranges button");
-      if (r) { pfRange = r.getAttribute("data-r"); try { localStorage.setItem("agora-pfrange", pfRange); } catch (er) {} Array.prototype.forEach.call(document.querySelectorAll("#dkranges button"), function (x) { x.setAttribute("aria-pressed", x === r); }); pfDraw(holdings()); return; }
+      if (r) { pfRange = r.getAttribute("data-r"); try { localStorage.setItem("agora-pfrange", pfRange); } catch (er) {} Array.prototype.forEach.call(document.querySelectorAll("#dkranges button"), function (x) { x.setAttribute("aria-pressed", x === r); }); pfDraw(pfH()); return; }
       var th = e.target.closest(".dktable th[data-k]");
       if (th) { var k = th.getAttribute("data-k"); pfSort = pfSort.k === k ? { k: k, d: -pfSort.d } : { k: k, d: k === "sym" ? 1 : -1 }; renderPortfolio(); return; }
       if (e.target.closest("#dkcur")) {
@@ -2636,9 +2671,14 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   });
   document.getElementById("q").setAttribute("title", "Πάτα / από οπουδήποτε για γρήγορη αναζήτηση");
   function renderPortfolio() {
-    var H = holdings();
+    var H = pfH();
     if (!txns.length) {
       pfBody.innerHTML = '<div class="panel pempty"><h3>Το χαρτοφυλάκιο είναι άδειο</h3><p>Πρόσθεσε μια εικονική αγορά για να παρακολουθείς αξία, κέρδος και κατανομή με τις τιμές της σελίδας. Μπορείς επίσης να πατήσεις μια μετοχή στην Αγορά και «+ Στο χαρτοφυλάκιο».</p><button type="button" class="btn primary" data-act="add">+ Προσθήκη πρώτης συναλλαγής</button></div>';
+      return;
+    }
+    var fbar = filterBar();
+    if (!pfTx().length) {
+      pfBody.innerHTML = fbar + '<div class="panel pempty"><h3>Καμία θέση σε αυτές τις κατηγορίες</h3><p>Ενεργοποίησε κάποια από τις κατηγορίες παραπάνω.</p></div>';
       return;
     }
     var totPL = H.unreal + H.realized;
@@ -2695,9 +2735,9 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
           '<td class="hide-s"><span class="sens">' + eurS(h.pl) + '</span><span class="sub2 chg ' + cls(h.plPct) + '">' + sgn(h.plPct) + nf2.format(Math.abs(h.plPct)) + "%</span></td>" +
           '<td class="hide-s"><div class="dkshare"><span class="num">' + nf2.format(h.weight) + '%</span><i><u style="width:' + Math.max(1, h.weight) + '%"></u></i></div></td></tr>';
       }).join("") + "</tbody></table></div>" : '<div class="panel pempty"><h3>Δεν έχεις ανοιχτές θέσεις</h3><p>Όλες οι μετοχές έχουν πουληθεί. Το πραγματοποιημένο κέρδος ή η ζημιά φαίνεται στη σύνοψη.</p></div>';
-    var stats = '<section class="dkrow">' + hero + alloc + "</section>" + kpis;
+    var stats = fbar + '<section class="dkrow">' + hero + alloc + "</section>" + kpis;
     var hist = '<div class="dk dktable tablewrap pf-panel"><h2>Συναλλαγές</h2><table><thead><tr><th class="l hide-s">Ημερομηνία</th><th class="l">Είδος</th><th class="l">Μετοχή</th><th class="hide-s">Τεμάχια</th><th class="hide-s">Τιμή</th><th>Σύνολο</th><th><span style="position:absolute;left:-9999px">Ενέργειες</span></th></tr></thead><tbody>' +
-      txns.slice().sort(function (a, b) { return (b.date || "").localeCompare(a.date || "") || (b.ts || 0) - (a.ts || 0); }).map(function (t) {
+      pfTx().sort(function (a, b) { return (b.date || "").localeCompare(a.date || "") || (b.ts || 0) - (a.ts || 0); }).map(function (t) {
         return '<tr><td class="l num hide-s">' + fmtDate(t.date) + '</td><td class="l"><span class="side ' + (t.side === "sell" ? "sell" : "buy") + '">' + (t.side === "sell" ? "Πώληση" : "Αγορά") + '</span></td><td class="l"><b>' + esc(DS(t.sym)) + '</b></td><td class="num hide-s sens">' + fmtQty(t.qty) + '</td><td class="num hide-s">' + fmtC(t.price) + '</td><td class="num sens">' + eur(t.qty * t.price) + '</td><td><button type="button" class="xbtn" data-del="' + esc(t.id) + '" aria-label="Διαγραφή συναλλαγής ' + esc(DS(t.sym)) + " " + fmtDate(t.date) + '">Διαγραφή</button></td></tr>';
       }).join("") + "</tbody></table></div>";
     pfBody.innerHTML = stats + table + hist + '<p class="foot">Το κόστος υπολογίζεται με τη μέση τιμή αγοράς. Οι αξίες υπολογίζονται με τις τιμές της σελίδας (καθυστέρηση 15 λεπτών). Είναι εικονικό χαρτοφυλάκιο για παρακολούθηση, όχι επενδυτική συμβουλή.</p>';
