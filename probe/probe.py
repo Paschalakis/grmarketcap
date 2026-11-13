@@ -1,5 +1,11 @@
-import subprocess, json
-subprocess.run(["python","scripts/fetch_extras.py"])
-d=json.load(open("extras.json"))
-for k in ["ΑΛΦΑ","ΔΕΗ","ALWN"]: print(k, json.dumps(d["stocks"].get(k,{}).get("news"),ensure_ascii=False)[:1200])
-print("with pe", sum(1 for v in d["stocks"].values() if "pe" in v), "exd", sum(1 for v in d["stocks"].values() if "exd" in v), "news", sum(1 for v in d["stocks"].values() if "news" in v), "nodate", sum(1 for v in d["stocks"].values() for n in v.get("news",[]) if not n["d"]))
+import requests, json, time
+H={"User-Agent":"Mozilla/5.0 Chrome/124","Accept":"application/json"}
+for q in ["layerzero","octaspace","anyone protocol","plasma","monad","based","star atlas","araistotle"]:
+    r=requests.get("https://api.coingecko.com/api/v3/search",params={"query":q},headers=H,timeout=30)
+    try: coins=r.json().get("coins",[])[:6]
+    except Exception: coins=[]; print(q, r.status_code, r.text[:200])
+    print("##",q)
+    for c in coins: print(json.dumps({k:c.get(k) for k in ["id","name","symbol","market_cap_rank","large"]}))
+    time.sleep(3)
+ids="layerzero,octaspace,anyone-protocol,plasma,monad,star-atlas"
+r=requests.get("https://api.coingecko.com/api/v3/simple/price",params={"ids":ids,"vs_currencies":"usd"},headers=H,timeout=30); print(r.text)
