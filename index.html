@@ -428,6 +428,25 @@ body.pfhide .sens { filter: blur(9px); user-select: none; }
   .dktable tbody td, .dktable thead th { padding-left: 6px; padding-right: 6px; }
   .dktable .who { gap: 8px; }
 }
+.perps h2 { padding: 6px 8px 4px; }
+.perphead { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 12px; padding: 0 8px 6px; }
+.livedot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--up); box-shadow: 0 0 0 3px var(--up-soft); margin-right: 6px; vertical-align: 1px; animation: livep 2s infinite; }
+@keyframes livep { 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .livedot { animation: none; } }
+.pw { border-top: 1px solid var(--dk-line); padding: 12px 8px 4px; }
+.pw:first-of-type { border-top: 0; }
+.pwtop { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-bottom: 10px; }
+.pwtop code { font-size: 12px; color: var(--muted); }
+.pwtop a { font-size: 12.5px; color: var(--accent); }
+.pwtop .xbtn { margin-left: auto; }
+.pwk { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 10px; }
+@media (max-width: 640px) { .pwk { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.pwk div { background: var(--dk-head); border: 1px solid var(--dk-line); border-radius: 12px; padding: 10px 12px; }
+.pwk span { display: block; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.pwk b { display: block; margin-top: 4px; font-size: 16px; font-variant-numeric: tabular-nums; }
+.lsb { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 11.5px; font-weight: 700; }
+.lsb.long { background: var(--up-soft); color: var(--up); }
+.lsb.short { background: var(--down-soft); color: var(--down); }
 .plabrow { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .pcs { font: inherit; font-size: 12px; font-weight: 600; padding: 2px 6px; border-radius: 8px; border: 1px solid var(--dk-line); background: var(--dk-head); color: var(--accent); cursor: pointer; }
 .pcfix { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 8px; background: var(--accent-soft); color: var(--accent); }
@@ -683,6 +702,7 @@ th[aria-sort] button { color: var(--accent); }
       <div class="pftools">
         <button type="button" class="btn dkicon" id="pf-hide" aria-pressed="false" title="Απόκρυψη ποσών" aria-label="Απόκρυψη ποσών"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
         <button type="button" class="btn dkicon" id="pf-csv" title="Εξαγωγή σε CSV (Excel)" aria-label="Εξαγωγή σε CSV (Excel)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 19h16"/></svg></button>
+        <button type="button" class="btn" id="pf-hl" title="Παρακολούθηση θέσεων Perpetuals από το Hyperliquid">+ Perps</button>
         <button type="button" class="btn primary" id="pf-add">+ Προσθήκη συναλλαγής</button>
       </div>
     </div>
@@ -733,6 +753,15 @@ th[aria-sort] button { color: var(--accent); }
 <div class="toast" id="toast" role="status" hidden></div>
 <div class="scrim" id="authScrim" hidden></div>
 <div class="panel authbox" id="authBox" role="dialog" aria-modal="true" aria-labelledby="authTitle" hidden></div>
+<div class="scrim" id="hlScrim" hidden></div>
+<form class="panel authbox" id="hlBox" role="dialog" aria-modal="true" aria-labelledby="hlTitle" hidden novalidate>
+  <div class="ahead"><h2 id="hlTitle">Perpetuals από Hyperliquid</h2><button type="button" class="close" id="hlClose" aria-label="Κλείσιμο">×</button></div>
+  <p class="note" style="margin:0">Γράψε τη διεύθυνση του πορτοφολιού σου (0x…). Οι θέσεις διαβάζονται δημόσια από το Hyperliquid, χωρίς κλειδιά και χωρίς σύνδεση πορτοφολιού. Το site δεν μπορεί να κάνει καμία συναλλαγή.</p>
+  <label style="display:flex;flex-direction:column;gap:6px">Διεύθυνση πορτοφολιού<input id="hlAddr" class="search" autocomplete="off" spellcheck="false" placeholder="0x…" style="width:100%;font-family:ui-monospace,monospace"></label>
+  <label style="display:flex;flex-direction:column;gap:6px">Όνομα <span class="note">προαιρετικό</span><input id="hlName" class="search" autocomplete="off" placeholder="π.χ. Κύριο πορτοφόλι" style="width:100%"></label>
+  <p class="err" id="hlErr" role="alert" style="margin:0"></p>
+  <div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" class="btn" id="hlCancel">Άκυρο</button><button type="submit" class="btn primary">Προσθήκη</button></div>
+</form>
 <div class="scrim" id="mpScrim" hidden></div>
 <form class="panel authbox" id="mpBox" role="dialog" aria-modal="true" aria-labelledby="mpTitle" hidden novalidate>
   <div class="ahead"><h2 id="mpTitle">Τρέχουσα τιμή</h2><button type="button" class="close" id="mpClose" aria-label="Κλείσιμο">×</button></div>
@@ -1280,6 +1309,34 @@ var EN_EXACT = {
   "Εντάξει": "OK",
   "Γραμμή": "Line",
   "Χάρτης": "Heatmap",
+  "Perpetuals από Hyperliquid": "Perpetuals from Hyperliquid",
+  "Γράψε τη διεύθυνση του πορτοφολιού σου (0x…). Οι θέσεις διαβάζονται δημόσια από το Hyperliquid, χωρίς κλειδιά και χωρίς σύνδεση πορτοφολιού. Το site δεν μπορεί να κάνει καμία συναλλαγή.": "Enter your wallet address (0x…). Positions are read publicly from Hyperliquid, with no keys and no wallet connection. The site cannot place any trade.",
+  "Διεύθυνση πορτοφολιού": "Wallet address",
+  "Όνομα": "Name",
+  "π.χ. Κύριο πορτοφόλι": "e.g. Main wallet",
+  "Προσθήκη": "Add",
+  "Παρακολούθηση θέσεων Perpetuals από το Hyperliquid": "Track perpetual positions from Hyperliquid",
+  "ζωντανά": "live",
+  "φόρτωση…": "loading…",
+  "Αξία λογαριασμού": "Account value",
+  "Μη πραγμ. Κ/Ζ": "Unrealized PnL",
+  "Περιθώριο σε χρήση": "Margin used",
+  "Διαθέσιμο για ανάληψη": "Withdrawable",
+  "Καμία ανοιχτή θέση αυτή τη στιγμή.": "No open positions right now.",
+  "Φόρτωση θέσεων…": "Loading positions…",
+  "Δεν ήταν δυνατή η ανάγνωση από το Hyperliquid. Ξαναδοκιμάζω σε λίγο.": "Could not read from Hyperliquid. Retrying shortly.",
+  "Συμβόλαιο": "Contract",
+  "Μέγεθος": "Size",
+  "Είσοδος": "Entry",
+  "Αξία θέσης": "Position value",
+  "Μόχλευση": "Leverage",
+  "Ρευστοποίηση": "Liq. price",
+  "Κ/Ζ (ROE)": "PnL (ROE)",
+  "Αφαίρεση": "Remove",
+  "Σίγουρα;": "Sure?",
+  "Το πορτοφόλι αφαιρέθηκε": "Wallet removed",
+  "Η διεύθυνση πρέπει να ξεκινά με 0x και να έχει 42 χαρακτήρες.": "The address must start with 0x and be 42 characters long.",
+  "Αυτή η διεύθυνση υπάρχει ήδη.": "This address is already added.",
   "Επεξεργασία": "Edit",
   "Αποθήκευση αλλαγών": "Save changes",
   "Η συναλλαγή ενημερώθηκε": "Transaction updated",
@@ -1398,6 +1455,8 @@ var EN_EXACT = {
 };
 var EN_RX = [
   [/^Ενημέρωση: (.+)$/, "Updated: $1"],
+  [/^ενημέρωση (\d.+)$/, "updated $1"],
+  [/^Προστέθηκε το πορτοφόλι (.+)$/, "Wallet $1 added"],
   [/^\+(\d+) ακόμη$/, "+$1 more"],
   [/^μ\.τ\. (.+)$/, "avg $1"],
   [/^κόστος (.+)$/, "cost $1"],
@@ -1559,7 +1618,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   var NAME_EN = {"ΑΑΑΚ": "Wool Industry Tria Alfa S.A.", "ΑΒΑΞ": "Avax S.A.", "ΑΒΕ": "AVE S.A.", "ΑΔΜΗΕ": "ADMIE (IPTO) Holding S.A.", "ΑΚΡΙΤ": "Akritas S.A.", "ΑΛΜΥ": "Alumil Aluminium Industry S.A.", "ΑΛΦΑ": "Alpha Services and Holdings S.A.", "ΑΝΔΡΟ": "Alpha Trust-Andromeda Investment Trust S.A.", "ΑΣΚΟ": "A.S. Company S.A.", "ΑΣΤΑΚ": "Alpha Astika Akinita S.A.", "ΑΤΕΚ": "Attica Publications S.A.", "ΑΤΤΙΚΑ": "Attica Holdings S.A.", "ΒΑΡΝΗ": "Varvaressos S.A.", "ΒΙΟ": "Viohalco S.A./N.V.", "ΒΙΟΚΑ": "Biokarpet S.A.", "ΒΙΟΣΚ": "Unibios Holdings S.A.", "ΒΙΟΤ": "Bioter S.A.", "ΒΙΣ": "Vis S.A.", "ΒΟΣΥΣ": "Voyatzoglou Systems S.A.", "ΓΕΒΚΑ": "General Commercial & Industrial S.A.", "ΓΕΚΤΕΡΝΑ": "GEK Terna S.A.", "ΔΑΙΟΣ": "Daios Plastics S.A.", "ΔΟΜΙΚ": "Domiki Kritis S.A.", "ΔΡΟΜΕ": "Dromeas S.A.", "ΕΒΡΟΦ": "Evrofarma S.A.", "ΕΕΕ": "Coca-Cola HBC AG", "ΕΚΤΕΡ": "Ekter S.A.", "ΕΛΒΕ": "Elve S.A.", "ΕΛΙΝ": "Elinoil Hellenic Petroleum Company S.A.", "ΕΛΛΑΚΤΩΡ": "Ellaktor S.A.", "ΕΛΠΕ": "Helleniq Energy Holdings S.A.", "ΕΛΣΤΡ": "Elastron S.A.", "ΕΛΤΟΝ": "Elton S.A.", "ΕΛΧΑ": "ElvalHalcor S.A.", "ΕΝΤΕΡ": "Entersoft S.A.", "ΕΠΣΙΛ": "Epsilon Net S.A.", "ΕΤΕ": "National Bank of Greece S.A.", "ΕΥΑΠΣ": "Thessaloniki Water & Sewerage S.A.", "ΕΥΔΑΠ": "Athens Water Supply & Sewerage S.A.", "ΕΥΡΩΒ": "Eurobank Ergasias Services and Holdings S.A.", "ΙΑΤΡ": "Athens Medical Group", "ΙΚΤΙΝ": "Iktinos Hellas S.A.", "ΙΛΥΔΑ": "Ilyda S.A.", "ΙΝΛΙΦ": "Interlife S.A.", "ΙΝΤΕΚ": "Ideal Holdings S.A.", "ΙΝΤΕΡΚΟ": "Intercontinental International REIC", "ΙΝΤΕΤ": "Intertech S.A.", "ΚΑΜΠ": "Reds S.A.", "ΚΕΚΡ": "Kekrops S.A.", "ΚΕΠΕΝ": "Kepenos Flour Mills S.A.", "ΚΟΡΔΕ": "Kordellos Bros S.A.", "ΚΡΕΚΑ": "Kre.Ka S.A.", "ΚΡΙ": "Kri-Kri Milk Industry S.A.", "ΚΤΗΛΑ": "Kostas Lazaridis S.A.", "ΛΑΒΙ": "Lavipharm S.A.", "ΛΑΜΔΑ": "Lamda Development S.A.", "ΛΑΝΑΚ": "Lanakam S.A.", "ΛΙΒΑΝ": "Livanis Publishing S.A.", "ΜΑΘΙΟ": "Mathios Refractory S.A.", "ΜΕΒΑ": "Mevaco S.A.", "ΜΕΡΚΟ": "Mermeren Kombinat A.D. Prilep", "ΜΙΓ": "MIG Holdings S.A.", "ΜΙΝ": "Minerva Knitwear S.A.", "ΜΛΣ": "MLS Multimedia S.A.", "ΜΟΗ": "Motor Oil Hellas Refineries S.A.", "ΜΟΝΤΑ": "N. Varveris - Moda Bagno S.A.", "ΜΟΤΟ": "Motodynamics S.A.", "ΜΟΥΖΚ": "El. D. Mouzakis S.A.", "ΜΠΕΛΑ": "Jumbo S.A.", "ΜΠΛΕΚΕΔΡΟΣ": "Mple Kedros REIC", "ΜΥΤΙΛ": "Mytilineos S.A.", "ΝΑΚΑΣ": "Nakas Music S.A.", "ΝΑΥΠ": "Nafpaktos Textile Industry S.A.", "ΟΛΘ": "Thessaloniki Port Authority S.A.", "ΟΛΥΜΠ": "Technical Olympic S.A.", "ΟΡΙΛΙΝΑ": "Orilina Properties REIC", "ΟΤΟΕΛ": "Autohellas S.A.", "ΠΑΙΡ": "E. Pairis S.A.", "ΠΑΠ": "Papoutsanis S.A.", "ΠΕΤΡΟ": "Petros Petropoulos S.A.", "ΠΛΑΚΡ": "Crete Plastics S.A.", "ΠΡΔ": "Proodeftiki Technical Company S.A.", "ΠΡΕΜΙΑ": "Premia REIC", "ΠΡΟΝΤΕΑ": "Prodea REIC S.A.", "ΠΡΟΦ": "Profile Systems & Software S.A.", "ΡΕΒΟΙΛ": "Revoil S.A.", "ΣΑΡ": "Gr. Sarantis S.A.", "ΣΑΤΟΚ": "Sato Office and Houseware Supplies S.A.", "ΣΙΔΜΑ": "Sidma Steel S.A.", "ΤΡΑΣΤΟΡ": "Trastor REIC", "ΤΡΕΣΤΑΤΕΣ": "Trade Estates REIC", "ΥΑΛΚΟ": "Yalco - Constantinou S.A.", "ΦΙΕΡ": "Fieratex S.A.", "ΦΛΕΞΟ": "Flexopack S.A.", "ΦΡΙΓΟ": "Frigoglass S.A.", "ΧΑΙΔΕ": "Haidemenos S.A.", "ΑΡΑΙΓ": "Aegean Airlines", "ΑΤΡΑΣΤ": "Alpha Trust Holdings S.A.", "ΕΠΙΛΚ": "Selected Textile Industries S.A.", "ΕΧΑΕ": "Athens Stock Exchange (ATHEX)", "ΙΝΤΚΑ": "Intracom Holdings S.A.", "ΚΑΡΕΛ": "Karelia Tobacco Company S.A.", "ΚΟΥΑΛ": "Quality and Reliability S.A.", "ΚΟΥΕΣ": "Quest Holdings S.A.", "ΛΑΜΨΑ": "Lampsa Hotel S.A.", "ΛΕΒΚ": "N. Leventeris S.A. (common)", "ΛΕΒΠ": "N. Leventeris S.A. (preferred)", "ΛΟΓΟΣ": "Logismos Information Systems S.A.", "ΛΟΥΛΗ": "Loulis Food Ingredients S.A.", "ΜΕΝΤΙ": "Medicon Hellas S.A.", "ΜΠΡΙΚ": "BriQ Properties REIC", "ΞΥΛΚ": "Interwood-Xylemporia (common)", "ΞΥΛΠ": "Interwood-Xylemporia (preferred)", "ΟΛΠ": "Piraeus Port Authority S.A.", "ΟΤΕ": "Hellenic Telecommunications Organisation (OTE)", "ΠΕΙΡ": "Piraeus Financial Holdings S.A.", "ΠΛΑΘ": "Thrace Plastics Holding S.A.", "ΣΕΝΤΡ": "Centric Holdings S.A.", "ΣΠΕΙΣ": "Space Hellas S.A.", "ΣΠΥΡ": "Spirou Agricultural House S.A.", "ΤΕΝΕΡΓ": "Terna Energy S.A.", "ΦΡΛΚ": "Fourlis Holdings S.A.", "ΔΕΗ": "PPC S.A.", "ΕΛΛ": "Bank of Greece", "ΔΑΑ": "Athens International Airport", "ΠΛΑΙΣ": "Plaisio Computers", "ΙΑΣΩ": "Iaso S.A.", "ΠΕΡΦ": "Performance Technologies", "ΕΥΠΙΚ": "European Reliance", "ΒΙΝΤΑ": "Vidavo S.A.", "ΑΝΕΚ": "ANEK Lines", "ΜΙΝΟΑ": "Minoan Lines", "ΣΠΙ": "CPI Computer Peripherals International", "ΤΖΚΑ": "Pipeworks L. Tzirakian Profil S.A.", "ΚΑΙΡΟΜΕΖ": "Cairo Mezz", "ΝΤΟΤΣΟΦΤ": "Dotsoft", "ΦΑΙΣ": "Fais Group", "ΦΟΥΝΤΛ": "Foodlink", "ΦΒΜΕΖΖ": "Phoenix Vega Mezz", "ΣΑΝΜΕΖΖ": "Sunrisemezz", "ΓΚΜΕΖΖ": "Galaxy Cosmos Mezz"};
   var SYM_BACK = {}; Object.keys(SYM_EN).forEach(function (k) { SYM_BACK[SYM_EN[k]] = k; });
   var EXTMETA = {};
-  function isExt(s) { return /^[cfm]:/.test(s || ""); }
+  function isExt(s) { return /^[cfmp]:/.test(s || ""); }
   /* λογότυπα (TradingView), με κλειδί και το ελληνικό και το λατινικό σύμβολο */
   var LOGO_D = {};
   (function () {
@@ -1626,7 +1685,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   if (CUR !== "EUR" && !FX[CUR]) CUR = "EUR";
   var RATE = CUR === "EUR" ? 1 : FX[CUR];
   var CS = CUR === "EUR" ? " €" : CUR === "USD" ? " $" : " CHF";
-  function fmtC(v) { var x = v * RATE; return (RATE !== 1 && Math.abs(x) >= 1 ? nf2 : nf).format(x) + CS; }
+  function fmtC(v) { var x = v * RATE; return ((RATE !== 1 && Math.abs(x) >= 1) || Math.abs(x) >= 100 ? nf2 : nf).format(x) + CS; }
   function sgn(v) { return v > 0.004 ? "+" : v < -0.004 ? "−" : ""; }
   function cls(v) { return v > 0.004 ? "up" : v < -0.004 ? "down" : "flat"; }
   function arrow(v) { return v > 0.004 ? "▲ " : v < -0.004 ? "▼ " : ""; }
@@ -1905,6 +1964,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   function loadLong(s) {
     var sym = s.sym, c = longCode(sym);
     if (LONG[sym] !== undefined) return;
+    if (/^p:/.test(sym)) { LONG[sym] = null; return; }
     if (isExt(sym)) { loadExtHist(sym); return; }
     if (!c || !canLong()) { LONG[sym] = null; return; }
     LONG[sym] = "loading";
@@ -2077,6 +2137,10 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   function saveLocal() { try { localStorage.setItem(LKEY, JSON.stringify(txns)); } catch (e) {} }
   function fixTx(list) { return (list || []).map(function (t) { if (t && LEGACY[t.sym]) { t = Object.assign({}, t, { sym: LEGACY[t.sym] }); } return t; }); }
   txns = fixTx(loadLocal());
+  var WKEY = "agora-wallets";
+  var wallets = (function () { try { var v = JSON.parse(localStorage.getItem(WKEY) || "[]"); return Array.isArray(v) ? v : []; } catch (e) { return []; } })();
+  function saveWallets() { try { localStorage.setItem(WKEY, JSON.stringify(wallets)); } catch (e) {} }
+  function setWallets(list) { if (Array.isArray(list)) { wallets = list.filter(function (w) { return w && /^0x[0-9a-f]{40}$/.test(w.a || ""); }); saveWallets(); } }
 
   function setStorageNote() {
     document.getElementById("pf-storage").textContent = pfMode === "db"
@@ -2086,8 +2150,9 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       : "Οι καταχωρήσεις αποθηκεύονται μόνο σε αυτόν τον browser.";
   }
   function persist() {
+    saveWallets();
     if (!pfRef) { saveLocal(); return Promise.resolve(); }
-    var body = { txns: txns.slice(), favs: Object.keys(favs), updated: Date.now() };
+    var body = { txns: txns.slice(), favs: Object.keys(favs), wallets: wallets.slice(), updated: Date.now() };
     pfWriting = pfWriting.then(function () { return pfRef.set(body); }).catch(function (e) {
       if (e && (e.code === "invalid_argument" || e.code === "revoked" || e.code === "not_granted" || e.code === "permission-denied")) { pfRef = null; pfMode = e.code === "permission-denied" ? "norules" : "local"; setStorageNote(); }
       toast(e && e.code === "quota_exceeded" ? "Ο χώρος αποθήκευσης γέμισε. Σβήσε κάποιες συναλλαγές." : "Η αποθήκευση στον λογαριασμό απέτυχε. Κρατήθηκε σε αυτόν τον browser.");
@@ -2124,6 +2189,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
           if (snap.exists) {
             var d = snap.data();
             txns = fixTx(Array.isArray(d.txns) ? d.txns.slice() : []);
+            if (Array.isArray(d.wallets)) setWallets(d.wallets);
             saveLocal(); renderPortfolio();
             if (!drawer.hidden && cur) paint();
           }
@@ -2294,13 +2360,17 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
               var before = Object.keys(f2).length;
               Object.keys(favs).forEach(function (s) { f2[s] = true; });
               txns = merged; favs = f2;
-              if (!snap.exists || merged.length !== remote.length || Object.keys(f2).length !== before) {
+              var rw = Array.isArray(d.wallets) ? d.wallets : [], wb = rw.length, seenW = {};
+              var mw = rw.concat(wallets).filter(function (w) { if (!w || seenW[w.a]) return false; seenW[w.a] = 1; return true; });
+              setWallets(mw);
+              if (!snap.exists || merged.length !== remote.length || Object.keys(f2).length !== before || mw.length !== wb) {
                 persist().then(function () { if (pfRef) { try { localStorage.removeItem(LKEY); } catch (e) {} } });
                 if (guest.length && merged.length !== remote.length) toast("Οι συναλλαγές αυτού του browser μεταφέρθηκαν στον λογαριασμό σου");
               }
             } else if (snap.exists && !snap.metadata.hasPendingWrites) {
               txns = fixTx(Array.isArray(d.txns) ? d.txns : []);
               var f3 = {}; (Array.isArray(d.favs) ? d.favs : []).forEach(function (s) { f3[fixSym(s)] = true; }); favs = f3;
+              if (Array.isArray(d.wallets)) setWallets(d.wallets);
             }
             renderPortfolio(); tabsHtml(); render();
             if (!drawer.hidden && cur) paint();
@@ -2420,6 +2490,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var k = sym.charAt(0), id = sym.slice(2);
     if (k === "c") window.open("https://www.coingecko.com/" + (LANG === "en" ? "en" : "el") + "/coins/" + encodeURIComponent(id), "_blank", "noopener");
     else if (k === "f") window.open("https://finance.yahoo.com/quote/" + encodeURIComponent(id), "_blank", "noopener");
+    else if (k === "p") { var el = document.getElementById("perps"); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }
     else openMp(sym);
   }
   /* ενημέρωση τιμής για «Άλλο» */
@@ -2451,15 +2522,91 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     return monoHtml(label || DS(sym));
   }
 
+  /* ----- Perpetuals από Hyperliquid (δημόσια ανάγνωση με διεύθυνση) ----- */
+  var HLS = {}, HLERR = {}, hlAt = 0, hlBusy = false, HLMID = {};
+  function usdEur() { var u = FX.USD || (FOREIGN && FOREIGN.fx && FOREIGN.fx.USD) || 1.1; return 1 / u; }
+  function shortA(a) { return a.slice(0, 6) + "…" + a.slice(-4); }
+  function hlPost(body) { return fetch("https://api.hyperliquid.xyz/info", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
+  function hlRefresh(force) {
+    if (!wallets.length || hlBusy || typeof fetch !== "function" || (!force && Date.now() - hlAt < 14000)) return;
+    hlBusy = true;
+    var before = JSON.stringify(HLS);
+    Promise.all([hlPost({ type: "allMids" }).then(function (m) { HLMID = m || {}; }).catch(function () {})].concat(wallets.map(function (w) {
+      return hlPost({ type: "clearinghouseState", user: w.a }).then(function (s) { HLS[w.a] = s; delete HLERR[w.a]; }).catch(function () { HLERR[w.a] = true; });
+    }))).then(function () {
+      hlAt = Date.now(); hlBusy = false;
+      if (!document.getElementById("view-portfolio").hidden && (force || JSON.stringify(HLS) !== before)) renderPortfolio();
+      else { var t = document.getElementById("hlAge"); if (t) t.textContent = hlAgeTxt(); }
+    });
+  }
+  function hlAgeTxt() { return hlAt ? "ενημέρωση " + new Date(hlAt).toLocaleTimeString(LOC, { hour: "2-digit", minute: "2-digit", second: "2-digit" }) : "φόρτωση…"; }
+  setInterval(function () { if (!document.hidden && !document.getElementById("view-portfolio").hidden) hlRefresh(); }, 15000);
+  function hlPositions(s) { return ((s && s.assetPositions) || []).map(function (p) { return p.position || p; }).filter(function (p) { return p && +p.szi; }); }
+  function addPerps(H) {
+    var u = usdEur(), pv = 0, pc = 0;
+    wallets.forEach(function (w) {
+      var s = HLS[w.a]; if (!s || !s.marginSummary) return;
+      var av = +s.marginSummary.accountValue || 0, up = 0;
+      hlPositions(s).forEach(function (p) { up += +p.unrealizedPnl || 0; });
+      var v = av * u, c = (av - up) * u;
+      EXTMETA["p:" + w.a] = { s: "HL", n: w.n || "Hyperliquid" };
+      H.list.push({ sym: "p:" + w.a, perp: true, w: w, st: s, qty: 1, price: v, value: v, cost: c, avg: c, pl: v - c, plPct: c ? (v - c) / c * 100 : 0, day: 0, realized: 0, row: null });
+      pv += v; pc += c;
+    });
+    if (!pv && !pc) return;
+    H.value += pv; H.cost += pc; H.unreal = H.value - H.cost; H.prevValue = H.value - H.day; H.pv = pv; H.pc = pc;
+    H.list.forEach(function (h) { h.weight = H.value ? h.value / H.value * 100 : 0; });
+    H.list.sort(function (a, b) { return b.value - a.value; });
+  }
+  function perpsHtml() {
+    if (!wallets.length || pfOff.p) return "";
+    var u = usdEur();
+    return '<div class="dk dktable tablewrap perps" id="perps"><div class="perphead"><h2>Perpetuals · Hyperliquid</h2><span class="note"><span class="livedot" aria-hidden="true"></span><span>ζωντανά</span> · <span id="hlAge">' + hlAgeTxt() + "</span></span></div>" +
+      wallets.map(function (w) {
+        var s = HLS[w.a], ps = hlPositions(s), up = 0, head = '<div class="pwtop"><b>' + esc(w.n || "Hyperliquid") + "</b><code>" + esc(shortA(w.a)) + '</code><a href="https://app.hyperliquid.xyz/explorer/address/' + esc(w.a) + '" target="_blank" rel="noopener">Explorer ↗</a><button type="button" class="xbtn" data-hlrm="' + esc(w.a) + '">Αφαίρεση</button></div>';
+        if (!s) return '<div class="pw">' + head + '<p class="note">' + (HLERR[w.a] ? "Δεν ήταν δυνατή η ανάγνωση από το Hyperliquid. Ξαναδοκιμάζω σε λίγο." : "Φόρτωση θέσεων…") + "</p></div>";
+        ps.forEach(function (p) { up += +p.unrealizedPnl || 0; });
+        var ms = s.marginSummary || {}, av = +ms.accountValue || 0;
+        var k = '<div class="pwk"><div><span>Αξία λογαριασμού</span><b class="sens">' + eur(av * u) + '</b></div><div><span>Μη πραγμ. Κ/Ζ</span><b class="sens chg ' + cls(up) + '">' + sgn(up) + nf2.format(Math.abs(up * u) * RATE) + CS + '</b></div><div><span>Περιθώριο σε χρήση</span><b class="sens">' + eur((+ms.totalMarginUsed || 0) * u) + '</b></div><div><span>Διαθέσιμο για ανάληψη</span><b class="sens">' + eur((+s.withdrawable || 0) * u) + "</b></div></div>";
+        if (!ps.length) return '<div class="pw">' + head + k + '<p class="note">Καμία ανοιχτή θέση αυτή τη στιγμή.</p></div>';
+        var rowsH = ps.sort(function (a, b) { return Math.abs(+b.positionValue) - Math.abs(+a.positionValue); }).map(function (p) {
+          var sz = +p.szi, long = sz > 0, mark = +(HLMID[p.coin] || 0) || (Math.abs(+p.positionValue) / Math.abs(sz)), pnl = +p.unrealizedPnl || 0, roe = (+p.returnOnEquity || 0) * 100;
+          var lev = p.leverage ? (p.leverage.value + "x " + (p.leverage.type === "isolated" ? "isolated" : "cross")) : "—";
+          return '<tr><td class="l"><b>' + esc(p.coin) + '</b> <span class="lsb ' + (long ? "long" : "short") + '">' + (long ? "LONG" : "SHORT") + '</span></td><td class="num hide-s sens">' + nfQ.format(Math.abs(sz)) + '</td><td class="num hide-s">' + fmtC(+p.entryPx * u) + '</td><td class="num">' + fmtC(mark * u) + '</td><td class="num hide-s sens">' + eur(Math.abs(+p.positionValue) * u) + '</td><td class="num hide-s">' + esc(lev) + '</td><td class="num hide-s">' + (p.liquidationPx ? fmtC(+p.liquidationPx * u) : "—") + '</td><td class="num"><span class="sens chg ' + cls(pnl) + '">' + sgn(pnl) + nf2.format(Math.abs(pnl * u) * RATE) + CS + '</span><span class="sub2 chg ' + cls(roe) + '">' + sgn(roe) + nf2.format(Math.abs(roe)) + "%</span></td></tr>";
+        }).join("");
+        return '<div class="pw">' + head + k + '<table><thead><tr><th class="l">Συμβόλαιο</th><th class="hide-s">Μέγεθος</th><th class="hide-s">Είσοδος</th><th>Τιμή</th><th class="hide-s">Αξία θέσης</th><th class="hide-s">Μόχλευση</th><th class="hide-s">Ρευστοποίηση</th><th>Κ/Ζ (ROE)</th></tr></thead><tbody>' + rowsH + "</tbody></table></div>";
+      }).join("") + "</div>";
+  }
+  (function () {
+    var box = document.getElementById("hlBox"), scr = document.getElementById("hlScrim"), last = null;
+    function open() { last = document.activeElement; document.getElementById("hlErr").textContent = ""; document.getElementById("hlAddr").value = ""; document.getElementById("hlName").value = ""; box.hidden = false; scr.hidden = false; document.getElementById("hlAddr").focus(); }
+    function close() { box.hidden = true; scr.hidden = true; if (last && last.focus) last.focus(); }
+    document.getElementById("pf-hl").addEventListener("click", open);
+    document.getElementById("hlClose").addEventListener("click", close);
+    document.getElementById("hlCancel").addEventListener("click", close);
+    scr.addEventListener("click", close);
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !box.hidden) close(); });
+    box.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var a = document.getElementById("hlAddr").value.trim().toLowerCase(), n = document.getElementById("hlName").value.trim().slice(0, 40);
+      if (!/^0x[0-9a-f]{40}$/.test(a)) { document.getElementById("hlErr").textContent = "Η διεύθυνση πρέπει να ξεκινά με 0x και να έχει 42 χαρακτήρες."; return; }
+      if (wallets.some(function (w) { return w.a === a; })) { document.getElementById("hlErr").textContent = "Αυτή η διεύθυνση υπάρχει ήδη."; return; }
+      wallets.push({ a: a, n: n || null }); delete pfOff.p;
+      close(); persist(); renderPortfolio(); hlRefresh(true); toast("Προστέθηκε το πορτοφόλι " + shortA(a));
+    });
+  })();
+
   /* ----- φίλτρο κατηγοριών χαρτοφυλακίου ----- */
-  var PF_KINDS = [["gr", "Χ.Α."], ["f", "Ξένες μετοχές"], ["c", "Crypto"], ["m", "Άλλο"]];
+  var PF_KINDS = [["gr", "Χ.Α."], ["f", "Ξένες μετοχές"], ["c", "Crypto"], ["p", "Perpetuals"], ["m", "Άλλο"]];
   function kindOf(sym) { return isExt(sym) ? sym.charAt(0) : "gr"; }
+  function kindExists(k) { return k === "p" ? wallets.length > 0 : txns.some(function (t) { return kindOf(t.sym) === k; }); }
   var pfOff = (function () { try { return JSON.parse(localStorage.getItem("agora-pfoff") || "{}") || {}; } catch (e) { return {}; } })();
   function pfTx() { return txns.filter(function (t) { return !pfOff[kindOf(t.sym)]; }); }
-  function pfH() { return holdings(pfTx()); }
+  function pfH() { var H = holdings(pfTx()); if (!pfOff.p) addPerps(H); return H; }
   function filterBar() {
     var cnt = {}; holdings().list.forEach(function (h) { var k = kindOf(h.sym); cnt[k] = (cnt[k] || 0) + 1; });
-    var present = PF_KINDS.filter(function (k) { return cnt[k[0]] || txns.some(function (t) { return kindOf(t.sym) === k[0]; }); });
+    cnt.p = wallets.length;
+    var present = PF_KINDS.filter(function (k) { return cnt[k[0]] || kindExists(k[0]); });
     if (present.length < 2) return "";
     var allOn = present.every(function (k) { return !pfOff[k[0]]; });
     return '<div class="pffilter" role="group" aria-label="Κατηγορίες που συμμετέχουν"><span class="note">Συμμετέχουν:</span>' +
@@ -2499,7 +2646,8 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       });
       out.push({ x: d, v: v, c: c2 });
     });
-    if (out.length) { var lp = out[out.length - 1]; if (!HDAYS.length || lp.x >= HDAYS[HDAYS.length - 1]) { lp.v = H.value; lp.c = H.cost; } else out.push({ x: HDAYS[HDAYS.length - 1], v: H.value, c: H.cost }); }
+    var HV = H.value - (H.pv || 0), HC = H.cost - (H.pc || 0);
+    if (out.length) { var lp = out[out.length - 1]; if (!HDAYS.length || lp.x >= HDAYS[HDAYS.length - 1]) { lp.v = HV; lp.c = HC; } else out.push({ x: HDAYS[HDAYS.length - 1], v: HV, c: HC }); }
     return out;
   }
   function pfIntraday(H) {
@@ -2507,6 +2655,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     for (var i = 0; i < IT.length; i++) {
       var v = 0, ok = false;
       H.list.forEach(function (h) {
+        if (h.perp) return;
         var a = IPX[h.sym] || [], p = null;
         for (var j = i; j >= 0 && p == null; j--) p = a[j];
         if (p == null) p = h.row ? h.row.prev || h.price : h.price; else ok = true;
@@ -2514,7 +2663,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       });
       if (ok) out.push({ x: IT[i], v: v, c: H.cost });
     }
-    if (out.length) out[out.length - 1].v = H.value;
+    if (out.length) out[out.length - 1].v = H.value - (H.pv || 0);
     return out;
   }
   function pfRangePts(H, r) {
@@ -2625,7 +2774,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var H = pfH(), L = [];
     L.push([en ? "HOLDINGS" : "ΘΕΣΕΙΣ"]);
     L.push(en ? ["Symbol", "Name", "Shares", "Avg cost (EUR)", "Price (EUR)", "Value (EUR)", "P/L (EUR)", "P/L %", "Share %"] : ["Σύμβολο", "Όνομα", "Τεμάχια", "Μέση τιμή (€)", "Τιμή (€)", "Αξία (€)", "Κ/Ζ (€)", "Κ/Ζ %", "Μερίδιο %"]);
-    H.list.forEach(function (h) { L.push([DS(h.sym), h.row ? h.row.name : "", n(h.qty), n(h.avg), n(h.price), n(h.value, 2), n(h.pl, 2), n(h.plPct, 2), n(h.weight, 2)]); });
+    H.list.filter(function (h) { return !h.perp; }).forEach(function (h) { L.push([DS(h.sym), h.row ? h.row.name : "", n(h.qty), n(h.avg), n(h.price), n(h.value, 2), n(h.pl, 2), n(h.plPct, 2), n(h.weight, 2)]); });
     L.push([]);
     L.push([en ? "TRANSACTIONS" : "ΣΥΝΑΛΛΑΓΕΣ"]);
     L.push(en ? ["Date", "Type", "Symbol", "Shares", "Price (EUR)", "Total (EUR)"] : ["Ημερομηνία", "Είδος", "Σύμβολο", "Τεμάχια", "Τιμή (€)", "Σύνολο (€)"]);
@@ -2657,7 +2806,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
         var k = fk.getAttribute("data-pfk");
         if (k === "all") pfOff = {};
         else {
-          var on = PF_KINDS.filter(function (x) { return !pfOff[x[0]] && txns.some(function (t) { return kindOf(t.sym) === x[0]; }); });
+          var on = PF_KINDS.filter(function (x) { return !pfOff[x[0]] && kindExists(x[0]); });
           if (pfOff[k]) delete pfOff[k]; else if (on.length > 1) pfOff[k] = true;
         }
         try { localStorage.setItem("agora-pfoff", JSON.stringify(pfOff)); } catch (er) {}
@@ -2693,12 +2842,12 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   document.getElementById("q").setAttribute("title", "Πάτα / από οπουδήποτε για γρήγορη αναζήτηση");
   function renderPortfolio() {
     var H = pfH();
-    if (!txns.length) {
+    if (!txns.length && !wallets.length) {
       pfBody.innerHTML = '<div class="panel pempty"><h3>Το χαρτοφυλάκιο είναι άδειο</h3><p>Πρόσθεσε μια εικονική αγορά για να παρακολουθείς αξία, κέρδος και κατανομή με τις τιμές της σελίδας. Μπορείς επίσης να πατήσεις μια μετοχή στην Αγορά και «+ Στο χαρτοφυλάκιο».</p><button type="button" class="btn primary" data-act="add">+ Προσθήκη πρώτης συναλλαγής</button></div>';
       return;
     }
     var fbar = filterBar();
-    if (!pfTx().length) {
+    if (!pfTx().length && !(wallets.length && !pfOff.p)) {
       pfBody.innerHTML = fbar + '<div class="panel pempty"><h3>Καμία θέση σε αυτές τις κατηγορίες</h3><p>Ενεργοποίησε κάποια από τις κατηγορίες παραπάνω.</p></div>';
       return;
     }
@@ -2748,6 +2897,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       th("sym", "Μετοχή", ' class="l"') + th("qty", "Τεμάχια", ' class="hide-s"') + th("price", "Τιμή", ' class="hide-s"') + th("chg", "24ω") + th("value", "Αξία") + th("pl", "Κ/Ζ", ' class="hide-s"') + th("weight", "Μερίδιο", ' class="hide-s"') +
       "</tr></thead><tbody>" +
       sorted.map(function (h) {
+        if (h.perp) return '<tr tabindex="0" data-pfs="' + esc(h.sym) + '"><td class="l"><div class="who">' + monoHtml("HL") + "<div><b>" + esc(h.w.n || "Hyperliquid") + "</b><span>" + esc(shortA(h.w.a)) + ' · Perpetuals</span></div></div></td><td class="num hide-s">—</td><td class="num hide-s">—</td><td>—</td><td class="num"><b class="sens">' + eur(h.value) + '</b><span class="sub2 show-s chg ' + cls(h.pl) + ' sens">' + sgn(h.pl) + nf2.format(Math.abs(h.pl) * RATE) + CS + '</span></td><td class="hide-s"><span class="sens">' + eurS(h.pl) + '</span><span class="sub2 chg ' + cls(h.plPct) + '">' + sgn(h.plPct) + nf2.format(Math.abs(h.plPct)) + '%</span></td><td class="hide-s"><div class="dkshare"><span class="num">' + nf2.format(h.weight) + '%</span><i><u style="width:' + Math.max(1, h.weight) + '%"></u></i></div></td></tr>';
         var sub = esc(DS(h.sym)) + (h.row && h.row.sector ? " · " + esc(trS(h.row.sector)) : "");
         return '<tr tabindex="0" data-pfs="' + esc(h.sym) + '"><td class="l"><div class="who">' + assetIcon(h.sym) + "<div><b>" + esc(h.row && h.row.name ? h.row.name : DS(h.sym)) + "</b><span>" + sub + "</span></div></div></td>" +
           '<td class="num hide-s sens">' + fmtQty(h.qty) + '</td><td class="num hide-s">' + fmtC(h.price) + "<span class=\"sub2 note sens\">μ.τ. " + fmtC(h.avg) + "</span></td>" +
@@ -2761,12 +2911,18 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       pfTx().sort(function (a, b) { return (b.date || "").localeCompare(a.date || "") || (b.ts || 0) - (a.ts || 0); }).map(function (t) {
         return '<tr><td class="l num hide-s">' + fmtDate(t.date) + '</td><td class="l"><span class="side ' + (t.side === "sell" ? "sell" : "buy") + '">' + (t.side === "sell" ? "Πώληση" : "Αγορά") + '</span></td><td class="l"><b>' + esc(DS(t.sym)) + '</b></td><td class="num hide-s sens">' + fmtQty(t.qty) + '</td><td class="num hide-s">' + fmtC(effP(t)) + '</td><td class="num sens">' + eur(t.qty * effP(t)) + '</td><td style="white-space:nowrap"><button type="button" class="xbtn" data-edit="' + esc(t.id) + '" aria-label="Επεξεργασία συναλλαγής ' + esc(DS(t.sym)) + " " + fmtDate(t.date) + '">Επεξεργασία</button><button type="button" class="xbtn" data-del="' + esc(t.id) + '" aria-label="Διαγραφή συναλλαγής ' + esc(DS(t.sym)) + " " + fmtDate(t.date) + '">Διαγραφή</button></td></tr>';
       }).join("") + "</tbody></table></div>";
-    pfBody.innerHTML = stats + table + hist + '<p class="foot">Το κόστος υπολογίζεται με τη μέση τιμή αγοράς. Οι αξίες υπολογίζονται με τις τιμές της σελίδας (καθυστέρηση 15 λεπτών). Είναι εικονικό χαρτοφυλάκιο για παρακολούθηση, όχι επενδυτική συμβουλή.</p>';
+    pfBody.innerHTML = stats + table + perpsHtml() + hist + '<p class="foot">Το κόστος υπολογίζεται με τη μέση τιμή αγοράς. Οι αξίες υπολογίζονται με τις τιμές της σελίδας (καθυστέρηση 15 λεπτών). Είναι εικονικό χαρτοφυλάκιο για παρακολούθηση, όχι επενδυτική συμβουλή.</p>';
     if (H.list.length) { H.list.forEach(function (h) { if (h.row) loadLong(h.row); }); pfDraw(H); }
-    refreshCrypto();
+    refreshCrypto(); hlRefresh();
   }
   pfBody.addEventListener("click", function (e) {
     if (e.target.closest('[data-act="add"]')) { openForm("", "buy"); return; }
+    var rm = e.target.closest("[data-hlrm]");
+    if (rm) {
+      if (rm.getAttribute("data-armed")) { var a = rm.getAttribute("data-hlrm"); wallets = wallets.filter(function (w) { return w.a !== a; }); delete HLS[a]; persist(); renderPortfolio(); toast("Το πορτοφόλι αφαιρέθηκε"); }
+      else { rm.setAttribute("data-armed", "1"); rm.textContent = "Σίγουρα;"; rm.classList.add("danger"); setTimeout(function () { if (document.body.contains(rm)) { rm.removeAttribute("data-armed"); rm.textContent = "Αφαίρεση"; rm.classList.remove("danger"); } }, 3500); }
+      return;
+    }
     var ed = e.target.closest("[data-edit]");
     if (ed) { openEdit(ed.getAttribute("data-edit")); return; }
     var del = e.target.closest("[data-del]");
