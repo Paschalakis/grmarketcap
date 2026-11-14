@@ -1,16 +1,59 @@
-ΕΤΕ tv button count 1
-ΕΤΕ tvbox html <div class="tradingview-widget-container" style="height: 100%; width: 100%;"><iframe scrolling="no" allowtransparency="true" frameborder="0" src="https://www.tradingview-widget.com/embed-widget/advanced-chart/?locale=en#%7B%22autosize%22%3Atrue%2C%22symbol%22%3A%22ATHEX%3AETE%22%2C%22interval%22%3A%22D%22%2C%22timezone%22%3A%22Europe%2FAthens%22%2C%22theme%22%3A%22dark%22%2C%22style%22%3A%221%22%2C%22backgroundColor%22%3A%22rgba(38%2C%2044%2C%2056%2C%201)%22%2C%22gridColor%22%3A%22rgba(54%2C%2062%2C%2077%2C%200.6)%22%2C%22hide_side_toolbar%22%3Afalse%2C%22allow_symbol_change%22%3Afalse%2C%22wi
-ΕΤΕ frames [
-  'https://www.tradingview-widget.com/embed-widget/advanced-chart/?locale=en#%7B%22autosize%22%3Atrue%2C%22symbol%22%3A%22ATHEX%3AETE%22%2C%22interval%22%3A%22D%22'
-]
-ΕΤΕ frame text: 1m 30m 1h D Indicators E National Bank of Greece S.A. 1D Euronext Athens O 17.360 H 17.690 L 17.360 C 17.440 −0.080 (−0.46%) Vol 2.51 M 1D 5D 1M 3M 6M YTD 1Y 5Y All 11:58:37 UTC+2 ADJ
-ΕΤΕ tvbox size {"x":747,"y":225,"width":599,"height":460}
-failed: https://widget-sheriff.tradingview-widget.com/sheriff/api/v1/rules/search?origin=https%3A%2F%2Fpaschalakis.github.io net::ERR_ABORTED
-ΕΤΕ tv button count 1
-ΕΤΕ tvbox html <div class="tradingview-widget-container" style="height: 100%; width: 100%;"><iframe scrolling="no" allowtransparency="true" frameborder="0" src="https://www.tradingview-widget.com/embed-widget/advanced-chart/?locale=en#%7B%22autosize%22%3Atrue%2C%22symbol%22%3A%22ATHEX%3AETE%22%2C%22interval%22%3A%22D%22%2C%22timezone%22%3A%22Europe%2FAthens%22%2C%22theme%22%3A%22dark%22%2C%22style%22%3A%221%22%2C%22backgroundColor%22%3A%22rgba(38%2C%2044%2C%2056%2C%201)%22%2C%22gridColor%22%3A%22rgba(54%2C%2062%2C%2077%2C%200.6)%22%2C%22hide_side_toolbar%22%3Afalse%2C%22allow_symbol_change%22%3Afalse%2C%22wi
-ΕΤΕ frames [
-  'https://www.tradingview-widget.com/embed-widget/advanced-chart/?locale=en#%7B%22autosize%22%3Atrue%2C%22symbol%22%3A%22ATHEX%3AETE%22%2C%22interval%22%3A%22D%22'
-]
-ΕΤΕ frame text: 1m 30m 1h D E National Bank of Greece S.A. C 17.440 −0.080 (−0.46%) Vol 2.51 M Date Range 11:58:52 UTC+2 ADJ
-ΕΤΕ tvbox size {"x":17,"y":325.53125,"width":357,"height":360}
-failed: https://widget-sheriff.tradingview-widget.com/sheriff/api/v1/rules/search?origin=https%3A%2F%2Fpaschalakis.github.io net::ERR_ABORTED
+US rows 100 1 AA Apple Inc. AAPL · NASDAQ 323.05 € ▲ +0.39% ▲ +5.18% 4.69 τρισ. € 40.03 m +
+C rows 100 1 BT Bitcoin BTC 60,963.00 € ▼ −0.19% ▼ −2.75% ▼ −11.51% 1.23 τρισ. € 29.54 bn € + | 
+cg 200 https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&order=market_cap_desc&per_p
+cg 200 https://coin-images.coingecko.com/coins/images/825/large/bnb-icon2_2x.png?1696501970
+cg 200 https://coin-images.coingecko.com/coins/images/1/large/bitcoin.png?1696501400
+cg 200 https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661
+cg 200 https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602
+cg 200 https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628
+cg 200 https://coin-images.coingecko.com/coins/images/68480/large/figure.png?1755863954
+cg 200 https://coin-images.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png?169650144
+cg 200 https://coin-images.coingecko.com/coins/images/4128/large/solana.png?1718769756
+cg 200 https://coin-images.coingecko.com/coins/images/780/large/bitcoin-cash-circle.png?169650193
+cg 200 https://coin-images.coingecko.com/coins/images/2/large/litecoin.png?1696501400
+cg 200 https://coin-images.coingecko.com/coins/images/1094/large/photo_2026-04-13_09-59-16.png?17
+cg 200 https://coin-images.coingecko.com/coins/images/486/large/Brandmark-Yellow_%281%29.png?1785
+cg 200 https://coin-images.coingecko.com/coins/images/27045/large/wbt_token.png?1696526096
+cg 200 https://coin-images.coingecko.com/coins/images/8418/large/leo-token.png?1696508607
+cg 200 https://coin-images.coingecko.com/coins/images/12504/large/uniswap-logo.png?1720676669
+cg 200 https://coin-images.coingecko.com/coins/images/26375/large/sui-ocean-square.png?1727791290
+cg 200 https://coin-images.coingecko.com/coins/images/975/large/cardano.png?1696502090
+cg 200 https://coin-images.coingecko.com/coins/images/50882/large/hyperliquid.jpg?1729431300
+cg 200 https://coin-images.coingecko.com/coins/images/69/large/monero_logo.png?1696501460
+cg 200 https://coin-images.coingecko.com/coins/images/5/large/dogecoin.png?1696501409
+cg 200 https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683
+cg 200 https://coin-images.coingecko.com/coins/images/877/large/Chainlink_Logo_500.png?1760023405
+cg 200 https://coin-images.coingecko.com/coins/images/100/large/fmpFRHHQ_400x400.jpg?1735231350
+cg 200 https://coin-images.coingecko.com/coins/images/33613/large/usde.png?1733810059
+cg 200 https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996
+cg 200 https://coin-images.coingecko.com/coins/images/10365/large/near.jpg?1696510367
+cg 200 https://coin-images.coingecko.com/coins/images/12559/large/Avalanche_Circle_RedWhite_Trans
+cg 200 https://coin-images.coingecko.com/coins/images/70468/large/Canton-Ticker_%281%29.png?17628
+cg 200 https://coin-images.coingecko.com/coins/images/10481/large/logo.png?1774627372
+cg 200 https://coin-images.coingecko.com/coins/images/17980/large/Gram_Circular_Badge.png?1781524
+cg 200 https://coin-images.coingecko.com/coins/images/54977/large/USD1_1000x1000_transparent.png?
+cg 200 https://coin-images.coingecko.com/coins/images/39651/large/RLUSD_200x200_%281%29.png?17273
+cg 200 https://coin-images.coingecko.com/coins/images/3688/large/hbar.png?1696504364
+cg 200 https://coin-images.coingecko.com/coins/images/51281/large/GDN_USDG_Token_200x200.png?1730
+cg 200 https://coin-images.coingecko.com/coins/images/69134/large/Rain_logo_1_.png?1762952191
+cg 200 https://coin-images.coingecko.com/coins/images/31212/large/PYUSD_Token_Logo_2x.png?1765987
+cg 200 https://coin-images.coingecko.com/coins/images/11939/large/shiba.png?1696511800
+cg 200 https://coin-images.coingecko.com/coins/images/28452/large/ARUsPeNQ_400x400.jpeg?169652744
+cg 200 https://coin-images.coingecko.com/coins/images/31700/large/usdy_%281%29.png?1696530524
+cg 200 https://coin-images.coingecko.com/coins/images/7310/large/CRO.png?1794186148
+cg 200 https://coin-images.coingecko.com/coins/images/3370/large/5ZOu7brX_400x400.jpg?1696504070
+cg 200 https://coin-images.coingecko.com/coins/images/51054/large/Hashnote_SDYC_200x200.png?17303
+cg 200 https://coin-images.coingecko.com/coins/images/102172591/large/Fund_eurSAF0.png?1774104814
+cg 200 https://coin-images.coingecko.com/coins/images/53247/large/square-bg-transparent.png?17526
+cg 200 https://coin-images.coingecko.com/coins/images/4463/large/WeChat_Image_20220118095654.png?
+cg 200 https://coin-images.coingecko.com/coins/images/29850/large/pepe-token.jpeg?1696528776
+cg 200 https://coin-images.coingecko.com/coins/images/9519/large/asset-paxg.png?1785284785
+cg 200 https://coin-images.coingecko.com/coins/images/54558/large/ff_200_X_200.png?1740741076
+cg 200 https://coin-images.coingecko.com/coins/images/36530/large/ethena.png?1711701436
+cg 200 https://coin-images.coingecko.com/coins/images/12645/large/aave-token-round.png?1720472354
+cg 200 https://coin-images.coingecko.com/coins/images/69040/large/_ASTER.png?1757326782
+cg 200 https://coin-images.coingecko.com/coins/images/36291/large/blackrock.png?1711013223
+cg 200 https://coin-images.coingecko.com/coins/images/71157/large/united-stables-logo.jpg?1766061
+cg 200 https://coin-images.coingecko.com/coins/images/26580/large/ONDO.png?1696525656
+cg 200 https://coin-images.coingecko.com/coins/images/50767/large/wlfi.png?1756438915
+cg 200 https://coin-images.coingecko.com/coins/images/67164/large/pump.jpg?1751949376
