@@ -447,6 +447,36 @@ body.pfhide .sens { filter: blur(9px); user-select: none; }
 .lsb { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 11.5px; font-weight: 700; }
 .lsb.long { background: var(--up-soft); color: var(--up); }
 .lsb.short { background: var(--down-soft); color: var(--down); }
+.xacts { display: flex; flex-wrap: wrap; gap: 8px; }
+.xacts .btn { height: 36px; }
+.xacts .btn[aria-pressed="true"] { color: #f1c24b; border-color: #f1c24b; }
+.xdh { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.xdh .mono { width: 40px; height: 40px; flex: none; }
+.xchart { position: relative; height: 280px; touch-action: pan-y; flex: none; }
+@media (max-width: 640px) { .xchart { height: 220px; } }
+.xchart svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.xchart .cur { position: absolute; top: 0; bottom: 0; width: 1px; background: linear-gradient(var(--accent), transparent); pointer-events: none; display: none; }
+.xchart .dot { position: absolute; width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft), 0 0 18px var(--accent); pointer-events: none; display: none; }
+.xchart .tip { position: absolute; top: 4px; transform: translateX(-50%); background: var(--surface); border: 1px solid var(--dk-line); border-radius: 10px; padding: 6px 10px; font-size: 12px; white-space: nowrap; pointer-events: none; display: none; box-shadow: 0 8px 24px rgba(0, 0, 0, .25); z-index: 2; }
+.xchart .tip b { display: block; font-size: 14px; }
+.xchart .msg { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: 13px; text-align: center; padding: 0 20px; }
+#favx { display: flex; flex-direction: column; gap: 14px; }
+#favx h3 { font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: 8px 8px 10px; margin: 0; }
+#favx tr { cursor: pointer; }
+#favx td .chg { display: inline-flex; padding: 3px 9px; border-radius: 8px; font-size: 12.5px; }
+#favx td .chg.up { background: var(--up-soft); }
+#favx td .chg.down { background: var(--down-soft); }
+#favx .tablewrap { overflow-x: auto; }
+@media (max-width: 640px) {
+  #favx .tablewrap { padding: 6px; }
+  #favx .who { gap: 8px; }
+  #favx .who b, #favx .who span { display: block; max-width: 22vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #favx td, #favx th { padding: 10px 4px !important; white-space: nowrap; }
+  #favx td .chg { padding: 2px 5px; font-size: 11.5px; }
+  #favx .mono { width: 28px; height: 28px; font-size: 11px; }
+  #favx .price { font-size: 13px; }
+  #view-favs #favx .starcol { width: 26px; }
+}
 .mktsw { align-self: flex-start; }
 #view-market[data-mkt="us"] > *:not(.mktsw):not(#xlist), #view-market[data-mkt="c"] > *:not(.mktsw):not(#xlist) { display: none !important; }
 .xlist { display: flex; flex-direction: column; gap: 14px; }
@@ -726,6 +756,7 @@ th[aria-sort] button { color: var(--accent); }
         <tbody id="favrows"></tbody>
       </table>
     </div>
+    <div id="favx"></div>
     <div class="panel pempty" id="favempty" hidden><h3>Δεν έχεις αγαπημένες μετοχές</h3><p>Πάτα το ☆ δίπλα σε μια μετοχή στη λίστα «Μετοχές» ή στη σελίδα της μετοχής, και θα εμφανιστεί εδώ.</p><button type="button" class="btn primary" id="favgo">Δες τις μετοχές</button></div>
   </div>
 
@@ -1345,6 +1376,27 @@ var EN_EXACT = {
   "Εντάξει": "OK",
   "Γραμμή": "Line",
   "Χάρτης": "Heatmap",
+  "★ Στα αγαπημένα": "★ In favourites",
+  "+ Στο Χαρτοφυλάκιο": "+ Add to portfolio",
+  "24 ώρες": "24 hours",
+  "1 ώρα": "1 hour",
+  "24ω": "24h",
+  "7Η": "7D",
+  "Κατάταξη": "Rank",
+  "Υψηλό 24ω": "24h high",
+  "Χαμηλό 24ω": "24h low",
+  "Ιστορικό υψηλό": "All-time high",
+  "Σε κυκλοφορία": "Circulating supply",
+  "Μέγιστη προσφορά": "Max supply",
+  "Χρηματιστήριο": "Exchange",
+  "στο διάστημα": "in this period",
+  "Φόρτωση διαγράμματος…": "Loading chart…",
+  "Το διάγραμμα δεν είναι διαθέσιμο τώρα. Δοκίμασε ξανά σε λίγο.": "The chart is unavailable right now. Try again shortly.",
+  "Δεν υπάρχουν στοιχεία για αυτό το διάστημα.": "No data for this period.",
+  "Το διάγραμμα είναι διαθέσιμο στο δημόσιο site.": "The chart is available on the public site.",
+  "Τιμές και διάγραμμα από το CoinGecko.": "Prices and chart from CoinGecko.",
+  "Τιμή με καθυστέρηση, ενημέρωση κάθε ώρα. Διάγραμμα από το TradingView.": "Delayed price, updated hourly. Chart from TradingView.",
+  "Διάγραμμα τιμής": "Price chart",
   "Ελλάδα": "Greece",
   "ΗΠΑ": "US",
   "Αγορά": "Market",
@@ -1506,6 +1558,9 @@ var EN_EXACT = {
 };
 var EN_RX = [
   [/^Ενημέρωση: (.+)$/, "Updated: $1"],
+  [/^Κρυπτονόμισμα( · #\d+)?$/, "Cryptocurrency$1"],
+  [/^(.+) · Ξένη μετοχή$/, "$1 · Foreign stock"],
+  [/^Τιμή σε (.+)$/, "Price in $1"],
   [/^Ζωντανές τιμές από το CoinGecko, ενημέρωση κάθε λεπτό(?: · τελευταία (.+))?\.$/, function (m, a) { return "Live prices from CoinGecko, updated every minute" + (a ? " · last " + a : "") + "."; }],
   [/^Κατάταξη κατά κεφαλαιοποίηση \(NYSE, Nasdaq\), ενημέρωση κάθε ώρα(?: · τελευταία (.+))?\.$/, function (m, a) { return "Ranked by market cap (NYSE, Nasdaq), updated hourly" + (a ? " · last " + a : "") + "."; }],
   [/^Προσθήκη στο Χαρτοφυλάκιο: (.+)$/, "Add to portfolio: $1"],
@@ -1967,9 +2022,11 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   function renderFavs() {
     var list = rows.filter(function (r) { return favs[r.sym]; }).sort(function (a, b) { return (b.mcap || 0) - (a.mcap || 0) || a.sym.localeCompare(b.sym, "el"); });
     var cnt = document.getElementById("favcnt");
-    cnt.hidden = !list.length; cnt.textContent = list.length;
+    var xk = Object.keys(favs).filter(isExt), total = list.length + xk.length;
+    cnt.hidden = !total; cnt.textContent = total;
     document.getElementById("favwrap").hidden = !list.length;
-    document.getElementById("favempty").hidden = !!list.length;
+    document.getElementById("favempty").hidden = !!total;
+    renderFavX(xk);
     document.getElementById("favrows").innerHTML = list.map(function (s) { return rowHtml(s, false); }).join("");
   }
 
@@ -2003,11 +2060,12 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     saveFavs(); tabsHtml(); render();
     if (pfRef) persist();
     if (!drawer.hidden && cur && cur.sym === sym) paint();
+    if (isExt(sym)) { if (mkt !== "gr") renderX(); if (!drawer.hidden && xcur === sym) { var fb = drawer.querySelector("[data-xfav]"); if (fb) { fb.setAttribute("aria-pressed", !!favs[sym]); fb.textContent = favs[sym] ? "★ Στα αγαπημένα" : "☆ Προσθήκη στα αγαπημένα"; } } }
   }
 
   /* detail drawer */
   var drawer = document.getElementById("drawer"), scrim = document.getElementById("scrim");
-  var cur = null, lastFocus = null;
+  var cur = null, lastFocus = null, xcur = null;
   function kv(a, b) { return "<div><dt>" + a + "</dt><dd>" + b + "</dd></div>"; }
   /* διάγραμμα μετοχής σε στυλ CoinMarketCap: Τιμή/Κεφαλαιοποίηση · Γραμμή/TradingView · διάστημα */
   var chartKind = "line", chartRange = "today", chartMetric = "price";
@@ -2171,12 +2229,13 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   function openStock(sym, from) {
     if (isExt(sym)) { openExt(sym); return; }
     cur = rows.filter(function (s) { return s.sym === sym; })[0]; if (!cur) return;
+    xcur = null;
     lastFocus = from || null; paint();
     drawer.hidden = false; scrim.hidden = false; drawer.scrollTop = 0;
     document.getElementById("dclose").focus();
   }
   function closeStock() {
-    drawer.hidden = true; scrim.hidden = true;
+    drawer.hidden = true; scrim.hidden = true; xcur = null;
     var t = lastFocus && lastFocus.getAttribute ? document.querySelector('[data-s="' + lastFocus.getAttribute("data-s") + '"]') : null;
     if (t) t.focus();
   }
@@ -2547,8 +2606,8 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   }
   function openExt(sym) {
     var k = sym.charAt(0), id = sym.slice(2);
-    if (k === "c") window.open("https://www.coingecko.com/" + (LANG === "en" ? "en" : "el") + "/coins/" + encodeURIComponent(id), "_blank", "noopener");
-    else if (k === "f") window.open("https://finance.yahoo.com/quote/" + encodeURIComponent(id), "_blank", "noopener");
+    if (k === "c") openX(sym);
+    else if (k === "f") { if (tvSymbol(id)) openX(sym); else window.open("https://finance.yahoo.com/quote/" + encodeURIComponent(id), "_blank", "noopener"); }
     else if (k === "p") { var el = document.getElementById("perps"); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }
     else openMp(sym);
   }
@@ -3295,7 +3354,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var t = isC ? (cg100At ? new Date(cg100At).toLocaleTimeString(LOC, { hour: "2-digit", minute: "2-digit" }) : "") : (USD_ && USD_.updated ? new Date(USD_.updated).toLocaleString(LOC, { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "");
     document.getElementById("xnote").textContent = isC ? "Ζωντανές τιμές από το CoinGecko, ενημέρωση κάθε λεπτό" + (t ? " · τελευταία " + t : "") + "." : "Κατάταξη κατά κεφαλαιοποίηση (NYSE, Nasdaq), ενημέρωση κάθε ώρα" + (t ? " · τελευταία " + t : "") + ".";
     document.getElementById("xfoot").textContent = isC ? "Πάτα μια γραμμή για να ανοίξει στο CoinGecko ή το + για να την προσθέσεις στο Χαρτοφυλάκιο." : "Πάτα μια γραμμή για να ανοίξει στο Yahoo Finance ή το + για να την προσθέσεις στο Χαρτοφυλάκιο. Οι τιμές έχουν καθυστέρηση.";
-    var cols = [["rank", "#", "l hide-s"], ["n", "Όνομα", "l"], ["p", "Τιμή", ""]].concat(isC ? [["h1", "1ω", "hide-s"]] : []).concat([["c", "24ω", ""], ["w", "7ημ", "hide-s"], ["m", "Κεφαλαιοποίηση", "hide-s"], ["v", isC ? "Όγκος 24ω" : "Όγκος", "hide-s"]]).concat(isC ? [["", "7 ημέρες", "hide-s"]] : []).concat([["", "", ""]]);
+    var cols = [["", "", "starcol"], ["rank", "#", "l hide-s"], ["n", "Όνομα", "l"], ["p", "Τιμή", ""]].concat(isC ? [["h1", "1ω", "hide-s"]] : []).concat([["c", "24ω", ""], ["w", "7ημ", "hide-s"], ["m", "Κεφαλαιοποίηση", "hide-s"], ["v", isC ? "Όγκος 24ω" : "Όγκος", "hide-s"]]).concat(isC ? [["", "7 ημέρες", "hide-s"]] : []).concat([["", "", ""]]);
     document.getElementById("xhead").innerHTML = "<tr>" + cols.map(function (c) { var on = c[0] && XS.k === c[0]; return '<th class="' + c[2] + '"' + (c[0] ? ' data-xk="' + c[0] + '"' : "") + (on ? ' aria-sort="' + (XS.d > 0 ? "ascending" : "descending") + '"' : "") + ">" + c[1] + (on ? " " + (XS.d > 0 ? "▲" : "▼") : "") + "</th>"; }).join("") + "</tr>";
     if (q) items = items.filter(function (x) { return x.s.toLowerCase().indexOf(q) > -1 || x.n.toLowerCase().indexOf(q) > -1; });
     items.sort(function (a, b) { var k = XS.k; if (k === "n") return XS.d * a.n.localeCompare(b.n); var x = a[k], y = b[k]; if (x == null) return 1; if (y == null) return -1; return XS.d * (x - y); });
@@ -3304,27 +3363,189 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     emp.textContent = items.length ? "" : q ? "Δεν βρέθηκε τίποτα." : isC ? (cg100Err ? "Οι τιμές crypto δεν είναι διαθέσιμες τώρα. Ξαναδοκιμάζω σε ένα λεπτό." : "Φόρτωση…") : "Η λίστα θα εμφανιστεί μετά την επόμενη ενημέρωση.";
     document.getElementById("xrows").innerHTML = items.map(function (x) {
       var sp = x.sp && x.sp.length > 1 ? sparkHtml(x.sp.filter(function (_, i) { return i % Math.ceil(x.sp.length / 40) === 0; }).map(function (v) { return { y: v }; }), 110, 32) : "";
-      return '<tr tabindex="0" data-xid="' + esc(x.k + ":" + x.id) + '"><td class="l num hide-s" style="color:var(--muted)">' + x.rank + '</td><td class="l"><div class="who">' + logoBox(x.s, x.img) + "<div><b>" + esc(x.n) + "</b><span>" + esc(x.s + (x.sub ? " · " + x.sub : "")) + "</span></div></div></td>" +
+      var fk = x.k + ":" + x.id;
+      return '<tr tabindex="0" data-xid="' + esc(fk) + '"><td class="starcol"><button type="button" class="star" data-xstar="' + esc(fk) + '" aria-pressed="' + !!favs[fk] + '" aria-label="Αγαπημένο: ' + esc(x.s) + '">' + (favs[fk] ? "★" : "☆") + '</button></td><td class="l num hide-s" style="color:var(--muted)">' + x.rank + '</td><td class="l"><div class="who">' + logoBox(x.s, x.img) + "<div><b>" + esc(x.n) + "</b><span>" + esc(x.s + (x.sub ? " · " + x.sub : "")) + "</span></div></div></td>" +
         '<td class="num price">' + fmtC(x.p) + "</td>" + (isC ? '<td class="num hide-s">' + pctCell(x.h1) + "</td>" : "") + '<td class="num">' + pctCell(x.c) + '</td><td class="num hide-s">' + pctCell(x.w) + '</td><td class="num hide-s">' + money(x.m) + '</td><td class="num hide-s">' + (x.vsh ? compactN(x.v) : money(x.v)) + "</td>" +
         (isC ? '<td class="hide-s">' + sp + "</td>" : "") + '<td><button type="button" class="xadd" data-xadd="1" title="Προσθήκη στο Χαρτοφυλάκιο" aria-label="Προσθήκη στο Χαρτοφυλάκιο: ' + esc(x.n) + '">+</button></td></tr>';
     }).join("");
     box._items = xItems();
   }
+  /* στοιχεία για ένα crypto / ξένη μετοχή, από όποια λίστα το έχει */
+  var FAVCG = {}, favCgAt = 0, favCgBusy = false, FAVMETA = (function () { try { return JSON.parse(localStorage.getItem("agora-favmeta") || "{}") || {}; } catch (e) { return {}; } })();
+  function cgItem(x, i) { return { k: "c", id: x.id, s: String(x.symbol || "").toUpperCase(), n: x.name, p: x.current_price, np: x.current_price, h1: x.price_change_percentage_1h_in_currency, c: x.price_change_percentage_24h_in_currency != null ? x.price_change_percentage_24h_in_currency : x.price_change_percentage_24h, w: x.price_change_percentage_7d_in_currency, m: x.market_cap, v: x.total_volume, img: x.image, sp: x.sparkline_in_7d && x.sparkline_in_7d.price, rank: x.market_cap_rank || (i != null ? i + 1 : null), raw: x }; }
+  function xGet(key) {
+    var k = key.charAt(0), id = key.slice(2), u = usdEur(), m = EXTMETA[key] || FAVMETA[key] || {};
+    if (k === "c") {
+      var r = (CG100 || []).filter(function (x) { return x.id === id; })[0] || FAVCG[id];
+      if (r) return cgItem(r);
+      return { k: "c", id: id, s: m.s || id.toUpperCase(), n: m.n || id, p: CGP[id] ? CGP[id].p : null, c: CGP[id] ? CGP[id].c : null, img: m.img || null, partial: true };
+    }
+    var q = USQ[id], rank = null;
+    if (q) { ((USD_ && USD_.s) || []).forEach(function (x, i) { if (x.s === id) rank = i + 1; }); return { k: "f", id: id, s: id, n: q.n, p: q.p * u, np: q.p, c: q.c, w: q.w, m: q.m * u, v: q.v, vsh: true, img: q.l ? "https://s3-symbol-logo.tradingview.com/" + encodeURIComponent(q.l) + ".svg" : null, sub: q.x, sec: q.sec, rank: rank }; }
+    var f = FOREIGN && FOREIGN.q && FOREIGN.q[id];
+    if (f) return { k: "f", id: id, s: id, n: f.n, p: f.pe, np: f.p, ncur: f.cur, c: f.c, img: LOGO_D["f:" + id] ? "https://s3-symbol-logo.tradingview.com/" + encodeURIComponent(LOGO_D["f:" + id]) + ".svg" : null, sub: f.ex };
+    return { k: "f", id: id, s: id, n: m.n || id, p: null, c: null, img: null, partial: true };
+  }
+  function tvSymbol(id) {
+    if (/\./.test(id) || !/^[A-Z0-9\-]+$/.test(id)) return null;
+    var ex = (USQ[id] && USQ[id].x) || (FOREIGN && FOREIGN.q && FOREIGN.q[id] && FOREIGN.q[id].ex) || (EXTMETA["f:" + id] && EXTMETA["f:" + id].ex) || "";
+    var p = /nasdaq/i.test(ex) ? "NASDAQ:" : /american|amex/i.test(ex) ? "AMEX:" : /arca/i.test(ex) ? "AMEX:" : /nyse/i.test(ex) ? "NYSE:" : "";
+    return p + id.replace("-", ".");
+  }
+  function loadFavCg() {
+    var need = Object.keys(favs).filter(function (k) { return /^c:/.test(k); }).map(function (k) { return k.slice(2); }).filter(function (id) { return !(CG100 || []).some(function (x) { return x.id === id; }); });
+    if (xcur && /^c:/.test(xcur)) { var xi = xcur.slice(2); if (need.indexOf(xi) < 0 && !(CG100 || []).some(function (x) { return x.id === xi; })) need.push(xi); }
+    if (!need.length || favCgBusy || typeof fetch !== "function" || (Date.now() - favCgAt < 60000 && need.every(function (id) { return FAVCG[id]; }))) return;
+    favCgBusy = true;
+    fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&sparkline=true&price_change_percentage=1h%2C24h%2C7d&ids=" + encodeURIComponent(need.join(",")))
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (j) { (j || []).forEach(function (x) { FAVCG[x.id] = x; if (x.current_price != null) CGP[x.id] = { p: x.current_price, c: x.price_change_percentage_24h || 0 }; }); favCgAt = Date.now(); })
+      .catch(function () { favCgAt = Date.now(); })
+      .then(function () { favCgBusy = false; if (!document.getElementById("view-favs").hidden) renderFavs(); if (!drawer.hidden && xcur && /^c:/.test(xcur) && FAVCG[xcur.slice(2)]) paintX(); });
+  }
+  function renderFavX(keys) {
+    var box = document.getElementById("favx"); if (!box) return;
+    if (!keys.length) { box.innerHTML = ""; return; }
+    var groups = [["c", "Crypto"], ["f", "Ξένες μετοχές"]];
+    box.innerHTML = groups.map(function (g) {
+      var items = keys.filter(function (k) { return k.charAt(0) === g[0]; }).map(xGet).sort(function (a, b) { return (b.m || 0) - (a.m || 0); });
+      if (!items.length) return "";
+      return '<div class="panel tablewrap"><h3>' + g[1] + '</h3><table><thead><tr><th class="starcol"></th><th class="l">Όνομα</th><th>Τιμή</th><th>24ω</th><th class="hide-s">7ημ</th><th class="hide-s">Κεφαλαιοποίηση</th><th></th></tr></thead><tbody>' +
+        items.map(function (x) {
+          var fk = x.k + ":" + x.id;
+          return '<tr tabindex="0" data-xid="' + esc(fk) + '"><td class="starcol"><button type="button" class="star" data-xstar="' + esc(fk) + '" aria-pressed="true" aria-label="Αγαπημένο: ' + esc(x.s) + '">★</button></td><td class="l"><div class="who">' + logoBox(x.s, x.img) + "<div><b>" + esc(x.n) + "</b><span>" + esc(x.s + (x.sub ? " · " + x.sub : "")) + '</span></div></div></td><td class="num price">' + (x.p == null ? "—" : fmtC(x.p)) + '</td><td class="num">' + pctCell(x.c) + '</td><td class="num hide-s">' + pctCell(x.w) + '</td><td class="num hide-s">' + (x.m ? money(x.m) : "—") + '</td><td><button type="button" class="xadd" data-xadd="1" title="Προσθήκη στο Χαρτοφυλάκιο" aria-label="Προσθήκη στο Χαρτοφυλάκιο: ' + esc(x.n) + '">+</button></td></tr>';
+        }).join("") + "</tbody></table></div>";
+    }).join("");
+    loadFavCg();
+  }
+  function xAdd(it) {
+    var key = it.k + ":" + it.id;
+    EXTMETA[key] = Object.assign({}, EXTMETA[key] || {}, it.k === "c" ? { s: it.s, n: it.n, img: it.img } : { s: it.s, n: it.n, cur: it.ncur || "USD", ex: it.sub });
+    if (!drawer.hidden) closeStock();
+    showView("portfolio"); openForm(key);
+    if (it.p != null) { if (it.k === "c") fPrice.value = pfx(it.p); else if (it.np != null) { var xs = String(+it.np.toFixed(4)); fPrice.value = LANG === "en" ? xs : xs.replace(".", ","); } }
+    updTotal(); fQty.focus();
+  }
+  function xStar(key) {
+    var it = xGet(key);
+    if (!favs[key]) { FAVMETA[key] = { s: it.s, n: it.n, img: it.img || null }; if (it.k === "f" && !USQ[it.id]) trackForeign(it.id); } else delete FAVMETA[key];
+    try { localStorage.setItem("agora-favmeta", JSON.stringify(FAVMETA)); } catch (e) {}
+    toggleFav(key);
+  }
+  function xClick(e) {
+    var tr = e.target.closest("tr[data-xid]"); if (!tr) return;
+    var key = tr.getAttribute("data-xid");
+    if (e.target.closest("[data-xstar]")) { xStar(key); return; }
+    if (e.target.closest("[data-xadd]")) { xAdd(xGet(key)); return; }
+    openExt(key);
+  }
+  document.getElementById("favx").addEventListener("click", xClick);
+  document.getElementById("favx").addEventListener("keydown", function (e) { if (e.key === "Enter" && e.target.matches("tr[data-xid]")) xClick(e); });
+
+  /* σελίδα crypto / ξένης μετοχής μέσα στο site */
+  var xRange = "7", XH = {};
+  function lineChart(box, pts, fmt) {
+    if (!pts || pts.length < 2) { box.innerHTML = '<div class="msg">Δεν υπάρχουν στοιχεία για αυτό το διάστημα.</div>'; return; }
+    if (pts.length > 400) pts = thin(pts, 400);
+    var W = box.clientWidth || 580, Hh = box.clientHeight || 280, vs = pts.map(function (p) { return p.v; });
+    var mn = Math.min.apply(null, vs), mx = Math.max.apply(null, vs), pad = (mx - mn) * 0.12 || mx * 0.02 || 1; mn -= pad; mx += pad;
+    var P = pts.map(function (p, i) { return [6 + i / (pts.length - 1) * (W - 12), 10 + (1 - (p.v - mn) / (mx - mn)) * (Hh - 20)]; });
+    var line = smoothPath(P), up = vs[vs.length - 1] >= vs[0], col = up ? "var(--up)" : "var(--down)", gid = "xg" + Math.round(Math.random() * 1e6);
+    box.innerHTML = '<svg viewBox="0 0 ' + W + " " + Hh + '" preserveAspectRatio="none" role="img" aria-label="Διάγραμμα τιμής"><defs><linearGradient id="' + gid + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + col + '" stop-opacity=".30"/><stop offset="1" stop-color="' + col + '" stop-opacity="0"/></linearGradient></defs>' +
+      '<path d="' + line + "L" + P[P.length - 1][0].toFixed(1) + "," + Hh + "L" + P[0][0].toFixed(1) + "," + Hh + 'Z" fill="url(#' + gid + ')"/><path d="' + line + '" fill="none" stroke="' + col + '" stroke-width="2.2" stroke-linejoin="round"/></svg><div class="cur"></div><div class="dot"></div><div class="tip"></div>';
+    var cu = box.querySelector(".cur"), dot = box.querySelector(".dot"), tip = box.querySelector(".tip");
+    function at(cx) {
+      var r = box.getBoundingClientRect(), i = Math.max(0, Math.min(pts.length - 1, Math.round(((cx - r.left) / r.width * W - 6) / (W - 12) * (pts.length - 1))));
+      var px = P[i][0] / W * r.width, py = P[i][1] / Hh * r.height;
+      cu.style.display = dot.style.display = tip.style.display = "block";
+      cu.style.left = px + "px"; dot.style.left = px + "px"; dot.style.top = py + "px"; tip.style.left = Math.max(70, Math.min(r.width - 70, px)) + "px";
+      tip.innerHTML = '<span style="color:var(--muted)">' + esc(pts[i].x) + "</span><b>" + fmt(pts[i].v) + "</b>";
+    }
+    box.onpointermove = function (e) { at(e.clientX); }; box.onpointerdown = function (e) { at(e.clientX); };
+    box.onpointerleave = function () { cu.style.display = dot.style.display = tip.style.display = "none"; };
+  }
+  function loadXH(id, days) {
+    var key = id + "|" + days; if (XH[key] !== undefined) return;
+    XH[key] = "loading";
+    fetch("https://api.coingecko.com/api/v3/coins/" + encodeURIComponent(id) + "/market_chart?vs_currency=eur&days=" + days)
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (j) {
+        XH[key] = (j.prices || []).map(function (p) { var d = new Date(p[0]); return { x: days === "1" ? d.toLocaleTimeString(LOC, { hour: "2-digit", minute: "2-digit" }) : d.toLocaleDateString(LOC, days === "365" ? { day: "2-digit", month: "2-digit", year: "numeric" } : { day: "2-digit", month: "2-digit" }) + (days === "7" ? " " + d.toLocaleTimeString(LOC, { hour: "2-digit", minute: "2-digit" }) : ""), v: p[1] }; });
+      })
+      .catch(function () { XH[key] = null; })
+      .then(function () { if (!drawer.hidden && xcur === "c:" + id && xRange === days) drawX(); });
+  }
+  function drawX() {
+    var box = document.getElementById("xchart"); if (!box || !xcur) return;
+    var id = xcur.slice(2), d = XH[id + "|" + xRange];
+    if (d === undefined) { loadXH(id, xRange); d = XH[id + "|" + xRange]; }
+    if (d === "loading") { box.innerHTML = '<div class="msg">Φόρτωση διαγράμματος…</div>'; return; }
+    if (!d) { box.innerHTML = '<div class="msg">Το διάγραμμα δεν είναι διαθέσιμο τώρα. Δοκίμασε ξανά σε λίγο.</div>'; return; }
+    lineChart(box, d, function (v) { return fmtC(v); });
+    var ch = (d[d.length - 1].v / d[0].v - 1) * 100, ro = document.getElementById("xro");
+    if (ro) ro.innerHTML = chgHtml(ch) + ' <span style="color:var(--muted)">στο διάστημα</span>';
+  }
+  function paintX() {
+    var it = xGet(xcur); if (!it) return;
+    var isC = it.k === "c", key = xcur, r = it.raw || {};
+    var k = "";
+    if (it.m) k += kv("Κεφαλαιοποίηση", money(it.m));
+    if (it.rank) k += kv("Κατάταξη", "#" + it.rank);
+    if (it.v) k += kv(isC ? "Όγκος 24ω" : "Όγκος", it.vsh ? compactN(it.v) + " τεμ." : money(it.v));
+    if (it.h1 != null) k += kv("1 ώρα", sgn(it.h1) + nf2.format(Math.abs(it.h1)) + "%");
+    if (it.w != null) k += kv("7 ημέρες", sgn(it.w) + nf2.format(Math.abs(it.w)) + "%");
+    if (isC && r.high_24h != null) k += kv("Υψηλό 24ω", fmtC(r.high_24h)) + kv("Χαμηλό 24ω", fmtC(r.low_24h));
+    if (isC && r.ath != null) k += kv("Ιστορικό υψηλό", fmtC(r.ath) + (r.ath_change_percentage != null ? ' <span class="note">(' + sgn(r.ath_change_percentage) + nf2.format(Math.abs(r.ath_change_percentage)) + "%)</span>" : ""));
+    if (isC && r.circulating_supply) k += kv("Σε κυκλοφορία", compactN(r.circulating_supply) + " " + esc(it.s));
+    if (isC && r.max_supply) k += kv("Μέγιστη προσφορά", compactN(r.max_supply) + " " + esc(it.s));
+    if (!isC && it.sec) k += kv("Κλάδος", esc(it.sec));
+    if (!isC && it.sub) k += kv("Χρηματιστήριο", esc(it.sub));
+    if (!isC && it.np != null) k += kv("Τιμή σε " + esc(it.ncur || "USD"), nf2.format(it.np) + " " + (it.ncur && it.ncur !== "USD" ? esc(it.ncur) : "$"));
+    var tv = !isC && TV_ON ? tvSymbol(it.id) : null;
+    var chart = isC
+      ? '<div class="ctool">' + seg("data-xr", [["1", "24ω"], ["7", "7Η"], ["30", "1Μ"], ["365", "1Χ"]], xRange, "Διάστημα") + '<span id="xro" class="num" style="margin-left:auto"></span></div><div class="xchart" id="xchart"></div>'
+      : tv ? '<div class="tvbox" id="xtv"></div>' : '<div class="chartempty">Το διάγραμμα είναι διαθέσιμο στο δημόσιο site.</div>';
+    var ext = isC ? "https://www.coingecko.com/" + (LANG === "en" ? "en" : "el") + "/coins/" + encodeURIComponent(it.id) : "https://finance.yahoo.com/quote/" + encodeURIComponent(it.id);
+    drawer.innerHTML =
+      '<div class="dh"><div class="xdh">' + logoBox(it.s, it.img) + '<div style="min-width:0"><h2 id="dname">' + esc(it.s) + " · " + esc(it.n) + '</h2><div class="sec">' + (isC ? "Κρυπτονόμισμα" + (it.rank ? " · #" + it.rank : "") : esc(it.sub || "ΗΠΑ") + " · Ξένη μετοχή") + '</div></div></div><button type="button" class="close" id="dclose" aria-label="Κλείσιμο">×</button></div>' +
+      '<div class="bigp"><span class="p num">' + (it.p == null ? "—" : fmtC(it.p)) + "</span>" + (it.c == null ? "" : chgHtml(it.c)) + '<span class="sec" style="color:var(--muted)">24 ώρες</span></div>' +
+      '<div class="xacts"><button type="button" class="btn" data-xfav="1" aria-pressed="' + !!favs[key] + '">' + (favs[key] ? "★ Στα αγαπημένα" : "☆ Προσθήκη στα αγαπημένα") + '</button><button type="button" class="btn primary" data-xaddp="1">+ Στο Χαρτοφυλάκιο</button><a class="btn" href="' + esc(ext) + '" target="_blank" rel="noopener">' + (isC ? "CoinGecko" : "Yahoo Finance") + " ↗</a></div>" +
+      chart +
+      (k ? '<dl class="kv num">' + k + "</dl>" : "") +
+      holdingLine(key) +
+      '<p class="note" style="margin:0">' + (isC ? "Τιμές και διάγραμμα από το CoinGecko." : "Τιμή με καθυστέρηση, ενημέρωση κάθε ώρα. Διάγραμμα από το TradingView.") + "</p>";
+    document.getElementById("dclose").addEventListener("click", closeStock);
+    if (isC) { drawX(); if (it.partial || !it.raw) loadFavCg(); }
+    var xtv = document.getElementById("xtv");
+    if (xtv && tv) {
+      var c = document.createElement("div"); c.className = "tradingview-widget-container"; c.style.height = "100%";
+      var w = document.createElement("div"); w.className = "tradingview-widget-container__widget"; w.style.height = "calc(100% - 28px)";
+      var cp = document.createElement("div"); cp.className = "tradingview-widget-copyright";
+      cp.innerHTML = '<a href="https://www.tradingview.com/symbols/' + encodeURIComponent(tv.replace(":", "-")) + '/" rel="noopener nofollow" target="_blank">' + esc(it.s) + " · TradingView</a>";
+      var sc = document.createElement("script"), light = document.documentElement.getAttribute("data-ui") === "light";
+      sc.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js"; sc.async = true;
+      sc.text = JSON.stringify({ autosize: true, symbol: tv, interval: "D", timezone: "Europe/Athens", theme: light ? "light" : "dark", style: "1", locale: "en", backgroundColor: light ? "rgba(255, 255, 255, 1)" : "rgba(38, 44, 56, 1)", gridColor: light ? "rgba(221, 226, 234, 0.8)" : "rgba(54, 62, 77, 0.6)", hide_side_toolbar: true, allow_symbol_change: false, withdateranges: true, save_image: false, calendar: false, support_host: "https://www.tradingview.com" });
+      c.appendChild(w); c.appendChild(cp); c.appendChild(sc); xtv.appendChild(c);
+    }
+  }
+  function openX(key, from) {
+    cur = null; xcur = key; lastFocus = from || null;
+    paintX();
+    drawer.hidden = false; scrim.hidden = false; drawer.scrollTop = 0;
+    document.getElementById("dclose").focus();
+  }
+  drawer.addEventListener("click", function (e) {
+    if (!xcur) return;
+    if (e.target.closest("[data-xfav]")) { xStar(xcur); return; }
+    if (e.target.closest("[data-xaddp]")) { xAdd(xGet(xcur)); return; }
+    var rb = e.target.closest("[data-xr]");
+    if (rb) { xRange = rb.getAttribute("data-xr"); Array.prototype.forEach.call(drawer.querySelectorAll("[data-xr]"), function (x) { x.setAttribute("aria-pressed", x === rb); }); drawX(); }
+  });
   function setMkt(m) { mkt = m; XS = { k: "m", d: -1 }; try { localStorage.setItem("agora-mkt", m); } catch (e) {} document.getElementById("xq").value = ""; renderX(); if (m === "c") loadCg100(); }
   document.getElementById("mktsw").addEventListener("click", function (e) { var x = e.target.closest("button"); if (x) setMkt(x.getAttribute("data-mkt")); });
   document.getElementById("xq").addEventListener("input", renderX);
   document.getElementById("xhead").addEventListener("click", function (e) { var th = e.target.closest("th[data-xk]"); if (!th) return; var k = th.getAttribute("data-xk"); XS = XS.k === k ? { k: k, d: -XS.d } : { k: k, d: k === "n" || k === "rank" ? 1 : -1 }; renderX(); });
-  function xOpen(e) {
-    var tr = e.target.closest("tr[data-xid]"); if (!tr) return;
-    var key = tr.getAttribute("data-xid"), it = (document.getElementById("xlist")._items || []).filter(function (x) { return x.k + ":" + x.id === key; })[0]; if (!it) return;
-    if (e.target.closest("[data-xadd]")) {
-      EXTMETA[key] = it.k === "c" ? { s: it.s, n: it.n, img: it.img } : { s: it.s, n: it.n, cur: "USD", ex: it.sub };
-      showView("portfolio"); openForm(key);
-      if (it.k === "c") fPrice.value = pfx(it.p); else { var xs = String(+it.np.toFixed(4)); fPrice.value = LANG === "en" ? xs : xs.replace(".", ","); }
-      updTotal(); fQty.focus(); return;
-    }
-    openExt(key);
-  }
+  function xOpen(e) { xClick(e); }
   document.getElementById("xrows").addEventListener("click", xOpen);
   document.getElementById("xrows").addEventListener("keydown", function (e) { if (e.key === "Enter" && e.target.matches("tr[data-xid]")) xOpen(e); });
   renderX(); if (mkt === "c") loadCg100();
