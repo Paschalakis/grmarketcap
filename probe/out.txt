@@ -1,5 +1,15 @@
-OPTIONS 200 {'access-control-allow-origin': '*', 'access-control-allow-methods': '*', 'access-control-allow-headers': '*'}
-POST 200 {'access-control-expose-headers': '*', 'access-control-allow-origin': '*'} 25278
-{'#114910': '0.5', '#114911': '0.5', '#114920': '0.142335', '#114921': '0.857665', '#114930': '0.219275'} True
-STATE 200 {"marginSummary": {"accountValue": "10751264.0508169997", "totalNtlPos": "0.0", "totalRawUsd": "10751264.0508169997", "totalMarginUsed": "477.867397"}, "crossMarginSummary": {"accountValue": "10750786.1834200006", "totalNtlPos": "0.0", "totalRawUsd": "10750786.1834200006", "totalMarginUsed": "0.0"}, "crossMaintenanceMarginUsed": "0.0", "withdrawable": "10750786.1834200006", "assetPositions": [], "time": 1794603237385}
-META {"universe": [{"szDecimals": 5, "name": "BTC", "maxLeverage": 40, "marginTableId": 56}, {"szDecimals": 4, "name": "ETH", "maxLeverage": 25, "marginTableId": 55}, {"szDecimals": 2, "name": "ATOM", "maxLeverage": 5, "marginTableId": 5}, {"szDecimals": 1, "name": "MATIC", "maxLeverage": 20, "marginTabl
+ΕΤΕ tv button count 1
+ΕΤΕ tvbox html <div class="tradingview-widget-container" style="height: 100%; width: 100%;"><iframe scrolling="no" allowtransparency="true" frameborder="0" src="https://www.tradingview-widget.com/embed-widget/advanced-chart/?locale=en#%7B%22autosize%22%3Atrue%2C%22symbol%22%3A%22ATHEX%3AETE%22%2C%22interval%22%3A%22D%22%2C%22timezone%22%3A%22Europe%2FAthens%22%2C%22theme%22%3A%22dark%22%2C%22style%22%3A%221%22%2C%22backgroundColor%22%3A%22rgba(38%2C%2044%2C%2056%2C%201)%22%2C%22gridColor%22%3A%22rgba(54%2C%2062%2C%2077%2C%200.6)%22%2C%22hide_side_toolbar%22%3Afalse%2C%22allow_symbol_change%22%3Afalse%2C%22wi
+ΕΤΕ frames [
+  'https://www.tradingview-widget.com/embed-widget/advanced-chart/?locale=en#%7B%22autosize%22%3Atrue%2C%22symbol%22%3A%22ATHEX%3AETE%22%2C%22interval%22%3A%22D%22'
+]
+ΕΤΕ frame text: 1m 30m 1h D Indicators E National Bank of Greece S.A. 1D Euronext Athens O 17.360 H 17.690 L 17.360 C 17.440 −0.080 (−0.46%) Vol 2.51 M 1D 5D 1M 3M 6M YTD 1Y 5Y All 11:56:29 UTC+2 ADJ
+ΔΕΗ tv button count 1
+ΔΕΗ tvbox html <div class="tradingview-widget-container" style="height: 100%; width: 100%;"><iframe scrolling="no" allowtransparency="true" frameborder="0" src="https://www.tradingview-widget.com/embed-widget/advanced-chart/?locale=en#%7B%22autosize%22%3Atrue%2C%22symbol%22%3A%22ATHEX%3APPC%22%2C%22interval%22%3A%22D%22%2C%22timezone%22%3A%22Europe%2FAthens%22%2C%22theme%22%3A%22dark%22%2C%22style%22%3A%221%22%2C%22backgroundColor%22%3A%22rgba(38%2C%2044%2C%2056%2C%201)%22%2C%22gridColor%22%3A%22rgba(54%2C%2062%2C%2077%2C%200.6)%22%2C%22hide_side_toolbar%22%3Afalse%2C%22allow_symbol_change%22%3Afalse%2C%22wi
+ΔΕΗ frames [
+  'https://www.tradingview-widget.com/embed-widget/advanced-chart/?locale=en#%7B%22autosize%22%3Atrue%2C%22symbol%22%3A%22ATHEX%3APPC%22%2C%22interval%22%3A%22D%22'
+]
+ΔΕΗ frame text: 1m 30m 1h D Indicators P Public Power Corporation S.A. 1D Euronext Athens O 23.30 H 23.40 L 23.02 C 23.02 −0.08 (−0.35%) Vol 489.39 K 1D 5D 1M 3M 6M YTD 1Y 5Y All 11:56:38 UTC+2 ADJ
+failed: https://widget-sheriff.tradingview-widget.com/sheriff/api/v1/rules/search?origin=https%3A%2F%2Fpaschalakis.github.io net::ERR_ABORTED
+failed: https://widget-sheriff.tradingview-widget.com/sheriff/api/v1/rules/search?origin=https%3A%2F%2Fpaschalakis.github.io net::ERR_ABORTED
+failed: https://widget-sheriff.tradingview-widget.com/sheriff/api/v1/rules/search?origin=https%3A%2F%2Fpaschalakis.github.io net::ERR_ABORTED
