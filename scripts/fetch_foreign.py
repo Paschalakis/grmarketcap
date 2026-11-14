@@ -110,9 +110,24 @@ for t, q in q_out.items():
     q["pe"] = round(q["p"] / r, 4) if r else None
 q_out = {t: q for t, q in q_out.items() if q["pe"]}
 
+# παγκόσμια εικόνα: δείκτες, εμπορεύματα, ισοτιμίες
+GLOBAL = [("^GSPC", "S&P 500", ""), ("^IXIC", "Nasdaq", ""), ("^DJI", "Dow Jones", ""), ("^GDAXI", "DAX", ""), ("^STOXX50E", "Euro Stoxx 50", ""),
+          ("GC=F", "Χρυσός", "$"), ("BZ=F", "Πετρέλαιο Brent", "$"), ("EURUSD=X", "EUR/USD", ""), ("BTC-USD", "Bitcoin", "$"), ("^VIX", "VIX", "")]
+g_out = []
+try:
+    GQ = quotes([g[0] for g in GLOBAL])
+    for sym, name, unit in GLOBAL:
+        q = GQ.get(sym)
+        if not q or q.get("regularMarketPrice") is None: continue
+        g_out.append({"k": sym, "n": name, "u": unit, "p": round(float(q["regularMarketPrice"]), 4), "c": round(q.get("regularMarketChangePercent") or 0, 2)})
+except Exception as ex:
+    print("παγκόσμια εικόνα:", ex)
+print("παγκόσμια:", [(g["n"], g["p"], g["c"]) for g in g_out])
+
 old = load("foreign.json", {})
-if q_out and (old.get("q") != q_out or old.get("fx") != fx):
-    save("foreign.json", {"updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%MZ"), "fx": fx, "q": q_out})
+if not g_out: g_out = old.get("g") or []
+if (q_out or g_out) and (old.get("q") != q_out or old.get("fx") != fx or old.get("g") != g_out):
+    save("foreign.json", {"updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%MZ"), "fx": fx, "q": q_out or old.get("q") or {}, "g": g_out})
     print("foreign.json:", len(q_out))
 else:
     print("καμία αλλαγή στις τιμές")
