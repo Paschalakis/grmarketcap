@@ -9,5 +9,5 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
       - run: npm i playwright@1.47.0 && npx playwright install --with-deps chromium
-      - run: node probe/tv.js > probe/out.txt 2>&1 || true; MOB=1 node probe/tv.js >> probe/out.txt 2>&1 || true
+      - run: node probe/tv.js > probe/out.txt 2>&1 || true
       - run: git config user.name bot && git config user.email b@x && git add probe/out.txt probe/*.png && git commit -qm out && git push -q
