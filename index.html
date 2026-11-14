@@ -485,6 +485,13 @@ body.pfhide .sens { filter: blur(9px); user-select: none; }
 .gchip .r { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; white-space: nowrap; }
 .gchip .v { font-weight: 600; font-variant-numeric: tabular-nums; font-size: 14px; }
 .gchip .chg { font-size: 12px; }
+@media (max-width: 640px) { .pftag.opt { display: none; } .pf-panel .xbtn { padding: 4px 6px; font-size: 12px; } .pf-panel td, .pf-panel th { padding-left: 5px !important; padding-right: 5px !important; } }
+.mvbar .mini { background: none; }
+.mvbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 0 8px 12px; }
+.mvbar .btn { height: 32px; padding: 0 12px; }
+.mvbar .btn[disabled] { opacity: .45; cursor: default; }
+.dktable td.chk, .dktable th.chk { width: 30px; padding-right: 0 !important; text-align: left; }
+.dktable td.chk input { width: 17px; height: 17px; accent-color: var(--accent); cursor: pointer; }
 .pfbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 .pfbar .note { margin-right: 4px; }
 .pfbar .tab.ghost { border-style: dashed; color: var(--muted); background: none; }
@@ -1431,6 +1438,11 @@ var EN_EXACT = {
   "Εντάξει": "OK",
   "Γραμμή": "Line",
   "Χάρτης": "Heatmap",
+  "Επιλογή όλων": "Select all",
+  "Καμία": "None",
+  "Μεταφορά": "Move",
+  "Χαρτοφυλάκιο προορισμού": "Destination portfolio",
+  "Επιλογή": "Select",
   "Σύγκριση": "Compare",
   "Πρόσθεσε μετοχή ή crypto (έως 4)": "Add a stock or crypto (up to 4)",
   "Πρόσθεσε μετοχή ή crypto": "Add a stock or crypto",
@@ -1649,6 +1661,9 @@ var EN_EXACT = {
 };
 var EN_RX = [
   [/^Ενημέρωση: (.+)$/, "Updated: $1"],
+  [/^Μεταφορά επιλεγμένων(?: \((\d+)\))? σε:$/, function (m, a) { return "Move selected" + (a ? " (" + a + ")" : "") + " to:"; }],
+  [/^Μεταφέρθηκαν (\d+) συναλλαγές στο «(.+)»$/, "Moved $1 transactions to “$2”"],
+  [/^Οι επιλεγμένες είναι ήδη στο «(.+)»$/, "The selected ones are already in “$1”"],
   [/^Αφαίρεση (.+)$/, "Remove $1"],
   [/^Όλα τα μερίσματα \((\d+)\)$/, "All dividends ($1)"],
   [/^Το «(.+)» διαγράφηκε· οι θέσεις του πήγαν στο Κύριο$/, "“$1” deleted; its holdings moved to Main"],
@@ -2837,6 +2852,11 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   })();
 
   /* ----- πολλά χαρτοφυλάκια: νέο / μετονομασία ----- */
+  pfBody.addEventListener("change", function (e) {
+    var cb = e.target.closest("input[data-mv]");
+    if (cb) { if (cb.checked) mvSel[cb.getAttribute("data-mv")] = true; else delete mvSel[cb.getAttribute("data-mv")]; renderPortfolio(); return; }
+    if (e.target.id === "mvto") mvTo = e.target.value;
+  });
   var pfmId = null, pfmLast = null;
   function openPfm(id) {
     pfmId = id; pfmLast = document.activeElement;
@@ -2902,7 +2922,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       (D.rec.length > 6 ? '<div style="padding:10px 8px 2px"><button type="button" class="more" data-divall="1">' + (divAll ? "Λιγότερα" : "Όλα τα μερίσματα (" + D.rec.length + ")") + "</button></div>" : "") : '<p class="note" style="margin:0 8px 8px">Δεν έχει περάσει ακόμα αποκοπή μερίσματος από τότε που αγόρασες.</p>';
     return '<div class="dk dktable tablewrap perps" id="pfdivs"><div class="perphead"><h2>Μερίσματα</h2><span class="note">ποσά πριν από τον φόρο 5% · μόνο μετοχές Χ.Α.</span></div><div style="padding:0 8px">' + k + "</div>" + nx + tb + "</div>";
   }
-  var divAll = false;
+  var divAll = false, mvSel = {}, mvTo = "main";
   function pfBar() {
     var multi = pfs.length > 1, h = '<div class="pfbar" role="group" aria-label="Χαρτοφυλάκια"><span class="note">Χαρτοφυλάκιο:</span>';
     if (multi) h += '<button type="button" class="tab" data-pfsel="all" aria-pressed="' + (pfSel === "all") + '">Όλα μαζί</button>';
@@ -3111,6 +3131,15 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     pfBody.addEventListener("click", function (e) {
       if (e.target.closest("#dkexp")) { open(); return; }
       if (e.target.closest("[data-divall]")) { divAll = !divAll; renderPortfolio(); return; }
+      if (e.target.closest("[data-mvall]")) { var shown = pfTx(), allOn = shown.length && shown.every(function (t) { return mvSel[t.id]; }); mvSel = {}; if (!allOn) shown.forEach(function (t) { mvSel[t.id] = true; }); renderPortfolio(); return; }
+      if (e.target.closest("[data-mvgo]")) {
+        var ids = Object.keys(mvSel); if (!ids.length) return;
+        var dest = (document.getElementById("mvto") || {}).value || "main", moved = 0;
+        txns.forEach(function (t) { if (mvSel[t.id] && pfOf(t) !== dest) { if (dest === "main") delete t.pf; else t.pf = dest; moved++; } });
+        mvSel = {}; persist(); renderPortfolio();
+        toast(moved ? "Μεταφέρθηκαν " + moved + " συναλλαγές στο «" + pfName(dest) + "»" : "Οι επιλεγμένες είναι ήδη στο «" + pfName(dest) + "»");
+        return;
+      }
       var ps1 = e.target.closest("[data-pfsel]");
       if (ps1) { pfSel = ps1.getAttribute("data-pfsel"); try { localStorage.setItem("agora-pfsel", pfSel); } catch (er) {} renderPortfolio(); return; }
       if (e.target.closest("[data-pfnew]")) { openPfm(null); return; }
@@ -3232,9 +3261,13 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
           '<td class="hide-s"><div class="dkshare"><span class="num">' + nf2.format(h.weight) + '%</span><i><u style="width:' + Math.max(1, h.weight) + '%"></u></i></div></td></tr>';
       }).join("") + "</tbody></table></div>" : '<div class="panel pempty"><h3>Δεν έχεις ανοιχτές θέσεις</h3><p>Όλες οι μετοχές έχουν πουληθεί. Το πραγματοποιημένο κέρδος ή η ζημιά φαίνεται στη σύνοψη.</p></div>';
     var stats = fbar + '<section class="dkrow">' + hero + alloc + "</section>" + kpis;
-    var hist = '<div class="dk dktable tablewrap pf-panel"><h2>Συναλλαγές</h2><table><thead><tr><th class="l hide-s">Ημερομηνία</th><th class="l">Είδος</th><th class="l">Μετοχή</th><th class="hide-s">Τεμάχια</th><th class="hide-s">Τιμή</th><th>Σύνολο</th><th><span style="position:absolute;left:-9999px">Ενέργειες</span></th></tr></thead><tbody>' +
+    var multiPf = pfs.length > 1, shownTx = pfTx();
+    Object.keys(mvSel).forEach(function (id) { if (!shownTx.some(function (t) { return t.id === id; })) delete mvSel[id]; });
+    var nSel = Object.keys(mvSel).length;
+    var mvbar = multiPf ? '<div class="mvbar"><button type="button" class="mini" data-mvall="1">' + (nSel && nSel === shownTx.length ? "Καμία" : "Επιλογή όλων") + '</button><span class="note">Μεταφορά επιλεγμένων' + (nSel ? " (" + nSel + ")" : "") + ' σε:</span><select id="mvto" class="pcs" aria-label="Χαρτοφυλάκιο προορισμού">' + pfs.map(function (x) { return '<option value="' + esc(x.id) + '"' + (x.id === mvTo ? " selected" : "") + ">" + esc(x.n) + "</option>"; }).join("") + '</select><button type="button" class="btn" data-mvgo="1"' + (nSel ? "" : " disabled") + ">Μεταφορά</button></div>" : "";
+    var hist = '<div class="dk dktable tablewrap pf-panel"><h2>Συναλλαγές</h2>' + mvbar + '<table><thead><tr>' + (multiPf ? '<th class="chk"><span style="position:absolute;left:-9999px">Επιλογή</span></th>' : "") + '<th class="l hide-s">Ημερομηνία</th><th class="l">Είδος</th><th class="l">Μετοχή</th><th class="hide-s">Τεμάχια</th><th class="hide-s">Τιμή</th><th>Σύνολο</th><th><span style="position:absolute;left:-9999px">Ενέργειες</span></th></tr></thead><tbody>' +
       pfTx().sort(function (a, b) { return (b.date || "").localeCompare(a.date || "") || (b.ts || 0) - (a.ts || 0); }).map(function (t) {
-        return '<tr><td class="l num hide-s">' + fmtDate(t.date) + '</td><td class="l"><span class="side ' + (t.side === "sell" ? "sell" : "buy") + '">' + (t.side === "sell" ? "Πώληση" : "Αγορά") + '</span></td><td class="l"><b>' + esc(DS(t.sym)) + "</b>" + (pfs.length > 1 && pfSel === "all" ? '<span class="pftag">' + esc(pfName(pfOf(t))) + "</span>" : "") + '</td><td class="num hide-s sens">' + fmtQty(t.qty) + '</td><td class="num hide-s">' + fmtC(effP(t)) + '</td><td class="num sens">' + eur(t.qty * effP(t)) + '</td><td style="white-space:nowrap"><button type="button" class="xbtn" data-edit="' + esc(t.id) + '" aria-label="Επεξεργασία συναλλαγής ' + esc(DS(t.sym)) + " " + fmtDate(t.date) + '">Επεξεργασία</button><button type="button" class="xbtn" data-del="' + esc(t.id) + '" aria-label="Διαγραφή συναλλαγής ' + esc(DS(t.sym)) + " " + fmtDate(t.date) + '">Διαγραφή</button></td></tr>';
+        return '<tr>' + (multiPf ? '<td class="chk"><input type="checkbox" data-mv="' + esc(t.id) + '"' + (mvSel[t.id] ? " checked" : "") + ' aria-label="Επιλογή ' + esc(DS(t.sym)) + " " + fmtDate(t.date) + '"></td>' : "") + '<td class="l num hide-s">' + fmtDate(t.date) + '</td><td class="l"><span class="side ' + (t.side === "sell" ? "sell" : "buy") + '">' + (t.side === "sell" ? "Πώληση" : "Αγορά") + '</span></td><td class="l"><b>' + esc(DS(t.sym)) + "</b>" + (multiPf ? '<span class="pftag' + (pfSel === "all" ? "" : " opt") + '">' + esc(pfName(pfOf(t))) + "</span>" : "") + '</td><td class="num hide-s sens">' + fmtQty(t.qty) + '</td><td class="num hide-s">' + fmtC(effP(t)) + '</td><td class="num sens">' + eur(t.qty * effP(t)) + '</td><td style="white-space:nowrap"><button type="button" class="xbtn" data-edit="' + esc(t.id) + '" aria-label="Επεξεργασία συναλλαγής ' + esc(DS(t.sym)) + " " + fmtDate(t.date) + '">Επεξεργασία</button><button type="button" class="xbtn" data-del="' + esc(t.id) + '" aria-label="Διαγραφή συναλλαγής ' + esc(DS(t.sym)) + " " + fmtDate(t.date) + '">Διαγραφή</button></td></tr>';
       }).join("") + "</tbody></table></div>";
     pfBody.innerHTML = stats + table + divHtml(H) + perpsHtml() + hist + '<p class="foot">Το κόστος υπολογίζεται με τη μέση τιμή αγοράς. Οι αξίες υπολογίζονται με τις τιμές της σελίδας (καθυστέρηση 15 λεπτών). Είναι εικονικό χαρτοφυλάκιο για παρακολούθηση, όχι επενδυτική συμβουλή.</p>';
     if (H.list.length) { H.list.forEach(function (h) { if (h.row) loadLong(h.row); }); pfDraw(H); }
