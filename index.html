@@ -476,7 +476,8 @@ body.pfhide .sens { filter: blur(9px); user-select: none; }
 .heatleg i { width: 28px; height: 10px; border-radius: 2px; display: inline-block; }
 .heatleg span { margin: 0 6px; }
 .viewbtn .cnt { display: inline-block; margin-left: 6px; min-width: 20px; padding: 1px 6px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 12px; font-family: var(--font-body); }
-.tvbox { height: 460px; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); }
+.tvbox { height: 460px; flex: none; border-radius: 12px; overflow: hidden; border: 1px solid var(--dk-line); }
+.drawer > * { flex-shrink: 0; }
 @media (max-width: 640px) { .tvbox { height: 360px; } }
 .tvbox .tradingview-widget-copyright { font-size: 11px; padding: 6px 8px; color: var(--muted); }
 .tvbox .tradingview-widget-copyright a { color: var(--accent); text-decoration: none; }
