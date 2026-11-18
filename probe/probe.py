@@ -17,7 +17,8 @@ print("run", rid, [ (r["event"],r["status"],r["created_at"]) for r in runs[:4]])
 if rid:
     z=zipfile.ZipFile(io.BytesIO(api("actions/runs/%d/logs"%rid).read()))
     for n in z.namelist():
-        if "Ειδοποι" in n or "notify" in n.lower():
+        if "Ειδοποι" in n:
             txt=z.read(n).decode("utf8","ignore")
             lines=[l for l in txt.splitlines() if "##[" not in l and "pip" not in l.lower()]
-            print("==",n); print("\n".join(lines[-40:]))
+            print("==",n); print("\n".join(l[29:] for l in lines if not l[29:].startswith(("  ","shell","env",""))][-30:]))
+# 1794994203
