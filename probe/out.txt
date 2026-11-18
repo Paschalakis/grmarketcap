@@ -1,7 +1,5 @@
-__/auth/handler 200 462 text/html; charset=utf-8
-__/auth/handler.js 200 280750 text/javascript; charset=utf-8
-__/auth/experiments.js 200 831 text/javascript; charset=utf-8
-__/auth/iframe 200 439 text/html; charset=utf-8
-__/auth/iframe.js 200 289777 text/javascript; charset=utf-8
-__/firebase/init.json ERR HTTP Error 404: Not Found
-__/firebase/init.js ERR HTTP Error 404: Not Found
+__/auth/handler?apiKey=x 200 462 text/html; charset=utf-8 https://axiogram.eu/__/auth/handler?apiKey=x 
+__/auth/handler.js 200 280750 application/javascript; charset=utf-8 https://axiogram.eu/__/auth/handler.js 
+__/auth/iframe 200 439 text/html; charset=utf-8 https://axiogram.eu/__/auth/iframe 
+__/auth/experiments.js 200 831 application/javascript; charset=utf-8 https://axiogram.eu/__/auth/experiments.js 
+sw.js 200 1779 application/javascript; charset=utf-8 https://axiogram.eu/sw.js b'/* Axiogram: \xce\xb5\xcf\x86\xce\xb1\xcf\x81\xce\xbc\xce\xbf\xce\xb3\xce\xae (service worker).\n   \xce\xa0\xce\xac\xce\xbd\xcf\x84\xce'
