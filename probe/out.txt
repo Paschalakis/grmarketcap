@@ -1,9 +1,1 @@
-44257110428 schedule completed success 2026-11-18T07:12:48Z 2026-11-18T07:13:01Z
-  job completed success 2026-11-18T07:12:51Z [('Set up job', 'completed', 'success'), ('Run actions/checkout@v4', 'completed', 'success'), ('Run actions/setup-python@v5', 'completed', 'success'), ('Εγκατάσταση βιβλιοθηκών', 'completed', 'success'), ('Ενημέρωση τιμών κάθε 15 λεπτά όσο είναι ανοιχτή η αγορά', 'completed', 'success'), ('Αρχεία διάγνωσης (μόνο αν αποτύχει)', 'completed', 'skipped'), ('Post Run actions/setup-python@v5', 'completed', 'success'), ('Post Run actions/checkout@v4', 'completed', 'success'), ('Complete job', 'completed', 'success')]
-44119871215 schedule completed success 2026-11-17T15:55:31Z 2026-11-17T16:01:13Z
-44108196426 schedule completed cancelled 2026-11-17T14:54:07Z 2026-11-17T15:55:32Z
-44088735035 schedule completed success 2026-11-17T13:02:11Z 2026-11-17T16:01:03Z
-44077478985 schedule completed cancelled 2026-11-17T11:49:34Z 2026-11-17T13:02:13Z
-44061076842 schedule completed cancelled 2026-11-17T10:02:21Z 2026-11-17T11:49:35Z
-44051238107 schedule completed success 2026-11-17T08:57:59Z 2026-11-17T14:31:06Z
-44037088379 schedule completed success 2026-11-17T07:13:54Z 2026-11-17T07:14:12Z
+dispatch 204
