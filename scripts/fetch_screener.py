@@ -94,6 +94,36 @@ if extra:
         have.add(k); us.append(row(k, v))
 print("ΗΠΑ:", len(us))
 
+# ---------- μίνι διαγράμματα 3 μηνών (spark.json): Ελλάδα από τα hist/, ΗΠΑ από το Yahoo
+import os, time
+spark = {}
+for row in gr:
+    sym = row[0]
+    code = sym_en.get(sym) or (sym if re.fullmatch(r"[A-Z0-9]+", sym) else None)
+    h = load("hist/%s.json" % code, None) if code else None
+    if h and h.get("c"): spark[sym] = [round(float(x), 4) for x in h["c"][-66:]]
+try:
+    ys = requests.Session(); ys.headers.update({"User-Agent": H["User-Agent"]})
+    try: ys.get("https://fc.yahoo.com", timeout=15)
+    except Exception: pass
+    crumb = ys.get("https://query1.finance.yahoo.com/v1/test/getcrumb", timeout=15).text.strip()
+    syms = [r[0] for r in us]
+    for i in range(0, len(syms), 20):
+        part = syms[i:i + 20]
+        try:
+            r = ys.get("https://query1.finance.yahoo.com/v8/finance/spark", params={"symbols": ",".join(part), "range": "3mo", "interval": "1d", "crumb": crumb}, timeout=30)
+            j = r.json() if r.ok else {}
+            for k, v in (j or {}).items():
+                cl = [c for c in (v or {}).get("close") or [] if c is not None]
+                if len(cl) > 5: spark["f:" + k] = [round(float(c), 4) for c in cl]
+        except Exception as e: print("spark", i, e)
+        time.sleep(0.3)
+except Exception as e: print("Yahoo spark:", e)
+print("spark:", len(spark), "π.χ.", {k: len(v) for k, v in list(spark.items())[:3]}, "AAPL", len(spark.get("f:AAPL") or []))
+if len(spark) > 100:
+    with open("spark.json", "w", encoding="utf-8") as f:
+        json.dump({"d": datetime.now(timezone.utc).strftime("%Y-%m-%d"), "s": spark}, f, ensure_ascii=False, separators=(",", ":"))
+
 if len(gr) >= 50 and len(us) >= 300:
     out = {"updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%MZ"), "cols": COLS_OUT, "gr": gr, "us": us}
     with open("screener.json", "w", encoding="utf-8") as f:

@@ -767,7 +767,7 @@ th[aria-sort] button { color: var(--accent); }
 .altag { font-size: 12px; color: var(--muted); white-space: nowrap; }
 @media (max-width: 640px) { .altag { display: none; } }
 .sw { position: relative; display: inline-flex; flex: none; width: 40px; height: 22px; cursor: pointer; }
-.sw input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.sw input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; z-index: 1; }
 .sw i { width: 40px; height: 22px; border-radius: 999px; background: var(--line); transition: background .15s; position: relative; }
 .sw i::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: transform .15s; }
 .sw input:checked + i { background: var(--accent); }
@@ -807,6 +807,111 @@ th[aria-sort] button { color: var(--accent); }
 .svrow .pf { min-width: 64px; text-align: right; font-weight: 600; }
 @media (max-width: 640px) { .svrow .chg:not(.pf) { display: none; } }
 .svcta { display: flex; justify-content: center; }
+/* ===== Κίνηση και ζωντάνια ===== */
+@keyframes flUp { 0% { background-color: rgba(33, 190, 115, .5); color: #fff; } 100% { background-color: transparent; } }
+@keyframes flDn { 0% { background-color: rgba(229, 72, 77, .5); color: #fff; } 100% { background-color: transparent; } }
+.fl-up { animation: flUp 1.5s ease-out; border-radius: 5px; }
+.fl-down { animation: flDn 1.5s ease-out; border-radius: 5px; }
+td.fl-up, td.fl-down { border-radius: 0; }
+@keyframes vin { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+@keyframes popin { from { opacity: 0; transform: translate(-50%, -47%) scale(.96); } to { opacity: 1; transform: translate(-50%, -50%); } }
+@keyframes drawerIn { from { opacity: .4; transform: translateX(40px); } to { opacity: 1; transform: none; } }
+.view.vin { animation: vin .32s cubic-bezier(.2, .8, .3, 1); }
+.scrim:not([hidden]) { animation: fadein .2s ease-out; }
+.authbox:not([hidden]) { animation: popin .24s cubic-bezier(.2, .8, .3, 1); }
+@media (min-width: 641px) { .drawer:not([hidden]) { animation: drawerIn .28s cubic-bezier(.2, .8, .3, 1); } }
+.tlpane:not([hidden]), .scrf[open] .scrgrid { animation: vin .25s ease-out; }
+.btn, .tab, .seg2 button, .viewbtn, .indb, .mrow, .calrow, .dwr, .star, .xadd { transition: transform .12s ease, background-color .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease; }
+.btn:active, .tab:active, .seg2 button:active, .indb:active, .xadd:active { transform: scale(.96); }
+.star:active { transform: scale(1.3); }
+tbody tr { transition: background-color .15s ease; }
+@media (hover: hover) {
+  .dk, .stat, .secchip, .dw { transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+  .dw:hover, .stat:hover, .secchip:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(0, 0, 0, .22); border-color: color-mix(in srgb, var(--accent) 35%, var(--dk-line)); }
+}
+/* σκελετός φόρτωσης */
+@keyframes shimmer { 0% { background-position: -320px 0; } 100% { background-position: 320px 0; } }
+.skwrap { display: flex; flex-direction: column; gap: 4px; padding: 8px 0; }
+.sk { display: block; border-radius: 8px; background: linear-gradient(90deg, rgba(127, 142, 163, .10) 0%, rgba(127, 142, 163, .24) 50%, rgba(127, 142, 163, .10) 100%); background-size: 640px 100%; animation: shimmer 1.3s linear infinite; }
+.skrow { display: flex; align-items: center; gap: 12px; padding: 10px 14px; }
+.skrow span { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.sk-c { width: 32px; height: 32px; border-radius: 50%; flex: none; }
+.sk-l { height: 11px; width: 45%; }
+.sk-s { height: 9px; width: 70%; opacity: .7; }
+.sk-r { width: 64px; height: 12px; flex: none; }
+.sk-chart { height: 220px; border-radius: 14px; margin: 6px 0; }
+.empty .skwrap { padding: 0; text-align: left; }
+/* μίνι κάρτα */
+.hovcard { position: fixed; z-index: 40; width: 280px; padding: 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--dk-line); box-shadow: 0 22px 50px rgba(0, 0, 0, .45); display: flex; flex-direction: column; gap: 10px; pointer-events: none; font-size: 13px; }
+.hovcard.in { animation: popcard .18s cubic-bezier(.2, .8, .3, 1); }
+@keyframes popcard { from { opacity: 0; transform: translateY(6px) scale(.97); } to { opacity: 1; transform: none; } }
+.hvh { display: flex; align-items: center; gap: 10px; }
+.hvn { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.hvn b { font-size: 15px; }
+.hvn span { color: var(--muted); font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hvstar { color: #f5a524; }
+.hvp { display: flex; align-items: baseline; gap: 10px; }
+.hvp .num { font-size: 22px; font-weight: 700; }
+.hvsp { position: relative; }
+.hvsp svg { display: block; }
+.hvspl { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+.hvnone .sk-chart { height: 64px; margin: 0; }
+.hvkv { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin: 0; }
+.hvkv div { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.hvkv dt { color: var(--muted); font-size: 11.5px; }
+.hvkv dd { margin: 0; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hvheld { padding: 8px 10px; border-radius: 10px; background: var(--accent-soft); font-size: 12.5px; }
+.hvfoot { color: var(--muted); font-size: 11.5px; text-align: center; }
+@media (hover: none) { tbody tr, .mrow, .ht, .calrow, .dwr { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; } }
+/* ο πίνακάς μου */
+.dashsec { display: flex; flex-direction: column; gap: 10px; }
+.dashsec[hidden] { display: none; }
+.dash { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+@media (max-width: 640px) { .dash { grid-template-columns: 1fr; } }
+.dw { padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; animation: vin .3s ease-out both; }
+.dw:nth-child(2) { animation-delay: .04s; } .dw:nth-child(3) { animation-delay: .08s; } .dw:nth-child(4) { animation-delay: .12s; } .dw:nth-child(5) { animation-delay: .16s; } .dw:nth-child(6) { animation-delay: .2s; }
+.dwh { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.dwh h3 { margin: 0; font-size: 14px; font-weight: 700; color: var(--muted); text-transform: none; }
+.dwh h3 .note { font-weight: 500; }
+.dwbig { font-family: var(--font-display); font-size: 30px; font-weight: 300; letter-spacing: -.01em; white-space: nowrap; }
+.dwbig .cs { color: var(--muted); font-size: .55em; margin: 0 3px; vertical-align: .45em; }
+.dwbig .dec { color: var(--muted); font-size: .5em; }
+.dwsub { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 13px; color: var(--muted); }
+.dwlist { display: flex; flex-direction: column; }
+.dwr { display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 4px; border: 0; border-top: 1px solid var(--dk-line); background: none; color: var(--fg); font: inherit; text-align: left; cursor: pointer; border-radius: 8px; }
+.dwr:first-child { border-top: 0; }
+.dwr:hover { background: var(--accent-soft); }
+.dwr .cn { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.dwr .cn span { color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dwr .chg { white-space: nowrap; }
+.dwp { font-weight: 600; white-space: nowrap; padding: 1px 4px; }
+.dwgap { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; font-size: 12px; color: var(--muted); white-space: nowrap; }
+.dwgap i { display: block; width: 64px; height: 4px; border-radius: 4px; background: var(--line); position: relative; overflow: hidden; }
+.dwgap i::after { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--p); background: var(--accent); border-radius: 4px; }
+.dwdate { display: flex; flex-direction: column; align-items: center; width: 40px; flex: none; padding: 3px 0; border-radius: 8px; background: var(--accent-soft); line-height: 1.1; }
+.dwdate b { font-size: 16px; } .dwdate span { font-size: 11px; color: var(--muted); }
+.dwmk { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; }
+.dwmk > div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.dwmk .note { font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dwmk b { font-size: 15px; }
+.dwfng { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.dwdom { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 120px; }
+.userhide { display: none !important; }
+/* παράθυρο προσαρμογής */
+.cubox { width: min(480px, calc(100% - 24px)); }
+.cuh { margin: 4px 0 0; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.culist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.curow { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 12px; border: 1px solid var(--dk-line); background: var(--bg); transition: box-shadow .15s, transform .15s; }
+.curow.dragging { box-shadow: 0 12px 30px rgba(0, 0, 0, .35); transform: scale(1.02); border-color: var(--accent); position: relative; z-index: 2; }
+.curow .cn { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.curow .cn span { color: var(--muted); font-size: 12px; }
+.hdl { border: 0; background: none; color: var(--muted); font-size: 16px; letter-spacing: -2px; cursor: grab; padding: 4px 2px; touch-action: none; line-height: 1; }
+.curow.dragging .hdl { cursor: grabbing; }
+.cuar { display: flex; gap: 2px; }
+.cuar button { width: 28px; height: 28px; border: 1px solid var(--line); border-radius: 8px; background: none; color: var(--muted); cursor: pointer; font: inherit; }
+.cuar button:hover { color: var(--fg); border-color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; } }
 </style>
 
 <div class="demo demo-band"><p id="banner"><strong>Στιγμιότυπο.</strong> Οι τιμές προέρχονται από το capital.gr (καθυστέρηση 15 λεπτών) και η κεφαλαιοποίηση με τα ονόματα από το euro2day.gr (23/10/2026, 12:58). Τα στοιχεία δεν ενημερώνονται αυτόματα και δεν αποτελούν επενδυτική πληροφόρηση.</p></div>
@@ -839,7 +944,8 @@ th[aria-sort] button { color: var(--accent); }
   </nav>
 
   <div class="view" id="view-market" role="tabpanel" aria-labelledby="tab-market" data-mkt="gr">
-  <div class="mktrow"><div class="seg2 mktsw" id="mktsw" role="group" aria-label="Αγορά"><button type="button" data-mkt="gr" aria-pressed="true">Ελλάδα</button><button type="button" data-mkt="us" aria-pressed="false"><span>ΗΠΑ</span><span class="t100"> · Top 100</span></button><button type="button" data-mkt="c" aria-pressed="false">Crypto<span class="t100"> · Top 100</span></button></div><button type="button" class="btn cmpbtn" id="cmpOpen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-5 4 3 9-9"/><path d="M3 9l5 3 4-5 9 6" opacity=".55"/></svg> <span>Σύγκριση</span></button></div>
+  <section class="dashsec" id="dashsec" aria-label="Ο πίνακάς μου" hidden><div class="sechead"><h2>Ο πίνακάς μου</h2><button type="button" class="linkbtn" id="dashCu">Προσαρμογή</button></div><div class="dash" id="dash"></div></section>
+  <div class="mktrow"><div class="seg2 mktsw" id="mktsw" role="group" aria-label="Αγορά"><button type="button" data-mkt="gr" aria-pressed="true">Ελλάδα</button><button type="button" data-mkt="us" aria-pressed="false"><span>ΗΠΑ</span><span class="t100"> · Top 100</span></button><button type="button" data-mkt="c" aria-pressed="false">Crypto<span class="t100"> · Top 100</span></button></div><button type="button" class="btn cmpbtn" id="cmpOpen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-5 4 3 9-9"/><path d="M3 9l5 3 4-5 9 6" opacity=".55"/></svg> <span>Σύγκριση</span></button><button type="button" class="btn dkicon" id="cuOpen" title="Προσαρμογή αρχικής" aria-label="Προσαρμογή αρχικής"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/></svg></button></div>
   <section id="xlist" class="xlist" hidden>
     <div class="phead"><div><h2 id="xtitle"></h2><div class="storage" id="xnote"></div></div>
       <input type="search" class="search" id="xq" placeholder="Αναζήτηση" aria-label="Αναζήτηση στη λίστα" autocomplete="off"></div>
@@ -856,7 +962,7 @@ th[aria-sort] button { color: var(--accent); }
     <div class="panel"><h2>Μεγαλύτερες εταιρείες</h2><div id="biggest"></div></div>
   </section>
 
-  <section style="display:flex;flex-direction:column;gap:10px" aria-label="Κλάδοι">
+  <section style="display:flex;flex-direction:column;gap:10px" aria-label="Κλάδοι" id="secsec">
     <div class="sechead"><h2>Κλάδοι</h2><span class="note">Η κατηγοριοποίηση είναι δική μου και όχι η επίσημη του ATHEX.</span></div>
     <div class="sectors" id="sectors"></div>
   </section>
@@ -869,7 +975,7 @@ th[aria-sort] button { color: var(--accent); }
     </div>
   </section>
 
-  <section style="display:flex;flex-direction:column;gap:12px" aria-label="Όλες οι μετοχές">
+  <section style="display:flex;flex-direction:column;gap:12px" aria-label="Όλες οι μετοχές" id="allsec">
     <div class="controls">
       <div class="ctrlrow">
         <div class="tabs" id="tabs" role="group" aria-label="Φίλτρο κίνησης"></div>
@@ -1003,6 +1109,14 @@ th[aria-sort] button { color: var(--accent); }
     <div id="tl-al" class="tlpane" hidden></div>
   </div>
 <div class="toast" id="toast" role="status" hidden></div>
+<div class="scrim" id="cuScrim" hidden></div>
+<div class="panel authbox cubox" id="cuBox" role="dialog" aria-modal="true" aria-labelledby="cuTitle" hidden>
+  <div class="ahead"><h2 id="cuTitle">Προσαρμογή αρχικής</h2><button type="button" class="close" id="cuClose" aria-label="Κλείσιμο">×</button></div>
+  <p class="note" style="margin:0">Διάλεξε τι θέλεις να βλέπεις στη σελίδα «Μετοχές» και σύρε το ⋮⋮ για να αλλάξεις τη σειρά.</p>
+  <h3 class="cuh">Ο πίνακάς μου</h3><ul class="culist" id="cuW"></ul>
+  <h3 class="cuh">Ενότητες αγοράς</h3><ul class="culist" id="cuS"></ul>
+  <div style="display:flex;justify-content:space-between;gap:8px"><button type="button" class="btn" id="cuReset">Επαναφορά</button><button type="button" class="btn primary" id="cuDone">Έτοιμο</button></div>
+</div>
 <div class="scrim" id="shScrim" hidden></div>
 <div class="panel authbox" id="shBox" role="dialog" aria-modal="true" aria-labelledby="shTitle" hidden>
   <div class="ahead"><h2 id="shTitle">Κοινοποίηση χαρτοφυλακίου</h2><button type="button" class="close" id="shClose" aria-label="Κλείσιμο">×</button></div>
@@ -1826,6 +1940,26 @@ var EN_EXACT = {
   "Όλο": "All",
   "Δεν υπάρχουν ακόμα αρκετά στοιχεία για αυτό το διάστημα. Το ιστορικό συλλέγεται καθημερινά.": "Not enough data for this range yet. History is collected daily.",
   "Η εφαρμογή εγκαταστάθηκε": "The app was installed",
+  "Ο πίνακάς μου": "My dashboard",
+  "Προσαρμογή": "Customize",
+  "Προσαρμογή αρχικής": "Customize home",
+  "Ενότητες αγοράς": "Market sections",
+  "Επαναφορά": "Reset",
+  "Έτοιμο": "Done",
+  "Επόμενα γεγονότα": "Upcoming events",
+  "Αγορές με μια ματιά": "Markets at a glance",
+  "Άνοιγμα →": "Open →",
+  "Όλα →": "All →",
+  "Όλες →": "All →",
+  "Ημερολόγιο →": "Calendar →",
+  "Κλικ για λεπτομέρειες": "Click for details",
+  "Πάτα για λεπτομέρειες": "Tap for details",
+  "3 μήνες": "3 months",
+  "Θέση στο εύρος 52 εβδ.": "Position in 52-wk range",
+  "Κυριαρχία BTC": "BTC dominance",
+  "Παγκόσμιες αγορές (λωρίδα πάνω)": "Global markets (top strip)",
+  "+ Νέα ειδοποίηση": "+ New alert",
+  "Συνολικά": "Total",
   "Εργαλεία": "Tools",
   "Φίλτρο μετοχών": "Stock screener",
   "Ημερολόγιο": "Calendar",
@@ -1891,6 +2025,8 @@ var EN_EXACT = {
   "Φόρτωση ημερολογίου…": "Loading calendar…"
 };
 var EN_RX = [
+  [/^(\S+)% του χαρτοφυλακίου$/, "$1% of portfolio"],
+  [/^απέχει (.+)$/, "$1 away"],
   [/^σε (\d+) ημέρες$/, "in $1 days"],
   [/^\+ (\d+) ακόμα$/, "+ $1 more"],
   [/^Πάνω από (.+)$/, "Above $1"],
@@ -2190,32 +2326,36 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   function favCount() { return Object.keys(favs).length; }
 
   /* summary */
-  var ups = rows.filter(function (r) { return r.chg > 0.004; }).length;
-  var downs = rows.filter(function (r) { return r.chg < -0.004; }).length;
-  var flats = N - ups - downs;
-  var withCap = rows.filter(function (r) { return r.mcap && r.sym !== "ΑΔΑΚ"; });
-  var totalCap = withCap.reduce(function (a, r) { return a + r.mcap; }, 0);
-  var wChg = withCap.reduce(function (a, r) { return a + r.chg * r.mcap; }, 0) / totalCap;
+  var ups, downs, flats, withCap, totalCap, wChg, byCap, bigMovers, byChg;
   function pc(n) { return (n / N * 100); }
   function money(v) { v = v * RATE; return (v >= 1e12 ? nf2.format(v / 1e12) + " τρισ." : v >= 1e9 ? nf2.format(v / 1e9) + " δισ." : nf2.format(v / 1e6) + " εκ.") + CS; }
-  document.getElementById("stats").innerHTML =
-    '<div class="stat"><div class="lbl">Κεφαλαιοποίηση αγοράς</div><div class="val num">' + money(totalCap) + '</div><div class="sub" style="color:var(--muted)">' + withCap.length + " εταιρείες με γνωστή αξία</div></div>" +
-    (META && META.index ? '<div class="stat"><div class="lbl">Γενικός Δείκτης</div><div class="val num">' + nf2.format(META.index.value) + ' <span style="font-size:15px">' + chgHtml(META.index.pct) + '</span></div><div class="sub" style="color:var(--muted)">' + sgn(META.index.chg) + nf2.format(Math.abs(META.index.chg)) + " μον. · τζίρος " + money(META.index.turnover) + (META.index.time ? " · " + esc(META.index.time) : "") + "</div>" + (IGD.filter(function (v) { return v != null; }).length >= 2 ? '<div style="margin-top:6px">' + sparkHtml(IGD.map(function (v, i) { return { x: IT[i], y: v }; }).filter(function (p) { return p.y != null; }), 220, 34).replace('class="spark"', 'class="spark" preserveAspectRatio="none" style="margin:0;width:100%;max-width:220px"') + "</div>" : "") + "</div>"
-      : '<div class="stat"><div class="lbl">Μεταβολή σήμερα</div><div class="val num" style="color:var(--' + (wChg >= 0 ? "up" : "down") + ')">' + arrow(wChg) + sgn(wChg) + nf2.format(Math.abs(wChg)) + '%</div><div class="sub" style="color:var(--muted)">σταθμισμένη με την κεφαλαιοποίηση</div></div>') +
-    '<div class="stat wide"><div class="lbl">Εύρος αγοράς σήμερα · ' + N + ' μετοχές</div>' +
-    '<div class="breadth" role="img" aria-label="Άνοδοι ' + ups + ", πτώσεις " + downs + ", αμετάβλητες " + flats + '"><i class="u" style="width:' + pc(ups) + '%"></i><i class="f" style="width:' + pc(flats) + '%"></i><i class="d" style="width:' + pc(downs) + '%"></i></div>' +
-    '<div class="legend num"><span style="color:var(--up)">▲ ' + ups + " σε άνοδο</span><span>" + (HAS_VOL ? (NACT - ups - downs) + " αμετάβλητες με συναλλαγές · " + (N - NACT) + " χωρίς συναλλαγές" : flats + " αμετάβλητες") + '</span><span style="color:var(--down)">▼ ' + downs + " σε πτώση</span></div></div>";
-
-  var byCap = withCap.slice().sort(function (a, b) { return b.mcap - a.mcap; });
-  byCap.forEach(function (r, i) { r.rank = i + 1; });
-  var bigMovers = withCap.filter(function (r) { return r.mcap >= 5e7; }).sort(function (a, b) { return b.chg - a.chg; });
-  var byChg = rows.slice().sort(function (a, b) { return b.chg - a.chg; });
   function mrow(s, mode) {
-    return '<button type="button" class="mrow" data-s="' + esc(s.sym) + '">' + monoHtml(s.dsym) + '<div class="nm"><b>' + esc(s.dsym) + "</b><span>" + esc(s.name || "—") + '</span></div><div class="px num"><div class="price">' + (mode === "cap" ? money(s.mcap) : fmtC(s.price)) + "</div>" + chgHtml(s.chg) + "</div></button>";
+    return '<button type="button" class="mrow" data-s="' + esc(s.sym) + '">' + monoHtml(s.dsym) + '<div class="nm"><b>' + esc(s.dsym) + "</b><span>" + esc(s.name || "—") + '</span></div><div class="px num"><div class="price"' + (mode === "cap" ? "" : ' data-pk="' + esc(s.sym) + '" data-pv="' + s.price + '"') + ">" + (mode === "cap" ? money(s.mcap) : fmtC(s.price)) + "</div>" + chgHtml(s.chg) + "</div></button>";
   }
-  document.getElementById("gainers").innerHTML = bigMovers.slice(0, 5).map(function (s) { return mrow(s); }).join("");
-  document.getElementById("losers").innerHTML = bigMovers.slice(-5).reverse().map(function (s) { return mrow(s); }).join("");
-  document.getElementById("biggest").innerHTML = byCap.slice(0, 5).map(function (s) { return mrow(s, "cap"); }).join("");
+  function renderTop() {
+    ups = rows.filter(function (r) { return r.chg > 0.004; }).length;
+    downs = rows.filter(function (r) { return r.chg < -0.004; }).length;
+    flats = N - ups - downs;
+    withCap = rows.filter(function (r) { return r.mcap && r.sym !== "ΑΔΑΚ"; });
+    totalCap = withCap.reduce(function (a, r) { return a + r.mcap; }, 0);
+    wChg = withCap.reduce(function (a, r) { return a + r.chg * r.mcap; }, 0) / totalCap;
+    document.getElementById("stats").innerHTML =
+      '<div class="stat"><div class="lbl">Κεφαλαιοποίηση αγοράς</div><div class="val num">' + money(totalCap) + '</div><div class="sub" style="color:var(--muted)">' + withCap.length + " εταιρείες με γνωστή αξία</div></div>" +
+      (META && META.index ? '<div class="stat"><div class="lbl">Γενικός Δείκτης</div><div class="val num">' + nf2.format(META.index.value) + ' <span style="font-size:15px">' + chgHtml(META.index.pct) + '</span></div><div class="sub" style="color:var(--muted)">' + sgn(META.index.chg) + nf2.format(Math.abs(META.index.chg)) + " μον. · τζίρος " + money(META.index.turnover) + (META.index.time ? " · " + esc(META.index.time) : "") + "</div>" + (IGD.filter(function (v) { return v != null; }).length >= 2 ? '<div style="margin-top:6px">' + sparkHtml(IGD.map(function (v, i) { return { x: IT[i], y: v }; }).filter(function (p) { return p.y != null; }), 220, 34).replace('class="spark"', 'class="spark" preserveAspectRatio="none" style="margin:0;width:100%;max-width:220px"') + "</div>" : "") + "</div>"
+        : '<div class="stat"><div class="lbl">Μεταβολή σήμερα</div><div class="val num" style="color:var(--' + (wChg >= 0 ? "up" : "down") + ')">' + arrow(wChg) + sgn(wChg) + nf2.format(Math.abs(wChg)) + '%</div><div class="sub" style="color:var(--muted)">σταθμισμένη με την κεφαλαιοποίηση</div></div>') +
+      '<div class="stat wide"><div class="lbl">Εύρος αγοράς σήμερα · ' + N + ' μετοχές</div>' +
+      '<div class="breadth" role="img" aria-label="Άνοδοι ' + ups + ", πτώσεις " + downs + ", αμετάβλητες " + flats + '"><i class="u" style="width:' + pc(ups) + '%"></i><i class="f" style="width:' + pc(flats) + '%"></i><i class="d" style="width:' + pc(downs) + '%"></i></div>' +
+      '<div class="legend num"><span style="color:var(--up)">▲ ' + ups + " σε άνοδο</span><span>" + (HAS_VOL ? (NACT - ups - downs) + " αμετάβλητες με συναλλαγές · " + (N - NACT) + " χωρίς συναλλαγές" : flats + " αμετάβλητες") + '</span><span style="color:var(--down)">▼ ' + downs + " σε πτώση</span></div></div>";
+
+    byCap = withCap.slice().sort(function (a, b) { return b.mcap - a.mcap; });
+    byCap.forEach(function (r, i) { r.rank = i + 1; });
+    bigMovers = withCap.filter(function (r) { return r.mcap >= 5e7; }).sort(function (a, b) { return b.chg - a.chg; });
+    byChg = rows.slice().sort(function (a, b) { return b.chg - a.chg; });
+    document.getElementById("gainers").innerHTML = bigMovers.slice(0, 5).map(function (s) { return mrow(s); }).join("");
+    document.getElementById("losers").innerHTML = bigMovers.slice(-5).reverse().map(function (s) { return mrow(s); }).join("");
+    document.getElementById("biggest").innerHTML = byCap.slice(0, 5).map(function (s) { return mrow(s, "cap"); }).join("");
+  }
+  renderTop();
 
   /* συμπληρωματικά στοιχεία: θεμελιώδη, μερίσματα, ειδήσεις (extras.json) */
   var EXD = window.__EXTRA || null, EX = (EXD && EXD.stocks) || {};
@@ -2367,7 +2507,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   function rowHtml(s, withRank) {
       return '<tr tabindex="0" data-s="' + esc(s.sym) + '"><td class="starcol"><button type="button" class="star" data-star="' + esc(s.sym) + '" aria-pressed="' + !!favs[s.sym] + '" aria-label="Αγαπημένο: ' + esc(s.dsym) + '">' + (favs[s.sym] ? "★" : "☆") + '</button></td>' +
         (withRank ? '<td class="l idx num hide-s">' + (s.rank || "—") + "</td>" : "") + '<td class="l"><div class="who">' + monoHtml(s.dsym) + "<div><b>" + esc(s.dsym) + "</b>" + (s.name ? "<span>" + esc(s.name) + "</span>" : "") + "</div></div></td>" +
-        '<td class="num price">' + fmtC(s.price) + "</td><td>" + chgHtml(s.chg) + '</td><td class="hide-s">' + (s.w7 == null ? '<span class="chg flat">—</span>' : chgHtml(s.w7)) + '</td><td class="num hide-s">' + (s.mcap ? money(s.mcap) : "—") + '</td><td class="num hide-s">' + (s.vol == null ? "—" : s.vol ? compactN(s.vol) : '<span style="color:var(--muted)">0</span>') + '</td><td class="mvcell">' + trendCell(s) + "</td></tr>";
+        '<td class="num price" data-pk="' + esc(s.sym) + '" data-pv="' + s.price + '">' + fmtC(s.price) + "</td><td>" + chgHtml(s.chg) + '</td><td class="hide-s">' + (s.w7 == null ? '<span class="chg flat">—</span>' : chgHtml(s.w7)) + '</td><td class="num hide-s">' + (s.mcap ? money(s.mcap) : "—") + '</td><td class="num hide-s">' + (s.vol == null ? "—" : s.vol ? compactN(s.vol) : '<span style="color:var(--muted)">0</span>') + '</td><td class="mvcell">' + trendCell(s) + "</td></tr>";
   }
   function renderFavs() {
     var list = rows.filter(function (r) { return favs[r.sym]; }).sort(function (a, b) { return (b.mcap || 0) - (a.mcap || 0) || a.sym.localeCompare(b.sym, "el"); });
@@ -2441,7 +2581,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
         LONG[sym] = out;
       })
       .catch(function () { LONG[sym] = null; })
-      .then(function () { if (!drawer.hidden && cur && cur.sym === sym && chartKind === "line" && chartRange !== "today") paint(); if (window.__pfRefresh) window.__pfRefresh(); if (window.__cmpRefresh) window.__cmpRefresh(); });
+      .then(function () { if (!drawer.hidden && cur && cur.sym === sym && chartKind === "line" && chartRange !== "today") paint(); if (window.__pfRefresh) window.__pfRefresh(); if (window.__cmpRefresh) window.__cmpRefresh(); if (window.__hovRefresh) window.__hovRefresh(); });
   }
   function fullSeries(s) {
     var mine = dailySeries(s), lg = LONG[s.sym];
@@ -2575,7 +2715,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     if (chartKind === "tv") return bar + '<div class="tvbox" id="tvbox"></div>';
     bar += indBar(chartRange === "today");
     if (chartRange !== "today") loadLong(s);
-    if (chartRange !== "today" && LONG[s.sym] === "loading") return bar + '<div class="chartempty">Φόρτωση ιστορικού…</div>';
+    if (chartRange !== "today" && LONG[s.sym] === "loading") return bar + skel(1, "chart");
     var pts = rangeSeries(s);
     if (pts.length < 2) return bar + '<div class="chartempty">' + (chartRange === "today" ? "Το γράφημα της ημέρας εμφανίζεται μετά από δύο ενημερώσεις τιμών." : "Δεν υπάρχουν ακόμα αρκετά στοιχεία για αυτό το διάστημα. Το ιστορικό συλλέγεται καθημερινά.") + "</div>";
     var ind = indFor(s, pts);
@@ -2625,7 +2765,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var rc = byChg.indexOf(s) + 1;
     drawer.innerHTML =
       '<div class="dh"><div><h2 id="dname">' + esc(s.dsym) + (s.name ? " · " + esc(s.name) : "") + '</h2><div class="sec">Χρηματιστήριο Αθηνών</div></div><button type="button" class="close" id="dclose" aria-label="Κλείσιμο">×</button></div>' +
-      '<div class="bigp"><span class="p num">' + fmtC(s.price) + "</span>" + chgHtml(s.chg) + '<span class="sec" style="color:var(--muted)">σήμερα</span></div>' +
+      '<div class="bigp"><span class="p num" data-pk="' + esc(s.sym) + '" data-pv="' + s.price + '">' + fmtC(s.price) + "</span>" + chgHtml(s.chg) + '<span class="sec" style="color:var(--muted)">σήμερα</span></div>' +
       chartBlock(s) +
       '<dl class="kv num">' + kv("Κλάδος", esc(s.sector)) + kv("Προηγ. κλείσιμο (υπολογισμός)", fmtC(s.prev)) + kv("Μεταβολή", sgn(s.diff) + fmtC(Math.abs(s.diff))) +
       (HAS_VOL ? kv("Όγκος σήμερα", s.vol ? nf0.format(s.vol) + " τεμ." : "Καμία συναλλαγή") + kv("Τζίρος (περίπου)", s.vol ? money(s.vol * s.price).replace(" εκ. €", " εκ. €") : "—") + kv("Τελευταία συναλλαγή", s.lu || "—") : "") +
@@ -2707,7 +2847,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     saveWallets(); savePfs();
     if (!pfRef) { saveLocal(); return Promise.resolve(); }
     savePfs();
-    var body = { txns: txns.slice(), favs: Object.keys(favs), wallets: wallets.slice(), pfs: pfs.slice(), alerts: JSON.parse(JSON.stringify(ALERTS)), push: JSON.parse(JSON.stringify(PUSHT)), weekly: !!WEEKLY, updated: Date.now() };
+    var body = { txns: txns.slice(), favs: Object.keys(favs), wallets: wallets.slice(), pfs: pfs.slice(), alerts: JSON.parse(JSON.stringify(ALERTS)), push: JSON.parse(JSON.stringify(PUSHT)), weekly: !!WEEKLY, home: window.__homeGet ? JSON.parse(JSON.stringify(window.__homeGet())) : null, updated: Date.now() };
     if (WTEST) body.wtest = WTEST;
     try { localStorage.setItem("agora-alerts", JSON.stringify(ALERTS)); } catch (e) {}
     pfWriting = pfWriting.then(function () { return pfRef.set(body, { merge: true }); }).catch(function (e) {
@@ -2927,6 +3067,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
               setPfs(rp.concat(pfs));
               var ra = Array.isArray(d.alerts) ? d.alerts : [], ab = ra.length;
               ALERTS = mergeAlerts(ra, ALERTS); PUSHT = Array.isArray(d.push) ? d.push : []; WEEKLY = !!d.weekly;
+              if (d.home && window.__homeSet) window.__homeSet(d.home);
               if (ALERTS.length !== ab) pb = -1;
               if (!snap.exists || merged.length !== remote.length || Object.keys(f2).length !== before || mw.length !== wb || pfs.length !== pb) {
                 persist().then(function () { if (pfRef) { try { localStorage.removeItem(LKEY); } catch (e) {} } });
@@ -2939,8 +3080,10 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
             if (Array.isArray(d.pfs)) setPfs(d.pfs);
               var prevA = ALERTS; ALERTS = Array.isArray(d.alerts) ? d.alerts : []; PUSHT = Array.isArray(d.push) ? d.push : []; WEEKLY = !!d.weekly;
               if (window.__alFired) window.__alFired(prevA, ALERTS);
+              if (d.home && window.__homeSet) window.__homeSet(d.home);
             }
             if (window.__alBadge) window.__alBadge();
+            if (window.__dashRefresh) window.__dashRefresh();
             if (!document.getElementById("view-tools").hidden && window.__renderTools) window.__renderTools();
             renderPortfolio(); tabsHtml(); render();
             if (!drawer.hidden && cur) paint();
@@ -3608,7 +3751,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       expand: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>'
     };
     var curBtn = '<button type="button" class="dkcur" id="dkcur" title="Αλλαγή νομίσματος">' + CUR + "</button>";
-    var hero = '<article class="dk dkhero"><div class="dkhero-top"><div><div class="dkeye"><span class="ico">' + ICO.wallet + "</span>Συνολική αξία " + curBtn + '</div><div class="dkbig num sens">' + bigNum(H.value) + '</div><div class="dkdelta">' + chip(dayPct) + ' <span class="chg num sens ' + cls(H.day) + '">' + sgn(H.day) + nf2.format(Math.abs(H.day) * RATE) + CS + '</span><span style="color:var(--muted)">σήμερα</span></div></div>' +
+    var hero = '<article class="dk dkhero"><div class="dkhero-top"><div><div class="dkeye"><span class="ico">' + ICO.wallet + "</span>Συνολική αξία " + curBtn + '</div><div class="dkbig num sens" data-count="pf" data-cv="' + H.value + '">' + bigNum(H.value) + '</div><div class="dkdelta">' + chip(dayPct) + ' <span class="chg num sens ' + cls(H.day) + '">' + sgn(H.day) + nf2.format(Math.abs(H.day) * RATE) + CS + '</span><span style="color:var(--muted)">σήμερα</span></div></div>' +
       '<div class="dkranges" id="dkranges" role="group" aria-label="Διάστημα">' + [["1D", "1Η"], ["1W", "1Ε"], ["1M", "1Μ"], ["3M", "3Μ"], ["1Y", "1Χ"], ["ALL", "Όλο"]].map(function (r) { return '<button type="button" data-r="' + r[0] + '" aria-pressed="' + (pfRange === r[0]) + '">' + r[1] + "</button>"; }).join("") + "</div></div>" +
       '<div class="dkchart" id="dkchart"></div></article>';
     var top3 = H.list.slice(0, 3);
@@ -3637,9 +3780,9 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
         if (h.perp) return '<tr tabindex="0" data-pfs="' + esc(h.sym) + '"><td class="l"><div class="who">' + monoHtml("HL") + "<div><b>" + esc(h.w.n || "Hyperliquid") + "</b><span>" + esc(shortA(h.w.a)) + ' · Perpetuals</span></div></div></td><td class="num hide-s">—</td><td class="num hide-s">—</td><td>—</td><td class="num"><b class="sens">' + eur(h.value) + '</b><span class="sub2 show-s chg ' + cls(h.pl) + ' sens">' + sgn(h.pl) + nf2.format(Math.abs(h.pl) * RATE) + CS + '</span></td><td class="hide-s"><span class="sens">' + eurS(h.pl) + '</span><span class="sub2 chg ' + cls(h.plPct) + '">' + sgn(h.plPct) + nf2.format(Math.abs(h.plPct)) + '%</span></td><td class="hide-s"><div class="dkshare"><span class="num">' + nf2.format(h.weight) + '%</span><i><u style="width:' + Math.max(1, h.weight) + '%"></u></i></div></td></tr>';
         var sub = esc(DS(h.sym)) + (h.row && h.row.sector ? " · " + esc(trS(h.row.sector)) : "");
         return '<tr tabindex="0" data-pfs="' + esc(h.sym) + '"><td class="l"><div class="who">' + assetIcon(h.sym) + "<div><b>" + esc(h.row && h.row.name ? h.row.name : DS(h.sym)) + "</b><span>" + sub + "</span></div></div></td>" +
-          '<td class="num hide-s sens">' + fmtQty(h.qty) + '</td><td class="num hide-s">' + fmtC(h.price) + "<span class=\"sub2 note sens\">μ.τ. " + fmtC(h.avg) + "</span></td>" +
+          '<td class="num hide-s sens">' + fmtQty(h.qty) + '</td><td class="num hide-s"><span data-pk="' + esc(h.sym) + '" data-pv="' + h.price + '">' + fmtC(h.price) + "</span><span class=\"sub2 note sens\">μ.τ. " + fmtC(h.avg) + "</span></td>" +
           "<td>" + (h.row ? chip(h.row.chg) : "—") + "</td>" +
-          '<td class="num"><b class="sens">' + eur(h.value) + '</b><span class="sub2 show-s chg ' + cls(h.pl) + ' sens">' + sgn(h.pl) + nf2.format(Math.abs(h.pl) * RATE) + CS + "</span></td>" +
+          '<td class="num"><b class="sens" data-pk="v:' + esc(h.sym) + '" data-pv="' + h.value + '">' + eur(h.value) + '</b><span class="sub2 show-s chg ' + cls(h.pl) + ' sens">' + sgn(h.pl) + nf2.format(Math.abs(h.pl) * RATE) + CS + "</span></td>" +
           '<td class="hide-s"><span class="sens">' + eurS(h.pl) + '</span><span class="sub2 chg ' + cls(h.plPct) + '">' + sgn(h.plPct) + nf2.format(Math.abs(h.plPct)) + "%</span></td>" +
           '<td class="hide-s"><div class="dkshare"><span class="num">' + nf2.format(h.weight) + '%</span><i><u style="width:' + Math.max(1, h.weight) + '%"></u></i></div></td></tr>';
       }).join("") + "</tbody></table></div>" : '<div class="panel pempty"><h3>Δεν έχεις ανοιχτές θέσεις</h3><p>Όλες οι μετοχές έχουν πουληθεί. Το πραγματοποιημένο κέρδος ή η ζημιά φαίνεται στη σύνοψη.</p></div>';
@@ -3943,6 +4086,8 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     if (v === "favs") renderFavs();
     if (v === "heat") renderHeat();
     if (v === "tools" && window.__renderTools) window.__renderTools();
+    if (v === "market" && window.__dashRefresh) window.__dashRefresh();
+    var ve = document.getElementById("view-" + v); if (ve) { ve.classList.remove("vin"); void ve.offsetWidth; ve.classList.add("vin"); }
   }
 
   /* ----- σύγκριση μετοχών / crypto ----- */
@@ -4049,14 +4194,14 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   /* ----- παγκόσμια εικόνα ----- */
   function renderGlobal() {
     var box = document.getElementById("gstrip"), g = (FOREIGN && FOREIGN.g) || [], out = [];
-    if (META && META.index) out.push({ n: "Γενικός Δείκτης", v: nf2.format(META.index.value), c: META.index.pct });
+    if (META && META.index) out.push({ n: "Γενικός Δείκτης", v: nf2.format(META.index.value), c: META.index.pct, raw: META.index.value });
     g.forEach(function (x) {
       var p = x.p, c = x.c;
       if (x.k === "BTC-USD" && CGP.bitcoin) { p = CGP.bitcoin.p / usdEur(); c = CGP.bitcoin.c; }
-      out.push({ n: x.n, v: (x.k === "EURUSD=X" ? new Intl.NumberFormat(LOC, { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(p) : p >= 1000 ? new Intl.NumberFormat(LOC, { maximumFractionDigits: 0 }).format(p) : nf2.format(p)) + (x.u ? " " + x.u : ""), c: c });
+      out.push({ n: x.n, raw: p, v: (x.k === "EURUSD=X" ? new Intl.NumberFormat(LOC, { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(p) : p >= 1000 ? new Intl.NumberFormat(LOC, { maximumFractionDigits: 0 }).format(p) : nf2.format(p)) + (x.u ? " " + x.u : ""), c: c });
     });
     box.hidden = out.length < 2;
-    box.innerHTML = out.map(function (x) { return '<div class="gchip"><span class="n">' + esc(x.n) + '</span><span class="r"><span class="v">' + x.v + "</span>" + (x.c == null ? "" : chgHtml(x.c)) + "</span></div>"; }).join("");
+    box.innerHTML = out.map(function (x) { return '<div class="gchip"><span class="n">' + esc(x.n) + '</span><span class="r"><span class="v" data-pk="g:' + esc(x.n) + '" data-pv="' + x.raw + '">' + x.v + "</span>" + (x.c == null ? "" : chgHtml(x.c)) + "</span></div>"; }).join("");
   }
   renderGlobal();
 
@@ -4079,7 +4224,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (j) {
         if (!Array.isArray(j) || !j.length) throw new Error("empty");
-        CG100 = j; cg100At = Date.now(); cg100Err = false;
+        CG100 = j; cg100At = Date.now(); cg100Err = false; setTimeout(function () { if (window.__dashRefresh) window.__dashRefresh(); }, 0);
         j.forEach(function (x) { if (x.current_price != null) CGP[x.id] = { p: x.current_price, c: x.price_change_percentage_24h || 0 }; });
         try { localStorage.setItem("agora-cg100", JSON.stringify({ at: cg100At, d: j.map(function (x) { var y = Object.assign({}, x); if (y.sparkline_in_7d && y.sparkline_in_7d.price) y.sparkline_in_7d = { price: y.sparkline_in_7d.price.filter(function (_, i) { return i % 4 === 0; }) }; return y; }) })); } catch (e) {}
       })
@@ -4097,7 +4242,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     Promise.all([
       fetch("https://api.coingecko.com/api/v3/global").then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (j) { CGLOB = j && j.data; }).catch(function () {}),
       fetch("https://api.alternative.me/fng/?limit=31").then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (j) { if (j && Array.isArray(j.data) && j.data.length) FNG = j.data; }).catch(function () {})
-    ]).then(function () { cstatAt = Date.now(); cstatBusy = false; if (mkt === "c") renderCStats(); });
+    ]).then(function () { cstatAt = Date.now(); cstatBusy = false; if (mkt === "c") renderCStats(); if (window.__dashRefresh) window.__dashRefresh(); });
   }
   function gauge(v) {
     var a0 = Math.PI, ang = a0 - v / 100 * Math.PI, cx = 46, cy = 46, r = 38, segs = "", cols = ["#e5484d", "#f2994a", "#d9b84a", "#8cc152", "#3fb67f"];
@@ -4143,12 +4288,12 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     items.sort(function (a, b) { var k = XS.k; if (k === "n") return XS.d * a.n.localeCompare(b.n); var x = a[k], y = b[k]; if (x == null) return 1; if (y == null) return -1; return XS.d * (x - y); });
     var emp = document.getElementById("xempty");
     emp.hidden = items.length > 0;
-    emp.textContent = items.length ? "" : q ? "Δεν βρέθηκε τίποτα." : isC ? (cg100Err ? "Οι τιμές crypto δεν είναι διαθέσιμες τώρα. Ξαναδοκιμάζω σε ένα λεπτό." : "Φόρτωση…") : "Η λίστα θα εμφανιστεί μετά την επόμενη ενημέρωση.";
+    if (!items.length && !q && isC && !cg100Err) { emp.innerHTML = skel(8); } else emp.textContent = items.length ? "" : q ? "Δεν βρέθηκε τίποτα." : isC ? (cg100Err ? "Οι τιμές crypto δεν είναι διαθέσιμες τώρα. Ξαναδοκιμάζω σε ένα λεπτό." : "Φόρτωση…") : "Η λίστα θα εμφανιστεί μετά την επόμενη ενημέρωση.";
     document.getElementById("xrows").innerHTML = items.map(function (x) {
       var sp = x.sp && x.sp.length > 1 ? sparkHtml(x.sp.filter(function (_, i) { return i % Math.ceil(x.sp.length / 40) === 0; }).map(function (v) { return { y: v }; }), 110, 32) : "";
       var fk = x.k + ":" + x.id;
       return '<tr tabindex="0" data-xid="' + esc(fk) + '"><td class="starcol"><button type="button" class="star" data-xstar="' + esc(fk) + '" aria-pressed="' + !!favs[fk] + '" aria-label="Αγαπημένο: ' + esc(x.s) + '">' + (favs[fk] ? "★" : "☆") + '</button></td><td class="l num hide-s" style="color:var(--muted)">' + x.rank + '</td><td class="l"><div class="who">' + logoBox(x.s, x.img) + "<div><b>" + esc(x.n) + "</b><span>" + esc(x.s + (x.sub ? " · " + x.sub : "")) + "</span></div></div></td>" +
-        '<td class="num price">' + fmtC(x.p) + "</td>" + (isC ? '<td class="num hide-s">' + pctCell(x.h1) + "</td>" : "") + '<td class="num">' + pctCell(x.c) + '</td><td class="num hide-s">' + pctCell(x.w) + '</td><td class="num hide-s">' + money(x.m) + '</td><td class="num hide-s">' + (x.vsh ? compactN(x.v) : money(x.v)) + "</td>" +
+        '<td class="num price" data-pk="' + esc(fk) + '" data-pv="' + x.p + '">' + fmtC(x.p) + "</td>" + (isC ? '<td class="num hide-s">' + pctCell(x.h1) + "</td>" : "") + '<td class="num">' + pctCell(x.c) + '</td><td class="num hide-s">' + pctCell(x.w) + '</td><td class="num hide-s">' + money(x.m) + '</td><td class="num hide-s">' + (x.vsh ? compactN(x.v) : money(x.v)) + "</td>" +
         (isC ? '<td class="hide-s">' + sp + "</td>" : "") + '<td><button type="button" class="xadd" data-xadd="1" title="Προσθήκη στο Χαρτοφυλάκιο" aria-label="Προσθήκη στο Χαρτοφυλάκιο: ' + esc(x.n) + '">+</button></td></tr>';
     }).join("");
     box._items = xItems();
@@ -4184,7 +4329,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (j) { (j || []).forEach(function (x) { FAVCG[x.id] = x; if (x.current_price != null) CGP[x.id] = { p: x.current_price, c: x.price_change_percentage_24h || 0 }; }); favCgAt = Date.now(); })
       .catch(function () { favCgAt = Date.now(); })
-      .then(function () { favCgBusy = false; if (!document.getElementById("view-favs").hidden) renderFavs(); if (!drawer.hidden && xcur && /^c:/.test(xcur) && FAVCG[xcur.slice(2)]) paintX(); });
+      .then(function () { favCgBusy = false; if (window.__dashRefresh) window.__dashRefresh(); if (!document.getElementById("view-favs").hidden) renderFavs(); if (!drawer.hidden && xcur && /^c:/.test(xcur) && FAVCG[xcur.slice(2)]) paintX(); });
   }
   function renderFavX(keys) {
     var box = document.getElementById("favx"); if (!box) return;
@@ -4196,7 +4341,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       return '<div class="panel tablewrap"><h3>' + g[1] + '</h3><table><thead><tr><th class="starcol"></th><th class="l">Όνομα</th><th>Τιμή</th><th>24ω</th><th class="hide-s">7ημ</th><th class="hide-s">Κεφαλαιοποίηση</th><th></th></tr></thead><tbody>' +
         items.map(function (x) {
           var fk = x.k + ":" + x.id;
-          return '<tr tabindex="0" data-xid="' + esc(fk) + '"><td class="starcol"><button type="button" class="star" data-xstar="' + esc(fk) + '" aria-pressed="true" aria-label="Αγαπημένο: ' + esc(x.s) + '">★</button></td><td class="l"><div class="who">' + logoBox(x.s, x.img) + "<div><b>" + esc(x.n) + "</b><span>" + esc(x.s + (x.sub ? " · " + x.sub : "")) + '</span></div></div></td><td class="num price">' + (x.p == null ? "—" : fmtC(x.p)) + '</td><td class="num">' + pctCell(x.c) + '</td><td class="num hide-s">' + pctCell(x.w) + '</td><td class="num hide-s">' + (x.m ? money(x.m) : "—") + '</td><td><button type="button" class="xadd" data-xadd="1" title="Προσθήκη στο Χαρτοφυλάκιο" aria-label="Προσθήκη στο Χαρτοφυλάκιο: ' + esc(x.n) + '">+</button></td></tr>';
+          return '<tr tabindex="0" data-xid="' + esc(fk) + '"><td class="starcol"><button type="button" class="star" data-xstar="' + esc(fk) + '" aria-pressed="true" aria-label="Αγαπημένο: ' + esc(x.s) + '">★</button></td><td class="l"><div class="who">' + logoBox(x.s, x.img) + "<div><b>" + esc(x.n) + "</b><span>" + esc(x.s + (x.sub ? " · " + x.sub : "")) + '</span></div></div></td><td class="num price" data-pk="' + esc(fk) + '" data-pv="' + x.p + '">' + (x.p == null ? "—" : fmtC(x.p)) + '</td><td class="num">' + pctCell(x.c) + '</td><td class="num hide-s">' + pctCell(x.w) + '</td><td class="num hide-s">' + (x.m ? money(x.m) : "—") + '</td><td><button type="button" class="xadd" data-xadd="1" title="Προσθήκη στο Χαρτοφυλάκιο" aria-label="Προσθήκη στο Χαρτοφυλάκιο: ' + esc(x.n) + '">+</button></td></tr>';
         }).join("") + "</tbody></table></div>";
     }).join("");
     loadFavCg();
@@ -4269,7 +4414,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var box = document.getElementById("xchart"); if (!box || !xcur) return;
     var id = xcur.slice(2), d = XH[id + "|" + xRange];
     if (d === undefined) { loadXH(id, xRange); d = XH[id + "|" + xRange]; }
-    if (d === "loading") { box.innerHTML = '<div class="msg">Φόρτωση διαγράμματος…</div>'; return; }
+    if (d === "loading") { box.innerHTML = skel(1, "chart"); return; }
     if (!d) { box.innerHTML = '<div class="msg">Το διάγραμμα δεν είναι διαθέσιμο τώρα. Δοκίμασε ξανά σε λίγο.</div>'; return; }
     var xi = null, xr = document.getElementById("xrsi");
     if (xRange === "365" && anyInd() && d.length > 15) {
@@ -4304,7 +4449,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var ext = isC ? "https://www.coingecko.com/" + (LANG === "en" ? "en" : "el") + "/coins/" + encodeURIComponent(it.id) : "https://finance.yahoo.com/quote/" + encodeURIComponent(it.id);
     drawer.innerHTML =
       '<div class="dh"><div class="xdh">' + logoBox(it.s, it.img) + '<div style="min-width:0"><h2 id="dname">' + esc(it.s) + " · " + esc(it.n) + '</h2><div class="sec">' + (isC ? "Κρυπτονόμισμα" + (it.rank ? " · #" + it.rank : "") : esc(it.sub || "ΗΠΑ") + " · Ξένη μετοχή") + '</div></div></div><button type="button" class="close" id="dclose" aria-label="Κλείσιμο">×</button></div>' +
-      '<div class="bigp"><span class="p num">' + (it.p == null ? "—" : fmtC(it.p)) + "</span>" + (it.c == null ? "" : chgHtml(it.c)) + '<span class="sec" style="color:var(--muted)">24 ώρες</span></div>' +
+      '<div class="bigp"><span class="p num" data-pk="' + esc(xcur) + '" data-pv="' + it.p + '">' + (it.p == null ? "—" : fmtC(it.p)) + "</span>" + (it.c == null ? "" : chgHtml(it.c)) + '<span class="sec" style="color:var(--muted)">24 ώρες</span></div>' +
       '<div class="xacts"><button type="button" class="btn" data-xfav="1" aria-pressed="' + !!favs[key] + '">' + (favs[key] ? "★ Στα αγαπημένα" : "☆ Προσθήκη στα αγαπημένα") + '</button><button type="button" class="btn primary" data-xaddp="1">+ Στο Χαρτοφυλάκιο</button>' + (isC ? '<button type="button" class="btn" data-xcmp="1">Σύγκριση</button>' : "") + '<button type="button" class="btn" data-xal="1">🔔 Ειδοποίηση</button>' + '<a class="btn" href="' + esc(ext) + '" target="_blank" rel="noopener">' + (isC ? "CoinGecko" : "Yahoo Finance") + " ↗</a></div>" +
       chart +
       (k ? '<dl class="kv num">' + k + "</dl>" : "") +
@@ -4591,7 +4736,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   function scrInVal(v) { return v == null ? "" : String(v).replace(".", LANG === "en" ? "." : ","); }
   function renderScr() {
     var box = document.getElementById("tl-scr"); if (!box) return;
-    if (!SCR && !scrErr) { box.innerHTML = '<div class="panel pempty"><p>Φόρτωση στοιχείων…</p></div>'; loadScr(renderScr); return; }
+    if (!SCR && !scrErr) { box.innerHTML = '<div class="panel">' + skel(8) + "</div>"; loadScr(renderScr); return; }
     if (!SCR) { box.innerHTML = '<div class="panel pempty"><h3>Το φίλτρο δεν είναι διαθέσιμο εδώ</h3><p>Τα στοιχεία του φίλτρου φορτώνονται στο δημόσιο site, axiogram.eu. Αν είσαι ήδη εκεί, δοκίμασε ξανά σε λίγο.</p></div>'; return; }
     var secs = {}; (SCR[SF.m] || []).forEach(function (o) { var s = scrSecName(scrItem(o)); if (s) secs[s] = 1; });
     var secList = Object.keys(secs).sort(function (a, b) { return a.localeCompare(b, "el"); });
@@ -4601,7 +4746,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var rowsH = list.slice(0, scrShown).map(function (it) {
       var o = it.o;
       return '<tr tabindex="0" data-open="' + esc(it.key) + '"><td class="l"><div class="who">' + itemLogo(it) + "<div><b>" + esc(it.lab) + "</b><span>" + esc(it.n || "") + "</span></div></div></td>" +
-        '<td class="num">' + (it.p == null ? "—" : fmtP(it.p)) + '</td><td class="hide-s">' + (it.c == null ? "—" : chgHtml(it.c)) + '</td><td class="num hide-s">' + (it.m ? money(it.m) : "—") + "</td>" +
+        '<td class="num" data-pk="' + esc(it.key) + '" data-pv="' + it.p + '">' + (it.p == null ? "—" : fmtP(it.p)) + '</td><td class="hide-s">' + (it.c == null ? "—" : chgHtml(it.c)) + '</td><td class="num hide-s">' + (it.m ? money(it.m) : "—") + "</td>" +
         '<td class="num">' + (o.pe == null || o.pe <= 0 ? "—" : n1(o.pe)) + '</td><td class="num">' + (o.dy ? n1(o.dy, 2) + "%" : "—") + '</td><td class="num hide-s">' + (o.roe == null ? "—" : n1(o.roe) + "%") + '</td><td class="hide-s">' + (o.y == null ? "—" : chgHtml(o.y)) + '</td><td class="num hide-s">' + (o.rsi == null ? "—" : rsiTag(o.rsi)) + "</td></tr>";
     }).join("");
     box.innerHTML =
@@ -4688,7 +4833,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   }
   function renderCal() {
     var box = document.getElementById("tl-cal"); if (!box) return;
-    if (!SCR && !scrErr) { box.innerHTML = '<div class="panel pempty"><p>Φόρτωση ημερολογίου…</p></div>'; loadScr(renderCal); return; }
+    if (!SCR && !scrErr) { box.innerHTML = '<div class="panel">' + skel(6) + "</div>"; loadScr(renderCal); return; }
     var mine = myKeys(), hasMine = Object.keys(mine).length > 0, useMine = CALF.mine && hasMine;
     var ev = calEvents().filter(function (e) {
       if (!CALF[e.it.mk]) return false;
@@ -5028,6 +5173,357 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   function checkHash() { var m = /^#s=(.+)$/.exec(location.hash); if (m) openShareView(m[1]); else if (location.hash === "#tools") showView("tools"); }
   window.addEventListener("hashchange", checkHash);
   checkHash();
+
+  /* ===================== Ζωντανές τιμές: ανανέωση χωρίς φόρτωση της σελίδας ===================== */
+  var liveAt = META && META.updated, usAt = USD_ && USD_.updated, liveBusy = false;
+  function athSession() { var a = athensNow(); return a && ["Mon", "Tue", "Wed", "Thu", "Fri"].indexOf(a.wd) > -1 && a.min >= 10 * 60 && a.min <= 17 * 60 + 50; }
+  function liveTick(force) {
+    if (liveBusy || document.hidden || !canLong()) return;
+    if (!force && !athSession()) return;
+    liveBusy = true;
+    var base = DATA_URL.replace(/data\.json(\?.*)?$/, ""), t = "?t=" + Date.now();
+    fetch(base + "data.json" + t, { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      if (!d || !Array.isArray(d.stocks) || d.updated === liveAt) return;
+      liveAt = d.updated; META = d;
+      d.stocks.forEach(function (x) {
+        var r = BYSYM[x.sym]; if (!r || x.price == null) return;
+        r.price = +x.price; r.chg = +x.chg || 0; r.prev = r.price / (1 + r.chg / 100); r.diff = r.price - r.prev;
+        if (x.mcap != null) r.mcap = x.mcap; if (x.vol != null) r.vol = x.vol; if (x.lu) r.lu = x.lu;
+        r.w7 = w7(r);
+      });
+      return fetch(base + "intraday.json" + t, { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (it) {
+        if (it && Array.isArray(it.t)) { IT.length = 0; Array.prototype.push.apply(IT, it.t); Object.keys(IPX).forEach(function (k) { delete IPX[k]; }); Object.keys(it.px || {}).forEach(function (k) { IPX[k] = it.px[k]; }); }
+      }).catch(function () {}).then(function () { liveRedraw(); });
+    }).catch(function () {}).then(function () { liveBusy = false; });
+  }
+  function liveUs() {
+    if (document.hidden || !canLong()) return;
+    fetch(DATA_URL.replace(/data\.json(\?.*)?$/, "us.json") + "?t=" + Date.now(), { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (u) {
+      if (!u || !Array.isArray(u.s) || u.updated === usAt) return;
+      usAt = u.updated; USD_ = u; window.__US = u;
+      u.s.forEach(function (x) { USQ[x.s] = x; });
+      if (mkt === "us" && !document.getElementById("view-market").hidden) renderX();
+      if (!document.getElementById("view-portfolio").hidden) renderPortfolio();
+      renderDash();
+    }).catch(function () {});
+  }
+  function liveRedraw() {
+    renderTop(); render(); renderGlobal(); if (META) showLive(META);
+    if (!document.getElementById("view-portfolio").hidden) renderPortfolio();
+    if (!document.getElementById("view-heat").hidden) renderHeat();
+    if (!document.getElementById("view-tools").hidden && window.__renderTools) window.__renderTools();
+    if (!drawer.hidden && cur && chartKind !== "tv") { var st = drawer.scrollTop; paint(); drawer.scrollTop = st; }
+    renderDash(); alCheckLocal();
+  }
+  setInterval(function () { liveTick(false); }, 60000);
+  setInterval(liveUs, 10 * 60000);
+  document.addEventListener("visibilitychange", function () { if (!document.hidden) { liveTick(false); } });
+
+  /* ===================== Τιμές που αναβοσβήνουν + αριθμοί που «μετράνε» ===================== */
+  var LASTPV = {}, LASTCNT = {}, reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function flashScan() {
+    var els = document.querySelectorAll("[data-pk]"), changed = {}, seen = {};
+    Array.prototype.forEach.call(els, function (el) {
+      var k = el.getAttribute("data-pk"), v = +el.getAttribute("data-pv");
+      if (isNaN(v) || seen[k]) return; seen[k] = 1;
+      if (k in LASTPV && LASTPV[k] !== v) changed[k] = v > LASTPV[k] ? "fl-up" : "fl-down";
+      LASTPV[k] = v;
+    });
+    if (!reduceMotion) Array.prototype.forEach.call(els, function (el) {
+      var c = changed[el.getAttribute("data-pk")]; if (!c) return;
+      el.classList.remove("fl-up", "fl-down"); void el.offsetWidth; el.classList.add(c);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-count]"), function (el) {
+      var id = el.getAttribute("data-count"), v = +el.getAttribute("data-cv"), old = LASTCNT[id];
+      LASTCNT[id] = v;
+      if (old == null || old === v || reduceMotion || isNaN(v)) return;
+      var t0 = performance.now(), dur = 900;
+      (function step(t) {
+        if (!el.isConnected) return;
+        var p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+        el.innerHTML = bigNumG(old + (v - old) * e);
+        if (p < 1) requestAnimationFrame(step);
+      })(t0);
+      el.classList.remove("fl-up", "fl-down"); void el.offsetWidth; el.classList.add(v > old ? "fl-up" : "fl-down");
+    });
+  }
+  function bigNumG(v) {
+    var s = nf2.format(Math.abs(v) * RATE), dec = s.slice(-3), intp = s.slice(0, -3), sym = CS.trim();
+    return (v < 0 ? "−" : "") + (sym === "$" ? '<span class="cs">$</span>' + intp + '<span class="dec">' + dec + "</span>" : intp + '<span class="dec">' + dec + '</span><span class="cs">' + sym + "</span>");
+  }
+  var flashQ = 0;
+  new MutationObserver(function (ms) {
+    if (ms.every(function (m) { return m.target.nodeType === 1 && m.target.closest && m.target.closest("[data-count]"); })) return;
+    if (!flashQ) flashQ = requestAnimationFrame(function () { flashQ = 0; flashScan(); });
+  }).observe(document.body, { childList: true, subtree: true });
+
+  /* ===================== Σκελετός φόρτωσης ===================== */
+  function skel(n, kind) {
+    var h = "";
+    for (var i = 0; i < (n || 4); i++) h += kind === "chart" ? '<div class="sk sk-chart"></div>' : '<div class="skrow"><i class="sk sk-c"></i><span><i class="sk sk-l"></i><i class="sk sk-s"></i></span><i class="sk sk-r"></i></div>';
+    return '<div class="skwrap" aria-label="Φόρτωση" role="status">' + h + "</div>";
+  }
+  window.__skel = skel;
+
+  /* ===================== Μίνι κάρτα στο πέρασμα ===================== */
+  var SPARK = null, sparkBusy = false;
+  function loadSpark(cb) {
+    if (SPARK || sparkBusy || !canLong()) return;
+    sparkBusy = true;
+    fetch(DATA_URL.replace(/data\.json(\?.*)?$/, "spark.json") + "?t=" + Math.floor(Date.now() / 3600000)).then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { SPARK = (j && j.s) || {}; SPARK.__d = j && j.d; if (cb) cb(); }).catch(function () { SPARK = {}; });
+  }
+  var hov = document.createElement("div"); hov.className = "hovcard"; hov.hidden = true; hov.setAttribute("role", "tooltip"); document.body.appendChild(hov);
+  var hovKey = null, hovT = 0, hovEl = null, hovSuppress = false;
+  function hovKeyOf(el) {
+    var t = el.closest("[data-s],[data-xid],[data-open],[data-pfs],[data-hk]"); if (!t || t.closest(".hovcard,#drawer,.authbox,.sugg")) return null;
+    var k = t.getAttribute("data-s") || t.getAttribute("data-xid") || t.getAttribute("data-open") || t.getAttribute("data-pfs") || t.getAttribute("data-hk");
+    if (!k || /^[mp]:/.test(k)) return null;
+    return { k: k, el: t };
+  }
+  function sparkSvg(vals, w, h) {
+    if (!vals || vals.length < 2) return "";
+    var mn = Math.min.apply(null, vals), mx = Math.max.apply(null, vals), sp = mx - mn || 1, up = vals[vals.length - 1] >= vals[0], col = up ? "var(--up)" : "var(--down)";
+    var P = vals.map(function (v, i) { return [(i / (vals.length - 1)) * w, 4 + (1 - (v - mn) / sp) * (h - 8)]; });
+    var d = P.map(function (p, i) { return (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1); }).join("");
+    return '<svg viewBox="0 0 ' + w + " " + h + '" width="100%" height="' + h + '" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="hg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + col + '" stop-opacity=".28"/><stop offset="1" stop-color="' + col + '" stop-opacity="0"/></linearGradient></defs><path d="' + d + "L" + w + " " + h + "L0 " + h + 'Z" fill="url(#hg)"/><path d="' + d + '" fill="none" stroke="' + col + '" stroke-width="1.8" vector-effect="non-scaling-stroke"/></svg>';
+  }
+  function hovData(k) {
+    var o = { k: k, kv: [] };
+    if (/^c:/.test(k)) {
+      var it = xGet(k); o.lab = it.s; o.n = it.n; o.logo = logoBox(it.s, it.img); o.p = it.p; o.c = it.c;
+      if (it.sp && it.sp.length > 1) { o.sp = it.sp; o.spl = "7 ημέρες"; o.spc = (it.sp[it.sp.length - 1] / it.sp[0] - 1) * 100; }
+      if (it.m) o.kv.push(["Κεφαλαιοποίηση", money(it.m)]);
+      if (it.rank) o.kv.push(["Κατάταξη", "#" + it.rank]);
+      if (it.w != null) o.kv.push(["7 ημέρες", pctS(it.w, 2)]);
+      return o;
+    }
+    if (/^f:/.test(k)) {
+      var id = k.slice(2), x = xGet(k), sc = SCR && SCR.us.filter(function (r) { return r.k === id; })[0];
+      o.lab = id; o.n = x.n; o.logo = logoBox(id, x.img || (LOGO_D[k] ? "https://s3-symbol-logo.tradingview.com/" + encodeURIComponent(LOGO_D[k]) + ".svg" : null)); o.p = x.p; o.c = x.c;
+      var sv = SPARK && SPARK[k]; if (sv && sv.length > 1) { o.sp = sv; o.spl = "3 μήνες"; o.spc = (sv[sv.length - 1] / sv[0] - 1) * 100; }
+      if (x.m) o.kv.push(["Κεφαλαιοποίηση", money(x.m)]);
+      if (sc && sc.pe > 0) o.kv.push(["P/E", n1(sc.pe)]);
+      if (sc && sc.dy) o.kv.push(["Μέρισμα", n1(sc.dy, 2) + "%"]);
+      if (sc && sc.y != null) o.kv.push(["1 έτος", pctS(sc.y)]);
+      else if (x.w != null) o.kv.push(["7 ημέρες", pctS(x.w, 2)]);
+      if (x.sec) o.kv.push(["Κλάδος", usSec(x.sec)]);
+      return o;
+    }
+    var r = BYSYM[k]; if (!r) return null;
+    o.lab = r.dsym; o.n = r.name; o.logo = monoHtml(r.dsym); o.p = r.price; o.c = r.chg;
+    var lg = LONG[k], sv2 = null;
+    if (Array.isArray(lg) && lg.length > 30) { sv2 = fullSeries(r).slice(-66).map(function (p) { return p.y; }); o.spl = "3 μήνες"; }
+    else if (SPARK && SPARK[k] && SPARK[k].length > 1) { sv2 = SPARK[k].slice(); sv2[sv2.length - 1] = r.price; o.spl = "3 μήνες"; }
+    else { sv2 = dailySeries(r).map(function (p) { return p.y; }); o.spl = sv2.length > 1 ? sv2.length + " συνεδριάσεις" : ""; }
+    if (sv2 && sv2.length > 1) { o.sp = sv2; o.spc = (sv2[sv2.length - 1] / sv2[0] - 1) * 100; }
+    var e = EX[k] || {};
+    if (r.mcap) o.kv.push(["Κεφαλαιοποίηση", money(r.mcap)]);
+    if (e.pe != null && e.pe > 0) o.kv.push(["P/E", nf2.format(e.pe)]);
+    if (e.dy) o.kv.push(["Μέρισμα", nf2.format(e.dy * 100) + "%"]);
+    if (e.h52 && e.l52 && e.h52 > e.l52) o.kv.push(["Θέση στο εύρος 52 εβδ.", nf0.format(Math.max(0, Math.min(100, (r.price - e.l52) / (e.h52 - e.l52) * 100))) + "%"]);
+    else if (r.w7 != null) o.kv.push(["7 ημέρες", pctS(r.w7, 2)]);
+    o.kv.push(["Κλάδος", r.sector]);
+    return o;
+  }
+  function hovHtml(o) {
+    var held = holdings(txns).list.filter(function (h) { return h.sym === o.k; })[0];
+    return '<div class="hvh">' + o.logo + '<div class="hvn"><b>' + esc(o.lab) + "</b><span>" + esc(o.n || "") + "</span></div>" + (favs[o.k] ? '<span class="hvstar">★</span>' : "") + "</div>" +
+      '<div class="hvp"><span class="num">' + (o.p == null ? "—" : fmtP(o.p)) + "</span>" + (o.c == null ? "" : chgHtml(o.c)) + "</div>" +
+      (o.sp ? '<div class="hvsp">' + sparkSvg(o.sp, 240, 64) + '<div class="hvspl"><span>' + esc(o.spl || "") + "</span>" + (o.spc == null ? "" : '<span class="chg ' + cls(o.spc) + '">' + pctS(o.spc, 2) + "</span>") + "</div></div>" : '<div class="hvsp hvnone">' + (SPARK || /^c:/.test(o.k) ? "" : skel(1, "chart")) + "</div>") +
+      (o.kv.length ? '<dl class="hvkv">' + o.kv.slice(0, 4).map(function (x) { return "<div><dt>" + esc(x[0]) + "</dt><dd>" + esc(x[1]) + "</dd></div>"; }).join("") + "</dl>" : "") +
+      (held ? '<div class="hvheld">Στο χαρτοφυλάκιο: <b class="num sens">' + fmtQty(held.qty) + "</b> · " + plHtml(held.pl, held.plPct) + "</div>" : "") +
+      '<div class="hvfoot">' + (matchMedia("(hover: hover)").matches ? "Κλικ για λεπτομέρειες" : "Πάτα για λεπτομέρειες") + "</div>";
+  }
+  function hovShow(k, el, x, y) {
+    var o = hovData(k); if (!o) return;
+    hovKey = k; hovEl = el;
+    hov.innerHTML = hovHtml(o); hov.hidden = false; hov.classList.remove("in"); void hov.offsetWidth; hov.classList.add("in");
+    var r = el.getBoundingClientRect(), W = hov.offsetWidth, H = hov.offsetHeight, vw = innerWidth, vh = innerHeight;
+    var left = Math.max(8, Math.min(vw - W - 8, (x == null ? r.left + 24 : x - W / 2)));
+    var top = r.bottom + 8; if (top + H > vh - 8) top = Math.max(8, r.top - H - 8);
+    hov.style.left = left + "px"; hov.style.top = top + "px";
+    if (!SPARK) loadSpark(function () { if (hovKey === k && !hov.hidden) hovShow(k, el, x, y); });
+    if (!SCR && /^f:/.test(k)) loadScr(function () { if (hovKey === k && !hov.hidden) hovShow(k, el, x, y); });
+    if (!/^[cf]:/.test(k) && BYSYM[k] && LONG[k] === undefined) loadLong(BYSYM[k]);
+  }
+  function hovHide() { clearTimeout(hovT); hovKey = null; hovEl = null; hov.hidden = true; }
+  window.__hovRefresh = function () { if (hovKey && hovEl && !hov.hidden) { var k = hovKey, el = hovEl, l = hov.style.left; hovShow(k, el); hov.style.left = l; } };
+  var finePtr = window.matchMedia && matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (finePtr) {
+    document.addEventListener("pointerover", function (e) {
+      if (e.pointerType !== "mouse") return;
+      var h = hovKeyOf(e.target);
+      if (!h) { if (!e.target.closest(".hovcard")) { clearTimeout(hovT); if (!hov.hidden) hovT = setTimeout(hovHide, 120); } return; }
+      if (h.el === hovEl && !hov.hidden) { clearTimeout(hovT); return; }
+      clearTimeout(hovT);
+      var cx = e.clientX;
+      hovT = setTimeout(function () { if (h.el.isConnected && h.el.matches(":hover")) hovShow(h.k, h.el, cx); }, hov.hidden ? 380 : 120);
+    });
+    document.addEventListener("pointerdown", hovHide, true);
+    window.addEventListener("scroll", function () { if (!hov.hidden) hovHide(); }, { passive: true });
+  }
+  /* κινητό: παρατεταμένο πάτημα */
+  var lpT = 0, lpX = 0, lpY = 0;
+  document.addEventListener("touchstart", function (e) {
+    if (!hov.hidden && !e.target.closest(".hovcard")) { hovHide(); }
+    var h = hovKeyOf(e.target); if (!h || e.touches.length > 1) return;
+    lpX = e.touches[0].clientX; lpY = e.touches[0].clientY;
+    clearTimeout(lpT);
+    lpT = setTimeout(function () { hovSuppress = true; if (navigator.vibrate) try { navigator.vibrate(12); } catch (er) {} hovShow(h.k, h.el, lpX); }, 480);
+  }, { passive: true });
+  document.addEventListener("touchmove", function (e) { if (Math.abs(e.touches[0].clientX - lpX) > 10 || Math.abs(e.touches[0].clientY - lpY) > 10) clearTimeout(lpT); }, { passive: true });
+  document.addEventListener("touchend", function () { clearTimeout(lpT); }, { passive: true });
+  document.addEventListener("click", function (e) { if (hovSuppress) { hovSuppress = false; e.preventDefault(); e.stopPropagation(); } }, true);
+  document.addEventListener("contextmenu", function (e) { if (hovKeyOf(e.target) && !finePtr) e.preventDefault(); });
+  window.addEventListener("scroll", function () { if (!finePtr && !hov.hidden) hovHide(); }, { passive: true });
+
+  /* ===================== Ο πίνακάς μου (προσαρμοσμένη αρχική) ===================== */
+  var DW = [["pf", "Χαρτοφυλάκιο", "Αξία, μεταβολή ημέρας και οι μεγαλύτερες θέσεις"], ["favs", "Αγαπημένα", "Οι αγαπημένες σου μετοχές και crypto"], ["al", "Ειδοποιήσεις", "Όσες είναι πιο κοντά να χτυπήσουν"], ["cal", "Επόμενα γεγονότα", "Μερίσματα και αποτελέσματα για τις μετοχές σου"], ["mkts", "Αγορές με μια ματιά", "Γενικός Δείκτης, S&P 500, Bitcoin και άλλες"], ["fng", "Fear & Greed", "Η διάθεση της αγοράς crypto και η κυριαρχία του BTC"]];
+  var DS_ = [["gstrip", "Παγκόσμιες αγορές (λωρίδα πάνω)"], ["stats", "Σύνοψη αγοράς"], ["movers", "Κορυφαίες κινήσεις"], ["sectors", "Κλάδοι"], ["divsec", "Ημερολόγιο μερισμάτων"]];
+  var HOME = lsGet("agora-home", null);
+  function normHome(h) {
+    h = h && typeof h === "object" ? h : {};
+    var w = Array.isArray(h.w) ? h.w.filter(function (k) { return DW.some(function (d) { return d[0] === k; }); }) : [];
+    DW.forEach(function (d) { if (w.indexOf(d[0]) < 0) w.push(d[0]); });
+    var s = Array.isArray(h.s) ? h.s.filter(function (k) { return DS_.some(function (d) { return d[0] === k; }); }) : [];
+    DS_.forEach(function (d) { if (s.indexOf(d[0]) < 0) s.push(d[0]); });
+    var on = h.on && typeof h.on === "object" ? h.on : { pf: true, favs: true, al: true, cal: true, mkts: false, fng: false, gstrip: true, stats: true, movers: true, sectors: true, divsec: true };
+    return { w: w, s: s, on: on };
+  }
+  HOME = normHome(HOME);
+  function saveHome() { lsSet("agora-home", HOME); if (pfRef) persist(); }
+  window.__homeGet = function () { return HOME; };
+  window.__homeSet = function (h) { if (!h) return; var n = normHome(h); if (JSON.stringify(n) === JSON.stringify(HOME)) return; HOME = n; lsSet("agora-home", HOME); applySections(); renderDash(); };
+  function dashCard(id, title, body, more) { return '<article class="dk dw" data-dw="' + id + '"><div class="dwh"><h3>' + title + "</h3>" + (more || "") + "</div>" + body + "</article>"; }
+  function miniRow(key, lab, name, logo, p, c) {
+    return '<button type="button" class="dwr" data-hk="' + esc(key) + '">' + logo + '<span class="cn"><b>' + esc(lab) + "</b><span>" + esc(name || "") + '</span></span><span class="num dwp" data-pk="' + esc(key) + '" data-pv="' + (p == null ? "" : p) + '">' + (p == null ? "—" : fmtP(p)) + "</span>" + (c == null ? '<span class="note">—</span>' : chgHtml(c)) + "</button>";
+  }
+  function dwPf() {
+    if (!txns.length && !wallets.length) return dashCard("pf", "Χαρτοφυλάκιο", '<p class="note">Πρόσθεσε την πρώτη σου συναλλαγή για να βλέπεις εδώ την αξία και την πορεία του.</p><button type="button" class="btn primary" data-dgo="pfadd">+ Προσθήκη συναλλαγής</button>');
+    var H = pfH(), dayPct = H.prevValue ? H.day / H.prevValue * 100 : 0, tot = H.cost ? H.unreal / H.cost * 100 : 0;
+    return dashCard("pf", "Χαρτοφυλάκιο" + (pfSel !== "all" ? ' <span class="note">· ' + esc(pfName(pfSel)) + "</span>" : ""),
+      '<div class="dwbig num sens" data-count="dash-pf" data-cv="' + H.value + '">' + bigNumG(H.value) + "</div>" +
+      '<div class="dwsub"><span>Σήμερα ' + '<span class="chg num sens ' + cls(H.day) + '">' + sgn(H.day) + nf2.format(Math.abs(H.day) * RATE) + CS + "</span> " + chgHtml(dayPct) + '</span><span>Συνολικά <span class="chg ' + cls(tot) + '">' + pctS(tot, 2) + "</span></span></div>" +
+      '<div class="dwlist">' + H.list.slice(0, 3).map(function (h) { return '<button type="button" class="dwr" data-hk="' + esc(h.sym) + '">' + assetIcon(h.sym) + '<span class="cn"><b>' + esc(h.perp ? "Hyperliquid" : DS(h.sym)) + "</b><span>" + n1(h.weight) + '% του χαρτοφυλακίου</span></span><span class="chg ' + cls(h.plPct) + '">' + pctS(h.plPct) + "</span></button>"; }).join("") + "</div>",
+      '<button type="button" class="linkbtn" data-dgo="pf">Άνοιγμα →</button>');
+  }
+  function dwFavs() {
+    var keys = Object.keys(favs);
+    if (!keys.length) return dashCard("favs", "Αγαπημένα", '<p class="note">Πάτα ☆ δίπλα σε μια μετοχή ή ένα crypto για να το βλέπεις εδώ.</p>');
+    var items = keys.map(function (k) {
+      if (isExt(k)) { var x = xGet(k); return { k: k, lab: x.s, n: x.n, logo: logoBox(x.s, x.img || (LOGO_D[k] ? "https://s3-symbol-logo.tradingview.com/" + encodeURIComponent(LOGO_D[k]) + ".svg" : null)), p: x.p, c: x.c, m: x.m || 0 }; }
+      var r = BYSYM[k]; return r ? { k: k, lab: r.dsym, n: r.name, logo: monoHtml(r.dsym), p: r.price, c: r.chg, m: r.mcap || 0 } : null;
+    }).filter(Boolean);
+    return dashCard("favs", "Αγαπημένα <span class=\"note\">· " + items.length + "</span>", '<div class="dwlist">' + items.slice(0, 6).map(function (x) { return miniRow(x.k, x.lab, x.n, x.logo, x.p, x.c); }).join("") + "</div>", items.length > 6 ? '<button type="button" class="linkbtn" data-dgo="favs">Όλα →</button>' : "");
+  }
+  function dwAl() {
+    var act = ALERTS.filter(function (a) { return a.on; });
+    if (!act.length) return dashCard("al", "Ειδοποιήσεις", '<p class="note">Όρισε μια τιμή-στόχο και θα σε ειδοποιήσουμε όταν τη φτάσει.</p><button type="button" class="btn" data-dgo="al">+ Νέα ειδοποίηση</button>');
+    var L = act.map(function (a) { var p = alPrice(a.k), d = null; if (p && a.op !== "mv" && p.cur === a.cur) d = Math.abs(a.v / p.p - 1) * 100; return { a: a, p: p, d: d }; }).sort(function (x, y) { return (x.d == null ? 1e9 : x.d) - (y.d == null ? 1e9 : y.d); });
+    return dashCard("al", "Ειδοποιήσεις <span class=\"note\">· " + act.length + " ενεργές</span>", '<div class="dwlist">' + L.slice(0, 4).map(function (x) {
+      var a = x.a, pct = x.d == null ? 0 : Math.max(0, Math.min(100, 100 - x.d * 5));
+      return '<button type="button" class="dwr dwal" data-dgo="al">' + alLogo(a) + '<span class="cn"><b>' + esc(a.lab) + "</b><span>" + esc(alLabel(a)) + '</span></span><span class="dwgap">' + (x.d == null ? (x.p && x.p.c != null ? pctS(x.p.c, 2) + " σήμερα" : "—") : "απέχει " + n1(x.d) + "%") + (x.d == null ? "" : '<i style="--p:' + pct.toFixed(0) + '%"></i>') + "</span></button>";
+    }).join("") + "</div>", '<button type="button" class="linkbtn" data-dgo="al">Όλες →</button>');
+  }
+  function dwCal() {
+    if (!SCR && !scrErr) { loadScr(renderDash); return dashCard("cal", "Επόμενα γεγονότα", skel(3)); }
+    var mine = myKeys();
+    var ev = calEvents().filter(function (e) { return mine[e.it.key]; }).slice(0, 5);
+    var TL2 = { div: "Αποκοπή μερίσματος", pay: "Πληρωμή μερίσματος", earn: "Αποτελέσματα" };
+    if (!ev.length) return dashCard("cal", "Επόμενα γεγονότα", '<p class="note">' + (Object.keys(mine).length ? "Τίποτα για τις μετοχές σου τους επόμενους 4 μήνες." : "Πρόσθεσε μετοχές στο χαρτοφυλάκιο ή στα αγαπημένα για να βλέπεις εδώ μερίσματα και αποτελέσματα.") + "</p>");
+    return dashCard("cal", "Επόμενα γεγονότα", '<div class="dwlist">' + ev.map(function (e) {
+      var dt = new Date(e.d + "T12:00:00");
+      return '<button type="button" class="dwr" data-hk="' + esc(e.it.key) + '"><span class="dwdate"><b>' + dt.getDate() + "</b><span>" + esc(dt.toLocaleDateString(LOC, { month: "short" })) + '</span></span><span class="cn"><b>' + esc(e.it.lab) + "</b><span>" + TL2[e.t] + (e.amt ? " · " + n1(e.amt, 4) + " " + e.cur : "") + "</span></span></button>";
+    }).join("") + "</div>", '<button type="button" class="linkbtn" data-dgo="cal">Ημερολόγιο →</button>');
+  }
+  function dwMkts() {
+    var g = (FOREIGN && FOREIGN.g) || [], out = [];
+    if (META && META.index) out.push(["Γενικός Δείκτης", nf2.format(META.index.value), META.index.pct]);
+    g.forEach(function (x) { var p = x.p, c = x.c; if (x.k === "BTC-USD" && CGP.bitcoin) { p = CGP.bitcoin.p / usdEur(); c = CGP.bitcoin.c; } out.push([x.n, (p >= 1000 ? nf0.format(p) : nf2.format(p)) + (x.u ? " " + x.u : ""), c]); });
+    return dashCard("mkts", "Αγορές με μια ματιά", '<div class="dwmk">' + out.slice(0, 8).map(function (x) { return '<div><span class="note">' + esc(x[0]) + '</span><b class="num">' + x[1] + "</b>" + (x[2] == null ? "" : chgHtml(x[2])) + "</div>"; }).join("") + "</div>");
+  }
+  function dwFng() {
+    loadCStats();
+    if (!(FNG && FNG[0]) && !(CGLOB && CGLOB.market_cap_percentage)) return dashCard("fng", "Fear &amp; Greed", skel(2));
+    var v = FNG && FNG[0] ? +FNG[0].value : null, btc = CGLOB && CGLOB.market_cap_percentage ? CGLOB.market_cap_percentage.btc : null;
+    return dashCard("fng", "Fear &amp; Greed", '<div class="dwfng">' + (v == null ? "" : gauge(v) + '<div><div class="dwbig" style="color:' + fngColor(v) + '">' + v + '</div><div class="note">' + esc(FNG[0].value_classification || "") + "</div></div>") + (btc == null ? "" : '<div class="dwdom"><span class="note">Κυριαρχία BTC</span><b>' + nf2.format(btc) + '%</b><div class="dombar"><i style="width:' + btc + '%;background:#f7931a"></i></div></div>') + "</div>");
+  }
+  var DWF = { pf: dwPf, favs: dwFavs, al: dwAl, cal: dwCal, mkts: dwMkts, fng: dwFng };
+  function renderDash() {
+    var box = document.getElementById("dash"); if (!box) return;
+    var ids = HOME.w.filter(function (k) { return HOME.on[k]; });
+    document.getElementById("dashsec").hidden = !ids.length;
+    if (!ids.length || document.getElementById("view-market").hidden) return;
+    box.innerHTML = ids.map(function (k) { try { return DWF[k](); } catch (e) { return ""; } }).join("");
+  }
+  window.__dashRefresh = renderDash;
+  function applySections() {
+    var vm = document.getElementById("view-market"), anchor = document.getElementById("allsec");
+    HOME.s.forEach(function (k) {
+      var el = k === "movers" ? null : document.getElementById(k === "sectors" ? "secsec" : k);
+      if (k === "gstrip") { var g = document.getElementById("gstrip"); g.classList.toggle("userhide", !HOME.on.gstrip); return; }
+      if (k === "movers") { var mt = document.getElementById("mvtabs"), mv = document.getElementById("movers"); mt.classList.toggle("userhide", !HOME.on.movers); mv.classList.toggle("userhide", !HOME.on.movers); vm.insertBefore(mt, anchor); vm.insertBefore(mv, anchor); return; }
+      if (!el) return;
+      el.classList.toggle("userhide", !HOME.on[k]); vm.insertBefore(el, anchor);
+    });
+  }
+  applySections();
+  document.getElementById("dash").addEventListener("click", function (e) {
+    var g = e.target.closest("[data-dgo]");
+    if (g) { var w = g.getAttribute("data-dgo"); if (w === "pf") showView("portfolio"); else if (w === "pfadd") { showView("portfolio"); openForm(null, "buy"); } else if (w === "favs") showView("favs"); else { showView("tools"); setTl(w === "cal" ? "cal" : "al"); } return; }
+    var r = e.target.closest("[data-hk]"); if (r) { var k = r.getAttribute("data-hk"); if (/^p:/.test(k)) showView("portfolio"); else openKey(k, r); }
+  });
+  /* παράθυρο προσαρμογής */
+  var cuBox = document.getElementById("cuBox"), cuScrim = document.getElementById("cuScrim");
+  function cuRow(id, lab, sub, grp) {
+    return '<li class="curow" data-cu="' + id + '" data-grp="' + grp + '"><button type="button" class="hdl" aria-label="Μετακίνηση: ' + esc(lab) + '" title="Σύρε για να αλλάξεις σειρά">⋮⋮</button><label class="sw"><input type="checkbox" data-cuon="' + id + '"' + (HOME.on[id] ? " checked" : "") + ' aria-label="' + esc(lab) + '"><i></i></label><span class="cn"><b>' + esc(lab) + "</b>" + (sub ? "<span>" + esc(sub) + "</span>" : "") + '</span><span class="cuar"><button type="button" data-cumv="-1" aria-label="Πάνω">↑</button><button type="button" data-cumv="1" aria-label="Κάτω">↓</button></span></li>';
+  }
+  function paintCu() {
+    document.getElementById("cuW").innerHTML = HOME.w.map(function (k) { var d = DW.filter(function (x) { return x[0] === k; })[0]; return cuRow(k, d[1], d[2], "w"); }).join("");
+    document.getElementById("cuS").innerHTML = HOME.s.map(function (k) { var d = DS_.filter(function (x) { return x[0] === k; })[0]; return cuRow(k, d[1], "", "s"); }).join("");
+  }
+  function readCu() {
+    HOME.w = Array.prototype.map.call(document.querySelectorAll("#cuW .curow"), function (li) { return li.getAttribute("data-cu"); });
+    HOME.s = Array.prototype.map.call(document.querySelectorAll("#cuS .curow"), function (li) { return li.getAttribute("data-cu"); });
+    saveHome(); applySections(); renderDash();
+  }
+  function openCu() { paintCu(); cuBox.hidden = false; cuScrim.hidden = false; var f = cuBox.querySelector("input"); if (f) f.focus(); }
+  function closeCu() { cuBox.hidden = true; cuScrim.hidden = true; }
+  document.getElementById("cuOpen").addEventListener("click", openCu);
+  document.getElementById("dashCu").addEventListener("click", openCu);
+  document.getElementById("cuClose").addEventListener("click", closeCu);
+  document.getElementById("cuDone").addEventListener("click", closeCu);
+  cuScrim.addEventListener("click", closeCu);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !cuBox.hidden) closeCu(); });
+  document.getElementById("cuReset").addEventListener("click", function () { HOME = normHome(null); saveHome(); paintCu(); applySections(); renderDash(); });
+  cuBox.addEventListener("change", function (e) { var k = e.target.getAttribute("data-cuon"); if (!k) return; HOME.on[k] = e.target.checked; saveHome(); applySections(); renderDash(); });
+  cuBox.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-cumv]"); if (!b) return;
+    var li = b.closest(".curow"), d = +b.getAttribute("data-cumv"), sib = d < 0 ? li.previousElementSibling : li.nextElementSibling;
+    if (!sib) return;
+    li.parentNode.insertBefore(li, d < 0 ? sib : sib.nextElementSibling);
+    readCu(); b.focus();
+  });
+  /* σύρσιμο (ποντίκι και δάχτυλο) */
+  var drag = null;
+  cuBox.addEventListener("pointerdown", function (e) {
+    var h = e.target.closest(".hdl"); if (!h) return;
+    e.preventDefault();
+    var li = h.closest(".curow"); drag = { li: li, list: li.parentNode, id: e.pointerId };
+    li.classList.add("dragging"); h.setPointerCapture(e.pointerId);
+  });
+  cuBox.addEventListener("pointermove", function (e) {
+    if (!drag || e.pointerId !== drag.id) return;
+    var y = e.clientY, items = Array.prototype.filter.call(drag.list.children, function (x) { return x !== drag.li; });
+    var before = null;
+    for (var i = 0; i < items.length; i++) { var r = items[i].getBoundingClientRect(); if (y < r.top + r.height / 2) { before = items[i]; break; } }
+    if (before !== drag.li.nextElementSibling) drag.list.insertBefore(drag.li, before);
+  });
+  function endDrag() { if (!drag) return; drag.li.classList.remove("dragging"); drag = null; readCu(); }
+  cuBox.addEventListener("pointerup", endDrag); cuBox.addEventListener("pointercancel", endDrag);
+  renderDash();
+  setInterval(function () { if (!document.hidden && !document.getElementById("view-market").hidden && HOME.on.favs && Object.keys(favs).some(function (k) { return /^c:/.test(k); })) { loadFavCg(); } }, 60000);
 
   window.__alBadge = function () { var n = ALERTS.filter(function (a) { return a.on; }).length, c = document.getElementById("alcnt"); c.hidden = !n; c.textContent = n; };
   window.__alBadge();
