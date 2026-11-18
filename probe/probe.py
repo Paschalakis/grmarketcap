@@ -1,9 +1,9 @@
-import subprocess, time
-time.sleep(60)
-for u in ["http://axiogram.eu/","https://axiogram.eu/","http://www.axiogram.eu/","https://paschalakis.github.io/grmarketcap/","https://axiogram.eu/data.json"]:
-    r=subprocess.run(["curl","-sS","-o","/dev/null","-L","--max-time","30","-w","%{http_code} final=%{url_effective} ssl=%{ssl_verify_result}",u],capture_output=True,text=True)
-    print(u,"->",r.stdout,r.stderr.strip()[:160])
-r=subprocess.run(["curl","-sS","--max-time","30","-L","http://axiogram.eu/"],capture_output=True,text=True)
-import re; print("title:",re.findall(r"<title>(.*?)</title>",r.stdout)[:1])
-r=subprocess.run(["bash","-c","echo | openssl s_client -connect axiogram.eu:443 -servername axiogram.eu 2>/dev/null | openssl x509 -noout -subject -issuer -dates"],capture_output=True,text=True)
-print("cert:",r.stdout.strip().replace("\n"," | ") or r.stderr.strip()[:200])
+import urllib.request, os
+os.makedirs("probe/auth", exist_ok=True)
+B="https://agora-athinon.firebaseapp.com"
+for p in ["__/auth/handler","__/auth/handler.js","__/auth/experiments.js","__/auth/iframe","__/auth/iframe.js","__/firebase/init.json","__/firebase/init.js"]:
+    try:
+        r=urllib.request.urlopen(B+"/"+p, timeout=30); d=r.read()
+        open("probe/auth/"+p.replace("/","_"),"wb").write(d)
+        print(p, r.status, len(d), r.headers.get("content-type"))
+    except Exception as e: print(p, "ERR", e)
