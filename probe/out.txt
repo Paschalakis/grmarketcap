@@ -1,12 +1,7 @@
-['axiogram.eu', 'A'] 8.8.8.8 -> 185.199.109.153 | 185.199.108.153 | 185.199.110.153 | 185.199.111.153 
-['axiogram.eu', 'A'] 1.1.1.1 -> 185.199.110.153 | 185.199.108.153 | 185.199.111.153 | 185.199.109.153 
-['axiogram.eu', 'A'] dns1.papaki.gr -> 185.199.109.153 | 185.199.111.153 | 185.199.108.153 | 185.199.110.153 
-['www.axiogram.eu', 'CNAME'] 8.8.8.8 -> paschalakis.github.io. 
-['www.axiogram.eu', 'CNAME'] 1.1.1.1 -> paschalakis.github.io. 
-['www.axiogram.eu', 'CNAME'] dns1.papaki.gr -> paschalakis.github.io. 
-['www.axiogram.eu', 'A'] 8.8.8.8 -> paschalakis.github.io. | 185.199.108.153 | 185.199.110.153 | 185.199.111.153 | 185.199.109.153 
-['www.axiogram.eu', 'A'] 1.1.1.1 -> paschalakis.github.io. | 185.199.108.153 | 185.199.109.153 | 185.199.110.153 | 185.199.111.153 
-['www.axiogram.eu', 'A'] dns1.papaki.gr -> paschalakis.github.io. 
-['axiogram.eu', 'NS'] 8.8.8.8 -> dns1.papaki.gr. | dns2.papaki.gr. 
-['axiogram.eu', 'NS'] 1.1.1.1 -> dns1.papaki.gr. | dns2.papaki.gr. 
-['axiogram.eu', 'NS'] dns1.papaki.gr -> dns1.papaki.gr. | dns2.papaki.gr. 
+http://axiogram.eu/ -> 200 final=http://axiogram.eu/ ssl=0 
+https://axiogram.eu/ -> 200 final=https://axiogram.eu/ ssl=0 
+http://www.axiogram.eu/ -> 200 final=http://axiogram.eu/ ssl=0 
+https://paschalakis.github.io/grmarketcap/ -> 200 final=http://axiogram.eu/ ssl=0 
+https://axiogram.eu/data.json -> 200 final=https://axiogram.eu/data.json ssl=0 
+title: ['Axiogram']
+cert: subject=CN=axiogram.eu | issuer=C=US, O=Let's Encrypt, CN=YR2 | notBefore=Nov 18 06:49:51 2026 GMT | notAfter=Feb 16 06:49:50 2027 GMT
