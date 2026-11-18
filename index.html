@@ -2624,6 +2624,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     loadScript(base + "firebase-app-compat.js")
       .then(function () { return Promise.all([loadScript(base + "firebase-auth-compat.js"), loadScript(base + "firebase-firestore-compat.js")]); })
       .then(function () {
+        if (location.hostname === "axiogram.eu") FIREBASE_CONFIG.authDomain = "axiogram.eu"; // η σύνδεση δείχνει axiogram.eu
         firebase.initializeApp(FIREBASE_CONFIG);
         fbAuth = firebase.auth();
         fbAuth.languageCode = LANG;

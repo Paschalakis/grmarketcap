@@ -1,7 +1,7 @@
 /* Axiogram: εφαρμογή (service worker).
    Πάντα δοκιμάζει πρώτα το δίκτυο, ώστε οι τιμές να είναι οι τελευταίες.
    Αν δεν υπάρχει internet, δείχνει ό,τι αποθηκεύτηκε την τελευταία φορά. */
-var CACHE = "agora-v21";
+var CACHE = "agora-v22";
 var SHELL = ["./", "index.html", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png"];
 
 self.addEventListener("install", function (e) {
@@ -18,6 +18,7 @@ self.addEventListener("fetch", function (e) {
   var req = e.request;
   if (req.method !== "GET") return;
   var url = new URL(req.url);
+  if (url.pathname.indexOf("/__/") === 0) return; // σελίδες σύνδεσης Google/Firebase
   if (url.origin !== self.location.origin) return; // Firebase, γραμματοσειρές κ.λπ. απευθείας
   e.respondWith(
     fetch(req).then(function (res) {
