@@ -1,4 +1,6 @@
-  File "/home/runner/work/grmarketcap/grmarketcap/probe/probe.py", line 23
-    print("==",n); print("\n".join(l[29:] for l in lines if not l[29:].startswith(("  ","shell","env",""))][-30:]))
-                                                                                                           ^
-SyntaxError: closing parenthesis ']' does not match opening parenthesis '('
+run 44277409885 [('workflow_dispatch', 'completed', '2026-11-18T09:35:53Z'), ('workflow_dispatch', 'completed', '2026-11-18T09:26:31Z'), ('workflow_dispatch', 'completed', '2026-11-18T09:10:45Z')]
+== notify/5_Ειδοποιήσεις.txt
+
+/home/runner/work/grmarketcap/grmarketcap/scripts/notify.py:141: DeprecationWarning: Message.token is deprecated. Use Message.fid instead.
+χρήστες: 2
+q522Fy δοκιμαστική ειδοποίηση
