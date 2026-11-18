@@ -912,40 +912,6 @@ tbody tr { transition: background-color .15s ease; }
 .cuar button { width: 28px; height: 28px; border: 1px solid var(--line); border-radius: 8px; background: none; color: var(--muted); cursor: pointer; font: inherit; }
 .cuar button:hover { color: var(--fg); border-color: var(--accent); }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; } }
-/* ===== Επεξεργαστής εμφάνισης ===== */
-.panel.thbox { position: fixed; top: 12px; right: 12px; bottom: 12px; width: min(400px, calc(100% - 24px)); z-index: 30; overflow-y: auto; padding: 18px; display: flex; flex-direction: column; gap: 14px; background: var(--surface); box-shadow: 0 20px 60px rgba(0, 0, 0, .45); animation: drawerIn .28s cubic-bezier(.2, .8, .3, 1); }
-.thbox .ahead { display: flex; justify-content: space-between; align-items: center; position: sticky; top: -18px; background: var(--surface); margin: -18px -18px 0; padding: 16px 18px 8px; z-index: 1; }
-.thbox h2 { font-size: 20px; font-weight: 800; }
-.thsec { display: flex; flex-direction: column; gap: 8px; }
-.thsec h3 { margin: 0; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; font-family: var(--font-body); }
-.thsec .note { margin: 0; font-size: 12px; }
-.thpre { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-.thp { display: flex; flex-direction: column; gap: 6px; padding: 6px; border-radius: 12px; border: 2px solid transparent; background: var(--bg); color: var(--fg); font: inherit; font-size: 12.5px; cursor: pointer; text-align: left; }
-.thp[aria-pressed="true"] { border-color: var(--accent); }
-.thsw { display: block; height: 54px; border-radius: 8px; padding: 8px; }
-.thsw i { display: flex; flex-direction: column; gap: 4px; height: 100%; border-radius: 6px; padding: 6px; }
-.thsw b { display: block; width: 26px; height: 6px; border-radius: 3px; }
-.thsw em { display: block; height: 4px; width: 70%; border-radius: 2px; opacity: .55; }
-.thacc { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.tha { width: 32px; height: 32px; border-radius: 50%; border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--line); cursor: pointer; }
-.tha[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--fg); }
-.thcustom { position: relative; width: 32px; height: 32px; border-radius: 50%; border: 1px dashed var(--muted); display: grid; place-items: center; color: var(--muted); cursor: pointer; overflow: hidden; }
-.thcustom input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; border: 0; padding: 0; }
-.thsec .seg2 { flex-wrap: wrap; align-self: flex-start; }
-.thdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: -2px; }
-.thfonts { display: flex; flex-direction: column; gap: 6px; }
-.thf { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 9px 12px; border-radius: 10px; border: 2px solid transparent; background: var(--bg); color: var(--fg); cursor: pointer; text-align: left; }
-.thf b { font-size: 14px; } .thf span { font-size: 12.5px; color: var(--muted); }
-.thf[aria-pressed="true"] { border-color: var(--accent); }
-.thbox input[type="range"] { width: 100%; accent-color: var(--accent); }
-.thtog label { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0; cursor: pointer; }
-.thtog label > span:first-child { display: flex; flex-direction: column; }
-.thfoot { gap: 12px; padding-top: 8px; border-top: 1px solid var(--line); }
-.thown { display: flex; flex-direction: column; gap: 6px; padding: 12px; border-radius: 12px; background: var(--accent-soft); }
-@media (max-width: 640px) {
-  .panel.thbox { top: auto; left: 0; right: 0; bottom: 0; width: 100%; max-height: 62vh; border-radius: 18px 18px 0 0 !important; animation: vin .25s ease-out; padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px)); }
-  body.thopen .views { display: none; }
-}
 </style>
 
 <div class="demo demo-band"><p id="banner"><strong>Στιγμιότυπο.</strong> Οι τιμές προέρχονται από το capital.gr (καθυστέρηση 15 λεπτών) και η κεφαλαιοποίηση με τα ονόματα από το euro2day.gr (23/10/2026, 12:58). Τα στοιχεία δεν ενημερώνονται αυτόματα και δεν αποτελούν επενδυτική πληροφόρηση.</p></div>
@@ -1210,14 +1176,8 @@ tbody tr { transition: background-color .15s ease; }
   <div class="setrow"><span>Γλώσσα</span><div class="seg2" id="setLang" role="group" aria-label="Γλώσσα"><button type="button" data-v="el">Ελληνικά</button><button type="button" data-v="en">English</button></div></div>
   <div class="setrow"><span>Νόμισμα</span><div class="seg2" id="setCur" role="group" aria-label="Νόμισμα"><button type="button" data-v="EUR">€ EUR</button><button type="button" data-v="USD">$ USD</button><button type="button" data-v="CHF">CHF</button></div></div>
   <div class="setrow"><span>Θέμα</span><div class="seg2" id="setTheme" role="group" aria-label="Θέμα"><button type="button" data-v="light">Φωτεινό</button><button type="button" data-v="dark">Σκοτεινό</button><button type="button" data-v="system">Σύστημα</button></div></div>
-  <div class="setrow"><span>Εμφάνιση</span><button type="button" class="btn" id="setTheme2">🎨 Προσαρμογή εμφάνισης</button></div>
   <p class="note" id="setNote" style="margin:0"></p>
 </div>
-<aside class="panel thbox" id="thBox" role="dialog" aria-labelledby="thTitle" hidden>
-  <div class="ahead"><h2 id="thTitle">🎨 Εμφάνιση</h2><button type="button" class="close" id="thClose" aria-label="Κλείσιμο">×</button></div>
-  <p class="note" style="margin:0">Οι αλλαγές φαίνονται αμέσως. Αποθηκεύονται σε αυτή τη συσκευή και, αν είσαι συνδεδεμένος, στον λογαριασμό σου.</p>
-  <div id="thBody" style="display:flex;flex-direction:column;gap:18px"></div>
-</aside>
 <div class="scrim" id="appScrim" hidden></div>
 <div class="panel authbox" id="appBox" role="dialog" aria-modal="true" aria-labelledby="appTitle" hidden>
   <div class="ahead"><h2 id="appTitle">Εγκατάσταση εφαρμογής</h2><button type="button" class="close" id="appClose" aria-label="Κλείσιμο">×</button></div>
@@ -2199,82 +2159,6 @@ function applyTheme() {
 }
 applyTheme();
 try { matchMedia("(prefers-color-scheme: light)").addEventListener("change", function () { if (THEME === "system") applyTheme(); }); } catch (e) {}
-/* ===================== Εμφάνιση: θέματα και προσαρμογή ===================== */
-var THM_PRESETS = {
-  def: { n: "Axiogram", mode: null },
-  oled: { n: "Μαύρο OLED", mode: "dark", acc: "blue", glow: false, bg: { bg: "#000000", "bg-top": "#060708", "bg-bottom": "#000000", surface: "#0e1013", line: "#23262d", "dk-a": "rgba(30,32,38,.75)", "dk-b": "rgba(12,13,16,.85)", "dk-line": "rgba(255,255,255,.07)", "dk-head": "rgba(255,255,255,.03)", "dk-glow": "rgba(120,150,255,.08)" } },
-  navy: { n: "Μπλε ναυτικό", mode: "dark", acc: "cyan", bg: { bg: "#0f1b2d", "bg-top": "#16273f", "bg-bottom": "#0a1320", surface: "#14223a", line: "#26395a", "dk-a": "rgba(32,56,94,.6)", "dk-b": "rgba(16,30,52,.72)", "dk-line": "rgba(150,190,255,.10)", "dk-head": "rgba(4,10,22,.45)", "dk-glow": "rgba(92,200,255,.14)" } },
-  term: { n: "Τερματικό", mode: "dark", acc: "orange", font: "mono", rad: 4, dens: "compact", glow: false, bg: { bg: "#050505", "bg-top": "#0b0b0b", "bg-bottom": "#030303", surface: "#121212", line: "#2b2b2b", "dk-a": "rgba(24,24,24,.95)", "dk-b": "rgba(14,14,14,.95)", "dk-line": "rgba(255,160,40,.14)", "dk-head": "rgba(255,140,0,.07)", "dk-glow": "rgba(255,150,30,.06)", muted: "#b39a7a" } },
-  forest: { n: "Δάσος", mode: "dark", acc: "green", bg: { bg: "#121e19", "bg-top": "#1a2c24", "bg-bottom": "#0d1712", surface: "#192a22", line: "#2a4235", "dk-a": "rgba(38,70,55,.55)", "dk-b": "rgba(20,36,29,.68)", "dk-line": "rgba(160,255,200,.08)", "dk-head": "rgba(4,14,9,.42)", "dk-glow": "rgba(110,227,165,.12)" } },
-  plum: { n: "Μωβ νύχτα", mode: "dark", acc: "purple", bg: { bg: "#1b1430", "bg-top": "#271d44", "bg-bottom": "#140e24", surface: "#231a3a", line: "#3a2e5b", "dk-a": "rgba(72,52,124,.5)", "dk-b": "rgba(36,26,62,.66)", "dk-line": "rgba(200,170,255,.10)", "dk-head": "rgba(10,5,24,.42)", "dk-glow": "rgba(183,148,255,.14)" } },
-  light: { n: "Φωτεινό καθαρό", mode: "light", acc: "blue", glow: false },
-  sand: { n: "Άμμος", mode: "light", acc: "orange", font: "serif", bg: { bg: "#f3eee5", "bg-top": "#faf7f1", "bg-bottom": "#ece5d8", surface: "#fffdf8", line: "#e2d9c9", fg: "#2a2118", muted: "#6e6253", "dk-a": "#fffdf8", "dk-b": "#f7f2e8", "dk-line": "#e5ddcd", "dk-head": "#f1eadd", "dk-glow": "rgba(194,97,12,.06)" } }
-};
-var THM_ACC = { blue: ["#8fb0ff", "#2457d6"], cyan: ["#5cc8ff", "#0b7fb5"], green: ["#62e0a4", "#0a8a55"], orange: ["#ffad4d", "#c2610c"], pink: ["#ff8fc8", "#c4246f"], purple: ["#b794ff", "#6a3fd6"], gold: ["#f2c94c", "#946600"], red: ["#ff8080", "#c93434"] };
-var THM_UD = { gd: null, bo: [["#5aa9ff", "#ffa64d"], ["#1f6fd1", "#c25e00"]], rg: [["#ff7b7b", "#4fd69a"], ["#c93434", "#0a8a55"]] };
-var THM_FONTS = {
-  def: { n: "Axiogram", d: '"Commissioner", "Segoe UI", system-ui, sans-serif', b: '"IBM Plex Sans", "Segoe UI", system-ui, sans-serif' },
-  inter: { n: "Inter", g: "Inter:wght@300;400;500;600;700;800", d: '"Inter", system-ui, sans-serif', b: '"Inter", system-ui, sans-serif' },
-  roboto: { n: "Roboto", g: "Roboto:wght@300;400;500;700;900", d: '"Roboto", system-ui, sans-serif', b: '"Roboto", system-ui, sans-serif' },
-  round: { n: "Comfortaa (στρογγυλή)", g: "Comfortaa:wght@300;400;500;600;700", d: '"Comfortaa", system-ui, sans-serif', b: '"Comfortaa", system-ui, sans-serif' },
-  serif: { n: "Noto Serif (κλασική)", g: "Noto+Serif:wght@300;400;500;600;700;800", d: '"Noto Serif", Georgia, serif', b: '"Noto Serif", Georgia, serif' },
-  mono: { n: "JetBrains Mono (τερματικό)", g: "JetBrains+Mono:wght@300;400;500;600;700;800", d: '"JetBrains Mono", ui-monospace, monospace', b: '"JetBrains Mono", ui-monospace, monospace' },
-  system: { n: "Του συστήματος", d: "system-ui, -apple-system, \"Segoe UI\", sans-serif", b: "system-ui, -apple-system, \"Segoe UI\", sans-serif" }
-};
-var THM_DEF = { p: "def", acc: null, ud: "gd", font: null, scale: 1, rad: null, dens: null, glow: null, motion: true };
-function thmLoad(k) { try { var v = JSON.parse(localStorage.getItem(k) || "null"); return v && typeof v === "object" ? v : null; } catch (e) { return null; } }
-var THM = thmLoad("agora-thm"), SITE_THM = thmLoad("agora-sitethm");
-function thmNorm(t) { var o = {}; for (var k in THM_DEF) o[k] = t && t[k] !== undefined ? t[k] : THM_DEF[k]; if (!THM_PRESETS[o.p]) o.p = "def"; return o; }
-function thmActive() { return thmNorm(THM || SITE_THM); }
-function lum(hex) { var m = /^#?([0-9a-f]{6})$/i.exec(hex || ""); if (!m) return .5; var n = parseInt(m[1], 16), c = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(function (v) { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; }
-function thmCss(t) {
-  var P = THM_PRESETS[t.p] || THM_PRESETS.def, css = "", vars = { dark: {}, light: {} };
-  var font = THM_FONTS[t.font || P.font || "def"] || THM_FONTS.def, rad = t.rad != null ? t.rad : P.rad, dens = t.dens || P.dens || "normal", glow = t.glow != null ? t.glow : P.glow !== false;
-  if (P.bg) { var m = P.mode || "dark"; for (var k in P.bg) vars[m][k] = P.bg[k]; }
-  var acc = t.acc || P.acc;
-  if (acc) {
-    var pair = THM_ACC[acc] || [acc, acc];
-    ["dark", "light"].forEach(function (m, i) { var a = pair[i]; vars[m].accent = a; vars[m]["accent-soft"] = "color-mix(in srgb, " + a + " 20%, var(--surface))"; vars[m]["on-accent"] = lum(a) > .35 ? "#14181f" : "#ffffff"; });
-  }
-  var ud = THM_UD[t.ud];
-  if (ud) ["dark", "light"].forEach(function (m, i) { vars[m].up = ud[i][0]; vars[m].down = ud[i][1]; vars[m]["up-soft"] = "color-mix(in srgb, " + ud[i][0] + " 18%, var(--surface))"; vars[m]["down-soft"] = "color-mix(in srgb, " + ud[i][1] + " 18%, var(--surface))"; });
-  vars.dark["font-display"] = vars.light["font-display"] = font.d; vars.dark["font-body"] = vars.light["font-body"] = font.b;
-  ["dark", "light"].forEach(function (m) { var s = ""; for (var k in vars[m]) s += "--" + k + ":" + vars[m][k] + ";"; if (s) css += ':root[data-ui="' + m + '"][data-ui]{' + s + "}"; });
-  if (!glow) css += ":root[data-ui] body{background:linear-gradient(180deg,var(--bg-top) 0%,var(--bg) 40%,var(--bg-bottom) 100%) fixed;background-color:var(--bg)}.stat::before,.panel.glow::before{display:none}";
-  if (t.scale && t.scale !== 1) css += ".wrap>:not(.top),.drawer,.authbox,.hovcard{zoom:" + t.scale + "}";
-  if (rad != null) css += ".panel,.stat,.secchip,.heat,.authbox,.dk,.dw,.hovcard,.calday,.curow,.svkpi>div{border-radius:" + rad + "px!important}.btn,.search,.seg2,.tab,.scrrng input,.alpick,.more{border-radius:" + Math.min(rad, 10) + "px!important}.seg2 button{border-radius:" + Math.max(0, Math.min(rad, 10) - 2) + "px!important}";
-  if (dens === "compact") css += "td,th{padding-top:5px!important;padding-bottom:5px!important}.mrow,.dwr,.calrow{padding-top:5px!important;padding-bottom:5px!important}.wrap{gap:12px}";
-  if (dens === "comfy") css += "td,th{padding-top:15px!important;padding-bottom:15px!important}.mrow,.dwr,.calrow{padding-top:12px!important;padding-bottom:12px!important}";
-  if (t.motion === false) css += "*,*::before,*::after{animation:none!important;transition:none!important}";
-  return { css: css, font: font };
-}
-var thmFontsLoaded = {};
-function thmApply() {
-  var t = thmActive(), P = THM_PRESETS[t.p] || THM_PRESETS.def, r = thmCss(t);
-  var el = document.getElementById("thmcss"); if (!el) { el = document.createElement("style"); el.id = "thmcss"; document.head.appendChild(el); }
-  el.textContent = r.css;
-  if (r.font.g && !thmFontsLoaded[r.font.g]) { thmFontsLoaded[r.font.g] = 1; var l = document.createElement("link"); l.rel = "stylesheet"; l.href = "https://fonts.googleapis.com/css2?family=" + r.font.g + "&display=swap"; document.head.appendChild(l); }
-  document.documentElement.classList.toggle("nomotion", t.motion === false);
-}
-function thmSiteMode() {
-  var P = !THM && SITE_THM && THM_PRESETS[SITE_THM.p];
-  var chosen = null; try { chosen = localStorage.getItem("agora-theme"); } catch (e) {}
-  if (P && P.mode && !chosen && THEME !== P.mode) { THEME = P.mode; applyTheme(); }
-}
-thmSiteMode(); thmApply();
-/* η προεπιλεγμένη εμφάνιση του site (ορίζεται από τον ιδιοκτήτη) */
-(function () {
-  if (typeof fetch !== "function" || !/^https?:/.test(location.protocol) || window.claude) return;
-  fetch("https://firestore.googleapis.com/v1/projects/agora-athinon/databases/(default)/documents/site/theme?key=AIzaSyDd3-HyjHU6Cji1DwPtZ6epuJxFUT6luws")
-    .then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (j) {
-      var raw = j && j.fields && j.fields.t && j.fields.t.stringValue, v = null;
-      try { v = raw ? JSON.parse(raw) : null; } catch (e) {}
-      if (JSON.stringify(v) === JSON.stringify(SITE_THM)) return;
-      SITE_THM = v; try { if (v) localStorage.setItem("agora-sitethm", JSON.stringify(v)); else localStorage.removeItem("agora-sitethm"); } catch (e) {}
-      if (!THM) { thmSiteMode(); thmApply(); if (window.__thmPaint) window.__thmPaint(); }
-    }).catch(function () {});
-})();
 window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); window.__bip = e; document.dispatchEvent(new Event("agora-bip")); });
 (function () {
   var b = document.getElementById("langbtn");
@@ -2963,7 +2847,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     saveWallets(); savePfs();
     if (!pfRef) { saveLocal(); return Promise.resolve(); }
     savePfs();
-    var body = { txns: txns.slice(), favs: Object.keys(favs), wallets: wallets.slice(), pfs: pfs.slice(), alerts: JSON.parse(JSON.stringify(ALERTS)), push: JSON.parse(JSON.stringify(PUSHT)), weekly: !!WEEKLY, home: window.__homeGet ? JSON.parse(JSON.stringify(window.__homeGet())) : null, theme: window.__thmGet && window.__thmGet() ? JSON.parse(JSON.stringify(window.__thmGet())) : null, updated: Date.now() };
+    var body = { txns: txns.slice(), favs: Object.keys(favs), wallets: wallets.slice(), pfs: pfs.slice(), alerts: JSON.parse(JSON.stringify(ALERTS)), push: JSON.parse(JSON.stringify(PUSHT)), weekly: !!WEEKLY, home: window.__homeGet ? JSON.parse(JSON.stringify(window.__homeGet())) : null, updated: Date.now() };
     if (WTEST) body.wtest = WTEST;
     try { localStorage.setItem("agora-alerts", JSON.stringify(ALERTS)); } catch (e) {}
     pfWriting = pfWriting.then(function () { return pfRef.set(body, { merge: true }); }).catch(function (e) {
@@ -3184,7 +3068,6 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
               var ra = Array.isArray(d.alerts) ? d.alerts : [], ab = ra.length;
               ALERTS = mergeAlerts(ra, ALERTS); PUSHT = Array.isArray(d.push) ? d.push : []; WEEKLY = !!d.weekly;
               if (d.home && window.__homeSet) window.__homeSet(d.home);
-              if (d.theme && window.__thmSet) window.__thmSet(d.theme);
               if (ALERTS.length !== ab) pb = -1;
               if (!snap.exists || merged.length !== remote.length || Object.keys(f2).length !== before || mw.length !== wb || pfs.length !== pb) {
                 persist().then(function () { if (pfRef) { try { localStorage.removeItem(LKEY); } catch (e) {} } });
@@ -3198,7 +3081,6 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
               var prevA = ALERTS; ALERTS = Array.isArray(d.alerts) ? d.alerts : []; PUSHT = Array.isArray(d.push) ? d.push : []; WEEKLY = !!d.weekly;
               if (window.__alFired) window.__alFired(prevA, ALERTS);
               if (d.home && window.__homeSet) window.__homeSet(d.home);
-              if (d.theme && window.__thmSet) window.__thmSet(d.theme);
             }
             if (window.__alBadge) window.__alBadge();
             if (window.__dashRefresh) window.__dashRefresh();
@@ -5642,84 +5524,6 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   renderDash();
   setInterval(function () { if (!document.hidden && !document.getElementById("view-market").hidden && HOME.on.favs && Object.keys(favs).some(function (k) { return /^c:/.test(k); })) { loadFavCg(); } }, 60000);
 
-  /* ===================== Επεξεργαστής εμφάνισης ===================== */
-  var thBox = document.getElementById("thBox");
-  function thCur() { return thmNorm(THM || SITE_THM); }
-  function thSet(ch) {
-    var t = thCur(); for (var k in ch) t[k] = ch[k];
-    THM = t; try { localStorage.setItem("agora-thm", JSON.stringify(THM)); } catch (e) {}
-    thmApply(); thPaint();
-    clearTimeout(thSet.tm); thSet.tm = setTimeout(function () { if (pfRef) persist(); }, 800);
-  }
-  function swatch(p) {
-    var P = THM_PRESETS[p], dark = P.mode !== "light", bg = (P.bg && P.bg.bg) || (dark ? "#1f2430" : "#eef1f6"), sf = (P.bg && P.bg.surface) || (dark ? "#262c38" : "#ffffff"), ac = THM_ACC[P.acc || "blue"][dark ? 0 : 1], fg = (P.bg && P.bg.fg) || (dark ? "#e7eaef" : "#141a26");
-    return '<span class="thsw" style="background:' + bg + '"><i style="background:' + sf + ';color:' + fg + '"><b style="background:' + ac + '"></b><em style="background:' + fg + '"></em><em style="background:' + fg + ';width:40%"></em></i></span>';
-  }
-  function thPaint() {
-    if (!thBox || thBox.hidden) return;
-    var t = thCur(), P = THM_PRESETS[t.p] || THM_PRESETS.def, isLight = document.documentElement.getAttribute("data-ui") === "light";
-    var accNow = t.acc || P.acc || null, fontNow = t.font || P.font || "def", radNow = t.rad != null ? t.rad : P.rad != null ? P.rad : 18, densNow = t.dens || P.dens || "normal", glowNow = t.glow != null ? t.glow : P.glow !== false;
-    var seg = function (attr, items, curv) { return '<div class="seg2">' + items.map(function (x) { return '<button type="button" ' + attr + '="' + x[0] + '" aria-pressed="' + (String(x[0]) === String(curv)) + '">' + x[1] + "</button>"; }).join("") + "</div>"; };
-    var h = '<div class="thsec"><h3>Έτοιμα θέματα</h3><div class="thpre">' + Object.keys(THM_PRESETS).map(function (k) { return '<button type="button" class="thp" data-thp="' + k + '" aria-pressed="' + (t.p === k) + '">' + swatch(k) + "<span>" + esc(THM_PRESETS[k].n) + "</span></button>"; }).join("") + "</div></div>";
-    h += '<div class="thsec"><h3>Φωτεινό ή σκοτεινό</h3>' + seg("data-thm", [["dark", "Σκοτεινό"], ["light", "Φωτεινό"], ["system", "Αυτόματο"]], THEME) + "</div>";
-    h += '<div class="thsec"><h3>Κύριο χρώμα</h3><div class="thacc">' + Object.keys(THM_ACC).map(function (k) { var c = THM_ACC[k][isLight ? 1 : 0]; return '<button type="button" class="tha" data-tha="' + k + '" aria-pressed="' + (accNow === k) + '" style="background:' + c + '" aria-label="' + k + '"></button>'; }).join("") +
-      '<label class="thcustom" title="Δικό σου χρώμα"><input type="color" id="thColor" value="' + (accNow && accNow.charAt(0) === "#" ? accNow : (THM_ACC[accNow] || THM_ACC.blue)[isLight ? 1 : 0]) + '" aria-label="Δικό σου χρώμα"><span>+</span></label></div></div>';
-    h += '<div class="thsec"><h3>Χρώματα ανόδου και πτώσης</h3>' + seg("data-thud", [["gd", '<i class="thdot" style="background:#4fd69a"></i><i class="thdot" style="background:#ff7b7b"></i> Πράσινο / κόκκινο'], ["bo", '<i class="thdot" style="background:#5aa9ff"></i><i class="thdot" style="background:#ffa64d"></i> Μπλε / πορτοκαλί'], ["rg", '<i class="thdot" style="background:#ff7b7b"></i><i class="thdot" style="background:#4fd69a"></i> Ανάποδα']], t.ud) + '<p class="note">Το «μπλε / πορτοκαλί» ξεχωρίζει καλύτερα για όσους δυσκολεύονται με το πράσινο και το κόκκινο.</p></div>';
-    h += '<div class="thsec"><h3>Γραμματοσειρά</h3><div class="thfonts">' + Object.keys(THM_FONTS).map(function (k) { var f = THM_FONTS[k]; if (f.g && !thmFontsLoaded[f.g]) { thmFontsLoaded[f.g] = 1; var l = document.createElement("link"); l.rel = "stylesheet"; l.href = "https://fonts.googleapis.com/css2?family=" + f.g + "&display=swap"; document.head.appendChild(l); } return '<button type="button" class="thf" data-thf="' + k + '" aria-pressed="' + (fontNow === k) + '" style="font-family:' + esc(f.d) + '"><b>' + esc(f.n) + "</b><span>Αξία 12.345,67 € ▲ +2,15%</span></button>"; }).join("") + "</div></div>";
-    h += '<div class="thsec"><h3>Μέγεθος <span class="note" id="thScaleV">' + Math.round(t.scale * 100) + '%</span></h3><input type="range" id="thScale" min="85" max="125" step="5" value="' + Math.round(t.scale * 100) + '" aria-label="Μέγεθος"></div>';
-    h += '<div class="thsec"><h3>Γωνίες <span class="note" id="thRadV">' + radNow + ' px</span></h3><input type="range" id="thRad" min="0" max="28" step="2" value="' + radNow + '" aria-label="Στρογγυλότητα γωνιών"></div>';
-    h += '<div class="thsec"><h3>Πυκνότητα</h3>' + seg("data-thd", [["compact", "Συμπαγής"], ["normal", "Κανονική"], ["comfy", "Άνετη"]], densNow) + "</div>";
-    h += '<div class="thsec thtog"><label><span><b>Λάμψη φόντου</b><span class="note">Χρωματιστές αποχρώσεις πίσω από τη σελίδα</span></span><span class="sw"><input type="checkbox" id="thGlow"' + (glowNow ? " checked" : "") + "><i></i></span></label>" +
-      '<label><span><b>Κινήσεις</b><span class="note">Μεταβάσεις και αναλαμπές τιμών</span></span><span class="sw"><input type="checkbox" id="thMotion"' + (t.motion !== false ? " checked" : "") + "><i></i></span></label></div>";
-    var owner = fbUser && pfMode === "db";
-    h += '<div class="thsec thfoot"><button type="button" class="btn" id="thReset">' + (SITE_THM ? "Επαναφορά στην εμφάνιση του site" : "Επαναφορά") + "</button>" +
-      (owner ? '<div class="thown"><b>Για όλους τους επισκέπτες</b><span class="note">Κάνε αυτή την εμφάνιση προεπιλογή του site. Όποιος δεν έχει αλλάξει τη δική του, θα βλέπει αυτή. Λειτουργεί μόνο για τον ιδιοκτήτη.</span><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn primary" id="thSite">Ορισμός για όλους</button>' + (SITE_THM ? '<button type="button" class="btn" id="thSiteClr">Αφαίρεση</button>' : "") + "</div></div>" : "") + "</div>";
-    document.getElementById("thBody").innerHTML = h;
-  }
-  window.__thmPaint = thPaint;
-  window.__thmGet = function () { return THM; };
-  window.__thmSet = function (v) { if (!v || JSON.stringify(v) === JSON.stringify(THM)) return; THM = thmNorm(v); try { localStorage.setItem("agora-thm", JSON.stringify(THM)); } catch (e) {} thmApply(); thPaint(); };
-  function thOpen() { var sb = document.getElementById("setBox"); if (sb && !sb.hidden) document.getElementById("setClose").click(); thBox.hidden = false; thPaint(); document.getElementById("thClose").focus(); document.body.classList.add("thopen"); }
-  function thClose() { thBox.hidden = true; document.body.classList.remove("thopen"); }
-  document.getElementById("setTheme2").addEventListener("click", thOpen);
-  document.getElementById("thClose").addEventListener("click", thClose);
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !thBox.hidden) thClose(); });
-  thBox.addEventListener("click", function (e) {
-    var b;
-    if ((b = e.target.closest("[data-thp]"))) {
-      var p = b.getAttribute("data-thp"), P = THM_PRESETS[p];
-      if (P.mode) { THEME = P.mode; try { localStorage.setItem("agora-theme", THEME); } catch (er) {} applyTheme(); }
-      thSet({ p: p, acc: null, font: null, rad: null, dens: null, glow: null }); return;
-    }
-    if ((b = e.target.closest("[data-thm]"))) { THEME = b.getAttribute("data-thm"); try { localStorage.setItem("agora-theme", THEME); } catch (er) {} applyTheme(); thPaint(); if (!drawer.hidden && cur && chartKind === "tv") paint(); return; }
-    if ((b = e.target.closest("[data-tha]"))) { thSet({ acc: b.getAttribute("data-tha") }); return; }
-    if ((b = e.target.closest("[data-thud]"))) { thSet({ ud: b.getAttribute("data-thud") }); return; }
-    if ((b = e.target.closest("[data-thf]"))) { thSet({ font: b.getAttribute("data-thf") }); return; }
-    if ((b = e.target.closest("[data-thd]"))) { thSet({ dens: b.getAttribute("data-thd") }); return; }
-    if (e.target.closest("#thReset")) { THM = null; try { localStorage.removeItem("agora-thm"); } catch (er) {} thmSiteMode(); thmApply(); thPaint(); if (pfRef) persist(); toast("Η εμφάνιση επανήλθε"); return; }
-    if (e.target.closest("#thSite")) {
-      var val = thCur();
-      firebase.firestore().collection("site").doc("theme").set({ t: JSON.stringify(val), at: Date.now() })
-        .then(function () { SITE_THM = val; try { localStorage.setItem("agora-sitethm", JSON.stringify(val)); } catch (er) {} thPaint(); toast("Αυτή είναι πλέον η εμφάνιση του site για όλους"); })
-        .catch(function (er) { toast(er && er.code === "permission-denied" ? "Δεν επιτρέπεται: χρειάζεται ο κανόνας του Firestore για τον ιδιοκτήτη" : "Η αποθήκευση απέτυχε"); });
-      return;
-    }
-    if (e.target.closest("#thSiteClr")) {
-      firebase.firestore().collection("site").doc("theme").delete()
-        .then(function () { SITE_THM = null; try { localStorage.removeItem("agora-sitethm"); } catch (er) {} thmApply(); thPaint(); toast("Η εμφάνιση του site επανήλθε στην αρχική"); })
-        .catch(function () { toast("Δεν επιτρέπεται"); });
-    }
-  });
-  thBox.addEventListener("input", function (e) {
-    if (e.target.id === "thScale") { document.getElementById("thScaleV").textContent = e.target.value + "%"; thSet.raw = true; THM = thCur(); THM.scale = +e.target.value / 100; thmApply(); }
-    if (e.target.id === "thRad") { document.getElementById("thRadV").textContent = e.target.value + " px"; THM = thCur(); THM.rad = +e.target.value; thmApply(); }
-    if (e.target.id === "thColor") { THM = thCur(); THM.acc = e.target.value; thmApply(); }
-  });
-  thBox.addEventListener("change", function (e) {
-    if (e.target.id === "thScale" || e.target.id === "thRad" || e.target.id === "thColor") { thSet({}); return; }
-    if (e.target.id === "thGlow") thSet({ glow: e.target.checked });
-    if (e.target.id === "thMotion") thSet({ motion: e.target.checked });
-  });
 
   window.__alBadge = function () { var n = ALERTS.filter(function (a) { return a.on; }).length, c = document.getElementById("alcnt"); c.hidden = !n; c.textContent = n; };
   window.__alBadge();
