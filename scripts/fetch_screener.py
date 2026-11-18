@@ -14,9 +14,9 @@ H = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/124 Safari/
 TV = ["name", "description", "close", "change", "market_cap_basic", "sector", "industry", "price_earnings_ttm", "price_book_fq",
       "dividends_yield_current", "return_on_equity", "Perf.W", "Perf.Y", "Perf.YTD", "beta_1_year", "RSI", "Recommend.All",
       "net_margin", "total_revenue_yoy_growth_ttm", "debt_to_equity", "earnings_release_next_date", "ex_dividend_date_upcoming",
-      "dividend_payment_date_upcoming", "dps_common_stock_prim_issue_fy", "dividends_per_share_fq", "logoid", "currency", "type", "is_primary"]
+      "dividend_payment_date_upcoming", "dps_common_stock_prim_issue_fy", "dividends_per_share_fq", "logoid", "currency", "type", "is_primary", "exchange"]
 COLS_OUT = ["k", "n", "p", "c", "m", "sec", "ind", "pe", "pb", "dy", "roe", "w", "y", "ytd", "beta", "rsi", "rec",
-            "nm", "rg", "de", "earn", "exd", "pay", "dps", "logo"]
+            "nm", "rg", "de", "earn", "exd", "pay", "dps", "logo", "x"]
 
 
 def load(p, d):
@@ -55,7 +55,7 @@ def row(key, v):
             rnd(v.get("return_on_equity"), 1), rnd(v.get("Perf.W"), 2), rnd(v.get("Perf.Y"), 1), rnd(v.get("Perf.YTD"), 1),
             rnd(v.get("beta_1_year"), 2), rnd(v.get("RSI"), 1), rnd(v.get("Recommend.All"), 2), rnd(v.get("net_margin"), 1),
             rnd(v.get("total_revenue_yoy_growth_ttm"), 1), rnd(v.get("debt_to_equity"), 2), day(v.get("earnings_release_next_date")),
-            day(v.get("ex_dividend_date_upcoming")), day(v.get("dividend_payment_date_upcoming")), rnd(dps, 4), v.get("logoid") or None]
+            day(v.get("ex_dividend_date_upcoming")), day(v.get("dividend_payment_date_upcoming")), rnd(dps, 4), v.get("logoid") or None, v.get("exchange") or ""]
 
 
 # Ελλάδα
