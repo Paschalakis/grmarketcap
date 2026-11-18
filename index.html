@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Τιμές, μεταβολές και κεφαλαιοποίηση μετοχών του Χρηματιστηρίου Αθηνών, με κλάδους και εικονικό χαρτοφυλάκιο.">
+<meta name="description" content="Axiogram: ελληνικές και αμερικανικές μετοχές, crypto και το χαρτοφυλάκιό σου σε ένα σημείο, με τιμές, διαγράμματα, μερίσματα και heatmap.">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#2a3040">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -11,11 +11,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="GRmarketcap">
+<meta name="apple-mobile-web-app-title" content="Axiogram">
 <style>:root{color-scheme:dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
-<title>GRmarketcap</title>
+<title>Axiogram</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Commissioner:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
 /* Layout: sticky top bar, summary strip, two mover lists, then a sortable market table; stock detail opens in a right-hand drawer (bottom sheet on phones). */
@@ -518,6 +518,9 @@ body.pfhide .sens { filter: blur(9px); user-select: none; }
 .fng .cls { font-size: 15px; font-weight: 700; }
 .fnghist { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--muted); }
 .fnghist b { font-variant-numeric: tabular-nums; }
+.brandh { display: inline-flex; align-items: center; gap: 10px; }
+.brandh .brandmark { flex: none; border-radius: 8px; box-shadow: 0 4px 14px rgba(91, 124, 250, .35); }
+@media (max-width: 640px) { .brandh .brandmark { width: 26px; height: 26px; } .brandh { gap: 8px; } }
 .mktsw { align-self: flex-start; }
 #view-market[data-mkt="us"] > *:not(.mktrow):not(#xlist), #view-market[data-mkt="c"] > *:not(.mktrow):not(#xlist) { display: none !important; }
 .mktrow { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
@@ -707,7 +710,7 @@ th[aria-sort] button { color: var(--accent); }
 <div class="wrap">
   <header class="top">
     <div class="brand">
-      <h1>GRmarketcap</h1>
+      <h1 class="brandh"><svg class="brandmark" width="30" height="30" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="axg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4062f0"/><stop offset="1" stop-color="#7c4de6"/></linearGradient></defs><rect width="100" height="100" rx="22" fill="url(#axg)"/><path d="M21 79 50 20 79 79" fill="none" stroke="#fff" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M31 62 43 55 53 60 69 47" fill="none" stroke="#4fd69a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Axiogram</span></h1>
       <button type="button" class="pill" id="pill" aria-controls="banner" aria-expanded="false">Στιγμιότυπο</button>
     </div>
     <div class="topright">
@@ -937,7 +940,7 @@ th[aria-sort] button { color: var(--accent); }
 <div class="scrim" id="appScrim" hidden></div>
 <div class="panel authbox" id="appBox" role="dialog" aria-modal="true" aria-labelledby="appTitle" hidden>
   <div class="ahead"><h2 id="appTitle">Εγκατάσταση εφαρμογής</h2><button type="button" class="close" id="appClose" aria-label="Κλείσιμο">×</button></div>
-  <p class="note" style="margin:0">Βάλε το GRmarketcap στην αρχική οθόνη του κινητού σου. Θα ανοίγει σαν εφαρμογή, σε δικό της παράθυρο.</p>
+  <p class="note" style="margin:0">Βάλε το Axiogram στην αρχική οθόνη του κινητού σου. Θα ανοίγει σαν εφαρμογή, σε δικό της παράθυρο.</p>
   <ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;line-height:1.5">
     <li>Άνοιξε τη σελίδα στο Safari.</li>
     <li>Πάτα το κουμπί «Κοινοποίηση» (τετράγωνο με βέλος προς τα πάνω) στο κάτω μέρος της οθόνης.</li>
@@ -1453,7 +1456,7 @@ var EN_EXACT = {
   "Allwyn (πρώην ΟΠΑΠ)": "Allwyn (formerly OPAP)",
   "Εφαρμογή": "App",
   "Εγκατάσταση εφαρμογής": "Install the app",
-  "Βάλε το GRmarketcap στην αρχική οθόνη του κινητού σου. Θα ανοίγει σαν εφαρμογή, σε δικό της παράθυρο.": "Put GRmarketcap on your phone's home screen. It opens like an app, in its own window.",
+  "Βάλε το Axiogram στην αρχική οθόνη του κινητού σου. Θα ανοίγει σαν εφαρμογή, σε δικό της παράθυρο.": "Put Axiogram on your phone's home screen. It opens like an app, in its own window.",
   "Άνοιξε τη σελίδα στο Safari.": "Open this page in Safari.",
   "Πάτα το κουμπί «Κοινοποίηση» (τετράγωνο με βέλος προς τα πάνω) στο κάτω μέρος της οθόνης.": "Tap the Share button (a square with an arrow pointing up) at the bottom of the screen.",
   "Διάλεξε «Προσθήκη στην οθόνη Αφετηρίας» και πάτα «Προσθήκη».": "Choose “Add to Home Screen” and tap “Add”.",

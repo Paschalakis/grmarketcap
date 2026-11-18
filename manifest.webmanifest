@@ -1,6 +1,6 @@
 {
-  "name": "GRmarketcap",
-  "short_name": "GRmarketcap",
+  "name": "Axiogram",
+  "short_name": "Axiogram",
   "description": "Τιμές μετοχών του Χρηματιστηρίου Αθηνών, Γενικός Δείκτης και εικονικό χαρτοφυλάκιο.",
   "lang": "el",
   "start_url": "./",
