@@ -20,5 +20,5 @@ if rid:
         if "Ειδοποι" in n:
             txt=z.read(n).decode("utf8","ignore")
             lines=[l for l in txt.splitlines() if "##[" not in l and "pip" not in l.lower()]
-            print("==",n); print("\n".join(l[29:] for l in lines if not l[29:].startswith(("  ","shell","env",""))][-30:]))
-# 1794994203
+            print("==",n); print("\n".join([l[29:] for l in lines if not l[29:].startswith(("  ","shell","env","\x1b"))][-30:]))
+# r2
