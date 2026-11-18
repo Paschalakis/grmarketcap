@@ -1,1 +1,182 @@
-dispatch 204
+run 44275939424 [('workflow_dispatch', 'completed', '2026-11-18T09:26:31Z'), ('workflow_dispatch', 'completed', '2026-11-18T09:10:45Z')]
+== 0_notify.txt
+2026-11-18T09:26:38.6946742Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-18T09:26:38.6947049Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-18T09:26:38.6947347Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-18T09:26:38.6947782Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-18T09:26:38.6948054Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-18T09:26:38.6948333Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-18T09:26:42.7441973Z [36;1mMODE="alerts"[0m
+2026-11-18T09:26:42.7442177Z [36;1mif [ "" = "45 15 * * 5" ]; then MODE=weekly; fi[0m
+2026-11-18T09:26:42.7442469Z [36;1mpython scripts/notify.py "$***MODE:-alerts***"[0m
+2026-11-18T09:26:42.7484585Z shell: /usr/bin/bash -e ***0***
+2026-11-18T09:26:42.7484776Z env:
+2026-11-18T09:26:42.7484982Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-18T09:26:42.7485293Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-18T09:26:42.7485583Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-18T09:26:42.7485844Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-18T09:26:42.7486102Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-18T09:26:42.7486371Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-18T09:26:42.7491319Z   FIREBASE_SA: ***
+
+2026-11-18T09:26:42.7491509Z   GMAIL_USER: ***
+2026-11-18T09:26:42.7491710Z   GMAIL_APP_PW: ***
+2026-11-18T09:26:43.4830909Z χρήστες: 2
+2026-11-18T09:26:43.5319337Z Post job cleanup.
+2026-11-18T09:26:43.6090085Z (node:2257) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-18T09:26:43.6091141Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-18T09:26:43.6283772Z Post job cleanup.
+2026-11-18T09:26:43.7138167Z [command]/usr/bin/git version
+2026-11-18T09:26:43.7222926Z git version 2.56.1
+2026-11-18T09:26:43.7291124Z Temporarily overriding HOME='/home/runner/work/_temp/85bdf75e-d9b3-4bb0-ad51-0906b11c7936' before making global git config changes
+2026-11-18T09:26:43.7292063Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-18T09:26:43.7294034Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/grmarketcap/grmarketcap
+2026-11-18T09:26:43.7356139Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-18T09:26:43.7397620Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-18T09:26:43.7700760Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-18T09:26:43.7730860Z http.https://github.com/.extraheader
+2026-11-18T09:26:43.7741712Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-18T09:26:43.7788309Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-18T09:26:43.8034560Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-18T09:26:43.8069270Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-18T09:26:43.8418325Z Cleaning up orphan processes
+== notify/system.txt
+2026-11-18T09:26:33.3350000Z Requested labels: ubuntu-latest
+2026-11-18T09:26:33.3350000Z Job defined at: Paschalakis/grmarketcap/.github/workflows/notify.yml@refs/heads/main
+2026-11-18T09:26:33.3350000Z Waiting for a runner to pick up this job...
+2026-11-18T09:26:33.3320000Z Evaluating notify.if
+2026-11-18T09:26:33.3320000Z Evaluating: success()
+2026-11-18T09:26:33.3320000Z Result: true
+2026-11-18T09:26:33.3430000Z Job is waiting for a hosted runner to come online.
+2026-11-18T09:26:33.3440000Z Job is about to start running on the hosted runner: GitHub Actions 1000002129
+== notify/1_Set up job.txt
+﻿2026-11-18T09:26:35.0374124Z Current runner version: '2.338.2'
+2026-11-18T09:26:35.0395692Z Hosted Compute Agent
+2026-11-18T09:26:35.0396250Z Version: 20261103.629
+2026-11-18T09:26:35.0396864Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-18T09:26:35.0397714Z Build Date: 2026-11-03T17:26:59Z
+2026-11-18T09:26:35.0398466Z Worker ID: ***64955e3d-fac9-42c7-8d71-4cd4e5007547***
+2026-11-18T09:26:35.0399124Z Region: centralus
+2026-11-18T09:26:35.0399621Z Cloud: Azure
+2026-11-18T09:26:35.0401811Z Ubuntu
+2026-11-18T09:26:35.0402316Z 26.04.1
+2026-11-18T09:26:35.0402789Z LTS
+2026-11-18T09:26:35.0404299Z Image: ubuntu-26.04
+2026-11-18T09:26:35.0404907Z Version: 20261111.196.1
+2026-11-18T09:26:35.0405990Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261111.196/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-18T09:26:35.0407224Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261111.196
+2026-11-18T09:26:35.0411251Z Contents: read
+2026-11-18T09:26:35.0411802Z Metadata: read
+2026-11-18T09:26:35.0413862Z Secret source: Actions
+2026-11-18T09:26:35.0414692Z Cache mode: write
+2026-11-18T09:26:35.0415378Z Prepare workflow directory
+2026-11-18T09:26:35.0642146Z Prepare all required actions
+2026-11-18T09:26:35.0675584Z Getting action download info
+2026-11-18T09:26:35.2759684Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-18T09:26:35.4067077Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-11-18T09:26:35.6201199Z Complete job name: notify
+== notify/2_Run actions_checkout@v4.txt
+2026-11-18T09:26:36.2379743Z [command]/usr/bin/git version
+2026-11-18T09:26:36.2390785Z git version 2.56.1
+2026-11-18T09:26:36.2416347Z Temporarily overriding HOME='/home/runner/work/_temp/61e5068a-2550-4b6c-9b8e-473e9ad0a4b4' before making global git config changes
+2026-11-18T09:26:36.2418215Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-18T09:26:36.2420209Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/grmarketcap/grmarketcap
+2026-11-18T09:26:36.2485171Z Deleting the contents of '/home/runner/work/grmarketcap/grmarketcap'
+2026-11-18T09:26:36.2491605Z [command]/usr/bin/git init /home/runner/work/grmarketcap/grmarketcap
+2026-11-18T09:26:36.2597052Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-18T09:26:36.2598184Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-18T09:26:36.2599463Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-18T09:26:36.2600093Z hint: call:
+2026-11-18T09:26:36.2600462Z hint:
+2026-11-18T09:26:36.2600929Z hint: 	git config --global init.defaultBranch <name>
+2026-11-18T09:26:36.2601414Z hint:
+2026-11-18T09:26:36.2602000Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-18T09:26:36.2602683Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-18T09:26:36.2603239Z hint:
+2026-11-18T09:26:36.2603604Z hint: 	git branch -m <name>
+2026-11-18T09:26:36.2604007Z hint:
+2026-11-18T09:26:36.2604629Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-18T09:26:36.2607773Z Initialized empty Git repository in /home/runner/work/grmarketcap/grmarketcap/.git/
+2026-11-18T09:26:36.2617370Z [command]/usr/bin/git remote add origin https://github.com/Paschalakis/grmarketcap
+2026-11-18T09:26:36.2680865Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-18T09:26:36.2742882Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-18T09:26:36.2780456Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-18T09:26:36.3189982Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-18T09:26:36.3218832Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-18T09:26:36.3442140Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-18T09:26:36.3478712Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-18T09:26:36.3704653Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-18T09:26:36.3745962Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +bc55484bf9420a36eb438d691188af748c9602d1:refs/remotes/origin/main
+2026-11-18T09:26:37.3526008Z From https://github.com/Paschalakis/grmarketcap
+2026-11-18T09:26:37.3528593Z  * [new ref]         bc55484bf9420a36eb438d691188af748c9602d1 -> origin/main
+2026-11-18T09:26:37.3537866Z [command]/usr/bin/git sparse-checkout disable
+2026-11-18T09:26:37.3582886Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-18T09:26:37.3611968Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-11-18T09:26:37.3933832Z Switched to a new branch 'main'
+2026-11-18T09:26:37.3942211Z branch 'main' set up to track 'origin/main'.
+2026-11-18T09:26:37.3988848Z [command]/usr/bin/git log -1 --format=%H
+2026-11-18T09:26:37.4009382Z bc55484bf9420a36eb438d691188af748c9602d1
+== notify/3_Run actions_setup-python@v5.txt
+2026-11-18T09:26:37.4303033Z with:
+2026-11-18T09:26:37.4303798Z   python-version: 3.12
+2026-11-18T09:26:37.4305611Z   cache-dependency-path: scripts/requirements-notify.txt
+2026-11-18T09:26:37.4306786Z   check-latest: false
+2026-11-18T09:26:37.4312689Z   token: ***
+2026-11-18T09:26:37.4313694Z   update-environment: true
+2026-11-18T09:26:37.4314608Z   allow-prereleases: false
+2026-11-18T09:26:37.4315497Z   freethreaded: false
+2026-11-18T09:26:37.5348318Z (node:2187) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-18T09:26:37.5351356Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-18T09:26:37.5353263Z Successfully set up CPython (3.12.16)
+2026-11-18T09:26:37.9938024Z (node:2187) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-18T09:26:38.6293857Z Received 19926651 of 19926651 (100.0%), 37.1 MBs/sec
+2026-11-18T09:26:38.6294353Z Cache Size: ~19 MB (19926651 B)
+2026-11-18T09:26:38.6309813Z [command]/usr/bin/tar -xf /home/runner/work/_temp/e4cdf8ed-589e-485d-a8c4-5cc78c4ba486/cache.tzst -P -C /home/runner/work/grmarketcap/grmarketcap --use-compress-program unzstd
+2026-11-18T09:26:38.6712827Z Cache restored successfully
+== notify/4_Run pip install -q -r scripts_requirements-notify.txt.txt
+2026-11-18T09:26:38.6946278Z shell: /usr/bin/bash -e ***0***
+2026-11-18T09:26:38.6946498Z env:
+2026-11-18T09:26:38.6946740Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-18T09:26:38.6947047Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-18T09:26:38.6947346Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-18T09:26:38.6947780Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-18T09:26:38.6948051Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-18T09:26:38.6948329Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+== notify/5_Ειδοποιήσεις.txt
+2026-11-18T09:26:42.7441971Z [36;1mMODE="alerts"[0m
+2026-11-18T09:26:42.7442175Z [36;1mif [ "" = "45 15 * * 5" ]; then MODE=weekly; fi[0m
+2026-11-18T09:26:42.7442468Z [36;1mpython scripts/notify.py "$***MODE:-alerts***"[0m
+2026-11-18T09:26:42.7484581Z shell: /usr/bin/bash -e ***0***
+2026-11-18T09:26:42.7484774Z env:
+2026-11-18T09:26:42.7484979Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-18T09:26:42.7485291Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+2026-11-18T09:26:42.7485581Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-18T09:26:42.7485842Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-18T09:26:42.7486101Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+2026-11-18T09:26:42.7486370Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+2026-11-18T09:26:42.7491316Z   FIREBASE_SA: ***
+
+2026-11-18T09:26:42.7491507Z   GMAIL_USER: ***
+2026-11-18T09:26:42.7491688Z   GMAIL_APP_PW: ***
+2026-11-18T09:26:43.4830856Z χρήστες: 2
+== notify/9_Post Run actions_setup-python@v5.txt
+﻿2026-11-18T09:26:43.5319325Z Post job cleanup.
+2026-11-18T09:26:43.6090083Z (node:2257) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-18T09:26:43.6091138Z (Use `node --trace-deprecation ...` to show where the warning was created)
+== notify/10_Post Run actions_checkout@v4.txt
+﻿2026-11-18T09:26:43.6283763Z Post job cleanup.
+2026-11-18T09:26:43.7138119Z [command]/usr/bin/git version
+2026-11-18T09:26:43.7222905Z git version 2.56.1
+2026-11-18T09:26:43.7291107Z Temporarily overriding HOME='/home/runner/work/_temp/85bdf75e-d9b3-4bb0-ad51-0906b11c7936' before making global git config changes
+2026-11-18T09:26:43.7292060Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-18T09:26:43.7294031Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/grmarketcap/grmarketcap
+2026-11-18T09:26:43.7356106Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-18T09:26:43.7397360Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-18T09:26:43.7700708Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-18T09:26:43.7730714Z http.https://github.com/.extraheader
+2026-11-18T09:26:43.7741695Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-18T09:26:43.7788286Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-18T09:26:43.8034508Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-18T09:26:43.8069251Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+== notify/11_Complete job.txt
+﻿2026-11-18T09:26:43.8418309Z Cleaning up orphan processes
