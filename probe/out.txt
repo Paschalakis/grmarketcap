@@ -1,7 +1,1 @@
-tools view True True True 410340
-sw push True
-screener 2026-11-18T08:40Z 138 501 logo
-http->https http://axiogram.eu/
-update-prices.yml workflow_dispatch in_progress None 2026-11-18T08:52:21Z
-update-prices.yml schedule completed success 2026-11-18T07:12:48Z
-update-prices.yml schedule completed success 2026-11-17T15:55:31Z
+dispatch 204
