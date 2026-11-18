@@ -1,7 +1,17 @@
-import urllib.request, time
-time.sleep(90)
-for p in ["__/auth/handler?apiKey=x","__/auth/handler.js","__/auth/iframe","__/auth/experiments.js","sw.js"]:
-    try:
-        r=urllib.request.urlopen("https://axiogram.eu/"+p, timeout=30); d=r.read()
-        print(p, r.status, len(d), r.headers.get("content-type"), r.geturl(), d[:60] if p=="sw.js" else "")
-    except Exception as e: print(p, "ERR", e)
+import urllib.request, json, time
+time.sleep(240)
+K="AIzaSyDd3-HyjHU6Cji1DwPtZ6epuJxFUT6luws"
+req=urllib.request.Request("https://identitytoolkit.googleapis.com/v1/accounts:createAuthUri?key="+K,
+  data=json.dumps({"providerId":"google.com","continueUri":"https://axiogram.eu/__/auth/handler","authFlowType":"CODE_FLOW"}).encode(),
+  headers={"Content-Type":"application/json","Referer":"https://axiogram.eu/"})
+try:
+  j=json.load(urllib.request.urlopen(req,timeout=30)); u=j.get("authUri",""); print("authUri ok", "axiogram.eu" in u)
+  r=urllib.request.Request(u, headers={"User-Agent":"Mozilla/5.0 (Windows NT 10.0) Chrome/120"})
+  try:
+    resp=urllib.request.urlopen(r,timeout=30); d=resp.read().decode("utf8","ignore")
+    print("google", resp.status, resp.geturl()[:80]); print("MISMATCH" if "redirect_uri_mismatch" in d else "no mismatch text")
+  except urllib.error.HTTPError as e:
+    d=e.read().decode("utf8","ignore"); print("google HTTP", e.code, "MISMATCH" if "redirect_uri_mismatch" in d else "other")
+except Exception as e: print("ERR", e)
+for u in ["http://axiogram.eu/"]:
+  print(u, "->", urllib.request.urlopen(u,timeout=30).geturl())
