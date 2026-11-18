@@ -1,6 +1,6 @@
 name: probe
 on: { push: { branches: [probe], paths: [probe/probe.py, probe/tv.js] } }
-permissions: { contents: write, actions: read }
+permissions: { contents: write, actions: write }
 jobs:
   p:
     runs-on: ubuntu-latest
