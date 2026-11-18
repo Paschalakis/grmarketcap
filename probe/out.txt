@@ -1,5 +1,10 @@
-C drawer BTC · Bitcoin | paths 2 | ro ▼ −10.60% in this period | msg 
-US drawer AAPL · Apple Inc. | frames 1 | box {"x":747,"y":219.5,"width":599,"height":460}
-frame text: 1m 30m 1h D Indicators A Apple Inc 1D Cboe One O 357.96 H 360.83 L 355.75 C 356.27 +1.39 (+0.39%) Vol 40.02 M 1D 5D 1M 3M 6M YTD 1Y 5Y All 13:40:55 UTC+2 ADJ
-cg 200 v3/coins/markets?vs_currency=eur&order=market_cap_desc&per_page=100&page=1&spark
-cg 200 v3/coins/bitcoin/market_chart?vs_currency=eur&days=7
+vaults 200 []
+SPOT 200 {"balances": []}
+ORDERS 200 0 []
+FUNDING 200 0 []
+PORTFOLIO 200 ['day', 'week', 'month', 'allTime', 'perpDay', 'perpWeek', 'perpMonth', 'perpAllTime']
+day {'accountValueHistory': [[1794895995341, '152271840.8121989965'], [1794898978289, '152272633.8112410009'], [1794900315731, '152258736.7041690052']], 'pnlHistory': [[1794895995341, '0.0'], [1794898978289, '713.239042'], [1794900315731, '816.13197']], 'vlm': '0.0'} n= 62
+allTime {'accountValueHistory': [[1683758700034, '0.0'], [1683762300034, '82331.181599'], [1684367100059, '120596.774808']], 'pnlHistory': [[1683758700034, '0.0'], [1683762300034, '3747.061368'], [1684367100059, '11461.650587']], 'vlm': '0.0'} n= 103
+perpAllTime {'accountValueHistory': [[1714607953536, '0.0'], [1715212533532, '33814370.0411399975'], [1715817285092, '41422257.4003140032']], 'pnlHistory': [[1714607953536, '0.0'], [1715212533532, '46963553.4511509985'], [1715817285092, '47853003.5091359988']], 'vlm': '0.0'} n= 82
+CH pos sample []
+SPOTMETA 200 [{"name": "USDC", "szDecimals": 8, "weiDecimals": 8, "index": 0, "tokenId": "0x6d1e7cde53ba9467b783cb7c530ce054", "isCanonical": true, "evmContract": {"address": "0x6b9e773128f453f5c2c60935ee2de2cbc5390a24", "evm_extra_wei_decimals": -2}, "fullName": null, "deployerTradingFeeShare": "0.0"}, {"name": "PURR", "szDecimals": 0, "weiDecimals": 5, "index": 1, "tokenId": "0xc1fb593aeffbeb02f85e0308e9956a [{"tokens": [1, 0], "name": "PURR/USDC", "index": 0, "isCanonical": true}, {"tokens": [2, 0], "name": "@1", "index": 1, "isCanonical": false}, {"tokens": [3, 0], "name": "@2", "index": 2, "isCanonical": false}] [{"prevDayPx": "0.094856", "dayNtlVlm": "941372.3359160002", "markPx": "0.089691", "midPx": "0.0896735", "circulatingSupply": "594624712.5276099443", "coin": "PURR/USDC", "totalSupply": "594624723.8341300488", "dayBaseVlm": "10392823.0"}, {"prevDayPx": "9.8518", "dayNtlVlm": "16390.957739", "markPx": "9.8044", "midPx": "9.7934", "circulatingSupply": "995697.76347232", "coin": "@1", "totalSupply": 
