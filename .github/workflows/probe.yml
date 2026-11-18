@@ -10,4 +10,4 @@ jobs:
         with: { node-version: 20 }
       - run: npm i playwright@1.47.0 && npx playwright install --with-deps chromium
       - run: python3 probe/probe.py > probe/out.txt 2>&1 || true
-      - run: git config user.name bot && git config user.email b@x && git add probe && git commit -qm out && git push -q
+      - run: git config user.name Claude && git config user.email noreply@anthropic.com && git add probe && git commit -qm out && git push -q
