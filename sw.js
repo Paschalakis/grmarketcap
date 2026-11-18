@@ -1,7 +1,7 @@
 /* Axiogram: εφαρμογή (service worker).
    Πάντα δοκιμάζει πρώτα το δίκτυο, ώστε οι τιμές να είναι οι τελευταίες.
    Αν δεν υπάρχει internet, δείχνει ό,τι αποθηκεύτηκε την τελευταία φορά. */
-var CACHE = "agora-v22";
+var CACHE = "agora-v23";
 var SHELL = ["./", "index.html", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png"];
 
 self.addEventListener("install", function (e) {
@@ -34,4 +34,31 @@ self.addEventListener("fetch", function (e) {
       });
     })
   );
+});
+
+/* ειδοποιήσεις τιμών (Firebase Cloud Messaging, μηνύματα μόνο με δεδομένα) */
+self.addEventListener("push", function (e) {
+  var j = {};
+  try { j = e.data ? e.data.json() : {}; } catch (x) { j = { data: { title: "Axiogram", body: e.data ? e.data.text() : "" } }; }
+  var d = j.data || {}, n = j.notification || {};
+  var title = d.title || n.title || "Axiogram";
+  e.waitUntil(self.registration.showNotification(title, {
+    body: d.body || n.body || "",
+    icon: "icons/icon-192.png",
+    badge: "icons/favicon-32.png",
+    tag: d.tag || undefined,
+    renotify: !!d.tag,
+    data: { url: d.url || "./" }
+  }));
+});
+self.addEventListener("notificationclick", function (e) {
+  e.notification.close();
+  var url = new URL((e.notification.data && e.notification.data.url) || "./", self.location.href).href;
+  e.waitUntil(self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(function (list) {
+    for (var i = 0; i < list.length; i++) {
+      var c = list[i];
+      if (c.url.indexOf(self.location.origin) === 0 && "focus" in c) { if ("navigate" in c) c.navigate(url).catch(function () {}); return c.focus(); }
+    }
+    return self.clients.openWindow(url);
+  }));
 });

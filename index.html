@@ -703,6 +703,110 @@ th[aria-sort] button { color: var(--accent); }
 .bigp .p { font-weight: 300; font-size: 42px; letter-spacing: -.02em; }
 .kv div { border-top-color: var(--dk-line); }
 .heat { padding: 0; }
+/* ===== Εργαλεία ===== */
+#view-tools { display: flex; flex-direction: column; gap: 14px; }
+#view-tools[hidden] { display: none; }
+.tltabs { align-self: flex-start; }
+.tltabs button[aria-selected="true"] { background: var(--surface); color: var(--fg); box-shadow: 0 1px 3px rgba(0, 0, 0, .25); }
+.tlpane { display: flex; flex-direction: column; gap: 12px; }
+.tlpane[hidden] { display: none; }
+.scrtop, .calbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+.scrpre { display: flex; flex-wrap: wrap; gap: 6px; }
+.scrpre .tab { font-size: 13px; }
+.scrf { padding: 0; }
+.scrf summary { list-style: none; cursor: pointer; padding: 12px 16px; display: flex; gap: 10px; align-items: center; font-weight: 700; }
+.scrf summary::-webkit-details-marker { display: none; }
+.scrf summary::before { content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(-45deg); transition: transform .15s; }
+.scrf[open] summary::before { transform: rotate(45deg); }
+.scrgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px 16px; padding: 4px 16px 14px; border-top: 1px solid var(--line); padding-top: 14px; }
+.scrgrid label, .scrrng { display: flex; flex-direction: column; gap: 5px; font-size: 13px; color: var(--muted); }
+.scrgrid select { width: 100%; }
+.scrrng > div { display: flex; align-items: center; gap: 6px; }
+.scrrng input { width: 100%; min-width: 0; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; color: var(--fg); font: inherit; font-size: 14px; }
+.scrrng input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+.scrfoot { display: flex; justify-content: flex-end; padding: 0 16px 14px; }
+.scrcount { font-size: 14px; }
+.scrtab th button { white-space: nowrap; }
+.scrtab td .who span { max-width: 210px; }
+@media (max-width: 640px) { .scrtab td .who span { max-width: 110px; } .scrgrid { grid-template-columns: 1fr 1fr; padding: 12px; gap: 10px; } }
+.calday { padding: 0; overflow: hidden; }
+.calday h3 { margin: 0; padding: 12px 16px; font-size: 15px; border-bottom: 1px solid var(--line); background: var(--dk-head); }
+.calrow { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 16px; border: 0; border-bottom: 1px solid var(--dk-line); background: none; color: var(--fg); font: inherit; text-align: left; cursor: pointer; }
+.calrow:last-child { border-bottom: 0; }
+.calrow:hover { background: var(--accent-soft); }
+.calrow .cn, .svrow .cn { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.calrow .cn span, .svrow .cn span { color: var(--muted); font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.calrow .own { color: #f5a524; font-size: 12px; }
+.calrow .ct { font-size: 12.5px; padding: 4px 9px; border-radius: 999px; white-space: nowrap; background: var(--accent-soft); color: var(--fg); }
+.calrow .ct.div, .calrow .ct.pay { background: var(--up-soft); }
+.calrow .ct.earn { background: rgba(139, 123, 255, .16); }
+.calday .more { margin: 8px auto 12px; display: block; }
+@media (max-width: 640px) { .calrow { flex-wrap: wrap; } .calrow .ct { margin-left: 42px; } }
+.alstate { padding: 14px 16px; line-height: 1.6; }
+.alstate .btn { margin-top: 10px; display: flex; }
+.linkbtn { border: 0; background: none; padding: 0; color: var(--accent); font: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.alform { padding: 14px 16px; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr) minmax(0, 1fr); gap: 12px; align-items: end; }
+.alform h3 { grid-column: 1 / -1; margin: 0; font-size: 15px; }
+.alform label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--muted); position: relative; }
+.alform input, .alform select { width: 100%; }
+.alform #alV { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px; color: var(--fg); font: inherit; }
+.alact { grid-column: 1 / -1; display: flex; gap: 10px; align-items: center; justify-content: flex-end; }
+.alact .err { color: var(--down); font-size: 13px; margin-right: auto; }
+.alpick { display: flex; align-items: center; gap: 10px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px 6px 10px; color: var(--fg); min-height: 40px; }
+.alpick span { color: var(--muted); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.alpick .close { width: 28px; height: 28px; font-size: 18px; flex: none; }
+@media (max-width: 640px) { .alform { grid-template-columns: 1fr 1fr; } .alform .alsym { grid-column: 1 / -1; } }
+.alh { margin: 6px 0 0; font-size: 15px; }
+.allist { padding: 0; }
+.alrow { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--dk-line); }
+.alrow:last-child { border-bottom: 0; }
+.alrow.off { opacity: .6; }
+.alrow .aln { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.alrow .aln span { font-size: 13px; }
+.alrow .aln .note { font-size: 12px; }
+.altag { font-size: 12px; color: var(--muted); white-space: nowrap; }
+@media (max-width: 640px) { .altag { display: none; } }
+.sw { position: relative; display: inline-flex; flex: none; width: 40px; height: 22px; cursor: pointer; }
+.sw input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.sw i { width: 40px; height: 22px; border-radius: 999px; background: var(--line); transition: background .15s; position: relative; }
+.sw i::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: transform .15s; }
+.sw input:checked + i { background: var(--accent); }
+.sw input:checked + i::after { transform: translateX(18px); }
+.sw input:focus-visible + i { outline: 2px solid var(--accent); outline-offset: 2px; }
+.alweek { padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start; }
+.alweek > div { display: flex; flex-direction: column; gap: 4px; }
+.alweek .note { line-height: 1.5; }
+/* τεχνικοί δείκτες */
+.indbar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.indbar .note { font-size: 12px; margin-right: 2px; }
+.indb { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: none; color: var(--muted); border-radius: 999px; padding: 4px 10px; font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; }
+.indb i { width: 10px; height: 3px; border-radius: 2px; background: var(--ic); }
+.indb[aria-pressed="true"] { color: var(--fg); border-color: var(--ic); background: color-mix(in srgb, var(--ic) 14%, transparent); }
+.indb:disabled { opacity: .45; cursor: default; }
+.rsibox { position: relative; margin-top: -4px; }
+.rsibox svg { display: block; width: 100%; height: auto; }
+.rsibox text { font-size: 11px; fill: var(--muted); }
+.rsil { position: absolute; left: 10px; top: 4px; font-size: 12px; color: var(--muted); }
+#xrsi .rsibox { margin-top: 6px; }
+/* κοινοποίηση */
+.shopt { display: flex; gap: 10px; align-items: flex-start; line-height: 1.45; cursor: pointer; }
+.shopt input { margin-top: 3px; }
+.svbox { width: min(640px, calc(100vw - 24px)); max-height: calc(100vh - 40px); overflow-y: auto; }
+.svhead h2 { margin: 0 0 4px; font-size: 22px; }
+.svkpi { display: flex; gap: 12px; flex-wrap: wrap; }
+.svkpi > div { flex: 1; min-width: 140px; display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border-radius: 12px; background: linear-gradient(180deg, var(--dk-a), var(--dk-b)); border: 1px solid var(--dk-line); }
+.svkpi b { font-size: 24px; font-weight: 800; }
+.svbar { display: flex; height: 12px; border-radius: 999px; overflow: hidden; gap: 2px; }
+.svbar i { display: block; height: 100%; min-width: 2px; }
+.svlist { display: flex; flex-direction: column; }
+.svrow { display: flex; align-items: center; gap: 10px; padding: 9px 2px; border-bottom: 1px solid var(--dk-line); }
+.svrow:last-child { border-bottom: 0; }
+.svrow .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.svrow .w { font-weight: 700; min-width: 56px; text-align: right; }
+.svrow .chg { min-width: 70px; text-align: right; justify-content: flex-end; }
+.svrow .pf { min-width: 64px; text-align: right; font-weight: 600; }
+@media (max-width: 640px) { .svrow .chg:not(.pf) { display: none; } }
+.svcta { display: flex; justify-content: center; }
 </style>
 
 <div class="demo demo-band"><p id="banner"><strong>Στιγμιότυπο.</strong> Οι τιμές προέρχονται από το capital.gr (καθυστέρηση 15 λεπτών) και η κεφαλαιοποίηση με τα ονόματα από το euro2day.gr (23/10/2026, 12:58). Τα στοιχεία δεν ενημερώνονται αυτόματα και δεν αποτελούν επενδυτική πληροφόρηση.</p></div>
@@ -731,6 +835,7 @@ th[aria-sort] button { color: var(--accent); }
     <button type="button" class="viewbtn" role="tab" id="tab-heat" data-view="heat" aria-selected="false" aria-controls="view-heat"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="10" height="11" rx="1.5"/><rect x="15" y="3" width="6" height="6" rx="1.5"/><rect x="15" y="11" width="6" height="10" rx="1.5"/><rect x="3" y="16" width="10" height="5" rx="1.5"/></svg></span><span class="vl">Χάρτης</span></button>
     <button type="button" class="viewbtn" role="tab" id="tab-favs" data-view="favs" aria-selected="false" aria-controls="view-favs"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg><span class="cnt" id="favcnt" hidden></span></span><span class="vl">Αγαπημένα</span></button>
     <button type="button" class="viewbtn" role="tab" id="tab-portfolio" data-view="portfolio" aria-selected="false" aria-controls="view-portfolio"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></span><span class="vl">Χαρτοφυλάκιο</span></button>
+    <button type="button" class="viewbtn" role="tab" id="tab-tools" data-view="tools" aria-selected="false" aria-controls="view-tools"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10"/><path d="M18 6h2"/><circle cx="16" cy="6" r="2"/><path d="M4 12h4"/><path d="M12 12h8"/><circle cx="10" cy="12" r="2"/><path d="M4 18h12"/><path d="M20 18h0"/><circle cx="18" cy="18" r="2"/></svg><span class="cnt" id="alcnt" hidden></span></span><span class="vl">Εργαλεία</span></button>
   </nav>
 
   <div class="view" id="view-market" role="tabpanel" aria-labelledby="tab-market" data-mkt="gr">
@@ -838,6 +943,7 @@ th[aria-sort] button { color: var(--accent); }
       <div class="pftools">
         <button type="button" class="btn dkicon" id="pf-hide" aria-pressed="false" title="Απόκρυψη ποσών" aria-label="Απόκρυψη ποσών"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
         <button type="button" class="btn dkicon" id="pf-csv" title="Εξαγωγή σε CSV (Excel)" aria-label="Εξαγωγή σε CSV (Excel)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 19h16"/></svg></button>
+        <button type="button" class="btn dkicon" id="pf-share" title="Κοινοποίηση χαρτοφυλακίου" aria-label="Κοινοποίηση χαρτοφυλακίου"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button>
         <button type="button" class="btn" id="pf-hl" title="Παρακολούθηση θέσεων Perpetuals από το Hyperliquid">+ Perps</button>
         <button type="button" class="btn primary" id="pf-add">+ Προσθήκη συναλλαγής</button>
       </div>
@@ -889,7 +995,28 @@ th[aria-sort] button { color: var(--accent); }
     <div id="pf-body"></div>
   </div>
 </div>
+<div class="view" id="view-tools" role="tabpanel" aria-labelledby="tab-tools" hidden>
+    <div class="phead"><div><h2>Εργαλεία</h2><div class="storage">Βρες μετοχές με κριτήρια, δες τι έρχεται και όρισε ειδοποιήσεις τιμών.</div></div></div>
+    <div class="seg2 tltabs" id="tlTabs" role="tablist" aria-label="Εργαλεία"><button type="button" role="tab" data-tl="scr" aria-selected="true">Φίλτρο μετοχών</button><button type="button" role="tab" data-tl="cal" aria-selected="false">Ημερολόγιο</button><button type="button" role="tab" data-tl="al" aria-selected="false">Ειδοποιήσεις</button></div>
+    <div id="tl-scr" class="tlpane"></div>
+    <div id="tl-cal" class="tlpane" hidden></div>
+    <div id="tl-al" class="tlpane" hidden></div>
+  </div>
 <div class="toast" id="toast" role="status" hidden></div>
+<div class="scrim" id="shScrim" hidden></div>
+<div class="panel authbox" id="shBox" role="dialog" aria-modal="true" aria-labelledby="shTitle" hidden>
+  <div class="ahead"><h2 id="shTitle">Κοινοποίηση χαρτοφυλακίου</h2><button type="button" class="close" id="shClose" aria-label="Κλείσιμο">×</button></div>
+  <p class="note" style="margin:0">Όποιος ανοίξει τον σύνδεσμο βλέπει τις θέσεις σου με ποσοστά: πόσο ζυγίζει η καθεμία και πώς πάει σήμερα. Δεν βλέπει ποσά, τεμάχια ή συναλλαγές.</p>
+  <label class="shopt"><input type="checkbox" id="shPerf" checked> <span>Να φαίνεται και η απόδοση από την αγορά <span class="note">(ο σύνδεσμος περιέχει τότε και τη μέση τιμή αγοράς κάθε θέσης)</span></span></label>
+  <input id="shUrl" class="search" readonly aria-label="Σύνδεσμος" style="width:100%" onfocus="this.select()">
+  <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn primary" id="shCopy">Αντιγραφή συνδέσμου</button><button type="button" class="btn" id="shNative" hidden>Κοινοποίηση…</button></div>
+  <p class="note" style="margin:0">Ο σύνδεσμος είναι στιγμιότυπο του σημερινού χαρτοφυλακίου με ζωντανές τιμές. Αν αλλάξεις θέσεις, φτιάξε νέο σύνδεσμο.</p>
+</div>
+<div class="scrim" id="svScrim" hidden></div>
+<div class="panel authbox dkmodal svbox" id="svBox" role="dialog" aria-modal="true" aria-labelledby="svTitle" hidden>
+  <div class="ahead"><span class="note">Κοινοποιημένο χαρτοφυλάκιο · Axiogram</span><button type="button" class="close" id="svClose" aria-label="Κλείσιμο">×</button></div>
+  <div id="svBody"></div>
+</div>
 <div class="scrim" id="authScrim" hidden></div>
 <div class="panel authbox" id="authBox" role="dialog" aria-modal="true" aria-labelledby="authTitle" hidden></div>
 <div class="scrim" id="cmpScrim" hidden></div>
@@ -1698,9 +1825,77 @@ var EN_EXACT = {
   "1Μ": "1M",
   "Όλο": "All",
   "Δεν υπάρχουν ακόμα αρκετά στοιχεία για αυτό το διάστημα. Το ιστορικό συλλέγεται καθημερινά.": "Not enough data for this range yet. History is collected daily.",
-  "Η εφαρμογή εγκαταστάθηκε": "The app was installed"
+  "Η εφαρμογή εγκαταστάθηκε": "The app was installed",
+  "Εργαλεία": "Tools",
+  "Φίλτρο μετοχών": "Stock screener",
+  "Ημερολόγιο": "Calendar",
+  "Ειδοποιήσεις": "Alerts",
+  "Βρες μετοχές με κριτήρια, δες τι έρχεται και όρισε ειδοποιήσεις τιμών.": "Screen stocks, see what's coming up and set price alerts.",
+  "ΗΠΑ · 500": "US · 500",
+  "Υψηλό μέρισμα": "High dividend",
+  "Χαμηλό P/E": "Low P/E",
+  "Ποιότητα": "Quality",
+  "Ανάπτυξη": "Growth",
+  "Ισχυρή άνοδος": "Strong momentum",
+  "Υπερπουλημένες": "Oversold",
+  "Κριτήρια": "Criteria",
+  "ενεργά φίλτρα": "filters on",
+  "όλες οι μετοχές": "all stocks",
+  "Όλες": "All",
+  "πάνω από 100 εκ.": "over 100M",
+  "πάνω από 1 δισ.": "over 1B",
+  "πάνω από 10 δισ.": "over 10B",
+  "πάνω από 100 δισ.": "over 100B",
+  "Μερισματική απόδοση %": "Dividend yield %",
+  "Απόδοση 1 έτους %": "1-year return %",
+  "Αύξηση πωλήσεων %": "Revenue growth %",
+  "Χρέος / Ίδια κεφάλαια": "Debt / Equity",
+  "Καθαρισμός": "Clear",
+  "Μέρ. %": "Div. %",
+  "1 έτος": "1 year",
+  "μετοχές": "stocks",
+  "μετοχή": "stock",
+  " · πάτα μια στήλη για ταξινόμηση": " · tap a column to sort",
+  "Καμία μετοχή δεν ταιριάζει. Χαλάρωσε κάποιο κριτήριο.": "No stocks match. Relax a criterion.",
+  "Οι μετοχές μου": "My stocks",
+  "Αποτελέσματα": "Earnings",
+  "Αποκοπή μερίσματος": "Ex-dividend",
+  "Πληρωμή μερίσματος": "Dividend payment",
+  "Τίποτα τους επόμενους 4 μήνες": "Nothing in the next 4 months",
+  "Νέα ειδοποίηση": "New alert",
+  "Μετοχή ή crypto": "Stock or crypto",
+  "Όταν": "When",
+  "Οι ειδοποιήσεις μου": "My alerts",
+  "Η τιμή ανέβει πάνω από": "Price rises above",
+  "Η τιμή πέσει κάτω από": "Price falls below",
+  "Η ημερήσια μεταβολή ξεπεράσει ±": "Daily move exceeds ±",
+  "Δεν έχεις ειδοποιήσεις": "You have no alerts",
+  "Εβδομαδιαία σύνοψη στο email": "Weekly summary by email",
+  "Ενεργοποίηση ειδοποιήσεων": "Enable notifications",
+  "Στείλε μου μια δοκιμαστική": "Send me a test",
+  "Στείλε μου μία τώρα": "Send me one now",
+  "συνδέσου": "sign in",
+  "Η ειδοποίηση προστέθηκε": "Alert added",
+  "Δείκτες": "Indicators",
+  "ΚΜΟ 50": "MA 50",
+  "ΚΜΟ 200": "MA 200",
+  "🔔 Ειδοποίηση": "🔔 Alert",
+  "Κοινοποίηση χαρτοφυλακίου": "Share portfolio",
+  "Αντιγραφή συνδέσμου": "Copy link",
+  "Κοινοποίηση…": "Share…",
+  "Ο σύνδεσμος αντιγράφηκε": "Link copied",
+  "Απόδοση από την αγορά": "Return since purchase",
+  "Φτιάξε το δικό σου χαρτοφυλάκιο": "Build your own portfolio",
+  "Κοινοποιημένο χαρτοφυλάκιο · Axiogram": "Shared portfolio · Axiogram",
+  "Φόρτωση στοιχείων…": "Loading data…",
+  "Φόρτωση ημερολογίου…": "Loading calendar…"
 };
 var EN_RX = [
+  [/^σε (\d+) ημέρες$/, "in $1 days"],
+  [/^\+ (\d+) ακόμα$/, "+ $1 more"],
+  [/^Πάνω από (.+)$/, "Above $1"],
+  [/^Κάτω από (.+)$/, "Below $1"],
+  [/^Ημέρα ±(.+)$/, "Day ±$1"],
   [/^Ενημέρωση: (.+)$/, "Updated: $1"],
   [/^Ανοιχτές εντολές \((\d+)\)$/, "Open orders ($1)"],
   [/^\((.+) σε εντολές\)$/, "($1 in orders)"],
@@ -2281,16 +2476,76 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   function fmtY(v) { return chartMetric === "mcap" ? money(v) : fmtC(v); }
   function fmtAxis(v) { return chartMetric === "mcap" ? (v * RATE >= 1e9 ? nf2.format(v * RATE / 1e9) + " δισ." : nf2.format(v * RATE / 1e6) + " εκ.") : (Math.abs(v * RATE) >= 1 ? nf2 : nf).format(v * RATE); }
   var CH = { W: 560, H: 280, L: 6, R: 70, T: 12, B: 26 };
-  function chartSvg(pts) {
+  /* τεχνικοί δείκτες: κινητοί μέσοι όροι, ζώνες Bollinger, RSI */
+  var IND = (function () { try { return JSON.parse(localStorage.getItem("agora-ind") || "{}") || {}; } catch (e) { return {}; } })();
+  var IND_L = [["ma50", "ΚΜΟ 50", "#f5a524", "Κινητός μέσος όρος 50 ημερών"], ["ma200", "ΚΜΟ 200", "#8b7bff", "Κινητός μέσος όρος 200 ημερών"], ["bb", "Bollinger", "#7f8ea3", "Ζώνες Bollinger (20 ημέρες, ±2 τυπικές αποκλίσεις)"], ["rsi", "RSI", "#c084fc", "Δείκτης σχετικής ισχύος (14 ημέρες): πάνω από 70 υπεραγορασμένη, κάτω από 30 υπερπουλημένη"]];
+  function anyInd() { return !!(IND.ma50 || IND.ma200 || IND.bb || IND.rsi); }
+  function toggleInd(k) { IND[k] = !IND[k]; try { localStorage.setItem("agora-ind", JSON.stringify(IND)); } catch (e) {} }
+  function calcInd(v) {
+    var n = v.length, ma50 = [], ma200 = [], bu = [], bl = [], rsi = [], s50 = 0, s200 = 0, ag = 0, al = 0;
+    for (var i = 0; i < n; i++) {
+      s50 += v[i]; if (i >= 50) s50 -= v[i - 50]; ma50.push(i >= 49 ? s50 / 50 : null);
+      s200 += v[i]; if (i >= 200) s200 -= v[i - 200]; ma200.push(i >= 199 ? s200 / 200 : null);
+      if (i >= 19) {
+        var m = 0, q = 0, j;
+        for (j = i - 19; j <= i; j++) m += v[j];
+        m /= 20;
+        for (j = i - 19; j <= i; j++) q += (v[j] - m) * (v[j] - m);
+        var sd = Math.sqrt(q / 20); bu.push(m + 2 * sd); bl.push(m - 2 * sd);
+      } else { bu.push(null); bl.push(null); }
+      if (i > 0) {
+        var d = v[i] - v[i - 1], g = d > 0 ? d : 0, l = d < 0 ? -d : 0;
+        if (i <= 14) { ag += g / 14; al += l / 14; } else { ag = (ag * 13 + g) / 14; al = (al * 13 + l) / 14; }
+      }
+      rsi.push(i >= 14 ? (al === 0 ? 100 : 100 - 100 / (1 + ag / al)) : null);
+    }
+    return { ma50: ma50, ma200: ma200, bu: bu, bl: bl, rsi: rsi };
+  }
+  function indFor(s, pts) {
+    if (!anyInd() || chartRange === "today") return null;
+    var F = fullSeries(s); if (F.length < 15) return null;
+    var c = calcInd(F.map(function (p) { return p.y; })), at = {};
+    F.forEach(function (p, i) { at[p.x] = i; });
+    var sc = chartMetric === "mcap" && s.mcap && s.price ? s.mcap / s.price : 1;
+    function pick(a, scl) { return pts.map(function (p) { var i = at[p.x]; return i == null || a[i] == null ? null : a[i] * (scl ? sc : 1); }); }
+    return { ma50: IND.ma50 ? pick(c.ma50, 1) : null, ma200: IND.ma200 ? pick(c.ma200, 1) : null, bu: IND.bb ? pick(c.bu, 1) : null, bl: IND.bb ? pick(c.bl, 1) : null, rsi: IND.rsi ? pick(c.rsi) : null };
+  }
+  function indPath(a, X, Y) { var d = "", pen = false; a.forEach(function (v, i) { if (v == null) { pen = false; return; } d += (pen ? "L" : "M") + X(i).toFixed(1) + " " + Y(v).toFixed(1); pen = true; }); return d; }
+  function rsiSvg(a, W, L, R) {
+    var H = 84, T = 8, B = 8, n = a.length;
+    var Y = function (v) { return T + (1 - v / 100) * (H - T - B); }, X = function (i) { return L + (n === 1 ? 0.5 : i / (n - 1)) * (W - L - R); };
+    var last = null; for (var i = n - 1; i >= 0; i--) if (a[i] != null) { last = a[i]; break; }
+    return '<div class="rsibox"><span class="rsil">RSI 14' + (last == null ? "" : ': <b class="' + (last >= 70 ? "chg down" : last <= 30 ? "chg up" : "") + '">' + Math.round(last) + "</b>" + (last >= 70 ? " · υπεραγορασμένη" : last <= 30 ? " · υπερπουλημένη" : "")) + '</span><svg viewBox="0 0 ' + W + " " + H + '" aria-label="Γράφημα RSI">' +
+      '<rect x="' + L + '" y="' + Y(70) + '" width="' + (W - L - R) + '" height="' + (Y(30) - Y(70)) + '" fill="#c084fc" opacity=".08"/>' +
+      [30, 50, 70].map(function (v) { return '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="var(--line)" stroke-dasharray="' + (v === 50 ? "2 4" : "4 4") + '"/><text x="' + (W - R + 6) + '" y="' + (Y(v) + 4) + '">' + v + "</text>"; }).join("") +
+      '<path d="' + indPath(a, X, Y) + '" fill="none" stroke="#c084fc" stroke-width="1.6"/></svg></div>';
+  }
+  function indBar(disabled, why) {
+    return '<div class="indbar" role="group" aria-label="Τεχνικοί δείκτες"><span class="note">Δείκτες</span>' + IND_L.map(function (x) {
+      return '<button type="button" class="indb" data-ind="' + x[0] + '" aria-pressed="' + !!IND[x[0]] + '" title="' + (disabled ? why || "Διαθέσιμοι σε διάστημα μεγαλύτερο από μία ημέρα" : x[3]) + '"' + (disabled ? " disabled" : "") + ' style="--ic:' + x[2] + '"><i></i>' + x[1] + "</button>";
+    }).join("") + "</div>";
+  }
+  function chartSvg(pts, ind) {
     var W = CH.W, H = CH.H, L = CH.L, R = CH.R, T = CH.T, B = CH.B;
-    var ys = pts.map(function (p) { return p.y; });
-    var min = Math.min.apply(null, ys), max = Math.max.apply(null, ys), pd = (max - min || max * 0.01 || 1) * 0.1;
+    var ys = pts.map(function (p) { return p.y; }), all = ys.slice();
+    if (ind) ["ma50", "ma200", "bu", "bl"].forEach(function (k) { if (ind[k]) ind[k].forEach(function (v) { if (v != null) all.push(v); }); });
+    var min = Math.min.apply(null, all), max = Math.max.apply(null, all), pd = (max - min || max * 0.01 || 1) * 0.1;
     var lo = min - pd, hi = max + pd;
     function X(i) { return L + (pts.length === 1 ? 0.5 : i / (pts.length - 1)) * (W - L - R); }
     function Y(v) { return T + (1 - (v - lo) / (hi - lo)) * (H - T - B); }
     var line = pts.map(function (p, i) { return (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(p.y).toFixed(1); }).join("");
     var area = line + "L" + X(pts.length - 1).toFixed(1) + " " + (H - B) + "L" + X(0).toFixed(1) + " " + (H - B) + "Z";
-    var up = ys[ys.length - 1] >= ys[0], grid = "";
+    var up = ys[ys.length - 1] >= ys[0], grid = "", ov = "";
+    if (ind) {
+      if (ind.bu && ind.bl) {
+        var bx = function (i) { return X(i); }, top = [], bot = [];
+        ind.bu.forEach(function (v, i) { if (v != null && ind.bl[i] != null) { top.push(bx(i).toFixed(1) + " " + Y(v).toFixed(1)); bot.unshift(bx(i).toFixed(1) + " " + Y(ind.bl[i]).toFixed(1)); } });
+        if (top.length > 1) ov += '<path d="M' + top.join("L") + "L" + bot.join("L") + 'Z" fill="#7f8ea3" opacity=".12"/>';
+        ov += '<path d="' + indPath(ind.bu, X, Y) + '" fill="none" stroke="#7f8ea3" stroke-width="1" stroke-dasharray="3 3"/><path d="' + indPath(ind.bl, X, Y) + '" fill="none" stroke="#7f8ea3" stroke-width="1" stroke-dasharray="3 3"/>';
+      }
+      if (ind.ma200) ov += '<path d="' + indPath(ind.ma200, X, Y) + '" fill="none" stroke="#8b7bff" stroke-width="1.6"/>';
+      if (ind.ma50) ov += '<path d="' + indPath(ind.ma50, X, Y) + '" fill="none" stroke="#f5a524" stroke-width="1.6"/>';
+    }
     for (var g = 0; g < 5; g++) { var v = lo + (hi - lo) * (g / 4), y = Y(v).toFixed(1); grid += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y + '" y2="' + y + '" stroke="var(--line)" stroke-width="1"/><text x="' + (W - R + 6) + '" y="' + (+y + 4) + '">' + fmtAxis(v) + "</text>"; }
     var lastY = Y(ys[ys.length - 1]);
     var tag = '<rect x="' + (W - R + 2) + '" y="' + (lastY - 9).toFixed(1) + '" width="' + (R - 4) + '" height="18" rx="3" fill="currentColor"/><text x="' + (W - R + 6) + '" y="' + (lastY + 4).toFixed(1) + '" style="fill:var(--surface);font-weight:600">' + fmtAxis(ys[ys.length - 1]) + "</text>";
@@ -2299,7 +2554,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var xl = lab(0, "start") + (pts.length > 2 ? lab(Math.floor((pts.length - 1) / 2), "middle") : "") + lab(pts.length - 1, "end");
     return '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Γράφημα τιμής" style="color:' + (up ? "var(--up)" : "var(--down)") + '" data-lo="' + lo + '" data-hi="' + hi + '">' +
       '<defs><linearGradient id="dg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".25"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs>' +
-      grid + '<path d="' + area + '" fill="url(#dg)"/><path d="' + line + '" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>' +
+      grid + '<path d="' + area + '" fill="url(#dg)"/><path d="' + line + '" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>' + ov +
       '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + lastY.toFixed(1) + '" y2="' + lastY.toFixed(1) + '" stroke="currentColor" stroke-dasharray="2 3" stroke-opacity=".6"/>' + tag +
       '<line id="xh" y1="' + T + '" y2="' + (H - B) + '" stroke="var(--muted)" stroke-dasharray="3 3" visibility="hidden"/><circle id="xd" r="4" fill="currentColor" stroke="var(--surface)" stroke-width="2" cx="' + X(pts.length - 1).toFixed(1) + '" cy="' + lastY.toFixed(1) + '"/>' + xl + "</svg>";
   }
@@ -2318,17 +2573,22 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       (chartKind === "line" ? seg("data-crange", [["today", "Σήμερα"], ["1w", "1Ε"], ["1m", "1Μ"], ["1y", "1Χ", "1 χρόνος"], ["5y", "5Χ", "5 χρόνια"], ["all", "Όλο"]], chartRange, "Διάστημα", " right") : "") +
       "</div>";
     if (chartKind === "tv") return bar + '<div class="tvbox" id="tvbox"></div>';
+    bar += indBar(chartRange === "today");
     if (chartRange !== "today") loadLong(s);
     if (chartRange !== "today" && LONG[s.sym] === "loading") return bar + '<div class="chartempty">Φόρτωση ιστορικού…</div>';
     var pts = rangeSeries(s);
     if (pts.length < 2) return bar + '<div class="chartempty">' + (chartRange === "today" ? "Το γράφημα της ημέρας εμφανίζεται μετά από δύο ενημερώσεις τιμών." : "Δεν υπάρχουν ακόμα αρκετά στοιχεία για αυτό το διάστημα. Το ιστορικό συλλέγεται καθημερινά.") + "</div>";
-    return bar + '<div class="readout num" id="readout"></div><div class="chartbox" id="chartbox">' + chartSvg(pts) + "</div>";
+    var ind = indFor(s, pts);
+    return bar + '<div class="readout num" id="readout"></div><div class="chartbox" id="chartbox">' + chartSvg(pts, ind) + "</div>" + (ind && ind.rsi ? rsiSvg(ind.rsi, CH.W, CH.L, CH.R) : "");
   }
   function wireChart(s) {
     [["data-cmet", function (v) { chartMetric = v; }], ["data-ckind", function (v) { chartKind = v; }], ["data-crange", function (v) { chartRange = v; }]].forEach(function (pair) {
       Array.prototype.forEach.call(drawer.querySelectorAll("[" + pair[0] + "]"), function (b) {
         b.addEventListener("click", function () { var v = b.getAttribute(pair[0]); pair[1](v); paint(); var f = drawer.querySelector("[" + pair[0] + '="' + v + '"]'); if (f) f.focus(); });
       });
+    });
+    Array.prototype.forEach.call(drawer.querySelectorAll("[data-ind]"), function (b) {
+      b.addEventListener("click", function () { var k = b.getAttribute("data-ind"); toggleInd(k); paint(); var f = drawer.querySelector('[data-ind="' + k + '"]'); if (f) f.focus(); });
     });
     var tvbox = document.getElementById("tvbox");
     if (tvbox) {
@@ -2374,12 +2634,13 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       (holdingLine(s.sym)) +
       exHtml(s) +
       '<div style="display:flex;flex-wrap:wrap;gap:8px"><button type="button" class="btn primary" id="pfbtn">+ Στο χαρτοφυλάκιο</button>' +
-      '<button type="button" class="favbtn" id="favbtn" aria-pressed="' + !!favs[s.sym] + '">' + (favs[s.sym] ? "★ Στα αγαπημένα" : "☆ Προσθήκη στα αγαπημένα") + '</button><button type="button" class="favbtn" id="cmpbtn2">Σύγκριση</button></div>' +
+      '<button type="button" class="favbtn" id="favbtn" aria-pressed="' + !!favs[s.sym] + '">' + (favs[s.sym] ? "★ Στα αγαπημένα" : "☆ Προσθήκη στα αγαπημένα") + '</button><button type="button" class="favbtn" id="cmpbtn2">Σύγκριση</button><button type="button" class="favbtn" id="albtn">🔔 Ειδοποίηση</button></div>' +
       '<p class="note">Τιμές με καθυστέρηση 15 λεπτών. Δεν αποτελεί επενδυτική πληροφόρηση.</p>';
     document.getElementById("dclose").addEventListener("click", closeStock);
     wireChart(s);
     document.getElementById("favbtn").addEventListener("click", function () { toggleFav(s.sym); });
     document.getElementById("cmpbtn2").addEventListener("click", function () { openCmp(s.sym); });
+    document.getElementById("albtn").addEventListener("click", function () { window.__alStart(s.sym); });
     document.getElementById("pfbtn").addEventListener("click", function () { closeStock(); showView("portfolio"); openForm(s.sym, "buy"); });
   }
   function openStock(sym, from) {
@@ -2422,6 +2683,9 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   pfs = normPfs(pfs);
   function savePfs() { try { localStorage.setItem(PFKEY, JSON.stringify(pfs)); } catch (e) {} }
   function setPfs(list) { pfs = normPfs(list); savePfs(); if (pfSel !== "all" && !pfs.some(function (x) { return x.id === pfSel; })) pfSel = "all"; }
+  var ALERTS = (function () { try { var a = JSON.parse(localStorage.getItem("agora-alerts") || "[]"); return Array.isArray(a) ? a : []; } catch (e) { return []; } })();
+  var PUSHT = [], WEEKLY = false, WTEST = 0;
+  function mergeAlerts(remote, local) { var seen = {}, out = []; remote.concat(local).forEach(function (a) { if (a && a.id && !seen[a.id]) { seen[a.id] = 1; out.push(a); } }); return out; }
   var pfSel = (function () { try { return localStorage.getItem("agora-pfsel") || "all"; } catch (e) { return "all"; } })();
   if (pfSel !== "all" && !pfs.some(function (x) { return x.id === pfSel; })) pfSel = "all";
   function pfOf(t) { return t && t.pf && pfs.some(function (x) { return x.id === t.pf; }) ? t.pf : "main"; }
@@ -2443,8 +2707,10 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     saveWallets(); savePfs();
     if (!pfRef) { saveLocal(); return Promise.resolve(); }
     savePfs();
-    var body = { txns: txns.slice(), favs: Object.keys(favs), wallets: wallets.slice(), pfs: pfs.slice(), updated: Date.now() };
-    pfWriting = pfWriting.then(function () { return pfRef.set(body); }).catch(function (e) {
+    var body = { txns: txns.slice(), favs: Object.keys(favs), wallets: wallets.slice(), pfs: pfs.slice(), alerts: JSON.parse(JSON.stringify(ALERTS)), push: JSON.parse(JSON.stringify(PUSHT)), weekly: !!WEEKLY, updated: Date.now() };
+    if (WTEST) body.wtest = WTEST;
+    try { localStorage.setItem("agora-alerts", JSON.stringify(ALERTS)); } catch (e) {}
+    pfWriting = pfWriting.then(function () { return pfRef.set(body, { merge: true }); }).catch(function (e) {
       if (e && (e.code === "invalid_argument" || e.code === "revoked" || e.code === "not_granted" || e.code === "permission-denied")) { pfRef = null; pfMode = e.code === "permission-denied" ? "norules" : "local"; setStorageNote(); }
       toast(e && e.code === "quota_exceeded" ? "Ο χώρος αποθήκευσης γέμισε. Σβήσε κάποιες συναλλαγές." : "Η αποθήκευση στον λογαριασμό απέτυχε. Κρατήθηκε σε αυτόν τον browser.");
     });
@@ -2638,6 +2904,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
             pfRef = null; pfMode = "local";
             txns = fixTx(loadLocal());
             favs = {}; try { (JSON.parse(localStorage.getItem("agora-favs") || "[]")).forEach(function (s) { favs[fixSym(s)] = true; }); } catch (e) {}
+            PUSHT = []; WEEKLY = false; WTEST = 0;
             setStorageNote(); renderPortfolio(); tabsHtml(); render();
             return;
           }
@@ -2658,6 +2925,9 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
               setWallets(mw);
               var rp = Array.isArray(d.pfs) ? d.pfs : [], pb = normPfs(rp).length;
               setPfs(rp.concat(pfs));
+              var ra = Array.isArray(d.alerts) ? d.alerts : [], ab = ra.length;
+              ALERTS = mergeAlerts(ra, ALERTS); PUSHT = Array.isArray(d.push) ? d.push : []; WEEKLY = !!d.weekly;
+              if (ALERTS.length !== ab) pb = -1;
               if (!snap.exists || merged.length !== remote.length || Object.keys(f2).length !== before || mw.length !== wb || pfs.length !== pb) {
                 persist().then(function () { if (pfRef) { try { localStorage.removeItem(LKEY); } catch (e) {} } });
                 if (guest.length && merged.length !== remote.length) toast("Οι συναλλαγές αυτού του browser μεταφέρθηκαν στον λογαριασμό σου");
@@ -2667,7 +2937,11 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
               var f3 = {}; (Array.isArray(d.favs) ? d.favs : []).forEach(function (s) { f3[fixSym(s)] = true; }); favs = f3;
               if (Array.isArray(d.wallets)) setWallets(d.wallets);
             if (Array.isArray(d.pfs)) setPfs(d.pfs);
+              var prevA = ALERTS; ALERTS = Array.isArray(d.alerts) ? d.alerts : []; PUSHT = Array.isArray(d.push) ? d.push : []; WEEKLY = !!d.weekly;
+              if (window.__alFired) window.__alFired(prevA, ALERTS);
             }
+            if (window.__alBadge) window.__alBadge();
+            if (!document.getElementById("view-tools").hidden && window.__renderTools) window.__renderTools();
             renderPortfolio(); tabsHtml(); render();
             if (!drawer.hidden && cur) paint();
           }, function (err) {
@@ -3661,13 +3935,14 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   })();
   function showView(v) {
     if (window.matchMedia && matchMedia("(max-width: 640px)").matches) window.scrollTo(0, 0);
-    ["market", "heat", "favs", "portfolio"].forEach(function (k) {
+    ["market", "heat", "favs", "portfolio", "tools"].forEach(function (k) {
       document.getElementById("view-" + k).hidden = k !== v;
       document.getElementById("tab-" + k).setAttribute("aria-selected", k === v);
     });
     if (v === "portfolio") renderPortfolio();
     if (v === "favs") renderFavs();
     if (v === "heat") renderHeat();
+    if (v === "tools" && window.__renderTools) window.__renderTools();
   }
 
   /* ----- σύγκριση μετοχών / crypto ----- */
@@ -3952,15 +4227,22 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
 
   /* σελίδα crypto / ξένης μετοχής μέσα στο site */
   var xRange = "7", XH = {};
-  function lineChart(box, pts, fmt) {
+  function lineChart(box, pts, fmt, ind) {
     if (!pts || pts.length < 2) { box.innerHTML = '<div class="msg">Δεν υπάρχουν στοιχεία για αυτό το διάστημα.</div>'; return; }
-    if (pts.length > 400) pts = thin(pts, 400);
-    var W = box.clientWidth || 580, Hh = box.clientHeight || 280, vs = pts.map(function (p) { return p.v; });
-    var mn = Math.min.apply(null, vs), mx = Math.max.apply(null, vs), pad = (mx - mn) * 0.12 || mx * 0.02 || 1; mn -= pad; mx += pad;
+    if (pts.length > 400) { pts = thin(pts, 400); ind = null; }
+    var W = box.clientWidth || 580, Hh = box.clientHeight || 280, vs = pts.map(function (p) { return p.v; }), allv = vs.slice();
+    if (ind) ["ma50", "ma200", "bu", "bl"].forEach(function (k) { if (ind[k]) ind[k].forEach(function (v) { if (v != null) allv.push(v); }); });
+    var mn = Math.min.apply(null, allv), mx = Math.max.apply(null, allv), pad = (mx - mn) * 0.12 || mx * 0.02 || 1; mn -= pad; mx += pad;
     var P = pts.map(function (p, i) { return [6 + i / (pts.length - 1) * (W - 12), 10 + (1 - (p.v - mn) / (mx - mn)) * (Hh - 20)]; });
-    var line = smoothPath(P), up = vs[vs.length - 1] >= vs[0], col = up ? "var(--up)" : "var(--down)", gid = "xg" + Math.round(Math.random() * 1e6);
+    var line = smoothPath(P), up = vs[vs.length - 1] >= vs[0], col = up ? "var(--up)" : "var(--down)", gid = "xg" + Math.round(Math.random() * 1e6), ov = "";
+    if (ind) {
+      var IX = function (i) { return 6 + i / (pts.length - 1) * (W - 12); }, IY = function (v) { return 10 + (1 - (v - mn) / (mx - mn)) * (Hh - 20); };
+      if (ind.bu) ov += '<path d="' + indPath(ind.bu, IX, IY) + '" fill="none" stroke="#7f8ea3" stroke-width="1" stroke-dasharray="3 3" vector-effect="non-scaling-stroke"/><path d="' + indPath(ind.bl, IX, IY) + '" fill="none" stroke="#7f8ea3" stroke-width="1" stroke-dasharray="3 3" vector-effect="non-scaling-stroke"/>';
+      if (ind.ma200) ov += '<path d="' + indPath(ind.ma200, IX, IY) + '" fill="none" stroke="#8b7bff" stroke-width="1.6" vector-effect="non-scaling-stroke"/>';
+      if (ind.ma50) ov += '<path d="' + indPath(ind.ma50, IX, IY) + '" fill="none" stroke="#f5a524" stroke-width="1.6" vector-effect="non-scaling-stroke"/>';
+    }
     box.innerHTML = '<svg viewBox="0 0 ' + W + " " + Hh + '" preserveAspectRatio="none" role="img" aria-label="Διάγραμμα τιμής"><defs><linearGradient id="' + gid + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + col + '" stop-opacity=".30"/><stop offset="1" stop-color="' + col + '" stop-opacity="0"/></linearGradient></defs>' +
-      '<path d="' + line + "L" + P[P.length - 1][0].toFixed(1) + "," + Hh + "L" + P[0][0].toFixed(1) + "," + Hh + 'Z" fill="url(#' + gid + ')"/><path d="' + line + '" fill="none" stroke="' + col + '" stroke-width="2.2" stroke-linejoin="round"/></svg><div class="cur"></div><div class="dot"></div><div class="tip"></div>';
+      '<path d="' + line + "L" + P[P.length - 1][0].toFixed(1) + "," + Hh + "L" + P[0][0].toFixed(1) + "," + Hh + 'Z" fill="url(#' + gid + ')"/><path d="' + line + '" fill="none" stroke="' + col + '" stroke-width="2.2" stroke-linejoin="round"/>' + ov + '</svg><div class="cur"></div><div class="dot"></div><div class="tip"></div>';
     var cu = box.querySelector(".cur"), dot = box.querySelector(".dot"), tip = box.querySelector(".tip");
     function at(cx) {
       var r = box.getBoundingClientRect(), i = Math.max(0, Math.min(pts.length - 1, Math.round(((cx - r.left) / r.width * W - 6) / (W - 12) * (pts.length - 1))));
@@ -3989,7 +4271,13 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     if (d === undefined) { loadXH(id, xRange); d = XH[id + "|" + xRange]; }
     if (d === "loading") { box.innerHTML = '<div class="msg">Φόρτωση διαγράμματος…</div>'; return; }
     if (!d) { box.innerHTML = '<div class="msg">Το διάγραμμα δεν είναι διαθέσιμο τώρα. Δοκίμασε ξανά σε λίγο.</div>'; return; }
-    lineChart(box, d, function (v) { return fmtC(v); });
+    var xi = null, xr = document.getElementById("xrsi");
+    if (xRange === "365" && anyInd() && d.length > 15) {
+      var cc = calcInd(d.map(function (p) { return p.v; }));
+      xi = { ma50: IND.ma50 ? cc.ma50 : null, ma200: IND.ma200 ? cc.ma200 : null, bu: IND.bb ? cc.bu : null, bl: IND.bb ? cc.bl : null, rsi: IND.rsi ? cc.rsi : null };
+    }
+    lineChart(box, d, function (v) { return fmtC(v); }, xi);
+    if (xr) xr.innerHTML = xi && xi.rsi ? rsiSvg(xi.rsi, 560, 6, 34) : "";
     var ch = (d[d.length - 1].v / d[0].v - 1) * 100, ro = document.getElementById("xro");
     if (ro) ro.innerHTML = chgHtml(ch) + ' <span style="color:var(--muted)">στο διάστημα</span>';
   }
@@ -4011,13 +4299,13 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     if (!isC && it.np != null) k += kv("Τιμή σε " + esc(it.ncur || "USD"), nf2.format(it.np) + " " + (it.ncur && it.ncur !== "USD" ? esc(it.ncur) : "$"));
     var tv = !isC && TV_ON ? tvSymbol(it.id) : null;
     var chart = isC
-      ? '<div class="ctool">' + seg("data-xr", [["1", "24ω"], ["7", "7Η"], ["30", "1Μ"], ["365", "1Χ"]], xRange, "Διάστημα") + '<span id="xro" class="num" style="margin-left:auto"></span></div><div class="xchart" id="xchart"></div>'
+      ? '<div class="ctool">' + seg("data-xr", [["1", "24ω"], ["7", "7Η"], ["30", "1Μ"], ["365", "1Χ"]], xRange, "Διάστημα") + '<span id="xro" class="num" style="margin-left:auto"></span></div>' + indBar(xRange !== "365", "Διαθέσιμοι στο διάστημα 1Χ") + '<div class="xchart" id="xchart"></div><div id="xrsi"></div>'
       : tv ? '<div class="tvbox" id="xtv"></div>' : '<div class="chartempty">Το διάγραμμα είναι διαθέσιμο στο δημόσιο site.</div>';
     var ext = isC ? "https://www.coingecko.com/" + (LANG === "en" ? "en" : "el") + "/coins/" + encodeURIComponent(it.id) : "https://finance.yahoo.com/quote/" + encodeURIComponent(it.id);
     drawer.innerHTML =
       '<div class="dh"><div class="xdh">' + logoBox(it.s, it.img) + '<div style="min-width:0"><h2 id="dname">' + esc(it.s) + " · " + esc(it.n) + '</h2><div class="sec">' + (isC ? "Κρυπτονόμισμα" + (it.rank ? " · #" + it.rank : "") : esc(it.sub || "ΗΠΑ") + " · Ξένη μετοχή") + '</div></div></div><button type="button" class="close" id="dclose" aria-label="Κλείσιμο">×</button></div>' +
       '<div class="bigp"><span class="p num">' + (it.p == null ? "—" : fmtC(it.p)) + "</span>" + (it.c == null ? "" : chgHtml(it.c)) + '<span class="sec" style="color:var(--muted)">24 ώρες</span></div>' +
-      '<div class="xacts"><button type="button" class="btn" data-xfav="1" aria-pressed="' + !!favs[key] + '">' + (favs[key] ? "★ Στα αγαπημένα" : "☆ Προσθήκη στα αγαπημένα") + '</button><button type="button" class="btn primary" data-xaddp="1">+ Στο Χαρτοφυλάκιο</button>' + (isC ? '<button type="button" class="btn" data-xcmp="1">Σύγκριση</button>' : "") + '<a class="btn" href="' + esc(ext) + '" target="_blank" rel="noopener">' + (isC ? "CoinGecko" : "Yahoo Finance") + " ↗</a></div>" +
+      '<div class="xacts"><button type="button" class="btn" data-xfav="1" aria-pressed="' + !!favs[key] + '">' + (favs[key] ? "★ Στα αγαπημένα" : "☆ Προσθήκη στα αγαπημένα") + '</button><button type="button" class="btn primary" data-xaddp="1">+ Στο Χαρτοφυλάκιο</button>' + (isC ? '<button type="button" class="btn" data-xcmp="1">Σύγκριση</button>' : "") + '<button type="button" class="btn" data-xal="1">🔔 Ειδοποίηση</button>' + '<a class="btn" href="' + esc(ext) + '" target="_blank" rel="noopener">' + (isC ? "CoinGecko" : "Yahoo Finance") + " ↗</a></div>" +
       chart +
       (k ? '<dl class="kv num">' + k + "</dl>" : "") +
       holdingLine(key) +
@@ -4047,8 +4335,11 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     if (e.target.closest("[data-xfav]")) { xStar(xcur); return; }
     if (e.target.closest("[data-xaddp]")) { xAdd(xGet(xcur)); return; }
     if (e.target.closest("[data-xcmp]")) { openCmp(xcur); return; }
+    if (e.target.closest("[data-xal]")) { window.__alStart(xcur); return; }
+    var ib = e.target.closest("[data-ind]");
+    if (ib && !ib.disabled) { toggleInd(ib.getAttribute("data-ind")); ib.setAttribute("aria-pressed", !!IND[ib.getAttribute("data-ind")]); drawX(); return; }
     var rb = e.target.closest("[data-xr]");
-    if (rb) { xRange = rb.getAttribute("data-xr"); Array.prototype.forEach.call(drawer.querySelectorAll("[data-xr]"), function (x) { x.setAttribute("aria-pressed", x === rb); }); drawX(); }
+    if (rb) { xRange = rb.getAttribute("data-xr"); Array.prototype.forEach.call(drawer.querySelectorAll("[data-xr]"), function (x) { x.setAttribute("aria-pressed", x === rb); }); Array.prototype.forEach.call(drawer.querySelectorAll("[data-ind]"), function (x) { x.disabled = xRange !== "365"; }); drawX(); }
   });
   function setMkt(m) { mkt = m; XS = { k: "m", d: -1 }; try { localStorage.setItem("agora-mkt", m); } catch (e) {} document.getElementById("xq").value = ""; renderX(); if (m === "c") loadCg100(); }
   document.getElementById("mktsw").addEventListener("click", function (e) { var x = e.target.closest("button"); if (x) setMkt(x.getAttribute("data-mkt")); });
@@ -4216,6 +4507,530 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     }
     document.getElementById("asof").textContent = "Ενημέρωση: " + when;
   }
+  /* ===================== Εργαλεία: φίλτρο, ημερολόγιο, ειδοποιήσεις ===================== */
+  function lsGet(k, d) { try { var v = JSON.parse(localStorage.getItem(k) || "null"); return v == null ? d : v; } catch (e) { return d; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  var SCR = null, scrBusy = false, scrErr = false, scrQ = [];
+  function loadScr(cb) {
+    if (cb) scrQ.push(cb);
+    if (SCR || scrErr) { var q0 = scrQ; scrQ = []; q0.forEach(function (f) { f(); }); return; }
+    if (scrBusy) return;
+    if (!canLong()) { scrErr = true; loadScr(); return; }
+    scrBusy = true;
+    fetch(DATA_URL.replace(/data\.json(\?.*)?$/, "screener.json") + "?t=" + Math.floor(Date.now() / 600000))
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (j) {
+        var C = j.cols || [];
+        function obj(a, m) { var o = { mk: m }; C.forEach(function (c, i) { o[c] = a[i]; }); return o; }
+        SCR = { updated: j.updated, gr: (j.gr || []).map(function (a) { return obj(a, "gr"); }), us: (j.us || []).map(function (a) { return obj(a, "us"); }) };
+        SCR.us.forEach(function (o) {
+          if (!USQ[o.k]) USQ[o.k] = { s: o.k, n: o.n, p: o.p, c: o.c, w: o.w, m: o.m, v: 0, l: o.logo, x: o.x, sec: o.sec };
+          if (o.logo && !LOGO_D["f:" + o.k]) LOGO_D["f:" + o.k] = o.logo;
+        });
+      })
+      .catch(function () { scrErr = true; })
+      .then(function () { scrBusy = false; loadScr(); });
+  }
+  /* μια γραμμή του φίλτρου σε κοινή μορφή (τιμές σε €) */
+  function scrItem(o) {
+    if (o.mk === "gr") {
+      var r = BYSYM[o.k];
+      return { key: o.k, mk: "gr", lab: r ? r.dsym : DS(o.k), n: (r && r.name) || o.n, p: r ? r.price : o.p, c: r ? r.chg : o.c, m: (r && r.mcap) || o.m, o: o };
+    }
+    var u = usdEur();
+    return { key: "f:" + o.k, mk: "us", lab: o.k, n: o.n, p: o.p == null ? null : o.p * u, c: o.c, m: o.m ? o.m * u : null, o: o };
+  }
+  function itemLogo(it) {
+    if (it.mk === "gr") return monoHtml(it.lab);
+    return logoBox(it.lab, it.o && it.o.logo ? "https://s3-symbol-logo.tradingview.com/" + encodeURIComponent(it.o.logo) + ".svg" : null);
+  }
+  function fmtP(v) { return Math.abs(v * RATE) >= 1 ? nf2.format(v * RATE) + CS : fmtC(v); }
+  function pctS(v, d) { return v == null ? "—" : sgn(v) + new Intl.NumberFormat(LOC, { maximumFractionDigits: d == null ? 1 : d }).format(Math.abs(v)) + "%"; }
+  function n1(v, d) { return v == null ? "—" : new Intl.NumberFormat(LOC, { maximumFractionDigits: d == null ? 1 : d }).format(v); }
+
+  /* ---------- φίλτρο μετοχών ---------- */
+  var SF = lsGet("agora-scr", null);
+  if (!SF || typeof SF !== "object") SF = { m: "gr", sec: "", cap: 0, f: {}, pre: "", k: "m", d: -1 };
+  var SFIELDS = [["pe", "P/E"], ["dy", "Μερισματική απόδοση %"], ["roe", "ROE %"], ["y", "Απόδοση 1 έτους %"], ["rg", "Αύξηση πωλήσεων %"], ["pb", "P/B"], ["rsi", "RSI (14)"], ["de", "Χρέος / Ίδια κεφάλαια"]];
+  var SPRE = [
+    ["div", "Υψηλό μέρισμα", { dy: [4, null] }],
+    ["cheap", "Χαμηλό P/E", { pe: [0.01, 10] }],
+    ["qual", "Ποιότητα", { roe: [15, null], de: [null, 1] }],
+    ["grow", "Ανάπτυξη", { rg: [20, null] }],
+    ["mom", "Ισχυρή άνοδος", { y: [30, null] }],
+    ["over", "Υπερπουλημένες", { rsi: [null, 30] }]
+  ];
+  var SCAPS = [[0, "Όλες"], [1e8, "πάνω από 100 εκ."], [1e9, "πάνω από 1 δισ."], [1e10, "πάνω από 10 δισ."], [1e11, "πάνω από 100 δισ."]];
+  var scrShown = 60;
+  function scrSave() { lsSet("agora-scr", SF); }
+  function scrSecName(it) { return it.mk === "gr" ? ((BYSYM[it.key] && BYSYM[it.key].sector) || "") : usSec(it.o.sec); }
+  function scrList() {
+    var src = (SCR && SCR[SF.m]) || [], out = [];
+    src.forEach(function (o) {
+      var it = scrItem(o);
+      if (SF.cap && !(it.m >= SF.cap)) return;
+      if (SF.sec && scrSecName(it) !== SF.sec) return;
+      for (var k in SF.f) {
+        var r = SF.f[k]; if (!r) continue;
+        var v = o[k];
+        if ((r[0] != null || r[1] != null) && v == null) return;
+        if (r[0] != null && v < r[0]) return;
+        if (r[1] != null && v > r[1]) return;
+      }
+      out.push(it);
+    });
+    var k = SF.k, d = SF.d;
+    out.sort(function (a, b) {
+      var x = k === "m" ? a.m : k === "p" ? a.p : k === "c" ? a.c : k === "lab" ? a.lab : a.o[k], y = k === "m" ? b.m : k === "p" ? b.p : k === "c" ? b.c : k === "lab" ? b.lab : b.o[k];
+      if (x == null && y == null) return 0; if (x == null) return 1; if (y == null) return -1;
+      return (typeof x === "string" ? x.localeCompare(y, "el") : x - y) * d;
+    });
+    return out;
+  }
+  function scrRange(k) { var r = SF.f[k] || [null, null]; return r; }
+  function scrInVal(v) { return v == null ? "" : String(v).replace(".", LANG === "en" ? "." : ","); }
+  function renderScr() {
+    var box = document.getElementById("tl-scr"); if (!box) return;
+    if (!SCR && !scrErr) { box.innerHTML = '<div class="panel pempty"><p>Φόρτωση στοιχείων…</p></div>'; loadScr(renderScr); return; }
+    if (!SCR) { box.innerHTML = '<div class="panel pempty"><h3>Το φίλτρο δεν είναι διαθέσιμο εδώ</h3><p>Τα στοιχεία του φίλτρου φορτώνονται στο δημόσιο site, axiogram.eu. Αν είσαι ήδη εκεί, δοκίμασε ξανά σε λίγο.</p></div>'; return; }
+    var secs = {}; (SCR[SF.m] || []).forEach(function (o) { var s = scrSecName(scrItem(o)); if (s) secs[s] = 1; });
+    var secList = Object.keys(secs).sort(function (a, b) { return a.localeCompare(b, "el"); });
+    if (SF.sec && !secs[SF.sec]) SF.sec = "";
+    var list = scrList(), anyF = SF.sec || SF.cap || Object.keys(SF.f).some(function (k) { var r = SF.f[k]; return r && (r[0] != null || r[1] != null); });
+    var th = function (k, t, c) { return '<th' + (c ? ' class="' + c + '"' : "") + ' data-sk="' + k + '" aria-sort="' + (SF.k === k ? (SF.d > 0 ? "ascending" : "descending") : "none") + '"><button type="button">' + t + "</button></th>"; };
+    var rowsH = list.slice(0, scrShown).map(function (it) {
+      var o = it.o;
+      return '<tr tabindex="0" data-open="' + esc(it.key) + '"><td class="l"><div class="who">' + itemLogo(it) + "<div><b>" + esc(it.lab) + "</b><span>" + esc(it.n || "") + "</span></div></div></td>" +
+        '<td class="num">' + (it.p == null ? "—" : fmtP(it.p)) + '</td><td class="hide-s">' + (it.c == null ? "—" : chgHtml(it.c)) + '</td><td class="num hide-s">' + (it.m ? money(it.m) : "—") + "</td>" +
+        '<td class="num">' + (o.pe == null || o.pe <= 0 ? "—" : n1(o.pe)) + '</td><td class="num">' + (o.dy ? n1(o.dy, 2) + "%" : "—") + '</td><td class="num hide-s">' + (o.roe == null ? "—" : n1(o.roe) + "%") + '</td><td class="hide-s">' + (o.y == null ? "—" : chgHtml(o.y)) + '</td><td class="num hide-s">' + (o.rsi == null ? "—" : rsiTag(o.rsi)) + "</td></tr>";
+    }).join("");
+    box.innerHTML =
+      '<div class="scrtop"><div class="seg2" role="group" aria-label="Αγορά" id="scrMkt"><button type="button" data-v="gr" aria-pressed="' + (SF.m === "gr") + '">Ελλάδα</button><button type="button" data-v="us" aria-pressed="' + (SF.m === "us") + '">ΗΠΑ · 500</button></div>' +
+      '<div class="scrpre" role="group" aria-label="Έτοιμα φίλτρα">' + SPRE.map(function (p) { return '<button type="button" class="tab" data-pre="' + p[0] + '" aria-pressed="' + (SF.pre === p[0]) + '">' + esc(p[1]) + "</button>"; }).join("") + "</div></div>" +
+      '<details class="panel scrf"' + (anyF && !SF.pre ? " open" : "") + '><summary><span>Κριτήρια</span><span class="note">' + (anyF ? "ενεργά φίλτρα" : "όλες οι μετοχές") + "</span></summary>" +
+      '<div class="scrgrid"><label><span>Κλάδος</span><select id="scrSec" class="search"><option value="">Όλοι οι κλάδοι</option>' + secList.map(function (s) { return '<option' + (s === SF.sec ? " selected" : "") + ">" + esc(s) + "</option>"; }).join("") + "</select></label>" +
+      '<label><span>Κεφαλαιοποίηση</span><select id="scrCap" class="search">' + SCAPS.map(function (c) { return '<option value="' + c[0] + '"' + (+SF.cap === c[0] ? " selected" : "") + ">" + esc(c[1]) + "</option>"; }).join("") + "</select></label>" +
+      SFIELDS.map(function (f) { var r = scrRange(f[0]); return '<div class="scrrng"><span>' + esc(f[1]) + '</span><div><input inputmode="decimal" data-fk="' + f[0] + '" data-fi="0" placeholder="από" aria-label="' + esc(f[1]) + ' από" value="' + scrInVal(r[0]) + '"><span>–</span><input inputmode="decimal" data-fk="' + f[0] + '" data-fi="1" placeholder="έως" aria-label="' + esc(f[1]) + ' έως" value="' + scrInVal(r[1]) + '"></div></div>'; }).join("") +
+      '</div><div class="scrfoot"><button type="button" class="btn" id="scrReset">Καθαρισμός</button></div></details>' +
+      '<div class="scrcount"><b>' + list.length + "</b> " + (list.length === 1 ? "μετοχή" : "μετοχές") + '<span class="note"> · πάτα μια στήλη για ταξινόμηση</span></div>' +
+      '<div class="panel tablewrap"><table class="scrtab"><thead><tr>' + th("lab", "Μετοχή", "l") + th("p", "Τιμή") + th("c", "Ημέρα %", "hide-s") + th("m", "Κεφαλαιοποίηση", "hide-s") + th("pe", "P/E") + th("dy", "Μέρ. %") + th("roe", "ROE", "hide-s") + th("y", "1 έτος", "hide-s") + th("rsi", "RSI", "hide-s") + "</tr></thead><tbody>" + rowsH + "</tbody></table>" +
+      (list.length ? "" : '<div class="empty">Καμία μετοχή δεν ταιριάζει. Χαλάρωσε κάποιο κριτήριο.</div>') + "</div>" +
+      (list.length > scrShown ? '<button type="button" class="more" id="scrMore">Εμφάνιση περισσότερων (' + (list.length - scrShown) + " ακόμα)</button>" : "") +
+      '<p class="foot">Θεμελιώδη στοιχεία από το TradingView, ενημέρωση τρεις φορές την ημέρα (' + esc(fmtUpd(SCR.updated)) + "). Οι τιμές των ελληνικών μετοχών είναι οι τρέχουσες του site. Το P/E, η μερισματική απόδοση και το ROE αφορούν τους τελευταίους 12 μήνες. Δεν αποτελεί επενδυτική συμβουλή.</p>";
+  }
+  function rsiTag(v) { var c = v >= 70 ? "down" : v <= 30 ? "up" : ""; return '<span class="' + (c ? "chg " + c : "") + '">' + n1(v, 0) + "</span>"; }
+  function fmtUpd(s) { var d = new Date(s); return isNaN(d.getTime()) ? "—" : d.toLocaleString(LOC, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "Europe/Athens" }); }
+  function openKey(k, from) { if (isExt(k)) openX(k, from); else openStock(k, from); }
+  (function () {
+    var box = document.getElementById("tl-scr");
+    box.addEventListener("click", function (e) {
+      var b = e.target.closest("#scrMkt button"); if (b) { SF.m = b.getAttribute("data-v"); SF.sec = ""; scrShown = 60; scrSave(); renderScr(); return; }
+      var p = e.target.closest("[data-pre]");
+      if (p) { var id = p.getAttribute("data-pre"); if (SF.pre === id) { SF.pre = ""; SF.f = {}; } else { SF.pre = id; SF.f = JSON.parse(JSON.stringify(SPRE.filter(function (x) { return x[0] === id; })[0][2])); } scrShown = 60; scrSave(); renderScr(); return; }
+      var th = e.target.closest("th[data-sk]");
+      if (th) { var k = th.getAttribute("data-sk"); SF.d = SF.k === k ? -SF.d : (k === "lab" || k === "pe" || k === "rsi" ? 1 : -1); SF.k = k; scrSave(); renderScr(); return; }
+      if (e.target.closest("#scrReset")) { SF.f = {}; SF.sec = ""; SF.cap = 0; SF.pre = ""; scrSave(); renderScr(); return; }
+      if (e.target.closest("#scrMore")) { scrShown += 100; renderScr(); return; }
+      var tr = e.target.closest("tr[data-open]"); if (tr) openKey(tr.getAttribute("data-open"), tr);
+    });
+    box.addEventListener("keydown", function (e) { if (e.key === "Enter" && e.target.matches("tr[data-open]")) openKey(e.target.getAttribute("data-open"), e.target); });
+    box.addEventListener("change", function (e) {
+      var t = e.target;
+      if (t.id === "scrSec") { SF.sec = t.value; }
+      else if (t.id === "scrCap") { SF.cap = +t.value; }
+      else if (t.hasAttribute("data-fk")) {
+        var k = t.getAttribute("data-fk"), i = +t.getAttribute("data-fi"), v = t.value.trim() === "" ? null : num(t.value);
+        if (v != null && isNaN(v)) { t.value = ""; v = null; }
+        var r = (SF.f[k] || [null, null]).slice(); r[i] = v; SF.f[k] = r;
+      } else return;
+      SF.pre = ""; scrShown = 60; scrSave(); renderScr();
+      var again = t.id ? document.getElementById(t.id) : box.querySelector('[data-fk="' + t.getAttribute("data-fk") + '"][data-fi="' + t.getAttribute("data-fi") + '"]');
+      if (again && again.closest("details")) again.closest("details").open = true;
+    });
+  })();
+
+  /* ---------- ημερολόγιο ---------- */
+  var CALF = lsGet("agora-cal", null);
+  if (!CALF || typeof CALF !== "object") CALF = { mine: true, gr: true, us: true, div: true, earn: true };
+  var calOpen = {};
+  function myKeys() {
+    var m = {};
+    holdings(txns).list.forEach(function (h) { m[h.sym] = 1; });
+    Object.keys(favs).forEach(function (k) { m[k] = 1; });
+    return m;
+  }
+  function calEvents() {
+    var ev = [], end = daysAgo(-120), seen = {};
+    function add(d, t, it, amt, cur) { if (!d || d < TODAY || d > end) return; var id = d + t + it.key; if (seen[id]) return; seen[id] = 1; ev.push({ d: d, t: t, it: it, amt: amt, cur: cur }); }
+    ["gr", "us"].forEach(function (mk) {
+      ((SCR && SCR[mk]) || []).forEach(function (o) {
+        var it = scrItem(o);
+        if (o.earn) add(o.earn, "earn", it);
+        var amt = o.dps, cur = mk === "gr" ? "€" : "$";
+        if (mk === "gr" && EX[o.k] && EX[o.k].divs) { var dv = EX[o.k].divs.filter(function (x) { return x[0] === o.exd; })[0]; if (dv) amt = dv[1]; }
+        if (o.exd) add(o.exd, "div", it, amt, cur);
+        if (o.pay && o.pay !== o.exd) add(o.pay, "pay", it, amt, cur);
+      });
+    });
+    /* αποκοπές από το capital.gr για ελληνικές μετοχές που δεν τις έχει το TradingView */
+    Object.keys(EX).forEach(function (sym) {
+      var e = EX[sym]; if (!e || !e.exd || !BYSYM[sym]) return;
+      var r = BYSYM[sym], amt = null; (e.divs || []).forEach(function (x) { if (x[0] === e.exd) amt = x[1]; });
+      add(e.exd, "div", { key: sym, mk: "gr", lab: r.dsym, n: r.name, p: r.price, c: r.chg, m: r.mcap, o: {} }, amt, "€");
+    });
+    ev.sort(function (a, b) { return a.d.localeCompare(b.d) || (b.it.m || 0) - (a.it.m || 0); });
+    return ev;
+  }
+  function dayLabel(d) {
+    var dt = new Date(d + "T12:00:00"), diff = Math.round((dt - new Date(TODAY + "T12:00:00")) / 864e5);
+    var main = dt.toLocaleDateString(LOC, { weekday: "long", day: "numeric", month: "long" });
+    return main.charAt(0).toUpperCase() + main.slice(1) + '<span class="note"> · ' + (diff === 0 ? "σήμερα" : diff === 1 ? "αύριο" : "σε " + diff + " ημέρες") + "</span>";
+  }
+  function renderCal() {
+    var box = document.getElementById("tl-cal"); if (!box) return;
+    if (!SCR && !scrErr) { box.innerHTML = '<div class="panel pempty"><p>Φόρτωση ημερολογίου…</p></div>'; loadScr(renderCal); return; }
+    var mine = myKeys(), hasMine = Object.keys(mine).length > 0, useMine = CALF.mine && hasMine;
+    var ev = calEvents().filter(function (e) {
+      if (!CALF[e.it.mk]) return false;
+      if (e.t === "earn" ? !CALF.earn : !CALF.div) return false;
+      return !useMine || mine[e.it.key];
+    });
+    var by = {}, days = [];
+    ev.forEach(function (e) { if (!by[e.d]) { by[e.d] = []; days.push(e.d); } by[e.d].push(e); });
+    var tg = function (k, t, on, dis) { return '<button type="button" class="tab" data-cf="' + k + '" aria-pressed="' + !!on + '"' + (dis ? " disabled" : "") + ">" + t + "</button>"; };
+    var TL = { div: "Αποκοπή μερίσματος", pay: "Πληρωμή μερίσματος", earn: "Αποτελέσματα" };
+    var html = '<div class="calbar"><div class="seg2" role="group" aria-label="Εμφάνιση"><button type="button" data-cm="1" aria-pressed="' + useMine + '"' + (hasMine ? "" : " disabled") + '>Οι μετοχές μου</button><button type="button" data-cm="0" aria-pressed="' + !useMine + '">Όλες</button></div>' +
+      '<div class="scrpre">' + tg("gr", "Ελλάδα", CALF.gr) + tg("us", "ΗΠΑ", CALF.us) + tg("div", "Μερίσματα", CALF.div) + tg("earn", "Αποτελέσματα", CALF.earn) + "</div></div>";
+    if (!hasMine) html += '<p class="note" style="margin:0">Το «Οι μετοχές μου» δείχνει όσες έχεις στο χαρτοφυλάκιο ή στα αγαπημένα.</p>';
+    if (!days.length) html += '<div class="panel pempty"><h3>Τίποτα τους επόμενους 4 μήνες</h3><p>' + (useMine ? "Δεν βρέθηκαν μερίσματα ή αποτελέσματα για τις μετοχές σου. Πάτα «Όλες» για να δεις όλη την αγορά." : "Δεν βρέθηκαν γεγονότα με αυτά τα φίλτρα.") + "</p></div>";
+    html += days.map(function (d) {
+      var list = by[d], lim = calOpen[d] ? list.length : 12;
+      return '<div class="panel calday"><h3>' + dayLabel(d) + "</h3>" + list.slice(0, lim).map(function (e) {
+        var it = e.it, own = mine[it.key];
+        return '<button type="button" class="calrow" data-open="' + esc(it.key) + '">' + itemLogo(it) + '<span class="cn"><b>' + esc(it.lab) + (own ? ' <span class="own" title="Στο χαρτοφυλάκιο ή στα αγαπημένα">★</span>' : "") + "</b><span>" + esc(it.n || "") + '</span></span><span class="ct ' + e.t + '">' + TL[e.t] + (e.amt ? ' <b class="num">' + n1(e.amt, 4) + " " + e.cur + "</b>" : "") + "</span></button>";
+      }).join("") + (list.length > lim ? '<button type="button" class="more" data-cmore="' + d + '">+ ' + (list.length - lim) + " ακόμα</button>" : "") + "</div>";
+    }).join("");
+    html += '<p class="foot">Αποκοπή μερίσματος: όποιος έχει τη μετοχή την προηγούμενη ημέρα παίρνει το μέρισμα. Οι ημερομηνίες αποτελεσμάτων είναι οι αναμενόμενες και μπορεί να αλλάξουν. Πηγές: TradingView, capital.gr.</p>';
+    box.innerHTML = html;
+  }
+  (function () {
+    var box = document.getElementById("tl-cal");
+    box.addEventListener("click", function (e) {
+      var m = e.target.closest("[data-cm]"); if (m && !m.disabled) { CALF.mine = m.getAttribute("data-cm") === "1"; lsSet("agora-cal", CALF); renderCal(); return; }
+      var f = e.target.closest("[data-cf]"); if (f) { var k = f.getAttribute("data-cf"); CALF[k] = !CALF[k]; if (!CALF.gr && !CALF.us) CALF[k === "gr" ? "us" : "gr"] = true; if (!CALF.div && !CALF.earn) CALF[k === "div" ? "earn" : "div"] = true; lsSet("agora-cal", CALF); renderCal(); return; }
+      var mo = e.target.closest("[data-cmore]"); if (mo) { calOpen[mo.getAttribute("data-cmore")] = 1; renderCal(); return; }
+      var r = e.target.closest("[data-open]"); if (r) openKey(r.getAttribute("data-open"), r);
+    });
+  })();
+
+  /* ---------- ειδοποιήσεις τιμών ---------- */
+  var AL_OP = { gt: "Η τιμή ανέβει πάνω από", lt: "Η τιμή πέσει κάτω από", mv: "Η ημερήσια μεταβολή ξεπεράσει ±" };
+  var alPick = null, alOp = "gt";
+  function alPrice(k) {
+    /* τρέχουσα τιμή στο νόμισμα της ειδοποίησης: Χ.Α. σε €, ΗΠΑ και crypto σε $ */
+    if (/^c:/.test(k)) { var id = k.slice(2), c = (CG100 || []).filter(function (x) { return x.id === id; })[0]; var pe = c ? c.current_price : CGP[id] ? CGP[id].p : null; var ch = c ? c.price_change_percentage_24h : CGP[id] ? CGP[id].c : null; return pe == null ? null : { p: pe / usdEur(), c: ch, cur: "USD" }; }
+    if (/^f:/.test(k)) { var q = USQ[k.slice(2)]; if (q) return { p: q.p, c: q.c, cur: "USD" }; var f = FOREIGN && FOREIGN.q && FOREIGN.q[k.slice(2)]; return f ? { p: f.p, c: f.c, cur: f.cur || "USD" } : null; }
+    var r = BYSYM[k]; return r ? { p: r.price, c: r.chg, cur: "EUR" } : null;
+  }
+  function curSym(c) { return c === "EUR" ? "€" : c === "USD" ? "$" : c; }
+  function fmtNat(v, c) { var a = Math.abs(v); return new Intl.NumberFormat(LOC, { maximumFractionDigits: a >= 100 ? 2 : a >= 1 ? 3 : 6 }).format(v) + " " + curSym(c); }
+  function alLabel(a) { return a.op === "mv" ? "Ημέρα ±" + n1(a.v, 2) + "%" : (a.op === "gt" ? "Πάνω από " : "Κάτω από ") + fmtNat(a.v, a.cur); }
+  function alSugg(q) {
+    q = q.trim().toLowerCase(); var out = [];
+    if (!q) return out;
+    rows.forEach(function (r) { var a = r.dsym.toLowerCase(), b = r.sym.toLowerCase(), n = (r.name || "").toLowerCase(); var sc = a === q || b === q ? 0 : a.indexOf(q) === 0 || b.indexOf(q) === 0 ? 1 : n.indexOf(q) > -1 ? 2 : -1; if (sc >= 0) out.push([sc - (r.mcap ? 0.5 : 0), r.sym, r.dsym, r.name || "", "Χ.Α.", monoHtml(r.dsym)]); });
+    Object.keys(USQ).forEach(function (s) { var u = USQ[s], a = s.toLowerCase(), n = (u.n || "").toLowerCase(); var sc = a === q ? 0 : a.indexOf(q) === 0 ? 1.2 : n.indexOf(q) > -1 ? 2.2 : -1; if (sc >= 0) out.push([sc, "f:" + s, s, u.n || "", "ΗΠΑ", logoBox(s, u.l ? "https://s3-symbol-logo.tradingview.com/" + encodeURIComponent(u.l) + ".svg" : null)]); });
+    (CG100 || []).forEach(function (c) { var a = String(c.symbol || "").toLowerCase(), n = String(c.name || "").toLowerCase(); var sc = a === q ? 0.1 : a.indexOf(q) === 0 || n.indexOf(q) === 0 ? 1.1 : n.indexOf(q) > -1 ? 2.1 : -1; if (sc >= 0) out.push([sc, "c:" + c.id, a.toUpperCase(), c.name, "Crypto", logoBox(a.toUpperCase(), c.image)]); });
+    out.sort(function (x, y) { return x[0] - y[0]; });
+    return out.slice(0, 8);
+  }
+  function alKeyInfo(k) {
+    if (/^c:/.test(k)) { var it = xGet(k); return { lab: it.s, n: it.n, img: it.img }; }
+    if (/^f:/.test(k)) { var q = USQ[k.slice(2)]; return { lab: k.slice(2), n: q ? q.n : k.slice(2), img: q && q.l ? "https://s3-symbol-logo.tradingview.com/" + encodeURIComponent(q.l) + ".svg" : null }; }
+    var r = BYSYM[k]; return { lab: r ? r.dsym : k, n: r ? r.name : "" };
+  }
+  function alLogo(a) { return /^[cf]:/.test(a.k) ? logoBox(a.lab, a.img || null) : monoHtml(a.lab); }
+  function isIOS() { return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1); }
+  function standalone() { return (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true; }
+  function pushState() {
+    if (!FIREBASE_CONFIG || window.claude) return "nosite";
+    if (!fbUser) return "signin";
+    if (pfMode !== "db") return "nodb";
+    if (isIOS() && !standalone()) return "ios";
+    if (!("Notification" in window) || !("serviceWorker" in navigator) || !("PushManager" in window)) return "unsupported";
+    if (Notification.permission === "denied") return "denied";
+    var tok = lsGet("agora-pushtok", null);
+    if (Notification.permission === "granted" && tok && PUSHT.some(function (x) { return x.t === tok; })) return "on";
+    return "off";
+  }
+  function renderAlerts() {
+    var box = document.getElementById("tl-al"); if (!box) return;
+    var st = pushState();
+    var stH = {
+      nosite: "Οι ειδοποιήσεις λειτουργούν στο δημόσιο site, axiogram.eu.",
+      signin: 'Για να σου έρχονται ειδοποιήσεις στο κινητό ακόμα κι όταν το site είναι κλειστό, <button type="button" class="linkbtn" data-al="signin">συνδέσου</button>. Χωρίς σύνδεση, ειδοποιείσαι μόνο όσο το site είναι ανοιχτό.',
+      nodb: "Η αποθήκευση στον λογαριασμό δεν είναι ενεργή, οπότε οι ειδοποιήσεις λειτουργούν μόνο όσο το site είναι ανοιχτό.",
+      ios: "Στο iPhone, οι ειδοποιήσεις λειτουργούν όταν το Axiogram είναι στην αρχική οθόνη: πάτα <b>Κοινοποίηση → Προσθήκη στην αρχική οθόνη</b>, άνοιξέ το από εκεί και έλα ξανά εδώ.",
+      unsupported: "Αυτός ο browser δεν υποστηρίζει ειδοποιήσεις. Δοκίμασε Chrome, Edge, Firefox ή Safari.",
+      denied: "Οι ειδοποιήσεις είναι μπλοκαρισμένες για το axiogram.eu. Ενεργοποίησέ τις από τις ρυθμίσεις του browser (το λουκέτο δίπλα στη διεύθυνση) και ξαναπάτα εδώ.",
+      off: 'Ενεργοποίησε τις ειδοποιήσεις σε αυτή τη συσκευή για να έρχονται ακόμα κι όταν το site είναι κλειστό. <button type="button" class="btn primary" data-al="push">Ενεργοποίηση ειδοποιήσεων</button>',
+      on: '<span class="chg up">✓</span> Οι ειδοποιήσεις είναι ενεργές σε αυτή τη συσκευή. <button type="button" class="linkbtn" data-al="test">Στείλε μου μια δοκιμαστική</button>'
+    }[st];
+    var p = alPick ? alPrice(alPick.k) : null, unit = alOp === "mv" ? "%" : p ? curSym(p.cur) : "";
+    var form = '<form class="panel alform" id="alForm" novalidate><h3>Νέα ειδοποίηση</h3>' +
+      '<label class="alsym"><span>Μετοχή ή crypto</span>' + (alPick ? '<div class="alpick">' + alLogo(alPick) + "<b>" + esc(alPick.lab) + "</b><span>" + esc(alPick.n || "") + "</span>" + (p ? '<span class="num" style="margin-left:auto">' + fmtNat(p.p, p.cur) + "</span>" : "") + '<button type="button" class="close" data-al="unpick" aria-label="Αλλαγή">×</button></div>' : '<input id="alQ" class="search" autocomplete="off" placeholder="Γράψε σύμβολο ή όνομα, π.χ. ΔΕΗ, NVDA, BTC" aria-controls="alSugg"><div class="sugg" id="alSugg" role="listbox" hidden></div>') + "</label>" +
+      '<label><span>Όταν</span><select id="alOp" class="search">' + Object.keys(AL_OP).map(function (k) { return '<option value="' + k + '"' + (k === alOp ? " selected" : "") + ">" + AL_OP[k] + "</option>"; }).join("") + "</select></label>" +
+      '<label><span>Τιμή (' + (unit || "—") + ')</span><input id="alV" inputmode="decimal" autocomplete="off" placeholder="' + (alOp === "mv" ? "π.χ. 5" : p ? "π.χ. " + fmtNat(p.p * (alOp === "gt" ? 1.1 : 0.9), p.cur).replace(/ \S+$/, "") : "") + '"></label>' +
+      '<div class="alact"><span class="err" id="alErr" role="alert"></span><button type="submit" class="btn primary">Προσθήκη</button></div></form>';
+    var mine = ALERTS.slice().sort(function (a, b) { return (b.on ? 1 : 0) - (a.on ? 1 : 0) || (b.at || 0) - (a.at || 0); });
+    var list = mine.length ? '<div class="panel allist">' + mine.map(function (a) {
+      var pp = alPrice(a.k), dist = "";
+      if (pp && a.op !== "mv" && pp.cur === a.cur) dist = '<span class="note">τώρα ' + fmtNat(pp.p, pp.cur) + " · " + pctS((a.v / pp.p - 1) * 100) + "</span>";
+      if (pp && a.op === "mv" && pp.c != null) dist = '<span class="note">σήμερα ' + pctS(pp.c, 2) + "</span>";
+      return '<div class="alrow' + (a.on ? "" : " off") + '">' + alLogo(a) + '<div class="aln"><b>' + esc(a.lab) + "</b><span>" + esc(alLabel(a)) + "</span>" + dist + "</div>" +
+        (a.fired && !a.on ? '<span class="altag">Ειδοποιήθηκες ' + esc(new Date(a.fired).toLocaleDateString(LOC, { day: "numeric", month: "short" })) + "</span>" : "") +
+        '<label class="sw" title="' + (a.on ? "Ενεργή" : "Ανενεργή") + '"><input type="checkbox" data-alon="' + esc(a.id) + '"' + (a.on ? " checked" : "") + ' aria-label="Ενεργή ειδοποίηση ' + esc(a.lab) + '"><i></i></label>' +
+        '<button type="button" class="xbtn" data-aldel="' + esc(a.id) + '" aria-label="Διαγραφή ειδοποίησης ' + esc(a.lab) + '">Διαγραφή</button></div>';
+    }).join("") + "</div>" : '<div class="panel pempty"><h3>Δεν έχεις ειδοποιήσεις</h3><p>Πρόσθεσε μία παραπάνω, ή πάτα «🔔 Ειδοποίηση» στη σελίδα μιας μετοχής.</p></div>';
+    var wk = fbUser && pfMode === "db"
+      ? '<div class="panel alweek"><label class="sw"><input type="checkbox" id="alWeekly"' + (WEEKLY ? " checked" : "") + '><i></i></label><div><b>Εβδομαδιαία σύνοψη στο email</b><span class="note">Κάθε Παρασκευή απόγευμα στο ' + esc(fbUser.email || "email σου") + ": πώς πήγε το χαρτοφυλάκιο, τι κινήθηκε περισσότερο και τι έρχεται την επόμενη εβδομάδα." + (WEEKLY ? ' <button type="button" class="linkbtn" data-al="wtest">Στείλε μου μία τώρα</button>' : "") + "</span></div></div>"
+      : '<div class="panel alweek"><div><b>Εβδομαδιαία σύνοψη στο email</b><span class="note">Συνδέσου για να λαμβάνεις κάθε Παρασκευή τη σύνοψη του χαρτοφυλακίου σου.</span></div></div>';
+    box.innerHTML = '<div class="panel alstate">' + stH + "</div>" + form + '<h3 class="alh">Οι ειδοποιήσεις μου</h3>' + list + wk +
+      '<p class="foot">Οι τιμές ελέγχονται περίπου κάθε 10 λεπτά. Οι μετοχές του Χ.Α. και των ΗΠΑ έχουν καθυστέρηση 15 λεπτών. Κάθε ειδοποίηση τιμής στέλνεται μία φορά και μετά απενεργοποιείται· την ενεργοποιείς ξανά από τον διακόπτη. Η ειδοποίηση μεταβολής στέλνεται το πολύ μία φορά την ημέρα.</p>';
+  }
+  function alSave() { lsSet("agora-alerts", ALERTS); if (pfRef) persist(); if (window.__alBadge) window.__alBadge(); }
+  function alStart(k) {
+    var info = alKeyInfo(k); alPick = { k: k, lab: info.lab, n: info.n, img: info.img };
+    if (!drawer.hidden) closeStock();
+    showView("tools"); setTl("al");
+    var v = document.getElementById("alV"); if (v) v.focus();
+  }
+  (function () {
+    var box = document.getElementById("tl-al");
+    box.addEventListener("input", function (e) {
+      if (e.target.id !== "alQ") return;
+      var sg = document.getElementById("alSugg"), out = alSugg(e.target.value);
+      if (!e.target.value.trim()) { sg.hidden = true; return; }
+      sg.innerHTML = out.length ? out.map(function (x) { return '<button type="button" role="option" data-alk="' + esc(x[1]) + '">' + x[5] + "<b>" + esc(x[2]) + "</b><span>" + esc(x[3] + " · " + x[4]) + "</span></button>"; }).join("") : '<div class="msg">Δεν βρέθηκε τίποτα.</div>';
+      sg.hidden = false;
+      if (!CG100) loadCg100(true);
+    });
+    box.addEventListener("mousedown", function (e) { if (e.target.closest("#alSugg")) e.preventDefault(); });
+    box.addEventListener("change", function (e) {
+      var t = e.target;
+      if (t.id === "alOp") { alOp = t.value; var keep = (document.getElementById("alV") || {}).value; renderAlerts(); document.getElementById("alV").value = keep || ""; return; }
+      if (t.id === "alWeekly") { WEEKLY = t.checked; persist(); renderAlerts(); toast(WEEKLY ? "Θα λαμβάνεις τη σύνοψη κάθε Παρασκευή" : "Η εβδομαδιαία σύνοψη απενεργοποιήθηκε"); return; }
+      var on = t.getAttribute("data-alon");
+      if (on) { ALERTS.forEach(function (a) { if (a.id === on) { a.on = t.checked; if (t.checked) { a.fired = null; a.last = null; } } }); alSave(); renderAlerts(); }
+    });
+    box.addEventListener("click", function (e) {
+      var s = e.target.closest("[data-alk]");
+      if (s) { var k = s.getAttribute("data-alk"), info = alKeyInfo(k); alPick = { k: k, lab: info.lab, n: info.n, img: info.img }; renderAlerts(); document.getElementById("alV").focus(); return; }
+      var a = e.target.closest("[data-al]"); if (a) {
+        var w = a.getAttribute("data-al");
+        if (w === "unpick") { alPick = null; renderAlerts(); var q = document.getElementById("alQ"); if (q) q.focus(); }
+        if (w === "signin") openAuth("signin");
+        if (w === "push") enablePush();
+        if (w === "test") { PUSHT.forEach(function (x) { if (x.t === lsGet("agora-pushtok", null)) x.test = Date.now(); }); persist(); toast("Η δοκιμαστική ειδοποίηση θα έρθει σε λίγα λεπτά"); }
+        if (w === "wtest") { WTEST = Date.now(); persist(); toast("Η σύνοψη θα έρθει στο email σου σε λίγα λεπτά"); }
+        return;
+      }
+      var d = e.target.closest("[data-aldel]");
+      if (d) { var id = d.getAttribute("data-aldel"); ALERTS = ALERTS.filter(function (x) { return x.id !== id; }); alSave(); renderAlerts(); }
+    });
+    box.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var err = document.getElementById("alErr"), v = num(document.getElementById("alV").value);
+      if (!alPick) { err.textContent = "Διάλεξε μετοχή ή crypto."; var q = document.getElementById("alQ"); if (q) q.focus(); return; }
+      if (!(v > 0)) { err.textContent = "Γράψε έναν θετικό αριθμό."; document.getElementById("alV").focus(); return; }
+      var p = alPrice(alPick.k);
+      if (alOp !== "mv" && p && (alOp === "gt" ? p.p >= v : p.p <= v)) { err.textContent = "Η τιμή είναι ήδη " + (alOp === "gt" ? "πάνω" : "κάτω") + " από " + fmtNat(v, p.cur) + "."; return; }
+      ALERTS.push({ id: "a" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), k: alPick.k, lab: alPick.lab, n: alPick.n || "", img: alPick.img || null, op: alOp, v: v, cur: alOp === "mv" ? "%" : p ? p.cur : (/^[cf]:/.test(alPick.k) ? "USD" : "EUR"), on: true, at: Date.now(), fired: null });
+      alPick = null; alSave(); renderAlerts(); toast("Η ειδοποίηση προστέθηκε");
+      if (pushState() === "off") toast("Πάτα «Ενεργοποίηση ειδοποιήσεων» για να έρχονται και με το site κλειστό");
+    });
+  })();
+  function enablePush() {
+    if (!fbUser) { openAuth("signin"); return; }
+    Notification.requestPermission().then(function (perm) {
+      if (perm !== "granted") { renderAlerts(); toast("Δεν δόθηκε άδεια για ειδοποιήσεις"); return; }
+      toast("Ενεργοποίηση…");
+      return loadScript("https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js")
+        .then(function () { return navigator.serviceWorker.register("sw.js").then(function () { return navigator.serviceWorker.ready; }); })
+        .then(function (reg) { return firebase.messaging().getToken({ serviceWorkerRegistration: reg }); })
+        .then(function (tok) {
+          if (!tok) throw new Error("no token");
+          lsSet("agora-pushtok", tok);
+          var dev = (/android/i.test(navigator.userAgent) ? "Android" : isIOS() ? "iPhone/iPad" : /windows/i.test(navigator.userAgent) ? "Windows" : /mac/i.test(navigator.userAgent) ? "Mac" : "Υπολογιστής");
+          PUSHT = PUSHT.filter(function (x) { return x.t !== tok; }).concat([{ t: tok, d: dev, at: Date.now(), test: Date.now() }]).slice(-6);
+          return persist().then(function () { renderAlerts(); toast("Έτοιμο. Θα σου έρθει μια δοκιμαστική ειδοποίηση σε λίγα λεπτά"); });
+        });
+    }).catch(function (er) { renderAlerts(); toast("Η ενεργοποίηση απέτυχε" + (er && er.code ? " (" + er.code + ")" : "") + ". Δοκίμασε ξανά."); });
+  }
+  /* έλεγχος όσο το site είναι ανοιχτό (όταν δεν υπάρχει λογαριασμός ή push) */
+  function alCheckLocal() {
+    if (pushState() === "on") return;
+    var hit = [], today = TODAY;
+    ALERTS.forEach(function (a) {
+      if (!a.on) return;
+      var p = alPrice(a.k); if (!p) return;
+      if (a.op === "mv") { if (p.c != null && Math.abs(p.c) >= a.v && a.last !== today) { a.last = today; hit.push([a, p]); } return; }
+      if (p.cur !== a.cur) return;
+      if (a.op === "gt" ? p.p >= a.v : p.p <= a.v) { a.on = false; a.fired = Date.now(); hit.push([a, p]); }
+    });
+    if (!hit.length) return;
+    alSave();
+    hit.forEach(function (x) {
+      var a = x[0], p = x[1], body = a.op === "mv" ? "Μεταβολή σήμερα " + pctS(p.c, 2) : (a.op === "gt" ? "Πάνω από " : "Κάτω από ") + fmtNat(a.v, a.cur) + " · τώρα " + fmtNat(p.p, p.cur);
+      toast("🔔 " + a.lab + ": " + body);
+      try { if ("Notification" in window && Notification.permission === "granted") new Notification("🔔 " + a.lab, { body: body, icon: "icons/icon-192.png", tag: a.id }); } catch (e) {}
+    });
+    if (!document.getElementById("view-tools").hidden && TL === "al") renderAlerts();
+  }
+  setInterval(function () { if (ALERTS.some(function (a) { return a.on && /^c:/.test(a.k); })) refreshAlertCrypto(); alCheckLocal(); }, 60000);
+  function refreshAlertCrypto() {
+    var ids = {}; ALERTS.forEach(function (a) { if (a.on && /^c:/.test(a.k)) ids[a.k.slice(2)] = 1; });
+    var list = Object.keys(ids).filter(function (id) { return !(CG100 || []).some(function (x) { return x.id === id; }); });
+    if (!list.length || typeof fetch !== "function") return;
+    fetch("https://api.coingecko.com/api/v3/simple/price?vs_currencies=eur&include_24hr_change=true&ids=" + encodeURIComponent(list.join(",")))
+      .then(function (r) { return r.json(); }).then(function (j) { Object.keys(j).forEach(function (id) { if (j[id] && j[id].eur != null) CGP[id] = { p: j[id].eur, c: j[id].eur_24h_change || 0 }; }); alCheckLocal(); }).catch(function () {});
+  }
+  /* όταν ο server στείλει ειδοποίηση, δείξε τη και εδώ */
+  window.__alFired = function (prev, next) {
+    var was = {}; prev.forEach(function (a) { was[a.id] = a; });
+    next.forEach(function (a) { var o = was[a.id]; if (o && a.fired && a.fired !== o.fired && Date.now() - a.fired < 30 * 60000) toast("🔔 " + a.lab + ": " + alLabel(a)); });
+    if (!document.getElementById("view-tools").hidden && TL === "al") renderAlerts();
+  };
+
+  /* ---------- καρτέλες εργαλείων ---------- */
+  var TL = lsGet("agora-tl", "scr");
+  if (["scr", "cal", "al"].indexOf(TL) < 0) TL = "scr";
+  function setTl(t) {
+    TL = t; lsSet("agora-tl", t);
+    Array.prototype.forEach.call(document.querySelectorAll("#tlTabs button"), function (b) { b.setAttribute("aria-selected", b.getAttribute("data-tl") === t); });
+    ["scr", "cal", "al"].forEach(function (k) { document.getElementById("tl-" + k).hidden = k !== t; });
+    renderTools();
+  }
+  function renderTools() { if (TL === "scr") renderScr(); else if (TL === "cal") renderCal(); else renderAlerts(); }
+  document.getElementById("tlTabs").addEventListener("click", function (e) { var b = e.target.closest("[data-tl]"); if (b) setTl(b.getAttribute("data-tl")); });
+  window.__renderTools = function () { setTl(TL); };
+  window.__alStart = alStart;
+
+  /* ===================== Κοινοποίηση χαρτοφυλακίου ===================== */
+  function b64u(bytes) { var s = ""; for (var i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]); return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); }
+  function unb64u(s) { s = s.replace(/-/g, "+").replace(/_/g, "/"); while (s.length % 4) s += "="; var b = atob(s), u = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
+  function streamBytes(bytes, T) { return new Response(new Blob([bytes]).stream().pipeThrough(new T("deflate-raw"))).arrayBuffer().then(function (a) { return new Uint8Array(a); }); }
+  function packShare(obj) {
+    var raw = new TextEncoder().encode(JSON.stringify(obj));
+    if (typeof CompressionStream !== "function") return Promise.resolve("j." + b64u(raw));
+    return streamBytes(raw, CompressionStream).then(function (z) { return "z." + b64u(z); }).catch(function () { return "j." + b64u(raw); });
+  }
+  function unpackShare(s) {
+    var kind = s.slice(0, 2), bytes = unb64u(s.slice(2));
+    var p = kind === "z." ? streamBytes(bytes, DecompressionStream) : Promise.resolve(bytes);
+    return p.then(function (b) { return JSON.parse(new TextDecoder().decode(b)); });
+  }
+  function shareData(perf) {
+    var H = pfH(), tot = H.value || 0;
+    var h = H.list.filter(function (x) { return x.value > 0; }).map(function (x) {
+      var meta = EXTMETA[x.sym] || {}, k = x.sym;
+      var lab = x.perp ? "HL" : DS(k), name = x.perp ? (x.w && x.w.n) || "Hyperliquid" : (x.row && x.row.name) || meta.n || "";
+      var r = [k, lab, name, +(x.value / tot * 100).toFixed(2), x.price ? +x.price.toPrecision(7) : 0, x.row ? +(x.row.chg || 0).toFixed(2) : 0, meta.img || null];
+      if (perf) r.push(+(x.plPct || 0).toFixed(2));
+      return r;
+    });
+    return { v: 1, n: pfSel === "all" ? (pfs.length > 1 ? "Όλα τα χαρτοφυλάκια" : "Χαρτοφυλάκιο") : pfName(pfSel), d: TODAY, perf: !!perf, h: h };
+  }
+  var shBox = document.getElementById("shBox"), shScrim = document.getElementById("shScrim");
+  function openShare() {
+    var H = pfH();
+    if (!H.list.length) { toast("Το χαρτοφυλάκιο είναι άδειο"); return; }
+    shBox.hidden = false; shScrim.hidden = false; makeShare();
+  }
+  function makeShare() {
+    var perf = document.getElementById("shPerf").checked, out = document.getElementById("shUrl");
+    out.value = "…";
+    packShare(shareData(perf)).then(function (code) {
+      var base = location.origin && /^https?:/.test(location.origin) ? location.origin + location.pathname : "https://axiogram.eu/";
+      out.value = base + "#s=" + code;
+      document.getElementById("shNative").hidden = !navigator.share;
+    });
+  }
+  function closeShare() { shBox.hidden = true; shScrim.hidden = true; }
+  document.getElementById("shClose").addEventListener("click", closeShare);
+  shScrim.addEventListener("click", closeShare);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !shBox.hidden) closeShare(); });
+  document.getElementById("shPerf").addEventListener("change", makeShare);
+  document.getElementById("shCopy").addEventListener("click", function () {
+    var u = document.getElementById("shUrl");
+    (navigator.clipboard ? navigator.clipboard.writeText(u.value) : Promise.reject()).then(function () { toast("Ο σύνδεσμος αντιγράφηκε"); }).catch(function () { u.select(); try { document.execCommand("copy"); toast("Ο σύνδεσμος αντιγράφηκε"); } catch (e) {} });
+  });
+  document.getElementById("shNative").addEventListener("click", function () { navigator.share({ title: "Το χαρτοφυλάκιό μου στο Axiogram", url: document.getElementById("shUrl").value }).catch(function () {}); });
+  document.getElementById("pf-share").addEventListener("click", openShare);
+
+  /* προβολή κοινοποιημένου χαρτοφυλακίου (#s=…) */
+  var SHV = null;
+  function livePx(k) {
+    if (/^c:/.test(k)) { var id = k.slice(2), c = (CG100 || []).filter(function (x) { return x.id === id; })[0]; if (c) return { p: c.current_price, c: c.price_change_percentage_24h }; return CGP[id] ? { p: CGP[id].p, c: CGP[id].c } : null; }
+    if (/^f:/.test(k)) { var q = USQ[k.slice(2)]; if (q) return { p: q.p * usdEur(), c: q.c }; var f = FOREIGN && FOREIGN.q && FOREIGN.q[k.slice(2)]; return f ? { p: f.pe, c: f.c } : null; }
+    if (/^[mp]:/.test(k)) return null;
+    var r = BYSYM[k]; return r ? { p: r.price, c: r.chg } : null;
+  }
+  function renderShareView() {
+    var d = SHV, box = document.getElementById("svBody"); if (!d || !box) return;
+    var items = d.h.map(function (x) {
+      var lp = livePx(x[0]), r0 = x[7], ratio = lp && x[4] ? lp.p / x[4] : 1;
+      return { k: x[0], lab: x[1], n: x[2], w0: x[3], ratio: ratio, chg: lp ? lp.c : x[5], img: x[6], perf: r0 == null ? null : ((1 + r0 / 100) * ratio - 1) * 100 };
+    });
+    var tw = 0; items.forEach(function (it) { it.wl = it.w0 * it.ratio; tw += it.wl; });
+    var day = 0, perfV = 0, perfBase = 0;
+    items.forEach(function (it) {
+      it.w = tw ? it.wl / tw * 100 : 0;
+      if (it.chg != null) day += it.w * it.chg / 100;
+      if (it.perf != null) { var cost = it.wl / (1 + it.perf / 100); perfBase += cost; perfV += it.wl; }
+    });
+    items.sort(function (a, b) { return b.w - a.w; });
+    var tp = perfBase ? (perfV / perfBase - 1) * 100 : null;
+    var bar = items.map(function (it, i) { return '<i style="width:' + it.w.toFixed(2) + "%;background:" + pfColor(i) + '" title="' + esc(it.lab + " " + n1(it.w) + "%") + '"></i>'; }).join("");
+    var when = new Date(d.d + "T12:00:00").toLocaleDateString(LOC, { day: "numeric", month: "long", year: "numeric" });
+    box.innerHTML =
+      '<div class="svhead"><div><h2 id="svTitle">' + esc(d.n || "Χαρτοφυλάκιο") + '</h2><span class="note">Κοινοποιήθηκε ' + esc(when) + " · " + items.length + " θέσεις · μόνο ποσοστά, χωρίς ποσά</span></div></div>" +
+      '<div class="svkpi">' + (tp != null ? '<div><span class="note">Απόδοση από την αγορά</span><b class="chg ' + cls(tp) + '">' + pctS(tp, 2) + "</b></div>" : "") + '<div><span class="note">Σήμερα</span><b class="chg ' + cls(day) + '">' + pctS(day, 2) + "</b></div></div>" +
+      '<div class="svbar">' + bar + "</div>" +
+      '<div class="svlist">' + items.map(function (it, i) {
+        var logo = /^[cf]:/.test(it.k) ? logoBox(it.lab, it.img || (/^f:/.test(it.k) && LOGO_D[it.k] ? "https://s3-symbol-logo.tradingview.com/" + encodeURIComponent(LOGO_D[it.k]) + ".svg" : null)) : monoHtml(it.lab);
+        return '<div class="svrow"><i class="dot" style="background:' + pfColor(i) + '"></i>' + logo + '<div class="cn"><b>' + esc(it.lab) + "</b><span>" + esc(it.n || "") + '</span></div><span class="num w">' + n1(it.w) + "%</span>" + (it.chg == null ? '<span class="note">—</span>' : chgHtml(it.chg)) + (d.perf ? '<span class="pf chg ' + (it.perf == null ? "" : cls(it.perf)) + '" title="Απόδοση από την αγορά">' + pctS(it.perf) + "</span>" : "") + "</div>";
+      }).join("") + "</div>" +
+      '<p class="note" style="margin:0">Οι τιμές είναι οι τρέχουσες. Οι αναλογίες αλλάζουν με τις τιμές από τη μέρα της κοινοποίησης.</p>' +
+      '<div class="svcta"><button type="button" class="btn primary" id="svGo">Φτιάξε το δικό σου χαρτοφυλάκιο</button></div>';
+  }
+  function openShareView(code) {
+    unpackShare(code).then(function (d) {
+      if (!d || !Array.isArray(d.h)) throw new Error("bad");
+      SHV = d;
+      document.getElementById("svBox").hidden = false; document.getElementById("svScrim").hidden = false;
+      renderShareView();
+      if (d.h.some(function (x) { return /^c:/.test(x[0]); })) {
+        var ids = d.h.filter(function (x) { return /^c:/.test(x[0]); }).map(function (x) { return x[0].slice(2); });
+        fetch("https://api.coingecko.com/api/v3/simple/price?vs_currencies=eur&include_24hr_change=true&ids=" + encodeURIComponent(ids.join(",")))
+          .then(function (r) { return r.json(); }).then(function (j) { Object.keys(j).forEach(function (id) { if (j[id] && j[id].eur != null) CGP[id] = { p: j[id].eur, c: j[id].eur_24h_change || 0 }; }); renderShareView(); }).catch(function () {});
+      }
+    }).catch(function () { toast("Ο σύνδεσμος χαρτοφυλακίου δεν είναι έγκυρος"); });
+  }
+  function closeShareView() {
+    document.getElementById("svBox").hidden = true; document.getElementById("svScrim").hidden = true; SHV = null;
+    if (/^#s=/.test(location.hash)) history.replaceState(null, "", location.pathname + location.search);
+  }
+  document.getElementById("svClose").addEventListener("click", closeShareView);
+  document.getElementById("svScrim").addEventListener("click", closeShareView);
+  document.getElementById("svBox").addEventListener("click", function (e) { if (e.target.closest("#svGo")) { closeShareView(); showView("portfolio"); } });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && SHV) closeShareView(); });
+  function checkHash() { var m = /^#s=(.+)$/.exec(location.hash); if (m) openShareView(m[1]); else if (location.hash === "#tools") showView("tools"); }
+  window.addEventListener("hashchange", checkHash);
+  checkHash();
+
+  window.__alBadge = function () { var n = ALERTS.filter(function (a) { return a.on; }).length, c = document.getElementById("alcnt"); c.hidden = !n; c.textContent = n; };
+  window.__alBadge();
   render();
   if (META) showLive(META);
 }
