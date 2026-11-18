@@ -1,17 +1,11 @@
-import urllib.request, json, time
-time.sleep(240)
-K="AIzaSyDd3-HyjHU6Cji1DwPtZ6epuJxFUT6luws"
-req=urllib.request.Request("https://identitytoolkit.googleapis.com/v1/accounts:createAuthUri?key="+K,
-  data=json.dumps({"providerId":"google.com","continueUri":"https://axiogram.eu/__/auth/handler","authFlowType":"CODE_FLOW"}).encode(),
-  headers={"Content-Type":"application/json","Referer":"https://axiogram.eu/"})
-try:
-  j=json.load(urllib.request.urlopen(req,timeout=30)); u=j.get("authUri",""); print("authUri ok", "axiogram.eu" in u)
-  r=urllib.request.Request(u, headers={"User-Agent":"Mozilla/5.0 (Windows NT 10.0) Chrome/120"})
-  try:
-    resp=urllib.request.urlopen(r,timeout=30); d=resp.read().decode("utf8","ignore")
-    print("google", resp.status, resp.geturl()[:80]); print("MISMATCH" if "redirect_uri_mismatch" in d else "no mismatch text")
-  except urllib.error.HTTPError as e:
-    d=e.read().decode("utf8","ignore"); print("google HTTP", e.code, "MISMATCH" if "redirect_uri_mismatch" in d else "other")
-except Exception as e: print("ERR", e)
-for u in ["http://axiogram.eu/"]:
-  print(u, "->", urllib.request.urlopen(u,timeout=30).geturl())
+import requests, json
+H = {"User-Agent": "Mozilla/5.0 Chrome/124", "Origin": "https://www.tradingview.com", "Referer": "https://www.tradingview.com/", "Content-Type": "application/json"}
+cands=["earnings_release_next_date","earnings_release_date","earnings_release_next_trading_date_fq","ex_dividend_date_upcoming","dividend_ex_date_upcoming","dividend_payment_date_upcoming","dividends_yield_current","dividends_yield","dividend_yield_recent","price_earnings_ttm","price_book_fq","price_book_ratio","return_on_equity","Perf.Y","Perf.YTD","beta_1_year","dividend_payout_ratio_ttm","earnings_per_share_diluted_ttm","RSI","Recommend.All","net_margin","total_revenue_yoy_growth_ttm","debt_to_equity","price_sales_ratio","High.All","price_52_week_high","price_52_week_low","dps_common_stock_prim_issue_fy","dividends_per_share_fq","earnings_per_share_forecast_next_fq","industry","sector"]
+for m in ["greece","america"]:
+  ok=[]
+  for c in cands:
+    b={"columns":["name",c],"range":[0,3],"sort":{"sortBy":"market_cap_basic","sortOrder":"desc"},"filter":[]}
+    r=requests.post("https://scanner.tradingview.com/%s/scan"%m,headers=H,data=json.dumps(b),timeout=30)
+    if r.status_code==200: ok.append((c,[d["d"][1] for d in r.json().get("data",[])]))
+    else: print(m,c,"BAD",r.status_code)
+  for c,v in ok: print(m,c,v)
