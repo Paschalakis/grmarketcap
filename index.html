@@ -439,7 +439,8 @@ body.pfhide .sens { filter: blur(9px); user-select: none; }
 .pwtop code { font-size: 12px; color: var(--muted); }
 .pwtop a { font-size: 12.5px; color: var(--accent); }
 .pwtop .xbtn { margin-left: auto; }
-.pwk { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 10px; }
+.pwk { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-bottom: 10px; }
+.pwh { margin: 14px 0 6px; font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
 @media (max-width: 640px) { .pwk { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .pwk div { background: var(--dk-head); border: 1px solid var(--dk-line); border-radius: 12px; padding: 10px 12px; }
 .pwk span { display: block; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
@@ -498,6 +499,25 @@ body.pfhide .sens { filter: blur(9px); user-select: none; }
 .pfbar .mini { border: 0; background: none; color: var(--muted); font: inherit; font-size: 12.5px; cursor: pointer; padding: 4px 6px; border-radius: 8px; text-decoration: underline; text-underline-offset: 3px; }
 .pfbar .mini:hover, .pfbar .mini.danger { color: var(--down); }
 .pftag { display: inline-block; font-size: 10.5px; font-weight: 600; padding: 1px 6px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); margin-left: 6px; vertical-align: 1px; white-space: nowrap; }
+.heattools { display: flex; flex-wrap: wrap; gap: 8px; }
+.heat .hmsg { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); }
+.cstats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.cstats[hidden] { display: none; }
+@media (max-width: 860px) { .cstats { grid-template-columns: minmax(0, 1fr); } }
+.cstat { padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; }
+.cstat .lbl { font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.cstat .big { font-size: 26px; font-variant-numeric: tabular-nums; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.cstat .sub { font-size: 12.5px; color: var(--muted); }
+.dombar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; background: var(--dk-head); }
+.dombar i { display: block; height: 100%; }
+.domleg { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12.5px; color: var(--muted); }
+.domleg b { color: var(--fg); font-variant-numeric: tabular-nums; }
+.domleg i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+.fng { display: flex; align-items: center; gap: 14px; }
+.fng svg { flex: none; }
+.fng .cls { font-size: 15px; font-weight: 700; }
+.fnghist { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--muted); }
+.fnghist b { font-variant-numeric: tabular-nums; }
 .mktsw { align-self: flex-start; }
 #view-market[data-mkt="us"] > *:not(.mktrow):not(#xlist), #view-market[data-mkt="c"] > *:not(.mktrow):not(#xlist) { display: none !important; }
 .mktrow { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
@@ -715,6 +735,7 @@ th[aria-sort] button { color: var(--accent); }
   <section id="xlist" class="xlist" hidden>
     <div class="phead"><div><h2 id="xtitle"></h2><div class="storage" id="xnote"></div></div>
       <input type="search" class="search" id="xq" placeholder="Αναζήτηση" aria-label="Αναζήτηση στη λίστα" autocomplete="off"></div>
+    <div class="cstats" id="cstats" hidden></div>
     <div class="panel tablewrap"><table><thead id="xhead"></thead><tbody id="xrows"></tbody></table><div class="empty" id="xempty" hidden>Φόρτωση…</div></div>
     <p class="foot" id="xfoot"></p>
   </section>
@@ -775,10 +796,11 @@ th[aria-sort] button { color: var(--accent); }
 
   <div class="view" id="view-heat" role="tabpanel" aria-labelledby="tab-heat" hidden>
     <div class="phead"><div><h2>Χάρτης αγοράς</h2><div class="storage">Το μέγεθος κάθε κουτιού είναι η κεφαλαιοποίηση και το χρώμα η μεταβολή. Πάτα σε μια μετοχή για λεπτομέρειες.</div></div>
-      <div class="seg2" id="heatPer" role="group" aria-label="Διάστημα"><button type="button" data-v="d" aria-pressed="true">Ημέρα</button><button type="button" data-v="w" aria-pressed="false">7 ημέρες</button></div></div>
+      <div class="heattools"><div class="seg2" id="heatMkt" role="group" aria-label="Αγορά"><button type="button" data-hm="gr" aria-pressed="true">Ελλάδα</button><button type="button" data-hm="us" aria-pressed="false">ΗΠΑ</button><button type="button" data-hm="c" aria-pressed="false">Crypto</button></div>
+      <div class="seg2" id="heatPer" role="group" aria-label="Διάστημα"><button type="button" data-v="d" aria-pressed="true">Ημέρα</button><button type="button" data-v="w" aria-pressed="false">7 ημέρες</button></div></div></div>
     <div class="heat" id="heat"></div>
     <div class="heatleg" aria-hidden="true"><span>−4%</span><i style="background:#b8333a"></i><i style="background:#8e3a3f"></i><i style="background:#5e3a3f"></i><i style="background:#4a5060"></i><i style="background:#2f5e47"></i><i style="background:#2b8257"></i><i style="background:#21a36a"></i><span>+4%</span></div>
-    <p class="foot">Εμφανίζονται οι εταιρείες με γνωστή κεφαλαιοποίηση, ομαδοποιημένες ανά κλάδο.</p>
+    <p class="foot" id="heatFoot">Εμφανίζονται οι εταιρείες με γνωστή κεφαλαιοποίηση, ομαδοποιημένες ανά κλάδο.</p>
   </div>
 
   <div class="view" id="view-favs" role="tabpanel" aria-labelledby="tab-favs" hidden>
@@ -1438,6 +1460,22 @@ var EN_EXACT = {
   "Εντάξει": "OK",
   "Γραμμή": "Line",
   "Χάρτης": "Heatmap",
+  "Συνολική αξία": "Total value",
+  "Funding 30 ημερών": "Funding 30 days",
+  "Spot υπόλοιπα": "Spot balances",
+  "Θέσεις perpetual": "Perpetual positions",
+  "Νόμισμα": "Coin",
+  "Πλευρά": "Side",
+  "Τύπος": "Type",
+  "ΑΓΟΡΑ": "BUY",
+  "ΠΩΛΗΣΗ": "SELL",
+  "Καμία ανοιχτή θέση perpetual αυτή τη στιγμή.": "No open perpetual positions right now.",
+  "Συνολική κεφαλαιοποίηση crypto": "Total crypto market cap",
+  "Κυριαρχία": "Dominance",
+  "Υπόλοιπα": "Others",
+  "Δείκτης Fear & Greed": "Fear & Greed Index",
+  "Οι 100 μεγαλύτερες μετοχές ΗΠΑ, ομαδοποιημένες ανά κλάδο. Ενημέρωση κάθε ώρα.": "Top 100 US stocks, grouped by sector. Updated hourly.",
+  "Τα 100 μεγαλύτερα κρυπτονομίσματα από το CoinGecko, ενημέρωση κάθε λεπτό.": "Top 100 cryptocurrencies from CoinGecko, updated every minute.",
   "Επιλογή όλων": "Select all",
   "Καμία": "None",
   "Μεταφορά": "Move",
@@ -1661,6 +1699,9 @@ var EN_EXACT = {
 };
 var EN_RX = [
   [/^Ενημέρωση: (.+)$/, "Updated: $1"],
+  [/^Ανοιχτές εντολές \((\d+)\)$/, "Open orders ($1)"],
+  [/^\((.+) σε εντολές\)$/, "($1 in orders)"],
+  [/^funding 30ημ (.+)$/, "funding 30d $1"],
   [/^Μεταφορά επιλεγμένων(?: \((\d+)\))? σε:$/, function (m, a) { return "Move selected" + (a ? " (" + a + ")" : "") + " to:"; }],
   [/^Μεταφέρθηκαν (\d+) συναλλαγές στο «(.+)»$/, "Moved $1 transactions to “$2”"],
   [/^Οι επιλεγμένες είναι ήδη στο «(.+)»$/, "The selected ones are already in “$1”"],
@@ -2778,6 +2819,42 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
 
   /* ----- Perpetuals από Hyperliquid (δημόσια ανάγνωση με διεύθυνση) ----- */
   var HLS = {}, HLERR = {}, hlAt = 0, hlBusy = false, HLMID = {};
+  var HLSPOT = {}, HLORD = {}, HLFUND = {}, HLHIST = {}, hlSlowAt = 0, SPOTPX = { 0: 1 }, SPOTNAME = { 0: "USDC" }, spotPxAt = 0;
+  function hlSpotPx() {
+    if (Date.now() - spotPxAt < 60000) return Promise.resolve();
+    return hlPost({ type: "spotMetaAndAssetCtxs" }).then(function (j) {
+      var meta = j && j[0], ctx = (j && j[1]) || [];
+      ((meta && meta.tokens) || []).forEach(function (t) { SPOTNAME[t.index] = t.name; });
+      ((meta && meta.universe) || []).forEach(function (u) { var c = ctx[u.index]; if (c && u.tokens && u.tokens[1] === 0) { var px = +(c.midPx || c.markPx); if (px > 0) SPOTPX[u.tokens[0]] = px; } });
+      spotPxAt = Date.now();
+    }).catch(function () {});
+  }
+  function hlSlow(force) {
+    if (!force && Date.now() - hlSlowAt < 600000) return [];
+    hlSlowAt = Date.now();
+    var since = Date.now() - 30 * 864e5;
+    return wallets.map(function (w) {
+      var fund = function (st, acc, n) {
+        return hlPost({ type: "userFunding", user: w.a, startTime: st }).then(function (r) {
+          r = Array.isArray(r) ? r : [];
+          r.forEach(function (x) { var u = +(x.delta && x.delta.usdc) || 0; acc.t += u; var c = x.delta && x.delta.coin; if (c) acc.by[c] = (acc.by[c] || 0) + u; });
+          if (r.length >= 500 && n < 8) return fund(r[r.length - 1].time + 1, acc, n + 1);
+          return acc;
+        });
+      };
+      return Promise.all([
+        fund(since, { t: 0, by: {} }, 0).then(function (a) { HLFUND[w.a] = a; }).catch(function () {}),
+        hlPost({ type: "portfolio", user: w.a }).then(function (p) {
+          var pts = {};
+          (Array.isArray(p) ? p : []).forEach(function (x) { if (["allTime", "month", "week"].indexOf(x[0]) > -1) ((x[1] && x[1].accountValueHistory) || []).forEach(function (q) { pts[q[0]] = +q[1]; }); });
+          var by = {};
+          Object.keys(pts).map(Number).sort(function (a, b) { return a - b; }).forEach(function (t) { by[new Date(t).toISOString().slice(0, 10)] = pts[t]; });
+          var ds = Object.keys(by).sort(), firstNZ = ds.filter(function (d) { return by[d] > 0; })[0];
+          HLHIST[w.a] = firstNZ ? ds.filter(function (d) { return d >= firstNZ; }).map(function (d) { return [d, by[d]]; }) : [];
+        }).catch(function () {})
+      ]);
+    });
+  }
   function usdEur() { var u = FX.USD || (FOREIGN && FOREIGN.fx && FOREIGN.fx.USD) || 1.1; return 1 / u; }
   function shortA(a) { return a.slice(0, 6) + "…" + a.slice(-4); }
   function hlPost(body) { return fetch("https://api.hyperliquid.xyz/info", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
@@ -2785,9 +2862,15 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     if (!wallets.length || hlBusy || typeof fetch !== "function" || (!force && Date.now() - hlAt < 14000)) return;
     hlBusy = true;
     var before = JSON.stringify(HLS);
-    Promise.all([hlPost({ type: "allMids" }).then(function (m) { HLMID = m || {}; }).catch(function () {})].concat(wallets.map(function (w) {
-      return hlPost({ type: "clearinghouseState", user: w.a }).then(function (s) { HLS[w.a] = s; delete HLERR[w.a]; }).catch(function () { HLERR[w.a] = true; });
-    }))).then(function () {
+    var snap2 = function () { return JSON.stringify([HLSPOT, HLORD, HLFUND, Object.keys(HLHIST).map(function (k) { return HLHIST[k].length; })]); }, before2 = snap2();
+    Promise.all([hlPost({ type: "allMids" }).then(function (m) { HLMID = m || {}; }).catch(function () {}), hlSpotPx()].concat(wallets.map(function (w) {
+      return Promise.all([
+        hlPost({ type: "clearinghouseState", user: w.a }).then(function (s) { HLS[w.a] = s; delete HLERR[w.a]; }).catch(function () { HLERR[w.a] = true; }),
+        hlPost({ type: "spotClearinghouseState", user: w.a }).then(function (s) { HLSPOT[w.a] = (s && s.balances) || []; }).catch(function () {}),
+        hlPost({ type: "frontendOpenOrders", user: w.a }).then(function (o) { HLORD[w.a] = Array.isArray(o) ? o : []; }).catch(function () {})
+      ]);
+    })).concat(hlSlow(force))).then(function () {
+      if (snap2() !== before2) before = "";
       hlAt = Date.now(); hlBusy = false;
       if (!document.getElementById("view-portfolio").hidden && (force || JSON.stringify(HLS) !== before)) renderPortfolio();
       else { var t = document.getElementById("hlAge"); if (t) t.textContent = hlAgeTxt(); }
@@ -2796,13 +2879,21 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   function hlAgeTxt() { return hlAt ? "ενημέρωση " + new Date(hlAt).toLocaleTimeString(LOC, { hour: "2-digit", minute: "2-digit", second: "2-digit" }) : "φόρτωση…"; }
   setInterval(function () { if (!document.hidden && !document.getElementById("view-portfolio").hidden) hlRefresh(); }, 15000);
   function hlPositions(s) { return ((s && s.assetPositions) || []).map(function (p) { return p.position || p; }).filter(function (p) { return p && +p.szi; }); }
+  function hlSpotRows(a) {
+    return (HLSPOT[a] || []).map(function (x) {
+      var tot = +x.total || 0, px = SPOTPX[x.token] != null ? SPOTPX[x.token] : x.coin === "USDC" ? 1 : null, val = px == null ? 0 : tot * px, en = +x.entryNtl || 0;
+      var cost = x.coin === "USDC" ? val : en > 0 ? en : val;
+      return { coin: x.coin, tot: tot, hold: +x.hold || 0, px: px, val: val, cost: cost, pl: val - cost };
+    }).filter(function (r) { return r.tot > 0 && (r.val >= 0.01 || r.px == null); }).sort(function (a, b) { return b.val - a.val; });
+  }
   function addPerps(H) {
     var u = usdEur(), pv = 0, pc = 0;
     walSel().forEach(function (w) {
       var s = HLS[w.a]; if (!s || !s.marginSummary) return;
-      var av = +s.marginSummary.accountValue || 0, up = 0;
+      var av = +s.marginSummary.accountValue || 0, up = 0, sv = 0, sc = 0;
       hlPositions(s).forEach(function (p) { up += +p.unrealizedPnl || 0; });
-      var v = av * u, c = (av - up) * u;
+      hlSpotRows(w.a).forEach(function (r) { sv += r.val; sc += r.cost; });
+      var v = (av + sv) * u, c = (av - up + sc) * u;
       EXTMETA["p:" + w.a] = { s: "HL", n: w.n || "Hyperliquid" };
       H.list.push({ sym: "p:" + w.a, perp: true, w: w, st: s, qty: 1, price: v, value: v, cost: c, avg: c, pl: v - c, plPct: c ? (v - c) / c * 100 : 0, day: 0, realized: 0, row: null });
       pv += v; pc += c;
@@ -2820,15 +2911,26 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
         var s = HLS[w.a], ps = hlPositions(s), up = 0, head = '<div class="pwtop"><b>' + esc(w.n || "Hyperliquid") + "</b><code>" + esc(shortA(w.a)) + '</code><a href="https://app.hyperliquid.xyz/explorer/address/' + esc(w.a) + '" target="_blank" rel="noopener">Explorer ↗</a><button type="button" class="xbtn" data-hlrm="' + esc(w.a) + '">Αφαίρεση</button></div>';
         if (!s) return '<div class="pw">' + head + '<p class="note">' + (HLERR[w.a] ? "Δεν ήταν δυνατή η ανάγνωση από το Hyperliquid. Ξαναδοκιμάζω σε λίγο." : "Φόρτωση θέσεων…") + "</p></div>";
         ps.forEach(function (p) { up += +p.unrealizedPnl || 0; });
-        var ms = s.marginSummary || {}, av = +ms.accountValue || 0;
-        var k = '<div class="pwk"><div><span>Αξία λογαριασμού</span><b class="sens">' + eur(av * u) + '</b></div><div><span>Μη πραγμ. Κ/Ζ</span><b class="sens chg ' + cls(up) + '">' + sgn(up) + nf2.format(Math.abs(up * u) * RATE) + CS + '</b></div><div><span>Περιθώριο σε χρήση</span><b class="sens">' + eur((+ms.totalMarginUsed || 0) * u) + '</b></div><div><span>Διαθέσιμο για ανάληψη</span><b class="sens">' + eur((+s.withdrawable || 0) * u) + "</b></div></div>";
-        if (!ps.length) return '<div class="pw">' + head + k + '<p class="note">Καμία ανοιχτή θέση αυτή τη στιγμή.</p></div>';
+        var ms = s.marginSummary || {}, av = +ms.accountValue || 0, sp = hlSpotRows(w.a), sv = 0, F = HLFUND[w.a];
+        sp.forEach(function (r) { sv += r.val; });
+        var k = '<div class="pwk"><div><span>Συνολική αξία</span><b class="sens">' + eur((av + sv) * u) + '</b></div><div><span>Perps</span><b class="sens">' + eur(av * u) + '</b></div><div><span>Spot</span><b class="sens">' + eur(sv * u) + '</b></div><div><span>Μη πραγμ. Κ/Ζ</span><b class="sens chg ' + cls(up) + '">' + sgn(up) + nf2.format(Math.abs(up * u) * RATE) + CS + '</b></div><div><span>Περιθώριο σε χρήση</span><b class="sens">' + eur((+ms.totalMarginUsed || 0) * u) + '</b></div><div><span>Διαθέσιμο για ανάληψη</span><b class="sens">' + eur((+s.withdrawable || 0) * u) + '</b></div><div><span>Funding 30 ημερών</span><b class="sens chg ' + (F ? cls(F.t) : "") + '">' + (F ? sgn(F.t) + nf2.format(Math.abs(F.t * u) * RATE) + CS : "…") + "</b></div></div>";
+        var spotH = sp.length ? '<h4 class="pwh">Spot υπόλοιπα</h4><table><thead><tr><th class="l">Νόμισμα</th><th>Ποσότητα</th><th class="hide-s">Τιμή</th><th>Αξία</th><th class="hide-s">Κ/Ζ</th></tr></thead><tbody>' + sp.map(function (r) {
+          return '<tr><td class="l"><b>' + esc(r.coin) + "</b>" + (r.hold > 0 ? ' <span class="note">(' + nfQ.format(r.hold) + " σε εντολές)</span>" : "") + '</td><td class="num sens">' + nfQ.format(r.tot) + '</td><td class="num hide-s">' + (r.px == null ? "—" : fmtC(r.px * u)) + '</td><td class="num sens">' + eur(r.val * u) + '</td><td class="num hide-s">' + (r.coin === "USDC" || Math.abs(r.pl) < 0.005 ? "—" : '<span class="sens chg ' + cls(r.pl) + '">' + sgn(r.pl) + nf2.format(Math.abs(r.pl * u) * RATE) + CS + "</span>") + "</td></tr>";
+        }).join("") + "</tbody></table>" : "";
+        var od = HLORD[w.a] || [];
+        var ordH = od.length ? '<h4 class="pwh">Ανοιχτές εντολές (' + od.length + ')</h4><table><thead><tr><th class="l">Συμβόλαιο</th><th class="l">Πλευρά</th><th class="l hide-s">Τύπος</th><th>Τιμή</th><th>Μέγεθος</th><th class="hide-s">Αξία</th></tr></thead><tbody>' + od.slice().sort(function (a, b) { return (b.timestamp || 0) - (a.timestamp || 0); }).map(function (o) {
+          var buy = o.side === "B", px = +(o.isTrigger && +o.triggerPx ? o.triggerPx : o.limitPx) || 0, sz = +o.sz || 0, nm = /^@\d+$/.test(o.coin) ? "Spot " + o.coin : o.coin;
+          return '<tr><td class="l"><b>' + esc(nm) + '</b></td><td class="l"><span class="lsb ' + (buy ? "long" : "short") + '">' + (buy ? "ΑΓΟΡΑ" : "ΠΩΛΗΣΗ") + "</span>" + (o.reduceOnly ? ' <span class="note">reduce</span>' : "") + '</td><td class="l hide-s">' + esc(o.orderType || "Limit") + (o.isTrigger && o.triggerCondition ? ' <span class="note">' + esc(o.triggerCondition) + "</span>" : "") + '</td><td class="num">' + (px ? fmtC(px * u) : "Market") + '</td><td class="num sens">' + nfQ.format(sz) + '</td><td class="num hide-s sens">' + (px ? eur(px * sz * u) : "—") + "</td></tr>";
+        }).join("") + "</tbody></table>" : "";
+        var tail = spotH + ordH;
+        if (!ps.length) return '<div class="pw">' + head + k + '<p class="note">Καμία ανοιχτή θέση perpetual αυτή τη στιγμή.</p>' + tail + "</div>";
         var rowsH = ps.sort(function (a, b) { return Math.abs(+b.positionValue) - Math.abs(+a.positionValue); }).map(function (p) {
           var sz = +p.szi, long = sz > 0, mark = +(HLMID[p.coin] || 0) || (Math.abs(+p.positionValue) / Math.abs(sz)), pnl = +p.unrealizedPnl || 0, roe = (+p.returnOnEquity || 0) * 100;
           var lev = p.leverage ? (p.leverage.value + "x " + (p.leverage.type === "isolated" ? "isolated" : "cross")) : "—";
-          return '<tr><td class="l"><b>' + esc(p.coin) + '</b> <span class="lsb ' + (long ? "long" : "short") + '">' + (long ? "LONG" : "SHORT") + '</span></td><td class="num hide-s sens">' + nfQ.format(Math.abs(sz)) + '</td><td class="num hide-s">' + fmtC(+p.entryPx * u) + '</td><td class="num">' + fmtC(mark * u) + '</td><td class="num hide-s sens">' + eur(Math.abs(+p.positionValue) * u) + '</td><td class="num hide-s">' + esc(lev) + '</td><td class="num hide-s">' + (p.liquidationPx ? fmtC(+p.liquidationPx * u) : "—") + '</td><td class="num"><span class="sens chg ' + cls(pnl) + '">' + sgn(pnl) + nf2.format(Math.abs(pnl * u) * RATE) + CS + '</span><span class="sub2 chg ' + cls(roe) + '">' + sgn(roe) + nf2.format(Math.abs(roe)) + "%</span></td></tr>";
+          var fpos = F && F.by[p.coin] != null ? F.by[p.coin] : null;
+          return '<tr><td class="l"><b>' + esc(p.coin) + '</b> <span class="lsb ' + (long ? "long" : "short") + '">' + (long ? "LONG" : "SHORT") + '</span></td><td class="num hide-s sens">' + nfQ.format(Math.abs(sz)) + '</td><td class="num hide-s">' + fmtC(+p.entryPx * u) + '</td><td class="num">' + fmtC(mark * u) + '</td><td class="num hide-s sens">' + eur(Math.abs(+p.positionValue) * u) + '</td><td class="num hide-s">' + esc(lev) + '</td><td class="num hide-s">' + (p.liquidationPx ? fmtC(+p.liquidationPx * u) : "—") + '</td><td class="num"><span class="sens chg ' + cls(pnl) + '">' + sgn(pnl) + nf2.format(Math.abs(pnl * u) * RATE) + CS + '</span><span class="sub2 chg ' + cls(roe) + '">' + sgn(roe) + nf2.format(Math.abs(roe)) + "%</span>" + (fpos != null && Math.abs(fpos) >= 0.005 ? '<span class="sub2 note sens">funding 30ημ ' + sgn(fpos) + nf2.format(Math.abs(fpos * u) * RATE) + CS + "</span>" : "") + "</td></tr>";
         }).join("");
-        return '<div class="pw">' + head + k + '<table><thead><tr><th class="l">Συμβόλαιο</th><th class="hide-s">Μέγεθος</th><th class="hide-s">Είσοδος</th><th>Τιμή</th><th class="hide-s">Αξία θέσης</th><th class="hide-s">Μόχλευση</th><th class="hide-s">Ρευστοποίηση</th><th>Κ/Ζ (ROE)</th></tr></thead><tbody>' + rowsH + "</tbody></table></div>";
+        return '<div class="pw">' + head + k + '<h4 class="pwh">Θέσεις perpetual</h4><table><thead><tr><th class="l">Συμβόλαιο</th><th class="hide-s">Μέγεθος</th><th class="hide-s">Είσοδος</th><th>Τιμή</th><th class="hide-s">Αξία θέσης</th><th class="hide-s">Μόχλευση</th><th class="hide-s">Ρευστοποίηση</th><th>Κ/Ζ (ROE)</th></tr></thead><tbody>' + rowsH + "</tbody></table>" + tail + "</div>";
       }).join("") + "</div>";
   }
   (function () {
@@ -2951,13 +3053,15 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   function pfColor(i) { return PF_COLORS[Math.min(i, PF_COLORS.length - 1)]; }
   function pfDaily(H) {
     var tx = pfTx().filter(function (t) { return t.date && t.date <= TODAY; }).sort(function (a, b) { return a.date.localeCompare(b.date) || (a.ts || 0) - (b.ts || 0); });
-    if (!tx.length) return [];
+    var wh = pfOff.p ? [] : walSel().map(function (w) { return HLHIST[w.a]; }).filter(function (h) { return h && h.length; });
+    if (!tx.length && !wh.length) return [];
     var syms = [], seen = {}, firstPx = {};
     tx.forEach(function (t) { if (!seen[t.sym]) { seen[t.sym] = 1; syms.push(t.sym); firstPx[t.sym] = t.price; } });
-    var ser = {}, set = {}, start = tx[0].date;
+    var ser = {}, set = {}, start = tx.length ? tx[0].date : wh.reduce(function (m, h) { return h[0][0] < m ? h[0][0] : m; }, "9999");
+    wh.forEach(function (h) { if (h[0][0] < start) start = h[0][0]; h.forEach(function (p) { set[p[0]] = 1; }); });
     syms.forEach(function (s) { var r = BYSYM[s]; ser[s] = r ? fullSeries(r) : []; ser[s].forEach(function (p) { if (p.x >= start) set[p.x] = 1; }); });
     tx.forEach(function (t) { set[t.date] = 1; });
-    var dates = Object.keys(set).sort(), idx = {}, last = {}, qty = {}, cost = {}, ti = 0, out = [];
+    var dates = Object.keys(set).sort(), idx = {}, last = {}, qty = {}, cost = {}, ti = 0, out = [], wi = wh.map(function () { return 0; }), wl = wh.map(function () { return 0; }), uE = usdEur();
     dates.forEach(function (d) {
       while (ti < tx.length && tx[ti].date <= d) {
         var t = tx[ti++], q = qty[t.sym] || 0, c = cost[t.sym] || 0;
@@ -2973,9 +3077,10 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
         var p = last[s] != null ? last[s] : firstPx[s];
         v += (qty[s] || 0) * p; c2 += cost[s] || 0;
       });
+      wh.forEach(function (h, k) { while (wi[k] < h.length && h[wi[k]][0] <= d) { wl[k] = h[wi[k]][1]; wi[k]++; } v += wl[k] * uE; c2 += wl[k] * uE; });
       out.push({ x: d, v: v, c: c2 });
     });
-    var HV = H.value - (H.pv || 0), HC = H.cost - (H.pc || 0);
+    var HV = H.value - (wh.length ? 0 : (H.pv || 0)), HC = H.cost - (wh.length ? 0 : (H.pc || 0));
     if (out.length) { var lp = out[out.length - 1]; if (!HDAYS.length || lp.x >= HDAYS[HDAYS.length - 1]) { lp.v = HV; lp.c = HC; } else out.push({ x: HDAYS[HDAYS.length - 1], v: HV, c: HC }); }
     return out;
   }
@@ -3700,15 +3805,53 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
         try { localStorage.setItem("agora-cg100", JSON.stringify({ at: cg100At, d: j.map(function (x) { var y = Object.assign({}, x); if (y.sparkline_in_7d && y.sparkline_in_7d.price) y.sparkline_in_7d = { price: y.sparkline_in_7d.price.filter(function (_, i) { return i % 4 === 0; }) }; return y; }) })); } catch (e) {}
       })
       .catch(function () { cg100Err = true; })
-      .then(function () { cg100Busy = false; if (mkt === "c") renderX(); renderGlobal(); });
+      .then(function () { cg100Busy = false; if (mkt === "c") renderX(); renderGlobal(); if (heatMkt === "c") renderHeat(); });
   }
-  setInterval(function () { if (!document.hidden && mkt === "c" && !document.getElementById("view-market").hidden) loadCg100(); }, 60000);
+  setInterval(function () { if (!document.hidden && ((mkt === "c" && !document.getElementById("view-market").hidden) || (heatMkt === "c" && !document.getElementById("view-heat").hidden))) loadCg100(); }, 60000);
+  var CGLOB = null, FNG = null, cstatAt = 0, cstatBusy = false;
+  var FNG_GR = { "Extreme Fear": "Ακραίος φόβος", "Fear": "Φόβος", "Neutral": "Ουδέτερο", "Greed": "Απληστία", "Extreme Greed": "Ακραία απληστία" };
+  function fngCls(c) { return LANG === "en" ? c : FNG_GR[c] || c; }
+  function fngColor(v) { return v < 25 ? "#e5484d" : v < 45 ? "#f2994a" : v < 56 ? "#d9b84a" : v < 75 ? "#8cc152" : "#3fb67f"; }
+  function loadCStats() {
+    if (cstatBusy || typeof fetch !== "function" || Date.now() - cstatAt < 300000) return;
+    cstatBusy = true;
+    Promise.all([
+      fetch("https://api.coingecko.com/api/v3/global").then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (j) { CGLOB = j && j.data; }).catch(function () {}),
+      fetch("https://api.alternative.me/fng/?limit=31").then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (j) { if (j && Array.isArray(j.data) && j.data.length) FNG = j.data; }).catch(function () {})
+    ]).then(function () { cstatAt = Date.now(); cstatBusy = false; if (mkt === "c") renderCStats(); });
+  }
+  function gauge(v) {
+    var a0 = Math.PI, ang = a0 - v / 100 * Math.PI, cx = 46, cy = 46, r = 38, segs = "", cols = ["#e5484d", "#f2994a", "#d9b84a", "#8cc152", "#3fb67f"];
+    for (var i = 0; i < 5; i++) {
+      var s = a0 - i / 5 * Math.PI, e = a0 - (i + 1) / 5 * Math.PI + 0.03;
+      segs += '<path d="M' + (cx + r * Math.cos(s)).toFixed(1) + "," + (cy - r * Math.sin(s)).toFixed(1) + " A" + r + "," + r + " 0 0 1 " + (cx + r * Math.cos(e)).toFixed(1) + "," + (cy - r * Math.sin(e)).toFixed(1) + '" stroke="' + cols[i] + '" stroke-width="8" fill="none" opacity=".9"/>';
+    }
+    return '<svg width="92" height="54" viewBox="0 0 92 54" aria-hidden="true">' + segs + '<circle cx="' + (cx + (r - 0) * Math.cos(ang)).toFixed(1) + '" cy="' + (cy - r * Math.sin(ang)).toFixed(1) + '" r="6" fill="var(--fg)" stroke="var(--surface)" stroke-width="2.5"/></svg>';
+  }
+  function renderCStats() {
+    var box = document.getElementById("cstats"); if (!box) return;
+    if (mkt !== "c") { box.hidden = true; return; }
+    loadCStats();
+    var h = "";
+    if (CGLOB && CGLOB.total_market_cap) {
+      var tm = CGLOB.total_market_cap.eur, ch = CGLOB.market_cap_change_percentage_24h_usd, tv = CGLOB.total_volume && CGLOB.total_volume.eur;
+      h += '<div class="panel cstat"><span class="lbl">Συνολική κεφαλαιοποίηση crypto</span><div class="big"><span>' + money(tm) + "</span>" + (ch != null ? chgHtml(ch) : "") + '</div><span class="sub">' + (tv ? (LANG === "en" ? "24h volume: " : "Όγκος 24ω: ") + money(tv) : "") + (CGLOB.active_cryptocurrencies ? " · " + new Intl.NumberFormat(LOC, { maximumFractionDigits: 0 }).format(CGLOB.active_cryptocurrencies) + (LANG === "en" ? " coins" : " νομίσματα") : "") + "</span></div>";
+      var mp = CGLOB.market_cap_percentage || {}, btc = mp.btc || 0, eth = mp.eth || 0, rest = Math.max(0, 100 - btc - eth);
+      h += '<div class="panel cstat"><span class="lbl">Κυριαρχία</span><div class="big"><span>BTC ' + nf2.format(btc) + '%</span></div><div class="dombar"><i style="width:' + btc + '%;background:#f7931a"></i><i style="width:' + eth + '%;background:#7b8cff"></i><i style="width:' + rest + '%;background:var(--muted);opacity:.35"></i></div><div class="domleg"><span><i style="background:#f7931a"></i>Bitcoin <b>' + nf2.format(btc) + '%</b></span><span><i style="background:#7b8cff"></i>Ethereum <b>' + nf2.format(eth) + '%</b></span><span><i style="background:var(--muted)"></i>Υπόλοιπα <b>' + nf2.format(rest) + "%</b></span></div></div>";
+    }
+    if (FNG && FNG[0]) {
+      var v = +FNG[0].value, pick = function (i) { return FNG[i] ? '<span>' + (LANG === "en" ? (i === 1 ? "Yesterday" : i === 7 ? "1 week ago" : "1 month ago") : (i === 1 ? "Χθες" : i === 7 ? "Πριν 1 εβδομάδα" : "Πριν 1 μήνα")) + ': <b style="color:' + fngColor(+FNG[i].value) + '">' + FNG[i].value + "</b></span>" : ""; };
+      h += '<div class="panel cstat"><span class="lbl">Δείκτης Fear &amp; Greed</span><div class="fng">' + gauge(v) + '<div><div class="big" style="color:' + fngColor(v) + '">' + v + '</div><div class="cls" style="color:' + fngColor(v) + '">' + esc(fngCls(FNG[0].value_classification)) + '</div></div></div><div class="fnghist">' + pick(1) + pick(7) + pick(30) + "</div></div>";
+    }
+    box.innerHTML = h; box.hidden = !h;
+  }
   function pctCell(v) { return v == null || isNaN(v) ? '<span class="chg flat">—</span>' : chgHtml(v); }
   function renderX() {
     var box = document.getElementById("xlist"), vm = document.getElementById("view-market");
     vm.setAttribute("data-mkt", mkt);
     Array.prototype.forEach.call(document.querySelectorAll("#mktsw button"), function (x) { x.setAttribute("aria-pressed", x.getAttribute("data-mkt") === mkt); });
     box.hidden = mkt === "gr";
+    renderCStats();
     if (mkt === "gr") return;
     var isC = mkt === "c", items = xItems(), q = document.getElementById("xq").value.trim().toLowerCase();
     document.getElementById("xtitle").textContent = isC ? "Τα 100 μεγαλύτερα κρυπτονομίσματα" : "Οι 100 μεγαλύτερες μετοχές ΗΠΑ";
@@ -3937,27 +4080,44 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     }
     return out;
   }
+  var heatMkt = (function () { try { var m = localStorage.getItem("agora-heatmkt"); return m === "us" || m === "c" ? m : "gr"; } catch (e) { return "gr"; } })();
+  var US_SEC = { "Electronic Technology": "Ηλεκτρονική τεχνολογία", "Technology Services": "Υπηρεσίες τεχνολογίας", "Finance": "Χρηματοοικονομικά", "Retail Trade": "Λιανεμπόριο", "Health Technology": "Τεχνολογία υγείας", "Consumer Non-Durables": "Καταναλωτικά μη διαρκή", "Energy Minerals": "Ενέργεια", "Consumer Durables": "Καταναλωτικά διαρκή", "Producer Manufacturing": "Βιομηχανία", "Communications": "Επικοινωνίες", "Utilities": "Κοινή ωφέλεια", "Health Services": "Υπηρεσίες υγείας", "Consumer Services": "Καταναλωτικές υπηρεσίες", "Transportation": "Μεταφορές", "Commercial Services": "Επιχειρηματικές υπηρεσίες", "Process Industries": "Χημικά & υλικά", "Non-Energy Minerals": "Μέταλλα & ορυχεία", "Industrial Services": "Βιομηχανικές υπηρεσίες", "Distribution Services": "Διανομή", "Miscellaneous": "Διάφορα" };
+  function usSec(s) { return !s ? (LANG === "en" ? "Other" : "Άλλο") : LANG === "en" ? s : US_SEC[s] || s; }
+  var STABLE = /^(usdt|usdc|dai|fdusd|usde|usds|tusd|pyusd|usd1|rlusd|usdd|gho|eurc|usdg|usdtb|usd0|bfusd|frax|lusd|crvusd|susds|susde|buidl|usyc|ustb)$/i;
+  function heatItems() {
+    if (heatMkt === "us") return ((USD_ && USD_.s) || []).map(function (x) { return { key: "f:" + x.s, lab: x.s, name: x.n, mcap: x.m * usdEur(), sector: usSec(x.sec), chg: x.c, w7: x.w }; });
+    if (heatMkt === "c") return (CG100 || []).filter(function (x) { return x.market_cap; }).map(function (x) {
+      var sym = String(x.symbol || "").toUpperCase(), st = STABLE.test(sym);
+      return { key: "c:" + x.id, lab: sym, name: x.name, mcap: x.market_cap, sector: x.id === "bitcoin" ? "Bitcoin" : x.id === "ethereum" ? "Ethereum" : st ? "Stablecoins" : "Altcoins", chg: x.price_change_percentage_24h_in_currency != null ? x.price_change_percentage_24h_in_currency : x.price_change_percentage_24h, w7: x.price_change_percentage_7d_in_currency };
+    });
+    return rows.filter(function (s) { return s.mcap; }).map(function (s) { return { key: s.sym, lab: s.dsym, name: s.name, mcap: s.mcap, sector: s.sector, chg: s.chg, w7: s.w7 }; });
+  }
   function renderHeat() {
     var box = document.getElementById("heat"); if (!box || document.getElementById("view-heat").hidden) return;
+    Array.prototype.forEach.call(document.querySelectorAll("#heatMkt button"), function (x) { x.setAttribute("aria-pressed", x.getAttribute("data-hm") === heatMkt); });
+    document.getElementById("heatFoot").textContent = heatMkt === "us" ? "Οι 100 μεγαλύτερες μετοχές ΗΠΑ, ομαδοποιημένες ανά κλάδο. Ενημέρωση κάθε ώρα." : heatMkt === "c" ? "Τα 100 μεγαλύτερα κρυπτονομίσματα από το CoinGecko, ενημέρωση κάθε λεπτό." : "Εμφανίζονται οι εταιρείες με γνωστή κεφαλαιοποίηση, ομαδοποιημένες ανά κλάδο.";
     var W = box.clientWidth || 800, H = Math.round(W < 640 ? W * 1.7 : Math.min(W * 0.62, 760));
     box.style.height = H + "px";
+    var items = heatItems();
+    if (!items.length) { box.innerHTML = '<div class="hmsg">' + (heatMkt === "c" ? (cg100Err ? "Οι τιμές crypto δεν είναι διαθέσιμες τώρα. Ξαναδοκιμάζω σε ένα λεπτό." : "Φόρτωση…") : "Η λίστα θα εμφανιστεί μετά την επόμενη ενημέρωση.") + "</div>"; if (heatMkt === "c") loadCg100(); return; }
     var groups = {};
-    rows.forEach(function (s) { if (!s.mcap) return; (groups[s.sector] = groups[s.sector] || []).push(s); });
+    items.forEach(function (s) { (groups[s.sector] = groups[s.sector] || []).push(s); });
     var gl = Object.keys(groups).map(function (k) { var v = 0; groups[k].forEach(function (s) { v += s.mcap; }); return { k: k, v: v, list: groups[k].sort(function (a, b) { return b.mcap - a.mcap; }) }; }).sort(function (a, b) { return b.v - a.v; });
     var html = "";
     squarify(gl, 0, 0, W, H).forEach(function (g) {
       var head = g.w > 70 && g.h > 50 ? 18 : 0;
       html += '<div class="hs" style="left:' + g.x + "px;top:" + g.y + "px;width:" + g.w + "px;height:" + g.h + 'px">' + (head ? "<b>" + esc(g.it.k) + "</b>" : "");
       squarify(g.it.list.map(function (s) { return { v: s.mcap, s: s }; }), 0, head, g.w, g.h - head).forEach(function (t) {
-        var s = t.it.s, c = heatPer === "w" ? s.w7 : s.chg, m = Math.min(t.w, t.h), fs = Math.max(8, Math.min(22, Math.sqrt(t.w * t.h) / 5, (t.w - 6) / (s.dsym.length * 0.68)));
-        var lab = t.w > 34 && t.h > 22 ? '<span class="s" style="font-size:' + fs + 'px">' + esc(s.dsym) + "</span>" + (t.h > 36 && t.w > 40 ? '<span class="c" style="font-size:' + Math.max(9, fs * 0.7) + 'px">' + (c == null ? "—" : (c > 0 ? "+" : c < 0 ? "−" : "") + nf2.format(Math.abs(c)) + "%") + "</span>" : "") : "";
-        html += '<button type="button" class="ht" data-s="' + esc(s.sym) + '" style="left:' + t.x + "px;top:" + t.y + "px;width:" + t.w + "px;height:" + t.h + "px;background:" + heatColor(c) + '" title="' + esc(s.dsym + " · " + (s.name || "") + " · " + (c == null ? "—" : nf2.format(c) + "%")) + '" aria-label="' + esc(s.dsym + " " + (c == null ? "" : nf2.format(c) + "%")) + '">' + lab + "</button>";
+        var s = t.it.s, c = heatPer === "w" ? s.w7 : s.chg, m = Math.min(t.w, t.h), fs = Math.max(8, Math.min(22, Math.sqrt(t.w * t.h) / 5, (t.w - 6) / (s.lab.length * 0.68)));
+        var lab = t.w > 34 && t.h > 22 ? '<span class="s" style="font-size:' + fs + 'px">' + esc(s.lab) + "</span>" + (t.h > 36 && t.w > 40 ? '<span class="c" style="font-size:' + Math.max(9, fs * 0.7) + 'px">' + (c == null ? "—" : (c > 0 ? "+" : c < 0 ? "−" : "") + nf2.format(Math.abs(c)) + "%") + "</span>" : "") : "";
+        html += '<button type="button" class="ht" data-s="' + esc(s.key) + '" style="left:' + t.x + "px;top:" + t.y + "px;width:" + t.w + "px;height:" + t.h + "px;background:" + heatColor(c) + '" title="' + esc(s.lab + " · " + (s.name || "") + " · " + (c == null ? "—" : nf2.format(c) + "%")) + '" aria-label="' + esc(s.lab + " " + (c == null ? "" : nf2.format(c) + "%")) + '">' + lab + "</button>";
       });
       html += "</div>";
     });
     box.innerHTML = html;
   }
-  document.getElementById("heat").addEventListener("click", function (e) { var t = e.target.closest(".ht"); if (t) openStock(t.getAttribute("data-s"), t); });
+  document.getElementById("heat").addEventListener("click", function (e) { var t = e.target.closest(".ht"); if (!t) return; var k = t.getAttribute("data-s"); if (isExt(k)) openExt(k); else openStock(k, t); });
+  document.getElementById("heatMkt").addEventListener("click", function (e) { var x = e.target.closest("button"); if (!x) return; heatMkt = x.getAttribute("data-hm"); try { localStorage.setItem("agora-heatmkt", heatMkt); } catch (er) {} renderHeat(); });
   document.getElementById("heatPer").addEventListener("click", function (e) {
     var x = e.target.closest("button"); if (!x) return; heatPer = x.getAttribute("data-v");
     Array.prototype.forEach.call(this.querySelectorAll("button"), function (y) { y.setAttribute("aria-pressed", y === x); });
