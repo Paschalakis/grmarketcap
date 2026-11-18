@@ -1,10 +1,79 @@
-vaults 200 []
-SPOT 200 {"balances": []}
-ORDERS 200 0 []
-FUNDING 200 0 []
-PORTFOLIO 200 ['day', 'week', 'month', 'allTime', 'perpDay', 'perpWeek', 'perpMonth', 'perpAllTime']
-day {'accountValueHistory': [[1794895995341, '152271840.8121989965'], [1794898978289, '152272633.8112410009'], [1794900315731, '152258736.7041690052']], 'pnlHistory': [[1794895995341, '0.0'], [1794898978289, '713.239042'], [1794900315731, '816.13197']], 'vlm': '0.0'} n= 62
-allTime {'accountValueHistory': [[1683758700034, '0.0'], [1683762300034, '82331.181599'], [1684367100059, '120596.774808']], 'pnlHistory': [[1683758700034, '0.0'], [1683762300034, '3747.061368'], [1684367100059, '11461.650587']], 'vlm': '0.0'} n= 103
-perpAllTime {'accountValueHistory': [[1714607953536, '0.0'], [1715212533532, '33814370.0411399975'], [1715817285092, '41422257.4003140032']], 'pnlHistory': [[1714607953536, '0.0'], [1715212533532, '46963553.4511509985'], [1715817285092, '47853003.5091359988']], 'vlm': '0.0'} n= 82
-CH pos sample []
-SPOTMETA 200 [{"name": "USDC", "szDecimals": 8, "weiDecimals": 8, "index": 0, "tokenId": "0x6d1e7cde53ba9467b783cb7c530ce054", "isCanonical": true, "evmContract": {"address": "0x6b9e773128f453f5c2c60935ee2de2cbc5390a24", "evm_extra_wei_decimals": -2}, "fullName": null, "deployerTradingFeeShare": "0.0"}, {"name": "PURR", "szDecimals": 0, "weiDecimals": 5, "index": 1, "tokenId": "0xc1fb593aeffbeb02f85e0308e9956a [{"tokens": [1, 0], "name": "PURR/USDC", "index": 0, "isCanonical": true}, {"tokens": [2, 0], "name": "@1", "index": 1, "isCanonical": false}, {"tokens": [3, 0], "name": "@2", "index": 2, "isCanonical": false}] [{"prevDayPx": "0.094856", "dayNtlVlm": "941372.3359160002", "markPx": "0.089691", "midPx": "0.0896735", "circulatingSupply": "594624712.5276099443", "coin": "PURR/USDC", "totalSupply": "594624723.8341300488", "dayBaseVlm": "10392823.0"}, {"prevDayPx": "9.8518", "dayNtlVlm": "16390.957739", "markPx": "9.8044", "midPx": "9.7934", "circulatingSupply": "995697.76347232", "coin": "@1", "totalSupply": 
+CSTATS TOTAL CRYPTO MARKET CAP 2.02 tn € ▼ −2.83% 24h volume: 70.44 bn € · 21,675 coins DOMINANCE BTC 58.43% Bitcoin 58.43% Ethereum 9.95% Others 31.62% FEAR & GREED INDEX 11 Extreme Fear Yesterday: 12 1 week ago: 29 1 month ago: 59
+HEAT C 100 [ 'Bitcoin', 'Altcoins', 'Stablecoins', 'Ethereum' ]
+HEAT US 100
+PERPS Perpetuals · Hyperliquid live · updated 06:31:10 HLP 0xdfc2…f303 Explorer ↗ Remove TOTAL BALANCE 12,210,962.05 € PERPS 12,210,962.05 € SPOT 0.00 € UNREALIZED PNL 0.00 € MARGIN USED 434.42 € WITHDRAWABLE 12,210,527.63 € FUNDING 30 DAYS 0.00 € No open perpetual positions right now.
+CHART paths 3 msg 
+200 api.hyperliquid.xyz/info {"type":"clearinghouseState","user":"0xdfc24b077bc
+200 api.hyperliquid.xyz/info {"type":"userFunding","user":"0xdfc24b077bc1425ad1
+200 api.hyperliquid.xyz/info {"type":"allMids"}
+200 api.hyperliquid.xyz/info {"type":"frontendOpenOrders","user":"0xdfc24b077bc
+200 api.hyperliquid.xyz/info {"type":"portfolio","user":"0xdfc24b077bc1425ad1de
+200 api.hyperliquid.xyz/info {"type":"spotMetaAndAssetCtxs"}
+200 api.hyperliquid.xyz/info {"type":"spotClearinghouseState","user":"0xdfc24b0
+200 api.coingecko.com/api/v3/global 
+200 api.alternative.me/fng/?limit=31 
+200 api.coingecko.com/api/v3/coins/markets?vs_currency=eur&order=market_cap_ 
+200 coin-images.coingecko.com/coins/images/1/large/bitcoin.png?1696501400 
+200 coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628 
+200 coin-images.coingecko.com/coins/images/825/large/bnb-icon2_2x.png?169650 
+200 coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661 
+200 coin-images.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png 
+200 coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602 
+200 coin-images.coingecko.com/coins/images/10365/large/near.jpg?1696510367 
+200 coin-images.coingecko.com/coins/images/780/large/bitcoin-cash-circle.png 
+200 coin-images.coingecko.com/coins/images/4128/large/solana.png?1718769756 
+200 coin-images.coingecko.com/coins/images/2/large/litecoin.png?1696501400 
+200 coin-images.coingecko.com/coins/images/70468/large/Canton-Ticker_%281%29 
+200 coin-images.coingecko.com/coins/images/69134/large/Rain_logo_1_.png?1762 
+200 coin-images.coingecko.com/coins/images/12504/large/uniswap-logo.png?1720 
+200 coin-images.coingecko.com/coins/images/1094/large/photo_2026-04-13_09-59 
+200 coin-images.coingecko.com/coins/images/68480/large/figure.png?1755863954 
+200 coin-images.coingecko.com/coins/images/50882/large/hyperliquid.jpg?17294 
+200 coin-images.coingecko.com/coins/images/10481/large/logo.png?1774627372 
+200 coin-images.coingecko.com/coins/images/486/large/Brandmark-Yellow_%281%2 
+200 coin-images.coingecko.com/coins/images/69/large/monero_logo.png?16965014 
+200 coin-images.coingecko.com/coins/images/5/large/dogecoin.png?1696501409 
+200 coin-images.coingecko.com/coins/images/8418/large/leo-token.png?16965086 
+200 coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683 
+200 coin-images.coingecko.com/coins/images/27045/large/wbt_token.png?1696526 
+200 coin-images.coingecko.com/coins/images/877/large/Chainlink_Logo_500.png? 
+200 coin-images.coingecko.com/coins/images/975/large/cardano.png?1696502090 
+200 coin-images.coingecko.com/coins/images/100/large/fmpFRHHQ_400x400.jpg?17 
+200 coin-images.coingecko.com/coins/images/33613/large/usde.png?1733810059 
+200 coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?16965099 
+200 coin-images.coingecko.com/coins/images/17980/large/Gram_Circular_Badge.p 
+200 coin-images.coingecko.com/coins/images/26375/large/sui-ocean-square.png? 
+200 coin-images.coingecko.com/coins/images/54977/large/USD1_1000x1000_transp 
+200 coin-images.coingecko.com/coins/images/39651/large/RLUSD_200x200_%281%29 
+200 coin-images.coingecko.com/coins/images/51281/large/GDN_USDG_Token_200x20 
+200 coin-images.coingecko.com/coins/images/3688/large/hbar.png?1696504364 
+200 coin-images.coingecko.com/coins/images/31212/large/PYUSD_Token_Logo_2x.p 
+200 coin-images.coingecko.com/coins/images/31700/large/usdy_%281%29.png?1696 
+200 coin-images.coingecko.com/coins/images/28452/large/ARUsPeNQ_400x400.jpeg 
+200 coin-images.coingecko.com/coins/images/7310/large/CRO.png?1794186148 
+200 coin-images.coingecko.com/coins/images/3370/large/5ZOu7brX_400x400.jpg?1 
+200 coin-images.coingecko.com/coins/images/11939/large/shiba.png?1696511800 
+200 coin-images.coingecko.com/coins/images/53247/large/square-bg-transparent 
+200 coin-images.coingecko.com/coins/images/51054/large/Hashnote_SDYC_200x200 
+200 coin-images.coingecko.com/coins/images/102172591/large/Fund_eurSAF0.png? 
+200 coin-images.coingecko.com/coins/images/4463/large/WeChat_Image_202201180 
+200 coin-images.coingecko.com/coins/images/12645/large/aave-token-round.png? 
+200 coin-images.coingecko.com/coins/images/9519/large/asset-paxg.png?1785284 
+200 coin-images.coingecko.com/coins/images/54558/large/ff_200_X_200.png?1740 
+200 coin-images.coingecko.com/coins/images/71157/large/united-stables-logo.j 
+200 coin-images.coingecko.com/coins/images/36291/large/blackrock.png?1711013 
+200 coin-images.coingecko.com/coins/images/29850/large/pepe-token.jpeg?16965 
+200 coin-images.coingecko.com/coins/images/12559/large/Avalanche_Circle_RedW 
+200 coin-images.coingecko.com/coins/images/36530/large/ethena.png?1711701436 
+200 api.hyperliquid.xyz/info {"type":"clearinghouseState","user":"0xdfc24b077bc
+200 api.hyperliquid.xyz/info {"type":"spotClearinghouseState","user":"0xdfc24b0
+200 api.hyperliquid.xyz/info {"type":"allMids"}
+200 api.hyperliquid.xyz/info {"type":"frontendOpenOrders","user":"0xdfc24b077bc
+200 api.hyperliquid.xyz/info {"type":"spotClearinghouseState","user":"0xdfc24b0
+200 api.hyperliquid.xyz/info {"type":"frontendOpenOrders","user":"0xdfc24b077bc
+200 api.hyperliquid.xyz/info {"type":"clearinghouseState","user":"0xdfc24b077bc
+200 api.hyperliquid.xyz/info {"type":"allMids"}
+200 api.hyperliquid.xyz/info {"type":"allMids"}
+200 api.hyperliquid.xyz/info {"type":"clearinghouseState","user":"0xdfc24b077bc
+200 api.hyperliquid.xyz/info {"type":"spotClearinghouseState","user":"0xdfc24b0
+200 api.hyperliquid.xyz/info {"type":"frontendOpenOrders","user":"0xdfc24b077bc
