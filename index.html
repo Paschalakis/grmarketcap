@@ -949,6 +949,30 @@ body[data-cat="pf"] .views + .view, body[data-cat="pf"] #view-portfolio { margin
   .viewbtn[aria-selected="true"] { background: var(--accent); color: var(--on-accent); border-color: transparent; }
   .wrap { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
 }
+/* ===== Επιπλέον επιλογές: πορτοκαλί LED ===== */
+.views { display: none !important; }
+.navrow { display: flex; gap: 12px; align-items: stretch; }
+.navrow .cats { flex: 1; min-width: 0; }
+.extras { display: flex; gap: 10px; }
+.xtra { --led: #ff8a1a; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; width: 108px; padding: 10px 8px; border-radius: 16px; border: 1px solid color-mix(in srgb, var(--led) 75%, transparent); background: linear-gradient(160deg, rgba(255, 138, 26, .16), rgba(255, 90, 0, .06)); color: #ffb366; font: inherit; font-family: var(--font-display); font-weight: 800; font-size: 14px; cursor: pointer; text-shadow: 0 0 10px rgba(255, 138, 26, .55); box-shadow: 0 0 0 1px rgba(255, 138, 26, .15), 0 0 14px rgba(255, 122, 0, .35), inset 0 0 14px rgba(255, 122, 0, .12); transition: transform .12s, box-shadow .2s, background .2s, color .2s; }
+.xtra .vi { display: block; position: static; line-height: 0; filter: drop-shadow(0 0 6px rgba(255, 138, 26, .8)); }
+.xtra .vi svg { width: 24px; height: 24px; }
+.xtra .vl { white-space: nowrap; }
+.xtra .cnt { position: absolute; top: -8px; right: -10px; margin: 0; min-width: 18px; height: 18px; line-height: 18px; padding: 0 5px; border-radius: 999px; background: #ff8a1a; color: #1a0b00; font-size: 11px; font-weight: 800; text-shadow: none; box-shadow: 0 0 10px rgba(255, 138, 26, .8); }
+.xtra:hover { color: #ffd0a0; box-shadow: 0 0 0 1px rgba(255, 138, 26, .35), 0 0 22px rgba(255, 122, 0, .55), inset 0 0 18px rgba(255, 122, 0, .18); }
+.xtra:active { transform: scale(.96); }
+.xtra[aria-pressed="true"] { background: linear-gradient(160deg, #ffa033, #ff6a00); color: #1f0d00; text-shadow: none; border-color: #ffb366; box-shadow: 0 0 0 1px #ffb366, 0 0 26px rgba(255, 122, 0, .85), 0 0 60px rgba(255, 106, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .35); }
+.xtra[aria-pressed="true"] .vi { filter: none; }
+.xtra[aria-pressed="true"] .cnt { background: #1f0d00; color: #ffb366; box-shadow: none; }
+:root[data-ui="light"] .xtra { color: #c25200; text-shadow: none; background: linear-gradient(160deg, rgba(255, 138, 26, .14), rgba(255, 138, 26, .04)); }
+@media (max-width: 900px) and (min-width: 641px) { .xtra { width: 86px; font-size: 12.5px; } }
+@media (max-width: 640px) {
+  .navrow { display: block; }
+  .extras { justify-content: flex-end; gap: 8px; }
+  .xtra { width: auto; flex: 0 1 auto; flex-direction: row; gap: 6px; padding: 8px 12px; border-radius: 12px; font-size: 13px; }
+  .xtra .vi svg { width: 18px; height: 18px; }
+  .xtra .cnt { top: -7px; right: -7px; }
+}
 </style>
 
 <div class="demo demo-band"><p id="banner"><strong>Στιγμιότυπο.</strong> Οι τιμές προέρχονται από το capital.gr (καθυστέρηση 15 λεπτών) και η κεφαλαιοποίηση με τα ονόματα από το euro2day.gr (23/10/2026, 12:58). Τα στοιχεία δεν ενημερώνονται αυτόματα και δεν αποτελούν επενδυτική πληροφόρηση.</p></div>
@@ -972,17 +996,21 @@ body[data-cat="pf"] .views + .view, body[data-cat="pf"] #view-portfolio { margin
 
   <div class="gstrip" id="gstrip" role="region" aria-label="Παγκόσμιες αγορές" hidden></div>
 
+  <div class="navrow">
   <nav class="cats" aria-label="Κατηγορίες">
-    <button type="button" class="cat" data-cat="mk" aria-pressed="true"><span class="ci"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-5 4 3 8-8"/><path d="M15 7h5v5"/></svg></span><span class="ct"><b>Αγορές</b><span>Μετοχές · Crypto · Χάρτης · Εργαλεία</span></span></button>
+    <button type="button" class="cat" data-cat="mk" aria-pressed="true"><span class="ci"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-5 4 3 8-8"/><path d="M15 7h5v5"/></svg></span><span class="ct"><b>Αγορές</b><span>Ελλάδα · ΗΠΑ · Crypto</span></span></button>
     <button type="button" class="cat" data-cat="pf" aria-pressed="false"><span class="ci"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></span><span class="ct"><b>Χαρτοφυλάκιο</b><span id="catPf">Οι επενδύσεις σου</span></span></button>
   </nav>
+  <nav class="extras" aria-label="Επιπλέον">
+    <button type="button" class="xtra" id="tab-heat" data-view="heat" aria-pressed="false"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="10" height="11" rx="1.5"/><rect x="15" y="3" width="6" height="6" rx="1.5"/><rect x="15" y="11" width="6" height="10" rx="1.5"/><rect x="3" y="16" width="10" height="5" rx="1.5"/></svg></span><span class="vl">Χάρτης</span></button>
+    <button type="button" class="xtra" id="tab-favs" data-view="favs" aria-pressed="false"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg><span class="cnt" id="favcnt" hidden></span></span><span class="vl">Αγαπημένα</span></button>
+    <button type="button" class="xtra" id="tab-tools" data-view="tools" aria-pressed="false"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10"/><path d="M18 6h2"/><circle cx="16" cy="6" r="2"/><path d="M4 12h4"/><path d="M12 12h8"/><circle cx="10" cy="12" r="2"/><path d="M4 18h12"/><path d="M20 18h0"/><circle cx="18" cy="18" r="2"/></svg><span class="cnt" id="alcnt" hidden></span></span><span class="vl">Εργαλεία</span></button>
+  </nav>
+  </div>
   <nav class="views" role="tablist" aria-label="Ενότητες αγορών">
     <button type="button" class="viewbtn" role="tab" id="tab-market" data-view="market" aria-selected="true" aria-controls="view-market"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V10"/><path d="M10 19V5"/><path d="M16 19v-7"/><path d="M22 19H2"/></svg></span><span class="vl">Μετοχές &amp; Crypto</span></button>
-    <button type="button" class="viewbtn" role="tab" id="tab-heat" data-view="heat" aria-selected="false" aria-controls="view-heat"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="10" height="11" rx="1.5"/><rect x="15" y="3" width="6" height="6" rx="1.5"/><rect x="15" y="11" width="6" height="10" rx="1.5"/><rect x="3" y="16" width="10" height="5" rx="1.5"/></svg></span><span class="vl">Χάρτης</span></button>
-    <button type="button" class="viewbtn" role="tab" id="tab-favs" data-view="favs" aria-selected="false" aria-controls="view-favs"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg><span class="cnt" id="favcnt" hidden></span></span><span class="vl">Αγαπημένα</span></button>
-    <button type="button" class="viewbtn" role="tab" id="tab-portfolio" data-view="portfolio" aria-selected="false" aria-controls="view-portfolio"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></span><span class="vl">Χαρτοφυλάκιο</span></button>
-    <button type="button" class="viewbtn" role="tab" id="tab-tools" data-view="tools" aria-selected="false" aria-controls="view-tools"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10"/><path d="M18 6h2"/><circle cx="16" cy="6" r="2"/><path d="M4 12h4"/><path d="M12 12h8"/><circle cx="10" cy="12" r="2"/><path d="M4 18h12"/><path d="M20 18h0"/><circle cx="18" cy="18" r="2"/></svg><span class="cnt" id="alcnt" hidden></span></span><span class="vl">Εργαλεία</span></button>
-  </nav>
+            <button type="button" class="viewbtn" role="tab" id="tab-portfolio" data-view="portfolio" aria-selected="false" aria-controls="view-portfolio"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></span><span class="vl">Χαρτοφυλάκιο</span></button>
+      </nav>
 
   <div class="view" id="view-market" role="tabpanel" aria-labelledby="tab-market" data-mkt="gr">
   <section class="dashsec" id="dashsec" aria-label="Ο πίνακάς μου" hidden><div class="sechead"><h2>Ο πίνακάς μου</h2><button type="button" class="linkbtn" id="dashCu">Προσαρμογή</button></div><div class="dash" id="dash"></div></section>
@@ -1981,6 +2009,7 @@ var EN_EXACT = {
   "Όλο": "All",
   "Δεν υπάρχουν ακόμα αρκετά στοιχεία για αυτό το διάστημα. Το ιστορικό συλλέγεται καθημερινά.": "Not enough data for this range yet. History is collected daily.",
   "Η εφαρμογή εγκαταστάθηκε": "The app was installed",
+  "Ελλάδα · ΗΠΑ · Crypto": "Greece · US · Crypto",
   "Αγορές": "Markets",
   "Μετοχές & Crypto": "Stocks & Crypto",
   "Μετοχές · Crypto · Χάρτης · Εργαλεία": "Stocks · Crypto · Heatmap · Tools",
@@ -4129,7 +4158,8 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     });
     var cat = v === "portfolio" ? "pf" : "mk";
     if (cat === "mk") lastMk = v;
-    Array.prototype.forEach.call(document.querySelectorAll(".cat"), function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-cat") === cat); });
+    Array.prototype.forEach.call(document.querySelectorAll(".cat"), function (b) { var c = b.getAttribute("data-cat"); b.setAttribute("aria-pressed", c === "pf" ? v === "portfolio" : v === "market"); });
+    Array.prototype.forEach.call(document.querySelectorAll(".xtra"), function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-view") === v); });
     document.querySelector(".views").hidden = cat === "pf";
     document.body.setAttribute("data-cat", cat);
     try { localStorage.setItem("agora-lastview", v); } catch (e) {}
@@ -4151,9 +4181,10 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       el.innerHTML = '<span class="sens">' + nf0.format(H.value * RATE) + CS + "</span> · " + '<span class="chg ' + cls(pct) + '">' + pctS(pct, 2) + "</span> σήμερα";
     } catch (e) {}
   }
+  document.querySelector(".extras").addEventListener("click", function (e) { var b = e.target.closest(".xtra"); if (b) showView(b.getAttribute("data-view")); });
   document.querySelector(".cats").addEventListener("click", function (e) {
     var b = e.target.closest(".cat"); if (!b) return;
-    showView(b.getAttribute("data-cat") === "pf" ? "portfolio" : lastMk);
+    showView(b.getAttribute("data-cat") === "pf" ? "portfolio" : "market");
   });
   /* ----- σύγκριση μετοχών / crypto ----- */
   var cmpKeys = (function () { try { var v = JSON.parse(localStorage.getItem("agora-cmp") || "[]"); return Array.isArray(v) ? v.slice(0, 4) : []; } catch (e) { return []; } })();
