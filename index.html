@@ -973,6 +973,18 @@ body[data-cat="pf"] .views + .view, body[data-cat="pf"] #view-portfolio { margin
   .xtra .vi svg { width: 18px; height: 18px; }
   .xtra .cnt { top: -7px; right: -7px; }
 }
+/* πορτοκαλί LED: χρωματισμοί κόκκινο-πορτοκαλί #ff4c2d και κεχριμπαρί #feb438 */
+.xtra { border-color: #ff6a2f; background: linear-gradient(115deg, rgba(255, 76, 45, .22) 0%, rgba(255, 76, 45, .14) 48%, rgba(254, 180, 56, .16) 100%); color: #feb438; text-shadow: 0 0 10px rgba(254, 180, 56, .55); box-shadow: 0 0 0 1px rgba(255, 76, 45, .25), 0 0 16px rgba(255, 76, 45, .45), inset 0 0 16px rgba(255, 106, 47, .16); }
+.xtra .vi { filter: drop-shadow(0 0 6px rgba(254, 180, 56, .85)); }
+.xtra:hover { color: #ffd27a; box-shadow: 0 0 0 1px rgba(255, 76, 45, .45), 0 0 26px rgba(255, 76, 45, .65), inset 0 0 20px rgba(255, 106, 47, .22); }
+.xtra .cnt { background: linear-gradient(135deg, #ff4c2d, #feb438); color: #2a0a00; box-shadow: 0 0 10px rgba(255, 76, 45, .8); }
+.xtra[aria-pressed="true"] { color: #2a0a00; border-color: #feb438; background: linear-gradient(115deg, #ff4c2d 0%, #ff4c2d 38%, #ff7a30 41%, #feb438 45%, #feb438 56%, #ff7a30 60%, #ff4c2d 64%, #ff4c2d 82%, #ff6a2f 90%, #feb438 100%); box-shadow: 0 0 0 1px #feb438, 0 0 26px rgba(255, 76, 45, .9), 0 0 60px rgba(255, 106, 47, .4), inset 0 1px 0 rgba(255, 255, 255, .35); }
+.xtra[aria-pressed="true"] .cnt { background: #2a0a00; color: #feb438; }
+:root[data-ui="light"] .xtra { color: #e03a1c; }
+.xtra .cnt { left: auto !important; right: -8px; top: -8px; }
+.xtra .vi { filter: none !important; }
+.xtra .vi svg { filter: drop-shadow(0 0 6px rgba(254, 180, 56, .85)); }
+.xtra[aria-pressed="true"] .vi svg { filter: none; }
 </style>
 
 <div class="demo demo-band"><p id="banner"><strong>Στιγμιότυπο.</strong> Οι τιμές προέρχονται από το capital.gr (καθυστέρηση 15 λεπτών) και η κεφαλαιοποίηση με τα ονόματα από το euro2day.gr (23/10/2026, 12:58). Τα στοιχεία δεν ενημερώνονται αυτόματα και δεν αποτελούν επενδυτική πληροφόρηση.</p></div>
