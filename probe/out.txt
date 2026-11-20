@@ -1,4 +1,12 @@
-χρήστες: 2
-q522Fy δοκιμαστική ειδοποίηση
-  push ok Android
-  email στάλθηκε
+release projects/agora-athinon/rulesets/0005d262-3928-411a-a242-13af85a18c8e None
+---- firestore.rules
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+  }
+}
+perms {'permissions': ['datastore.entities.update', 'firebaserules.releases.update', 'firebaserules.rulesets.create']}
+owner uid q522FywUk8NMdkqOK5iTmGqoT553
