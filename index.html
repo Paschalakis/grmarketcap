@@ -1475,7 +1475,7 @@ tr.txrow > td { padding: 0 10px 14px !important; background: transparent !import
     <div id="tl-al" class="tlpane" hidden></div>
   </div>
   <footer class="srcfoot" id="srcfoot">
-    <p><b>Πηγές δεδομένων.</b> Τιμές Χ.Α.: <a href="https://www.capital.gr" target="_blank" rel="noopener">capital.gr</a> · Κεφαλαιοποίηση: <a href="https://www.euro2day.gr" target="_blank" rel="noopener">euro2day.gr</a> · Διαγράμματα, μετοχές ΗΠΑ και θεμελιώδη: <a href="https://www.tradingview.com" target="_blank" rel="noopener">TradingView</a> και Yahoo Finance · Crypto: <a href="https://www.coingecko.com/en/api" target="_blank" rel="noopener">Data provided by CoinGecko</a> · Perpetuals: <a href="https://hyperliquid.xyz" target="_blank" rel="noopener">Hyperliquid</a>.</p>
+    <p><b>Πηγές δεδομένων.</b> Τιμές Χ.Α.: <a href="https://www.capital.gr" target="_blank" rel="noopener">capital.gr</a> · Κεφαλαιοποίηση: <a href="https://www.euro2day.gr" target="_blank" rel="noopener">euro2day.gr</a> · Διαγράμματα, μετοχές ΗΠΑ και θεμελιώδη: <a href="https://www.tradingview.com" target="_blank" rel="noopener">TradingView</a> και Yahoo Finance · Crypto: <a href="https://www.coingecko.com/en/api" target="_blank" rel="noopener">Data provided by CoinGecko</a> · Perpetuals: <a href="https://hyperliquid.xyz" target="_blank" rel="noopener">Hyperliquid</a> · Λογότυπα: <a href="https://brandfetch.com" target="_blank" rel="noopener">Brandfetch</a>.</p>
     <p>Οι τιμές έχουν καθυστέρηση έως 15 λεπτά και δίνονται μόνο για ενημέρωση. Δεν αποτελούν επενδυτική συμβουλή ούτε πρόταση αγοράς ή πώλησης. Τα σήματα και τα ονόματα ανήκουν στους κατόχους τους.</p>
     <p class="srcc">© <span id="srcY">2026</span> Axiogram</p>
   </footer>
@@ -2625,18 +2625,16 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   var SYM_BACK = {}; Object.keys(SYM_EN).forEach(function (k) { SYM_BACK[SYM_EN[k]] = k; });
   var EXTMETA = {};
   function isExt(s) { return /^[cfmp]:/.test(s || ""); }
-  /* λογότυπα (TradingView), με κλειδί και το ελληνικό και το λατινικό σύμβολο */
+  /* λογότυπα από το Brandfetch (δωρεάν, επιτρέπεται σε εμπορικά sites). Τιμή στο LOGO_D: "domain/…" ή "ticker/…" */
+  var BF_ID = "1idw-IXGU7tFB4ds1WN";
+  var GR_DOM = {"ΕΕΕ": "coca-colahellenic.com", "ΕΥΡΩΒ": "eurobank.gr", "ΕΤΕ": "nbg.gr", "ΔΕΗ": "dei.gr", "ΠΕΙΡ": "piraeusbank.gr", "ΑΛΦΑ": "alpha.gr", "ALWN": "allwyn.com", "ΟΤΕ": "cosmote.gr", "ΜΟΗ": "moh.gr", "MTLN": "metlengroup.com", "ΕΛΠΕ": "helleniqenergy.gr", "CENER": "cenergyholdings.com", "BOCHGR": "bankofcyprus.com", "ΒΙΟ": "viohalco.com", "ΔΑΑ": "aia.gr", "ΜΠΕΛΑ": "jumbo.gr", "TITC": "titan-cement.com", "OPTIMA": "optimabank.gr", "SBLK": "starbulk.com", "AKTR": "aktor.gr", "BYLOT": "intralot.com", "ΑΔΜΗΕ": "admie.gr", "ΕΛΧΑ": "elvalhalcor.com", "ΚΑΡΕΛ": "karelia.gr", "ΟΛΠ": "olp.gr", "ΑΡΑΙΓ": "aegeanair.com", "ΛΑΜΔΑ": "lamdadev.com", "SB": "safebulkers.com", "ΚΟΥΕΣ": "quest.gr", "ΕΧΑΕ": "athexgroup.gr", "ΑΒΑΞ": "avax.gr", "ΟΤΟΕΛ": "autohellas.gr", "ΠΛΑΚΡ": "plastikakritis.com", "ΕΛΛΑΚΤΩΡ": "ellaktor.com", "ΟΛΘ": "thpa.gr", "ACAG": "austriacard.com", "ΤΡΑΣΤΟΡ": "trastor.gr", "ΑΤΤΙΚΑ": "attica-group.com", "ΙΝΤΕΚ": "idealholdings.gr", "DIMAND": "dimand.gr", "ΙΝΤΚΑ": "intracom.com", "ΛΑΒΙ": "lavipharm.com", "ΠΡΟΦ": "profilesw.com", "ΦΡΛΚ": "fourlis.gr", "ΑΛΜΥ": "alumil.com", "ADPS": "atticadps.gr", "ΕΥΑΠΣ": "eyath.gr", "ΠΡΕΜΙΑ": "premia.gr", "ΜΠΡΙΚ": "briqproperties.gr", "ΙΝΛΙΦ": "interlife.gr", "ΠΕΡΦ": "performance.gr", "ΙΑΤΡ": "iatriko.gr", "ΦΛΕΞΟ": "flexopack.com", "ΠΑΠ": "papoutsanis.gr", "ΑΒΕ": "ave.gr", "ΜΟΤΟ": "motodynamics.gr", "ΑΣΚΟ": "ascompany.gr", "ΕΛΣΤΡ": "elastron.gr", "ΣΠΕΙΣ": "space.gr", "ΕΛΙΝ": "elin.gr", "ΦΡΙΓΟ": "frigoglass.com", "ΚΟΥΑΛ": "qnr.com.gr", "ΡΕΒΟΙΛ": "revoil.gr", "ΒΙΟΚΑ": "biokarpet.gr", "ΔΡΟΜΕ": "dromeas.gr", "CMFC": "capitalmaritime.com"};
   var LOGO_D = {};
-  /* λογότυπα μετοχών: προς το παρόν απενεργοποιημένα (το TradingView δεν επιτρέπει εμπορική χρήση των εικόνων του).
-     Για να μπουν ξανά από πηγή με άδεια, αρκεί να επιστρέφει εδώ τη διεύθυνση της εικόνας. */
-  function logoUrl(id) { return null; }
+  function logoUrl(id) { return id && /^(domain|ticker|crypto|isin)\//.test(id) ? "https://cdn.brandfetch.io/" + id + "/w/64/h/64/fallback/404/icon?c=" + BF_ID : null; }
+  function fLogo(k) { return LOGO_D[k] ? logoUrl(LOGO_D[k]) : /^f:/.test(k || "") ? logoUrl("ticker/" + k.slice(2)) : null; }
   (function () {
-    var L = window.__LOGOS || {};
-    ((window.__US && window.__US.s) || []).forEach(function (u) { if (u.l) { LOGO_D["f:" + u.s] = u.l; } });
-    Object.keys(L).forEach(function (k) {
-      if (/^f:/.test(k)) { LOGO_D[k] = L[k]; LOGO_D[k.slice(2)] = LOGO_D[k.slice(2)] || L[k]; return; }
-      LOGO_D[k] = L[k]; if (SYM_EN[k]) LOGO_D[SYM_EN[k]] = L[k];
-    });
+    Object.keys(GR_DOM).forEach(function (k) { LOGO_D[k] = "domain/" + GR_DOM[k]; if (SYM_EN[k]) LOGO_D[SYM_EN[k]] = LOGO_D[k]; });
+    ((window.__US && window.__US.s) || []).forEach(function (u) { LOGO_D["f:" + u.s] = "ticker/" + u.s; });
+    Object.keys(window.__LOGOS || {}).forEach(function (k) { if (/^f:/.test(k)) LOGO_D[k] = "ticker/" + k.slice(2); });
   })();
   function DS(s) { if (isExt(s)) return (EXTMETA[s] && EXTMETA[s].s) || s.slice(2).toUpperCase(); return (LANG === "en" && SYM_EN[s]) || s; }
   /* σύμβολα που υπάρχουν στο TradingView (ATHEX), ελεγμένα */
@@ -2706,7 +2704,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   function monoHtml(sym) {
     var h = 0; for (var i = 0; i < sym.length; i++) h = (h * 31 + sym.charCodeAt(i)) % 360;
     var lg = LOGO_D[sym] ? logoUrl(LOGO_D[sym]) : null;
-    return '<div class="mono hc' + (lg ? " haslogo" : "") + '" style="--h:' + h + '" aria-hidden="true">' + esc(sym.slice(0, 2)) + (lg ? '<img src="' + esc(lg) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.classList.remove(\'haslogo\');this.remove()">' : "") + "</div>";
+    return '<div class="mono hc' + (lg ? " haslogo" : "") + '" style="--h:' + h + '" aria-hidden="true">' + esc(sym.slice(0, 2)) + (lg ? '<img src="' + esc(lg) + '" alt="" loading="lazy" onerror="this.parentNode.classList.remove(\'haslogo\');this.remove()">' : "") + "</div>";
   }
   function barPos(v) {
     var w = Math.min(Math.abs(v), 10) / 10 * 50;
@@ -3670,7 +3668,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   });
   function assetIcon(sym, label) {
     var m = EXTMETA[sym];
-    if (/^f:/.test(sym) && LOGO_D[sym]) return logoBox(DS(sym), logoUrl(LOGO_D[sym]));
+    if (/^f:/.test(sym)) return logoBox(DS(sym), fLogo(sym));
     if (LOGO_D[sym] && !(m && m.img)) return monoHtml(DS(sym));
     if (m && m.img) return '<img class="cimg" src="' + esc(m.img) + '" alt="" loading="lazy" referrerpolicy="no-referrer">';
     return monoHtml(label || DS(sym));
@@ -4746,14 +4744,14 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   /* ----- λίστες ΗΠΑ / Crypto (top 100) ----- */
   function logoBox(label, url) {
     var h = 0; for (var i = 0; i < label.length; i++) h = (h * 31 + label.charCodeAt(i)) % 360;
-    return '<div class="mono hc' + (url ? " haslogo" : "") + '" style="--h:' + h + '" aria-hidden="true">' + esc(label.slice(0, 2)) + (url ? '<img src="' + esc(url) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.classList.remove(\'haslogo\');this.remove()">' : "") + "</div>";
+    return '<div class="mono hc' + (url ? " haslogo" : "") + '" style="--h:' + h + '" aria-hidden="true">' + esc(label.slice(0, 2)) + (url ? '<img src="' + esc(url) + '" alt="" loading="lazy" onerror="this.parentNode.classList.remove(\'haslogo\');this.remove()">' : "") + "</div>";
   }
   var mkt = (function () { try { var m = localStorage.getItem("agora-mkt"); return m === "us" || m === "c" ? m : "gr"; } catch (e) { return "gr"; } })();
   var XS = { k: "m", d: -1 }, CG100 = null, cg100At = 0, cg100Busy = false, cg100Err = false;
   try { var c0 = JSON.parse(localStorage.getItem("agora-cg100") || "null"); if (c0 && Array.isArray(c0.d)) { CG100 = c0.d; cg100At = c0.at || 0; } } catch (e) {}
   (CG100 || []).forEach(function (x) { if (x && x.id && x.current_price != null && !CGP[x.id]) CGP[x.id] = { p: x.current_price, c: x.price_change_percentage_24h || 0 }; });
   function xItems() {
-    if (mkt === "us") { var u = usdEur(); return ((USD_ && USD_.s) || []).map(function (x, i) { return { k: "f", id: x.s, s: x.s, n: x.n, p: x.p * u, np: x.p, h1: null, c: x.c, w: x.w, m: x.m * u, v: x.v, vsh: true, img: x.l ? logoUrl(x.l) : null, sub: x.x, rank: i + 1 }; }); }
+    if (mkt === "us") { var u = usdEur(); return ((USD_ && USD_.s) || []).map(function (x, i) { return { k: "f", id: x.s, s: x.s, n: x.n, p: x.p * u, np: x.p, h1: null, c: x.c, w: x.w, m: x.m * u, v: x.v, vsh: true, img: logoUrl("ticker/" + x.s), sub: x.x, rank: i + 1 }; }); }
     return (CG100 || []).map(function (x, i) { return { k: "c", id: x.id, s: String(x.symbol || "").toUpperCase(), n: x.name, p: x.current_price, np: x.current_price, h1: x.price_change_percentage_1h_in_currency, c: x.price_change_percentage_24h_in_currency != null ? x.price_change_percentage_24h_in_currency : x.price_change_percentage_24h, w: x.price_change_percentage_7d_in_currency, m: x.market_cap, v: x.total_volume, img: x.image, sp: x.sparkline_in_7d && x.sparkline_in_7d.price, rank: x.market_cap_rank || i + 1 }; });
   }
   function loadCg100(force) {
@@ -4848,9 +4846,9 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       return { k: "c", id: id, s: m.s || id.toUpperCase(), n: m.n || id, p: CGP[id] ? CGP[id].p : null, c: CGP[id] ? CGP[id].c : null, img: m.img || null, partial: true };
     }
     var q = USQ[id], rank = null;
-    if (q) { ((USD_ && USD_.s) || []).forEach(function (x, i) { if (x.s === id) rank = i + 1; }); return { k: "f", id: id, s: id, n: q.n, p: q.p * u, np: q.p, c: q.c, w: q.w, m: q.m * u, v: q.v, vsh: true, img: q.l ? logoUrl(q.l) : null, sub: q.x, sec: q.sec, rank: rank }; }
+    if (q) { ((USD_ && USD_.s) || []).forEach(function (x, i) { if (x.s === id) rank = i + 1; }); return { k: "f", id: id, s: id, n: q.n, p: q.p * u, np: q.p, c: q.c, w: q.w, m: q.m * u, v: q.v, vsh: true, img: logoUrl("ticker/" + id), sub: q.x, sec: q.sec, rank: rank }; }
     var f = FOREIGN && FOREIGN.q && FOREIGN.q[id];
-    if (f) return { k: "f", id: id, s: id, n: f.n, p: f.pe, np: f.p, ncur: f.cur, c: f.c, img: LOGO_D["f:" + id] ? logoUrl(LOGO_D["f:" + id]) : null, sub: f.ex };
+    if (f) return { k: "f", id: id, s: id, n: f.n, p: f.pe, np: f.p, ncur: f.cur, c: f.c, img: fLogo("f:" + id), sub: f.ex };
     return { k: "f", id: id, s: id, n: m.n || id, p: null, c: null, img: null, partial: true };
   }
   function tvSymbol(id) {
@@ -5643,7 +5641,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
         SCR = { updated: j.updated, gr: (j.gr || []).map(function (a) { return obj(a, "gr"); }), us: (j.us || []).map(function (a) { return obj(a, "us"); }) };
         SCR.us.forEach(function (o) {
           if (!USQ[o.k]) USQ[o.k] = { s: o.k, n: o.n, p: o.p, c: o.c, w: o.w, m: o.m, v: 0, l: o.logo, x: o.x, sec: o.sec };
-          if (o.logo && !LOGO_D["f:" + o.k]) LOGO_D["f:" + o.k] = o.logo;
+          if (!LOGO_D["f:" + o.k]) LOGO_D["f:" + o.k] = "ticker/" + o.k;
         });
       })
       .catch(function () { scrErr = true; })
@@ -5660,7 +5658,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   }
   function itemLogo(it) {
     if (it.mk === "gr") return monoHtml(it.lab);
-    return logoBox(it.lab, it.o && it.o.logo ? logoUrl(it.o.logo) : null);
+    return logoBox(it.lab, fLogo(it.key));
   }
   function fmtP(v) { return Math.abs(v * RATE) >= 1 ? nf2.format(v * RATE) + CS : fmtC(v); }
   function pctS(v, d) { return v == null ? "—" : sgn(v) + new Intl.NumberFormat(LOC, { maximumFractionDigits: d == null ? 1 : d }).format(Math.abs(v)) + "%"; }
@@ -5863,7 +5861,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   }
   function alKeyInfo(k) {
     if (/^c:/.test(k)) { var it = xGet(k); return { lab: it.s, n: it.n, img: it.img }; }
-    if (/^f:/.test(k)) { var q = USQ[k.slice(2)]; return { lab: k.slice(2), n: q ? q.n : k.slice(2), img: q && q.l ? logoUrl(q.l) : null }; }
+    if (/^f:/.test(k)) { var q = USQ[k.slice(2)]; return { lab: k.slice(2), n: q ? q.n : k.slice(2), img: fLogo(k) }; }
     var r = BYSYM[k]; return { lab: r ? r.dsym : k, n: r ? r.name : "" };
   }
   function alLogo(a) { return /^[cf]:/.test(a.k) ? logoBox(a.lab, a.img || null) : monoHtml(a.lab); }
@@ -6115,7 +6113,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       '<div class="svkpi">' + (tp != null ? '<div><span class="note">Απόδοση από την αγορά</span><b class="chg ' + cls(tp) + '">' + pctS(tp, 2) + "</b></div>" : "") + '<div><span class="note">Σήμερα</span><b class="chg ' + cls(day) + '">' + pctS(day, 2) + "</b></div></div>" +
       '<div class="svbar">' + bar + "</div>" +
       '<div class="svlist">' + items.map(function (it, i) {
-        var logo = /^[cf]:/.test(it.k) ? logoBox(it.lab, it.img || (/^f:/.test(it.k) && LOGO_D[it.k] ? logoUrl(LOGO_D[it.k]) : null)) : monoHtml(it.lab);
+        var logo = /^[cf]:/.test(it.k) ? logoBox(it.lab, it.img || fLogo(it.k)) : monoHtml(it.lab);
         return '<div class="svrow"><i class="dot" style="background:' + pfColor(i) + '"></i>' + logo + '<div class="cn"><b>' + esc(it.lab) + "</b><span>" + esc(it.n || "") + '</span></div><span class="num w">' + n1(it.w) + "%</span>" + (it.chg == null ? '<span class="note">—</span>' : chgHtml(it.chg)) + (d.perf ? '<span class="pf chg ' + (it.perf == null ? "" : cls(it.perf)) + '" title="Απόδοση από την αγορά">' + pctS(it.perf) + "</span>" : "") + "</div>";
       }).join("") + "</div>" +
       '<p class="note" style="margin:0">Οι τιμές είναι οι τρέχουσες. Οι αναλογίες αλλάζουν με τις τιμές από τη μέρα της κοινοποίησης.</p>' +
@@ -6272,7 +6270,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     }
     if (/^f:/.test(k)) {
       var id = k.slice(2), x = xGet(k), sc = SCR && SCR.us.filter(function (r) { return r.k === id; })[0];
-      o.lab = id; o.n = x.n; o.logo = logoBox(id, x.img || (LOGO_D[k] ? logoUrl(LOGO_D[k]) : null)); o.p = x.p; o.c = x.c;
+      o.lab = id; o.n = x.n; o.logo = logoBox(id, x.img || fLogo(k)); o.p = x.p; o.c = x.c;
       var sv = SPARK && SPARK[k]; if (sv && sv.length > 1) { o.sp = sv; o.spl = "3 μήνες"; o.spc = (sv[sv.length - 1] / sv[0] - 1) * 100; }
       if (x.m) o.kv.push(["Κεφαλαιοποίηση", money(x.m)]);
       if (sc && sc.pe > 0) o.kv.push(["P/E", n1(sc.pe)]);
@@ -6387,7 +6385,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var keys = Object.keys(favs);
     if (!keys.length) return dashCard("favs", "Αγαπημένα", '<p class="note">Πάτα ☆ δίπλα σε μια μετοχή ή ένα crypto για να το βλέπεις εδώ.</p>');
     var items = keys.map(function (k) {
-      if (isExt(k)) { var x = xGet(k); return { k: k, lab: x.s, n: x.n, logo: logoBox(x.s, x.img || (LOGO_D[k] ? logoUrl(LOGO_D[k]) : null)), p: x.p, c: x.c, m: x.m || 0 }; }
+      if (isExt(k)) { var x = xGet(k); return { k: k, lab: x.s, n: x.n, logo: logoBox(x.s, x.img || fLogo(k)), p: x.p, c: x.c, m: x.m || 0 }; }
       var r = BYSYM[k]; return r ? { k: k, lab: r.dsym, n: r.name, logo: monoHtml(r.dsym), p: r.price, c: r.chg, m: r.mcap || 0 } : null;
     }).filter(Boolean);
     return dashCard("favs", "Αγαπημένα <span class=\"note\">· " + items.length + "</span>", '<div class="dwlist">' + items.slice(0, 6).map(function (x) { return miniRow(x.k, x.lab, x.n, x.logo, x.p, x.c); }).join("") + "</div>", items.length > 6 ? '<button type="button" class="linkbtn" data-dgo="favs">Όλα →</button>' : "");
