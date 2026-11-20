@@ -1,26 +1,7 @@
-const { chromium } = require('playwright');
-(async () => {
-  const b = await chromium.launch();
-  const c = await b.newContext({ viewport: { width: 1366, height: 950 } });
-  const p = await c.newPage();
-  const logs = [];
-  p.on('pageerror', e => logs.push('pageerror: ' + e.message));
-  p.on('response', r => { const u = r.url(); if (/coingecko|alternative|hyperliquid/.test(u)) logs.push(r.status() + ' ' + u.slice(8, 80) + ' ' + (r.request().postData() || '').slice(0, 50)); });
-  p.on('requestfailed', r => { if (/coingecko|alternative|hyperliquid/.test(r.url())) logs.push('FAILED ' + r.url().slice(8, 80) + ' ' + (r.failure() || {}).errorText); });
-  await c.addInitScript(() => { localStorage.setItem('agora-wallets', JSON.stringify([{ a: '0xdfc24b077bc1425ad1dea75bcb6f8158e10df303', n: 'HLP' }])); localStorage.setItem('agora-portfolio', '[]'); });
-  await p.goto('https://paschalakis.github.io/grmarketcap/?v=' + Date.now(), { waitUntil: 'load' });
-  await p.waitForTimeout(3000);
-  await p.click('#mktsw [data-mkt="c"]'); await p.waitForTimeout(7000);
-  console.log('CSTATS', (await p.locator('#cstats').innerText().catch(() => '-')).replace(/\s+/g, ' '));
-  await p.locator('#cstats').screenshot({ path: 'probe/x_cstats.png' }).catch(() => {});
-  await p.click('#tab-heat'); await p.click('#heatMkt [data-hm="c"]'); await p.waitForTimeout(2500);
-  console.log('HEAT C', await p.locator('#heat .ht').count(), await p.locator('#heat .hs > b').allTextContents());
-  await p.click('#heatMkt [data-hm="us"]'); await p.waitForTimeout(800);
-  console.log('HEAT US', await p.locator('#heat .ht').count());
-  await p.click('#tab-portfolio'); await p.waitForTimeout(9000);
-  console.log('PERPS', (await p.locator('#perps').innerText().catch(() => '-')).replace(/\s+/g, ' ').slice(0, 600));
-  console.log('CHART paths', await p.locator('#dkchart path').count(), 'msg', await p.locator('#dkchart .msg').innerText().catch(() => ''));
-  await p.screenshot({ path: 'probe/x_pf.png' });
-  console.log(logs.join('\n'));
-  await b.close();
-})();
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();
+for(const o of [{viewport:{width:1366,height:900}},{viewport:{width:390,height:844},isMobile:true,hasTouch:true,colorScheme:'dark'}]){
+const c=await b.newContext(o);const p=await c.newPage();await p.goto('https://axiogram.eu/?x='+Date.now());await p.waitForTimeout(4000);
+console.log(o.viewport.width,'data-ui',await p.evaluate(()=>document.documentElement.getAttribute('data-ui')),'theme-mk in page',await p.evaluate(()=>typeof THEME!=='undefined'?THEME:'?'),'bg',await p.evaluate(()=>getComputedStyle(document.body).backgroundColor));
+await c.close();}
+await b.close();})();
