@@ -506,7 +506,7 @@ body.pfhide .sens { filter: blur(9px); user-select: none; }
 .brandh .brandmark { flex: none; border-radius: 8px; box-shadow: 0 4px 14px rgba(91, 124, 250, .35); }
 @media (max-width: 640px) { .brandh .brandmark { width: 26px; height: 26px; } .brandh { gap: 8px; } }
 .mktsw { align-self: flex-start; }
-#view-market[data-mkt="us"] > *:not(.mktrow):not(#xlist), #view-market[data-mkt="c"] > *:not(.mktrow):not(#xlist) { display: none !important; }
+#view-market[data-mkt="us"] > *:not(.mktrow):not(#xlist):not(#hero):not(#dashsec), #view-market[data-mkt="c"] > *:not(.mktrow):not(#xlist):not(#hero):not(#dashsec) { display: none !important; }
 .mktrow { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
 .cmpbtn { gap: 6px; height: 38px; }
 .cmpsel { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
@@ -896,43 +896,288 @@ tbody tr { transition: background-color .15s ease; }
 .cuar button { width: 28px; height: 28px; border: 1px solid var(--line); border-radius: 8px; background: none; color: var(--muted); cursor: pointer; font: inherit; }
 .cuar button:hover { color: var(--fg); border-color: var(--accent); }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; } }
-/* ===== Επεξεργαστής εμφάνισης ===== */
-.panel.thbox { position: fixed; top: 12px; right: 12px; bottom: 12px; width: min(400px, calc(100% - 24px)); z-index: 30; overflow-y: auto; padding: 18px; display: flex; flex-direction: column; gap: 14px; background: var(--surface); box-shadow: 0 20px 60px rgba(0, 0, 0, .45); animation: drawerIn .28s cubic-bezier(.2, .8, .3, 1); }
-.thbox .ahead { display: flex; justify-content: space-between; align-items: center; position: sticky; top: -18px; background: var(--surface); margin: -18px -18px 0; padding: 16px 18px 8px; z-index: 1; }
-.thbox h2 { font-size: 20px; font-weight: 800; }
-.thsec { display: flex; flex-direction: column; gap: 8px; }
-.thsec h3 { margin: 0; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; font-family: var(--font-body); }
-.thsec .note { margin: 0; font-size: 12px; }
-.thpre { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-.thp { display: flex; flex-direction: column; gap: 6px; padding: 6px; border-radius: 12px; border: 2px solid transparent; background: var(--bg); color: var(--fg); font: inherit; font-size: 12.5px; cursor: pointer; text-align: left; }
-.thp[aria-pressed="true"] { border-color: var(--accent); }
-.thsw { display: block; height: 54px; border-radius: 8px; padding: 8px; }
-.thsw i { display: flex; flex-direction: column; gap: 4px; height: 100%; border-radius: 6px; padding: 6px; }
-.thsw b { display: block; width: 26px; height: 6px; border-radius: 3px; }
-.thsw em { display: block; height: 4px; width: 70%; border-radius: 2px; opacity: .55; }
-.thacc { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.tha { width: 32px; height: 32px; border-radius: 50%; border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--line); cursor: pointer; }
-.tha[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--fg); }
-.thcustom { position: relative; width: 32px; height: 32px; border-radius: 50%; border: 1px dashed var(--muted); display: grid; place-items: center; color: var(--muted); cursor: pointer; overflow: hidden; }
-.thcustom input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; border: 0; padding: 0; }
-.thsec .seg2 { flex-wrap: wrap; align-self: flex-start; }
-.thdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: -2px; }
-.thfonts { display: flex; flex-direction: column; gap: 6px; }
-.thf { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 9px 12px; border-radius: 10px; border: 2px solid transparent; background: var(--bg); color: var(--fg); cursor: pointer; text-align: left; }
-.thf b { font-size: 14px; } .thf span { font-size: 12.5px; color: var(--muted); }
-.thf[aria-pressed="true"] { border-color: var(--accent); }
-.thbox input[type="range"] { width: 100%; accent-color: var(--accent); }
-.thtog label { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0; cursor: pointer; }
-.thtog label > span:first-child { display: flex; flex-direction: column; }
-.thfoot { gap: 12px; padding-top: 8px; border-top: 1px solid var(--line); }
-.thown { display: flex; flex-direction: column; gap: 6px; padding: 12px; border-radius: 12px; background: var(--accent-soft); }
+/* ===== Φόντο με τα χρώματα του λογότυπου (σκοτεινό θέμα) ===== */
+:root:not([data-ui="light"]) { --bg: #141428; --bg-top: #1a1a35; --bg-bottom: #0e0e1e; --surface: #1b1b33; --line: #2e2e52; --accent-soft: #2c2c55; --dk-a: rgba(52, 48, 104, .5); --dk-b: rgba(24, 22, 48, .7); --dk-line: rgba(190, 180, 255, .10); --dk-glow: rgba(124, 77, 230, .16); --dk-head: rgba(10, 8, 28, .42); }
+:root:not([data-ui="light"]) body { background:
+  radial-gradient(1000px 700px at 0% 0%, rgba(64, 98, 240, .32), transparent 60%),
+  radial-gradient(1000px 700px at 100% 10%, rgba(124, 77, 230, .30), transparent 60%),
+  radial-gradient(800px 500px at 50% 110%, rgba(79, 214, 154, .10), transparent 60%),
+  linear-gradient(180deg, var(--bg-top) 0%, var(--bg) 45%, var(--bg-bottom) 100%) fixed; background-color: var(--bg); }
+/* ===== Δύο κατηγορίες: Αγορές και Χαρτοφυλάκιο ===== */
+.cats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.cat { --cc: #5b8cff; display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 18px; border: 1px solid var(--dk-line); background: linear-gradient(160deg, var(--dk-a), var(--dk-b)); color: var(--muted); cursor: pointer; text-align: left; font: inherit; min-width: 0; opacity: .78; transition: opacity .2s, box-shadow .2s, border-color .2s, background .2s, transform .12s; }
+.cat[data-cat="pf"] { --cc: #a77bff; }
+.cat:hover { opacity: 1; }
+.cat:active { transform: scale(.98); }
+.cat .ci { flex: none; width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; background: color-mix(in srgb, var(--cc) 16%, transparent); color: var(--cc); transition: background .2s, color .2s; }
+.cat .ct { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.cat b { font-family: var(--font-display); font-size: 21px; font-weight: 800; color: var(--fg); letter-spacing: -.01em; }
+.cat .ct > span { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cat[aria-pressed="true"] { opacity: 1; border-color: color-mix(in srgb, var(--cc) 55%, transparent); background: linear-gradient(135deg, color-mix(in srgb, var(--cc) 24%, var(--dk-a)), var(--dk-b) 70%); box-shadow: 0 0 0 1px color-mix(in srgb, var(--cc) 35%, transparent), 0 16px 40px color-mix(in srgb, var(--cc) 22%, transparent); }
+.cat[aria-pressed="true"] .ci { background: var(--cc); color: #fff; box-shadow: 0 6px 18px color-mix(in srgb, var(--cc) 45%, transparent); }
+.views[hidden], #tab-portfolio { display: none !important; }
+body[data-cat="pf"] .views + .view, body[data-cat="pf"] #view-portfolio { margin-top: 0; }
 @media (max-width: 640px) {
-  .panel.thbox { top: auto; left: 0; right: 0; bottom: 0; width: 100%; max-height: 62vh; border-radius: 18px 18px 0 0 !important; animation: vin .25s ease-out; padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px)); }
-  body.thopen .views { display: none; }
+  .cats { position: fixed; left: 0; right: 0; bottom: 0; z-index: 16; gap: 8px; padding: 8px max(10px, env(safe-area-inset-left, 0px)) calc(8px + env(safe-area-inset-bottom, 0px)) max(10px, env(safe-area-inset-right, 0px)); background: var(--surface); border-top: 1px solid var(--line); box-shadow: 0 -8px 26px rgba(0, 0, 0, .3); }
+  .cat { padding: 8px 10px; gap: 10px; border-radius: 14px; }
+  .cat .ci { width: 36px; height: 36px; border-radius: 10px; }
+  .cat .ci svg { width: 19px; height: 19px; }
+  .cat b { font-size: 15.5px; }
+  .cat .ct > span { font-size: 11.5px; }
+  .views { position: static; display: flex; gap: 6px; overflow-x: auto; padding: 0 0 2px; margin: 0 -16px; padding-left: 16px; padding-right: 16px; border: 0; background: none; box-shadow: none; scrollbar-width: none; }
+  .views::-webkit-scrollbar { display: none; }
+  .viewbtn { flex: none; flex-direction: row; gap: 6px; padding: 8px 14px; font-size: 13.5px; font-weight: 700; border-radius: 999px; border: 1px solid var(--dk-line); background: var(--dk-head); }
+  .viewbtn .vi { display: none; }
+  .viewbtn .vl { max-width: none; }
+  .viewbtn .cnt { position: static; display: inline-block; }
+  .viewbtn[aria-selected="true"] { background: var(--accent); color: var(--on-accent); border-color: transparent; }
+  .wrap { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
 }
+/* ===== Επιπλέον επιλογές: πορτοκαλί LED ===== */
+.views { display: none !important; }
+.navrow { display: flex; gap: 12px; align-items: stretch; }
+.navrow .cats { flex: 1; min-width: 0; }
+.extras { display: flex; gap: 10px; }
+.xtra { --led: #ff8a1a; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; width: 108px; padding: 10px 8px; border-radius: 16px; border: 1px solid color-mix(in srgb, var(--led) 75%, transparent); background: linear-gradient(160deg, rgba(255, 138, 26, .16), rgba(255, 90, 0, .06)); color: #ffb366; font: inherit; font-family: var(--font-display); font-weight: 800; font-size: 14px; cursor: pointer; text-shadow: 0 0 10px rgba(255, 138, 26, .55); box-shadow: 0 0 0 1px rgba(255, 138, 26, .15), 0 0 14px rgba(255, 122, 0, .35), inset 0 0 14px rgba(255, 122, 0, .12); transition: transform .12s, box-shadow .2s, background .2s, color .2s; }
+.xtra .vi { display: block; position: static; line-height: 0; filter: drop-shadow(0 0 6px rgba(255, 138, 26, .8)); }
+.xtra .vi svg { width: 24px; height: 24px; }
+.xtra .vl { white-space: nowrap; }
+.xtra .cnt { position: absolute; top: -8px; right: -10px; margin: 0; min-width: 18px; height: 18px; line-height: 18px; padding: 0 5px; border-radius: 999px; background: #ff8a1a; color: #1a0b00; font-size: 11px; font-weight: 800; text-shadow: none; box-shadow: 0 0 10px rgba(255, 138, 26, .8); }
+.xtra:hover { color: #ffd0a0; box-shadow: 0 0 0 1px rgba(255, 138, 26, .35), 0 0 22px rgba(255, 122, 0, .55), inset 0 0 18px rgba(255, 122, 0, .18); }
+.xtra:active { transform: scale(.96); }
+.xtra[aria-pressed="true"] { background: linear-gradient(160deg, #ffa033, #ff6a00); color: #1f0d00; text-shadow: none; border-color: #ffb366; box-shadow: 0 0 0 1px #ffb366, 0 0 26px rgba(255, 122, 0, .85), 0 0 60px rgba(255, 106, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .35); }
+.xtra[aria-pressed="true"] .vi { filter: none; }
+.xtra[aria-pressed="true"] .cnt { background: #1f0d00; color: #ffb366; box-shadow: none; }
+:root[data-ui="light"] .xtra { color: #c25200; text-shadow: none; background: linear-gradient(160deg, rgba(255, 138, 26, .14), rgba(255, 138, 26, .04)); }
+@media (max-width: 900px) and (min-width: 641px) { .xtra { width: 86px; font-size: 12.5px; } }
+@media (max-width: 640px) {
+  .navrow { display: block; }
+  .extras { justify-content: flex-end; gap: 8px; }
+  .xtra { width: auto; flex: 0 1 auto; flex-direction: row; gap: 6px; padding: 8px 12px; border-radius: 12px; font-size: 13px; }
+  .xtra .vi svg { width: 18px; height: 18px; }
+  .xtra .cnt { top: -7px; right: -7px; }
+}
+/* πορτοκαλί LED: χρωματισμοί κόκκινο-πορτοκαλί #ff4c2d και κεχριμπαρί #feb438 */
+.xtra { border-color: #ff6a2f; background: linear-gradient(115deg, rgba(255, 76, 45, .22) 0%, rgba(255, 76, 45, .14) 48%, rgba(254, 180, 56, .16) 100%); color: #feb438; text-shadow: 0 0 10px rgba(254, 180, 56, .55); box-shadow: 0 0 0 1px rgba(255, 76, 45, .25), 0 0 16px rgba(255, 76, 45, .45), inset 0 0 16px rgba(255, 106, 47, .16); }
+.xtra .vi { filter: drop-shadow(0 0 6px rgba(254, 180, 56, .85)); }
+.xtra:hover { color: #ffd27a; box-shadow: 0 0 0 1px rgba(255, 76, 45, .45), 0 0 26px rgba(255, 76, 45, .65), inset 0 0 20px rgba(255, 106, 47, .22); }
+.xtra .cnt { background: linear-gradient(135deg, #ff4c2d, #feb438); color: #2a0a00; box-shadow: 0 0 10px rgba(255, 76, 45, .8); }
+.xtra[aria-pressed="true"] { color: #2a0a00; border-color: #feb438; background: linear-gradient(115deg, #ff4c2d 0%, #ff4c2d 38%, #ff7a30 41%, #feb438 45%, #feb438 56%, #ff7a30 60%, #ff4c2d 64%, #ff4c2d 82%, #ff6a2f 90%, #feb438 100%); box-shadow: 0 0 0 1px #feb438, 0 0 26px rgba(255, 76, 45, .9), 0 0 60px rgba(255, 106, 47, .4), inset 0 1px 0 rgba(255, 255, 255, .35); }
+.xtra[aria-pressed="true"] .cnt { background: #2a0a00; color: #feb438; }
+:root[data-ui="light"] .xtra { color: #e03a1c; }
+.xtra .cnt { left: auto !important; right: -8px; top: -8px; }
+.xtra .vi { filter: none !important; }
+.xtra .vi svg { filter: drop-shadow(0 0 6px rgba(254, 180, 56, .85)); }
+.xtra[aria-pressed="true"] .vi svg { filter: none; }
+/* το Χαρτοφυλάκιο χωρίς τα στοιχεία των αγορών */
+body[data-cat="pf"] #gstrip, body[data-cat="pf"] .extras { display: none !important; }
+/* ===== Ύφος based: κοραλί δεύτερο χρώμα, blueprint, κουμπιά-χάπια, καθαρές ενότητες ===== */
+:root { --coral: #ff6940; --coral-2: #ff8a5c; --on-coral: #1d0a03; --bp-line: rgba(150, 170, 255, .07); --bp-major: rgba(150, 170, 255, .11); }
+:root[data-ui="light"] { --bp-line: rgba(40, 70, 160, .06); --bp-major: rgba(40, 70, 160, .10); }
+.wrap { position: relative; }
+.wrap::before { content: ""; position: absolute; left: 50%; top: 0; width: 100vw; transform: translateX(-50%); height: 640px; z-index: -1; pointer-events: none;
+  background: linear-gradient(var(--bp-line) 1px, transparent 1px) 0 0 / 24px 24px, linear-gradient(90deg, var(--bp-line) 1px, transparent 1px) 0 0 / 24px 24px, linear-gradient(var(--bp-major) 1px, transparent 1px) 0 0 / 120px 120px, linear-gradient(90deg, var(--bp-major) 1px, transparent 1px) 0 0 / 120px 120px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 90% at 50% 0%, #000 30%, transparent 75%); mask-image: radial-gradient(ellipse 70% 90% at 50% 0%, #000 30%, transparent 75%); }
+/* κουμπιά σε σχήμα χαπιού */
+.btn, .tab, .seg2, .seg2 button, .langbtn, .more, .dkicon { border-radius: 999px !important; }
+.btn { padding: 9px 18px; font-weight: 600; background: transparent; border: 1px solid color-mix(in srgb, var(--fg) 22%, transparent); }
+.btn:hover { border-color: color-mix(in srgb, var(--fg) 45%, transparent); background: color-mix(in srgb, var(--fg) 6%, transparent); }
+.btn.primary { background: linear-gradient(135deg, var(--coral), var(--coral-2)); border-color: transparent; color: var(--on-coral); font-weight: 700; box-shadow: 0 6px 20px rgba(255, 105, 64, .32); }
+.btn.primary:hover { filter: brightness(1.06); box-shadow: 0 8px 26px rgba(255, 105, 64, .45); }
+.btn.sm { padding: 6px 14px; font-size: 13px; white-space: nowrap; }
+.btn.big { padding: 13px 26px; font-size: 16px; display: inline-flex; align-items: center; gap: 8px; }
+.dkicon { padding: 0; width: 40px; height: 40px; display: inline-grid; place-items: center; }
+.cnt { background: var(--coral) !important; color: var(--on-coral) !important; }
+/* καθαρές ενότητες: τίτλος, μία πρόταση, κουμπί */
+.sechead { align-items: flex-end; gap: 8px 16px; }
+.sechead h2, .phead h2 { font-family: var(--font-display); font-size: 21px; font-weight: 800; letter-spacing: -.01em; margin: 0; }
+.secdesc { margin: 4px 0 0; color: var(--muted); font-size: 14px; max-width: 62ch; line-height: 1.45; }
+.secdesc .note { font-size: 13px; }
+.dashsec .sechead, #mvhead { margin-top: 8px; }
+#allsec .sechead, #secsec .sechead, #divsec .sechead { margin-top: 14px; }
+/* σελίδα υποδοχής */
+.hero { position: relative; display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 24px; align-items: center; padding: 40px 40px 34px; border-radius: 26px; border: 1px solid var(--dk-line); overflow: hidden;
+  background: radial-gradient(600px 300px at 0% 0%, rgba(255, 105, 64, .16), transparent 70%), radial-gradient(700px 360px at 100% 100%, rgba(124, 77, 230, .22), transparent 70%),
+    linear-gradient(var(--bp-line) 1px, transparent 1px) 0 0 / 22px 22px, linear-gradient(90deg, var(--bp-line) 1px, transparent 1px) 0 0 / 22px 22px,
+    linear-gradient(var(--bp-major) 1px, transparent 1px) 0 0 / 110px 110px, linear-gradient(90deg, var(--bp-major) 1px, transparent 1px) 0 0 / 110px 110px,
+    linear-gradient(160deg, var(--dk-a), var(--dk-b)); }
+.hero[hidden] { display: none; }
+.heroX { position: absolute; top: 14px; right: 14px; }
+.herotxt { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.heroeye { align-self: flex-start; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--coral); padding: 5px 12px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--coral) 45%, transparent); background: rgba(255, 105, 64, .08); }
+.hero h1 { margin: 0; font-family: var(--font-display); font-size: clamp(32px, 5vw, 56px); line-height: 1.04; font-weight: 800; letter-spacing: -.025em; }
+.hero h1 em { font-style: normal; background: linear-gradient(90deg, var(--coral), #feb438); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero p { margin: 0; font-size: 17px; line-height: 1.5; color: var(--muted); max-width: 52ch; }
+.heroact { display: flex; flex-wrap: wrap; gap: 10px; }
+.herolinks { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.herolinks button { border: 0; background: none; padding: 2px 0; color: var(--fg); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; border-bottom: 1px solid transparent; opacity: .85; }
+.herolinks button::after { content: " ↗"; color: var(--coral); }
+.herolinks button:hover { opacity: 1; border-bottom-color: var(--coral); }
+.herostat { display: flex; flex-direction: column; gap: 14px; padding-left: 24px; border-left: 1px solid var(--dk-line); }
+.herostat div { display: flex; flex-direction: column; }
+.herostat b { font-family: var(--font-display); font-size: 40px; font-weight: 800; letter-spacing: -.02em; line-height: 1; }
+.herostat span { color: var(--muted); font-size: 13px; margin-top: 4px; }
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; padding: 28px 20px 24px; border-radius: 20px; }
+  .herostat { flex-direction: row; justify-content: space-between; padding: 16px 0 0; border-left: 0; border-top: 1px solid var(--dk-line); }
+  .herostat b { font-size: 26px; }
+  .hero p { font-size: 15px; }
+  .btn.big { padding: 12px 20px; font-size: 15px; }
+}
+.sechead h2, .phead h2 { text-transform: none !important; letter-spacing: -.01em !important; color: var(--fg) !important; }
+/* ===== Κινούμενο κοραλί φως στο φόντο ===== */
+.bgfx { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+.bgfx i { position: absolute; border-radius: 50%; will-change: transform; }
+.bgfx .b1 { width: 70vmax; height: 70vmax; left: -20vmax; top: -25vmax; background: radial-gradient(circle, rgba(255, 105, 64, .30) 0%, rgba(255, 105, 64, .12) 35%, transparent 65%); animation: bgf1 26s ease-in-out infinite alternate; }
+.bgfx .b2 { width: 60vmax; height: 60vmax; right: -22vmax; top: 30vh; background: radial-gradient(circle, rgba(254, 180, 56, .20) 0%, rgba(255, 105, 64, .10) 40%, transparent 66%); animation: bgf2 32s ease-in-out infinite alternate; }
+.bgfx .b3 { width: 55vmax; height: 55vmax; left: 20vw; bottom: -30vmax; background: radial-gradient(circle, rgba(255, 76, 45, .18) 0%, rgba(124, 77, 230, .10) 45%, transparent 68%); animation: bgf3 38s ease-in-out infinite alternate; }
+@keyframes bgf1 { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(28vw, 18vh) scale(1.15); } 100% { transform: translate(8vw, 40vh) scale(.95); } }
+@keyframes bgf2 { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-30vw, -20vh) scale(1.2); } 100% { transform: translate(-12vw, 25vh) scale(.9); } }
+@keyframes bgf3 { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(25vw, -25vh) scale(1.1); } 100% { transform: translate(-20vw, -10vh) scale(1.2); } }
+:root[data-ui="light"] .bgfx i { opacity: .45; }
+@media (prefers-reduced-motion: reduce) { .bgfx i { animation: none !important; } }
+html.nomotion .bgfx i { animation: none !important; }
+/* ===== Χαρτοφυλάκιο: βαθύ ηλεκτρικό LED μωβ ===== */
+:root { --led-p: #9d4dff; --led-p2: #7a00ff; --led-p3: #c99bff; }
+.bgfx .pv { opacity: 0; transition: opacity 1.1s ease; }
+.bgfx .b1.pv { background: radial-gradient(circle, rgba(122, 0, 255, .42) 0%, rgba(122, 0, 255, .16) 35%, transparent 65%); }
+.bgfx .b2.pv { background: radial-gradient(circle, rgba(190, 110, 255, .30) 0%, rgba(140, 50, 255, .12) 40%, transparent 66%); }
+.bgfx .b3.pv { background: radial-gradient(circle, rgba(157, 77, 255, .30) 0%, rgba(90, 20, 200, .14) 45%, transparent 68%); }
+.bgfx i:not(.pv) { transition: opacity 1.1s ease; }
+.pvtint { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(40, 8, 90, .55), rgba(18, 4, 42, .35) 50%, rgba(30, 6, 70, .5)); opacity: 0; transition: opacity 1.1s ease; }
+body[data-cat="pf"] .bgfx .pv, body[data-cat="pf"] .pvtint { opacity: 1; }
+body[data-cat="pf"] .bgfx i:not(.pv) { opacity: 0; }
+body[data-cat="pf"] { --accent: #b57dff; --accent-soft: rgba(157, 77, 255, .2); --on-accent: #12021f; --dk-line: rgba(185, 125, 255, .2); --dk-a: rgba(74, 28, 140, .48); --dk-b: rgba(30, 8, 64, .72); --dk-head: rgba(20, 4, 44, .5); --line: #3e2470; --bp-line: rgba(175, 110, 255, .085); --bp-major: rgba(175, 110, 255, .14); --surface: #1c1133; }
+body[data-cat="pf"] .btn.primary { background: linear-gradient(135deg, var(--led-p2), #b14dff); color: #fff; box-shadow: 0 0 0 1px rgba(205, 160, 255, .45), 0 0 22px rgba(140, 60, 255, .65), 0 0 50px rgba(122, 0, 255, .25); }
+body[data-cat="pf"] .btn.primary:hover { box-shadow: 0 0 0 1px rgba(220, 180, 255, .6), 0 0 30px rgba(150, 70, 255, .85), 0 0 70px rgba(122, 0, 255, .35); }
+body[data-cat="pf"] .panel, body[data-cat="pf"] .dk { border-color: rgba(185, 125, 255, .22); box-shadow: 0 0 0 1px rgba(157, 77, 255, .06), 0 10px 34px rgba(60, 0, 140, .25); }
+body[data-cat="pf"] #view-portfolio .phead h2 { background: linear-gradient(90deg, #fff 0%, #e2c8ff 40%, #b57dff 100%); -webkit-background-clip: text; background-clip: text; color: transparent !important; text-shadow: none; }
+body[data-cat="pf"] .chg.up, body[data-cat="pf"] .up { text-shadow: none; }
+/* η κάρτα «Χαρτοφυλάκιο»: μωβ LED */
+.cat[data-cat="pf"] { --cc: #a96bff; border-color: rgba(157, 77, 255, .45); box-shadow: 0 0 0 1px rgba(157, 77, 255, .12), 0 0 16px rgba(122, 0, 255, .22); }
+.cat[data-cat="pf"] .ci { color: #c99bff; background: rgba(122, 0, 255, .2); box-shadow: 0 0 12px rgba(157, 77, 255, .35); }
+.cat[data-cat="pf"][aria-pressed="true"] { border-color: #c99bff; background: linear-gradient(135deg, #5b13cc 0%, #3a0a8a 45%, #1d0546 100%); box-shadow: 0 0 0 1px #c99bff, 0 0 30px rgba(157, 77, 255, .85), 0 0 80px rgba(122, 0, 255, .4), inset 0 1px 0 rgba(255, 255, 255, .25); animation: ledp 2.8s ease-in-out infinite; }
+.cat[data-cat="pf"][aria-pressed="true"] .ci { background: linear-gradient(135deg, #b14dff, #7a00ff); color: #fff; box-shadow: 0 0 18px rgba(177, 77, 255, .9); }
+.cat[data-cat="pf"][aria-pressed="true"] b { color: #fff; text-shadow: 0 0 14px rgba(201, 155, 255, .8); }
+.cat[data-cat="pf"][aria-pressed="true"] .ct > span { color: #e3cbff; }
+@keyframes ledp { 0%, 100% { box-shadow: 0 0 0 1px #c99bff, 0 0 26px rgba(157, 77, 255, .75), 0 0 70px rgba(122, 0, 255, .35), inset 0 1px 0 rgba(255, 255, 255, .25); } 50% { box-shadow: 0 0 0 1px #e0c4ff, 0 0 38px rgba(170, 90, 255, 1), 0 0 100px rgba(122, 0, 255, .55), inset 0 1px 0 rgba(255, 255, 255, .3); } }
+/* μετάβαση: κύμα χρώματος από το σημείο που πάτησες */
+.catfx { position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: 0; }
+.catfx.go { animation: catwave .8s cubic-bezier(.2, .7, .3, 1) forwards; }
+.catfx.go.pf { background: radial-gradient(circle at var(--x) var(--y), rgba(201, 155, 255, .55) 0%, rgba(122, 0, 255, .45) 18%, rgba(70, 0, 160, .25) 40%, transparent 70%); }
+.catfx.go.mk { background: radial-gradient(circle at var(--x) var(--y), rgba(255, 170, 120, .4) 0%, rgba(255, 105, 64, .3) 18%, rgba(64, 98, 240, .18) 40%, transparent 70%); }
+@keyframes catwave { 0% { opacity: 0; clip-path: circle(0 at var(--x) var(--y)); } 25% { opacity: 1; } 100% { opacity: 0; clip-path: circle(150vmax at var(--x) var(--y)); } }
+body[data-cat="pf"] #view-portfolio.vin { animation: pfin .5s cubic-bezier(.2, .8, .3, 1); }
+@keyframes pfin { from { opacity: 0; transform: translateY(14px) scale(.985); filter: saturate(1.6) hue-rotate(-10deg); } to { opacity: 1; transform: none; filter: none; } }
+:root[data-ui="light"] body[data-cat="pf"] { --surface: #fbf7ff; --line: #e2d2ff; }
+:root[data-ui="light"] .pvtint { background: linear-gradient(180deg, rgba(157, 77, 255, .10), rgba(157, 77, 255, .04)); }
+@media (prefers-reduced-motion: reduce) { .cat[data-cat="pf"][aria-pressed="true"] { animation: none; } }
+.phead .btn { white-space: nowrap; }
+/* ===== Χαρτοφυλάκιο: χρωματισμοί DECK (βαθύ indigo-μπλε, περιβάγκα, τιρκουάζ), λίγο πιο έντονοι ===== */
+:root { --led-p: #7c84ff; --led-p2: #4b4dff; --led-p3: #b3b9ff; }
+.bgfx .b1.pv { background: radial-gradient(circle, rgba(75, 77, 255, .46) 0%, rgba(75, 77, 255, .18) 35%, transparent 65%); }
+.bgfx .b2.pv { background: radial-gradient(circle, rgba(122, 76, 255, .34) 0%, rgba(98, 60, 220, .14) 40%, transparent 66%); }
+.bgfx .b3.pv { background: radial-gradient(circle, rgba(48, 203, 210, .22) 0%, rgba(60, 90, 220, .14) 45%, transparent 68%); }
+.pvtint { background: linear-gradient(160deg, rgba(23, 26, 90, .62) 0%, rgba(12, 12, 28, .55) 45%, rgba(40, 20, 90, .55) 100%); }
+body[data-cat="pf"] { --accent: #7c84ff; --accent-soft: rgba(110, 118, 255, .22); --on-accent: #0b0d2a; --dk-line: rgba(130, 142, 255, .2); --dk-a: rgba(42, 48, 128, .52); --dk-b: rgba(16, 20, 56, .78); --dk-head: rgba(10, 12, 36, .58); --line: #2c3274; --surface: #151a3f; --bp-line: rgba(120, 132, 255, .085); --bp-major: rgba(120, 132, 255, .14); }
+body[data-cat="pf"] .btn.primary { background: linear-gradient(135deg, #4b4dff, #7c6bff); color: #fff; box-shadow: 0 0 0 1px rgba(170, 178, 255, .45), 0 0 22px rgba(90, 100, 255, .65), 0 0 50px rgba(75, 77, 255, .28); }
+body[data-cat="pf"] .btn.primary:hover { box-shadow: 0 0 0 1px rgba(190, 196, 255, .6), 0 0 30px rgba(100, 110, 255, .85), 0 0 70px rgba(75, 77, 255, .38); }
+body[data-cat="pf"] .panel, body[data-cat="pf"] .dk { border-color: rgba(130, 142, 255, .24); box-shadow: 0 0 0 1px rgba(110, 118, 255, .07), 0 12px 36px rgba(20, 24, 110, .32); }
+body[data-cat="pf"] #view-portfolio .phead h2 { background: linear-gradient(90deg, #fff 0%, #cdd1ff 45%, #8b95ff 100%); -webkit-background-clip: text; background-clip: text; }
+.cat[data-cat="pf"] { --cc: #8b95ff; border-color: rgba(124, 132, 255, .45); box-shadow: 0 0 0 1px rgba(124, 132, 255, .12), 0 0 16px rgba(75, 77, 255, .25); }
+.cat[data-cat="pf"] .ci { color: #b3b9ff; background: rgba(75, 77, 255, .22); box-shadow: 0 0 12px rgba(110, 118, 255, .38); }
+.cat[data-cat="pf"][aria-pressed="true"] { border-color: #a8b0ff; background: linear-gradient(135deg, #3b40d6 0%, #23287f 48%, #13123f 100%); animation: ledp 2.8s ease-in-out infinite; }
+.cat[data-cat="pf"][aria-pressed="true"] .ci { background: linear-gradient(135deg, #7c84ff, #4b4dff); box-shadow: 0 0 18px rgba(110, 118, 255, .95); }
+.cat[data-cat="pf"][aria-pressed="true"] b { text-shadow: 0 0 14px rgba(170, 178, 255, .8); }
+.cat[data-cat="pf"][aria-pressed="true"] .ct > span { color: #d3d7ff; }
+@keyframes ledp { 0%, 100% { box-shadow: 0 0 0 1px #a8b0ff, 0 0 26px rgba(100, 110, 255, .75), 0 0 70px rgba(75, 77, 255, .35), inset 0 1px 0 rgba(255, 255, 255, .25); } 50% { box-shadow: 0 0 0 1px #c9cdff, 0 0 38px rgba(120, 130, 255, 1), 0 0 100px rgba(75, 77, 255, .55), inset 0 1px 0 rgba(255, 255, 255, .3); } }
+.catfx.go.pf { background: radial-gradient(circle at var(--x) var(--y), rgba(180, 188, 255, .55) 0%, rgba(75, 77, 255, .45) 18%, rgba(40, 30, 150, .25) 40%, transparent 70%); }
+:root[data-ui="light"] .pvtint { background: linear-gradient(180deg, rgba(75, 77, 255, .10), rgba(75, 77, 255, .04)); }
+.pftools { flex-wrap: wrap; }
+@media (max-width: 640px) { #pf-add { flex: 1 1 100%; } }
+/* ===== Αριστερή μπάρα χαρτοφυλακίου (σε στυλ DECK) ===== */
+.pfrail { display: none; }
+@media (min-width: 901px) {
+  body[data-cat="pf"] .pfrail { display: flex; }
+  .pfrail { position: fixed; left: 14px; top: 50%; transform: translateY(-50%); z-index: 14; width: 58px; height: min(680px, calc(100vh - 40px)); flex-direction: column; align-items: center; gap: 10px; padding: 14px 0; border-radius: 22px;
+    background: linear-gradient(180deg, rgba(40, 46, 128, .78) 0%, rgba(18, 21, 60, .88) 45%, rgba(12, 14, 38, .92) 100%); border: 1px solid rgba(130, 142, 255, .22);
+    box-shadow: 0 0 0 1px rgba(110, 118, 255, .06), 0 20px 50px rgba(8, 10, 40, .6), inset 0 1px 0 rgba(255, 255, 255, .06); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); animation: railin .4s cubic-bezier(.2, .8, .3, 1); }
+  @keyframes railin { from { opacity: 0; transform: translate(-16px, -50%); } to { opacity: 1; transform: translate(0, -50%); } }
+  .rb { width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: 13px; border: 1px solid transparent; background: none; color: #8f97c9; cursor: pointer; font: inherit; transition: background .2s, color .2s, box-shadow .2s, transform .12s; }
+  .rb:hover { color: #e6e8ff; background: rgba(124, 132, 255, .12); }
+  .rb:active { transform: scale(.92); }
+  .rb.on { color: #e9ebff; background: rgba(124, 132, 255, .2); border-color: rgba(150, 160, 255, .35); box-shadow: 0 0 16px rgba(110, 118, 255, .35); }
+  .rb.add { width: 44px; height: 44px; margin: 6px 0; color: #fff; background: linear-gradient(135deg, #7c84ff, #4b4dff); box-shadow: 0 0 0 1px rgba(190, 196, 255, .5), 0 0 22px rgba(100, 110, 255, .8), 0 8px 20px rgba(40, 40, 160, .5); }
+  .rb.add:hover { box-shadow: 0 0 0 1px rgba(210, 214, 255, .7), 0 0 32px rgba(120, 130, 255, 1), 0 8px 24px rgba(40, 40, 160, .6); }
+  .rb.spin svg { animation: rspin .8s cubic-bezier(.4, .1, .3, 1); }
+  @keyframes rspin { to { transform: rotate(360deg); } }
+  .rb[aria-pressed="true"] { color: #fff; background: rgba(124, 132, 255, .22); }
+  .rapi { margin-top: auto; font-size: 11px; font-weight: 800; letter-spacing: .08em; }
+  .rtxt { flex: 1; min-height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; writing-mode: vertical-rl; transform: rotate(180deg); font-size: 10.5px; font-weight: 700; letter-spacing: .32em; color: #6f77b3; white-space: nowrap; user-select: none; }
+  .rtxt b { color: #a8b0ff; font-weight: 800; text-shadow: 0 0 10px rgba(124, 132, 255, .7); }
+  .rtxt i { width: 1px; height: 22px; background: linear-gradient(180deg, transparent, rgba(150, 160, 255, .5), transparent); }
+}
+@media (min-width: 901px) and (max-width: 1290px) { body[data-cat="pf"] .wrap { padding-left: 88px; } }
+:root[data-ui="light"] .pfrail { background: linear-gradient(180deg, #e9ebff, #f6f7ff); border-color: #d5d9ff; }
+:root[data-ui="light"] .rb { color: #5a62a8; }
+:root[data-ui="light"] .rtxt { color: #8a90c0; } :root[data-ui="light"] .rtxt b { color: #4b4dff; text-shadow: none; }
+/* Χαρτοφυλάκιο: τρίτο χρώμα, τιρκουάζ (#2398ab), από τη μέση και κάτω */
+.pvtint { background:
+  radial-gradient(120% 70% at 50% 100%, rgba(35, 162, 177, .38) 0%, rgba(34, 123, 151, .22) 40%, transparent 72%),
+  linear-gradient(180deg, transparent 0%, transparent 45%, rgba(35, 152, 171, .16) 70%, rgba(34, 117, 146, .32) 100%),
+  linear-gradient(160deg, rgba(23, 26, 90, .62) 0%, rgba(12, 12, 28, .55) 45%, rgba(40, 20, 90, .45) 100%); }
+.bgfx .b3.pv { background: radial-gradient(circle, rgba(35, 152, 171, .40) 0%, rgba(34, 123, 151, .18) 40%, transparent 68%); bottom: -24vmax; }
+:root[data-ui="light"] .pvtint { background: linear-gradient(180deg, rgba(75, 77, 255, .08) 0%, rgba(75, 77, 255, .03) 45%, rgba(35, 152, 171, .12) 100%); }
+/* κουμπί συναλλαγών τίτλου */
+.txoh, .txoc { width: 52px; text-align: center; padding-left: 4px !important; padding-right: 10px !important; }
+.txo { width: 36px; height: 36px; display: inline-grid; place-items: center; border-radius: 11px; cursor: pointer; color: #fff; border: 1px solid rgba(190, 196, 255, .55);
+  background: linear-gradient(135deg, #7c84ff, #4b4dff); box-shadow: 0 0 0 1px rgba(124, 132, 255, .25), 0 0 16px rgba(100, 110, 255, .55), inset 0 1px 0 rgba(255, 255, 255, .25); transition: transform .15s, box-shadow .2s, background .2s; }
+.txo:hover { box-shadow: 0 0 0 1px rgba(200, 206, 255, .7), 0 0 24px rgba(120, 130, 255, .9), inset 0 1px 0 rgba(255, 255, 255, .3); }
+.txo:active { transform: scale(.92); }
+.txo svg { transition: transform .25s cubic-bezier(.2, .8, .3, 1); }
+.txo[aria-expanded="true"] { background: linear-gradient(135deg, #2398ab, #227592); border-color: rgba(120, 220, 235, .6); box-shadow: 0 0 0 1px rgba(35, 162, 177, .3), 0 0 18px rgba(35, 162, 177, .6); }
+.txo[aria-expanded="true"] svg { transform: rotate(45deg); }
+tr.txrow > td { padding: 0 10px 14px !important; background: transparent !important; border-bottom: 1px solid var(--dk-line); }
+.txbox { border-radius: 16px; border: 1px solid rgba(35, 162, 177, .35); background: linear-gradient(180deg, rgba(35, 152, 171, .10), rgba(20, 24, 60, .35)); box-shadow: inset 0 0 24px rgba(35, 152, 171, .08); padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; animation: vin .25s ease-out; }
+.txhead { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 14px; }
+.txhead > div { display: flex; flex-direction: column; gap: 2px; }
+.txhead b { font-size: 15px; }
+.txhead .note { font-size: 12.5px; }
+.txtab { width: 100%; }
+.txtab th { font-size: 11px; }
+.txtab td, .txtab th { padding: 8px 10px !important; }
+.txact { white-space: nowrap; text-align: right; }
+@media (max-width: 640px) { .txoh, .txoc { width: 44px; padding-right: 6px !important; } .txo { width: 32px; height: 32px; border-radius: 10px; } .txtab .xbtn { padding: 4px 6px; } }
+.txbox { text-align: left; max-width: calc(100vw - 48px); }
+.txbox .tablewrap { overflow-x: auto; }
+.txtab .smt { display: none; }
+@media (max-width: 640px) { .txtab .lgt { display: none; } .txtab .smt { display: inline; font-size: 15px; } .txtab td, .txtab th { padding: 8px 6px !important; } .txbox { max-width: calc(100vw - 84px); } tr.txrow > td { padding: 0 6px 12px !important; } }
+.txhead .note { white-space: normal; }
+@media (max-width: 640px) {
+  .txoh, .txoc { width: 38px !important; padding-left: 0 !important; padding-right: 14px !important; }
+  .txo { width: 30px; height: 30px; border-radius: 9px; }
+  .txo svg { width: 15px; height: 15px; }
+  .txtab { font-size: 13px; }
+  .txtab th:nth-child(2), .txtab td:nth-child(2) { padding-left: 2px !important; padding-right: 2px !important; }
+}
+@media (max-width: 640px) { .txoh, .txoc { width: 34px !important; padding-right: 8px !important; } #view-portfolio .dktable td:first-child .who span { max-width: 96px; } }
 </style>
 
 <div class="demo demo-band"><p id="banner"><strong>Στιγμιότυπο.</strong> Οι τιμές προέρχονται από το capital.gr (καθυστέρηση 15 λεπτών) και η κεφαλαιοποίηση με τα ονόματα από το euro2day.gr (23/10/2026, 12:58). Τα στοιχεία δεν ενημερώνονται αυτόματα και δεν αποτελούν επενδυτική πληροφόρηση.</p></div>
+
+<div class="bgfx" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i><i class="b1 pv"></i><i class="b2 pv"></i><i class="b3 pv"></i><span class="pvtint"></span></div>
+<div class="catfx" id="catfx" aria-hidden="true"></div>
+<nav class="pfrail" id="pfrail" aria-label="Χαρτοφυλάκιο: γρήγορες ενέργειες">
+  <button type="button" class="rb on" data-rail="top" title="Επισκόπηση" aria-label="Επισκόπηση"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/></svg></button>
+  <button type="button" class="rb" data-rail="hold" title="Οι θέσεις μου" aria-label="Οι θέσεις μου"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg></button>
+  <button type="button" class="rb add" data-rail="add" title="Νέα συναλλαγή" aria-label="Νέα συναλλαγή"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+  <button type="button" class="rb" data-rail="ref" title="Ανανέωση τιμών" aria-label="Ανανέωση τιμών"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.5-4.5L4 8"/><path d="M4 4v4h4"/><path d="M4 13a8 8 0 0 0 14.5 4.5L20 16"/><path d="M20 20v-4h-4"/></svg></button>
+  <span class="rtxt" aria-hidden="true">PORTFOLIO <b>AXIOGRAM</b></span>
+  <button type="button" class="rb rapi" data-rail="api" title="Σύνδεση Hyperliquid (Perps)" aria-label="Σύνδεση Hyperliquid">API</button>
+  <button type="button" class="rb" data-rail="theme" title="Φωτεινό / σκοτεινό" aria-label="Φωτεινό ή σκοτεινό θέμα"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/></svg></button>
+  <button type="button" class="rb" data-rail="csv" title="Εξαγωγή σε CSV (Excel)" aria-label="Εξαγωγή σε CSV"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg></button>
+  <button type="button" class="rb" data-rail="hide" title="Απόκρυψη ποσών" aria-label="Απόκρυψη ποσών" aria-pressed="false"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
+</nav>
 
 <div class="wrap">
   <header class="top">
@@ -953,16 +1198,35 @@ tbody tr { transition: background-color .15s ease; }
 
   <div class="gstrip" id="gstrip" role="region" aria-label="Παγκόσμιες αγορές" hidden></div>
 
-  <nav class="views" role="tablist" aria-label="Ενότητες">
-    <button type="button" class="viewbtn" role="tab" id="tab-market" data-view="market" aria-selected="true" aria-controls="view-market"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V10"/><path d="M10 19V5"/><path d="M16 19v-7"/><path d="M22 19H2"/></svg></span><span class="vl">Μετοχές</span></button>
-    <button type="button" class="viewbtn" role="tab" id="tab-heat" data-view="heat" aria-selected="false" aria-controls="view-heat"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="10" height="11" rx="1.5"/><rect x="15" y="3" width="6" height="6" rx="1.5"/><rect x="15" y="11" width="6" height="10" rx="1.5"/><rect x="3" y="16" width="10" height="5" rx="1.5"/></svg></span><span class="vl">Χάρτης</span></button>
-    <button type="button" class="viewbtn" role="tab" id="tab-favs" data-view="favs" aria-selected="false" aria-controls="view-favs"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg><span class="cnt" id="favcnt" hidden></span></span><span class="vl">Αγαπημένα</span></button>
-    <button type="button" class="viewbtn" role="tab" id="tab-portfolio" data-view="portfolio" aria-selected="false" aria-controls="view-portfolio"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></span><span class="vl">Χαρτοφυλάκιο</span></button>
-    <button type="button" class="viewbtn" role="tab" id="tab-tools" data-view="tools" aria-selected="false" aria-controls="view-tools"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10"/><path d="M18 6h2"/><circle cx="16" cy="6" r="2"/><path d="M4 12h4"/><path d="M12 12h8"/><circle cx="10" cy="12" r="2"/><path d="M4 18h12"/><path d="M20 18h0"/><circle cx="18" cy="18" r="2"/></svg><span class="cnt" id="alcnt" hidden></span></span><span class="vl">Εργαλεία</span></button>
+  <div class="navrow">
+  <nav class="cats" aria-label="Κατηγορίες">
+    <button type="button" class="cat" data-cat="mk" aria-pressed="true"><span class="ci"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-5 4 3 8-8"/><path d="M15 7h5v5"/></svg></span><span class="ct"><b>Αγορές</b><span>Ελλάδα · ΗΠΑ · Crypto</span></span></button>
+    <button type="button" class="cat" data-cat="pf" aria-pressed="false"><span class="ci"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></span><span class="ct"><b>Χαρτοφυλάκιο</b><span id="catPf">Οι επενδύσεις σου</span></span></button>
   </nav>
+  <nav class="extras" aria-label="Επιπλέον">
+    <button type="button" class="xtra" id="tab-heat" data-view="heat" aria-pressed="false"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="10" height="11" rx="1.5"/><rect x="15" y="3" width="6" height="6" rx="1.5"/><rect x="15" y="11" width="6" height="10" rx="1.5"/><rect x="3" y="16" width="10" height="5" rx="1.5"/></svg></span><span class="vl">Χάρτης</span></button>
+    <button type="button" class="xtra" id="tab-favs" data-view="favs" aria-pressed="false"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg><span class="cnt" id="favcnt" hidden></span></span><span class="vl">Αγαπημένα</span></button>
+    <button type="button" class="xtra" id="tab-tools" data-view="tools" aria-pressed="false"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10"/><path d="M18 6h2"/><circle cx="16" cy="6" r="2"/><path d="M4 12h4"/><path d="M12 12h8"/><circle cx="10" cy="12" r="2"/><path d="M4 18h12"/><path d="M20 18h0"/><circle cx="18" cy="18" r="2"/></svg><span class="cnt" id="alcnt" hidden></span></span><span class="vl">Εργαλεία</span></button>
+  </nav>
+  </div>
+  <nav class="views" role="tablist" aria-label="Ενότητες αγορών">
+    <button type="button" class="viewbtn" role="tab" id="tab-market" data-view="market" aria-selected="true" aria-controls="view-market"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V10"/><path d="M10 19V5"/><path d="M16 19v-7"/><path d="M22 19H2"/></svg></span><span class="vl">Μετοχές &amp; Crypto</span></button>
+            <button type="button" class="viewbtn" role="tab" id="tab-portfolio" data-view="portfolio" aria-selected="false" aria-controls="view-portfolio"><span class="vi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></span><span class="vl">Χαρτοφυλάκιο</span></button>
+      </nav>
 
   <div class="view" id="view-market" role="tabpanel" aria-labelledby="tab-market" data-mkt="gr">
-  <section class="dashsec" id="dashsec" aria-label="Ο πίνακάς μου" hidden><div class="sechead"><h2>Ο πίνακάς μου</h2><button type="button" class="linkbtn" id="dashCu">Προσαρμογή</button></div><div class="dash" id="dash"></div></section>
+  <section class="hero" id="hero" aria-labelledby="heroTitle" hidden>
+    <button type="button" class="close heroX" id="heroX" aria-label="Απόκρυψη">×</button>
+    <div class="herotxt">
+      <span class="heroeye">Axiogram · δωρεάν</span>
+      <h1 id="heroTitle">Όλες οι επενδύσεις σου,<br><em>σε ένα μέρος.</em></h1>
+      <p>Ελληνικές και αμερικανικές μετοχές, crypto και το χαρτοφυλάκιό σου, με ζωντανές τιμές, ειδοποιήσεις και εργαλεία ανάλυσης.</p>
+      <div class="heroact"><button type="button" class="btn primary big" id="heroGo">Ξεκίνα</button><button type="button" class="btn big" id="heroApp"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Κατέβασε την εφαρμογή</button></div>
+      <div class="herolinks" aria-label="Γρήγορη πρόσβαση"><button type="button" data-hgo="gr">Μετοχές Χ.Α.</button><button type="button" data-hgo="us">Μετοχές ΗΠΑ</button><button type="button" data-hgo="c">Crypto</button><button type="button" data-hgo="pf">Χαρτοφυλάκιο</button><button type="button" data-hgo="al">Ειδοποιήσεις</button></div>
+    </div>
+    <div class="herostat"><div><b id="heroN">290+</b><span>μετοχές του Χ.Α.</span></div><div><b>500</b><span>μετοχές ΗΠΑ</span></div><div><b>100</b><span>κορυφαία crypto</span></div></div>
+  </section>
+  <section class="dashsec" id="dashsec" aria-label="Ο πίνακάς μου" hidden><div class="sechead"><div><h2>Ο πίνακάς μου</h2><p class="secdesc">Τα αγαπημένα σου, οι ειδοποιήσεις και ό,τι έρχεται για τις μετοχές σου, με μια ματιά.</p></div><button type="button" class="btn sm" id="dashCu">Προσαρμογή</button></div><div class="dash" id="dash"></div></section>
   <div class="mktrow"><div class="seg2 mktsw" id="mktsw" role="group" aria-label="Αγορά"><button type="button" data-mkt="gr" aria-pressed="true">Ελλάδα</button><button type="button" data-mkt="us" aria-pressed="false"><span>ΗΠΑ</span><span class="t100"> · Top 100</span></button><button type="button" data-mkt="c" aria-pressed="false">Crypto<span class="t100"> · Top 100</span></button></div><button type="button" class="btn cmpbtn" id="cmpOpen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-5 4 3 9-9"/><path d="M3 9l5 3 4-5 9 6" opacity=".55"/></svg> <span>Σύγκριση</span></button><button type="button" class="btn dkicon" id="cuOpen" title="Προσαρμογή αρχικής" aria-label="Προσαρμογή αρχικής"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/></svg></button></div>
   <section id="xlist" class="xlist" hidden>
     <div class="phead"><div><h2 id="xtitle"></h2><div class="storage" id="xnote"></div></div>
@@ -973,6 +1237,7 @@ tbody tr { transition: background-color .15s ease; }
   </section>
   <section class="stats" aria-label="Σύνοψη αγοράς" id="stats"></section>
 
+  <div class="sechead" id="mvhead"><div><h2>Κορυφαίες κινήσεις</h2><p class="secdesc">Οι μετοχές που ανέβηκαν και έπεσαν περισσότερο σήμερα, και οι μεγαλύτερες εταιρείες.</p></div><button type="button" class="btn sm" data-sgo="heat">Χάρτης αγοράς <span aria-hidden="true">→</span></button></div>
   <div class="seg2 mvtabs" id="mvtabs" role="group" aria-label="Κορυφαίες κινήσεις"><button type="button" data-mv="0" aria-pressed="true">Άνοδοι</button><button type="button" data-mv="1" aria-pressed="false">Πτώσεις</button><button type="button" data-mv="2" aria-pressed="false">Μεγαλύτερες</button></div>
   <section class="movers" id="movers" data-mv="0" aria-label="Κορυφαίες κινήσεις">
     <div class="panel"><h2>Κορυφαίες άνοδοι (αξία από 50 εκ. €)</h2><div id="gainers"></div></div>
@@ -981,12 +1246,13 @@ tbody tr { transition: background-color .15s ease; }
   </section>
 
   <section style="display:flex;flex-direction:column;gap:10px" aria-label="Κλάδοι" id="secsec">
-    <div class="sechead"><h2>Κλάδοι</h2><span class="note">Η κατηγοριοποίηση είναι δική μου και όχι η επίσημη του ATHEX.</span></div>
+    <div class="sechead"><div><h2>Κλάδοι</h2><p class="secdesc">Πώς πάει σήμερα κάθε κλάδος, με βάρος την κεφαλαιοποίηση των εταιρειών του.</p></div><button type="button" class="btn sm" data-sgo="heat">Δες τον χάρτη <span aria-hidden="true">→</span></button></div>
     <div class="sectors" id="sectors"></div>
+    <p class="note" style="margin:0">Η κατηγοριοποίηση είναι δική μου και όχι η επίσημη του ATHEX.</p>
   </section>
 
   <section style="display:flex;flex-direction:column;gap:10px" aria-label="Ημερολόγιο μερισμάτων" id="divsec" hidden>
-    <div class="sechead"><h2>Ημερολόγιο μερισμάτων</h2><span class="note" id="divnote"></span></div>
+    <div class="sechead"><div><h2>Ημερολόγιο μερισμάτων</h2><p class="secdesc">Οι επόμενες και οι πρόσφατες αποκοπές μερισμάτων στο Χρηματιστήριο Αθηνών. <span id="divnote"></span></p></div><button type="button" class="btn sm" data-sgo="cal">Όλο το ημερολόγιο <span aria-hidden="true">→</span></button></div>
     <div class="divcal">
       <div class="panel"><h2>Επόμενες αποκοπές</h2><div id="divnext"></div></div>
       <div class="panel"><h2>Πρόσφατες αποκοπές</h2><div id="divrecent"></div></div>
@@ -994,6 +1260,7 @@ tbody tr { transition: background-color .15s ease; }
   </section>
 
   <section style="display:flex;flex-direction:column;gap:12px" aria-label="Όλες οι μετοχές" id="allsec">
+    <div class="sechead"><div><h2>Όλες οι μετοχές</h2><p class="secdesc">Κάθε μετοχή του Χ.Α. με τιμή, μεταβολή, κεφαλαιοποίηση και πορεία 7 ημερών.</p></div><button type="button" class="btn sm" data-sgo="scr">Φίλτρο μετοχών <span aria-hidden="true">→</span></button></div>
     <div class="controls">
       <div class="ctrlrow">
         <div class="tabs" id="tabs" role="group" aria-label="Φίλτρο κίνησης"></div>
@@ -1036,7 +1303,7 @@ tbody tr { transition: background-color .15s ease; }
   </div>
 
   <div class="view" id="view-favs" role="tabpanel" aria-labelledby="tab-favs" hidden>
-    <div class="phead"><div><h2>Τα αγαπημένα μου</h2><div class="storage">Οι μετοχές που σημείωσες με ☆, για να τις βλέπεις όλες μαζί.</div></div></div>
+    <div class="phead"><div><h2>Τα αγαπημένα μου</h2><div class="storage">Οι μετοχές και τα crypto που σημείωσες με ☆, όλα μαζί.</div></div><button type="button" class="btn sm" data-sgo="al">Νέα ειδοποίηση <span aria-hidden="true">→</span></button></div>
     <div class="panel tablewrap" id="favwrap">
       <table>
         <thead>
@@ -1120,7 +1387,7 @@ tbody tr { transition: background-color .15s ease; }
   </div>
 </div>
 <div class="view" id="view-tools" role="tabpanel" aria-labelledby="tab-tools" hidden>
-    <div class="phead"><div><h2>Εργαλεία</h2><div class="storage">Βρες μετοχές με κριτήρια, δες τι έρχεται και όρισε ειδοποιήσεις τιμών.</div></div></div>
+    <div class="phead"><div><h2>Εργαλεία</h2><div class="storage">Βρες μετοχές με κριτήρια, δες τι έρχεται και όρισε ειδοποιήσεις τιμών.</div></div><button type="button" class="btn sm" data-sgo="pf">Το χαρτοφυλάκιό μου <span aria-hidden="true">→</span></button></div>
     <div class="seg2 tltabs" id="tlTabs" role="tablist" aria-label="Εργαλεία"><button type="button" role="tab" data-tl="scr" aria-selected="true">Φίλτρο μετοχών</button><button type="button" role="tab" data-tl="cal" aria-selected="false">Ημερολόγιο</button><button type="button" role="tab" data-tl="al" aria-selected="false">Ειδοποιήσεις</button></div>
     <div id="tl-scr" class="tlpane"></div>
     <div id="tl-cal" class="tlpane" hidden></div>
@@ -1194,14 +1461,8 @@ tbody tr { transition: background-color .15s ease; }
   <div class="setrow"><span>Γλώσσα</span><div class="seg2" id="setLang" role="group" aria-label="Γλώσσα"><button type="button" data-v="el">Ελληνικά</button><button type="button" data-v="en">English</button></div></div>
   <div class="setrow"><span>Νόμισμα</span><div class="seg2" id="setCur" role="group" aria-label="Νόμισμα"><button type="button" data-v="EUR">€ EUR</button><button type="button" data-v="USD">$ USD</button><button type="button" data-v="CHF">CHF</button></div></div>
   <div class="setrow"><span>Θέμα</span><div class="seg2" id="setTheme" role="group" aria-label="Θέμα"><button type="button" data-v="light">Φωτεινό</button><button type="button" data-v="dark">Σκοτεινό</button><button type="button" data-v="system">Σύστημα</button></div></div>
-  <div class="setrow"><span>Εμφάνιση</span><button type="button" class="btn" id="setTheme2">🎨 Προσαρμογή εμφάνισης</button></div>
   <p class="note" id="setNote" style="margin:0"></p>
 </div>
-<aside class="panel thbox" id="thBox" role="dialog" aria-labelledby="thTitle" hidden>
-  <div class="ahead"><h2 id="thTitle">🎨 Εμφάνιση</h2><button type="button" class="close" id="thClose" aria-label="Κλείσιμο">×</button></div>
-  <p class="note" style="margin:0">Οι αλλαγές φαίνονται αμέσως. Αποθηκεύονται σε αυτή τη συσκευή και, αν είσαι συνδεδεμένος, στον λογαριασμό σου.</p>
-  <div id="thBody" style="display:flex;flex-direction:column;gap:18px"></div>
-</aside>
 <div class="scrim" id="appScrim" hidden></div>
 <div class="panel authbox" id="appBox" role="dialog" aria-modal="true" aria-labelledby="appTitle" hidden>
   <div class="ahead"><h2 id="appTitle">Εγκατάσταση εφαρμογής</h2><button type="button" class="close" id="appClose" aria-label="Κλείσιμο">×</button></div>
@@ -1964,6 +2225,30 @@ var EN_EXACT = {
   "Όλο": "All",
   "Δεν υπάρχουν ακόμα αρκετά στοιχεία για αυτό το διάστημα. Το ιστορικό συλλέγεται καθημερινά.": "Not enough data for this range yet. History is collected daily.",
   "Η εφαρμογή εγκαταστάθηκε": "The app was installed",
+  "Όλες οι επενδύσεις σου,": "All your investments,",
+  "σε ένα μέρος.": "in one place.",
+  "Ξεκίνα": "Get started",
+  "Κατέβασε την εφαρμογή": "Get the app",
+  "Axiogram · δωρεάν": "Axiogram · free",
+  "Μετοχές Χ.Α.": "Athens stocks",
+  "Μετοχές ΗΠΑ": "US stocks",
+  "μετοχές του Χ.Α.": "Athens stocks",
+  "μετοχές ΗΠΑ": "US stocks",
+  "κορυφαία crypto": "top crypto",
+  "Δες τον χάρτη": "See the map",
+  "Όλο το ημερολόγιο": "Full calendar",
+  "Ελληνικές και αμερικανικές μετοχές, crypto και το χαρτοφυλάκιό σου, με ζωντανές τιμές, ειδοποιήσεις και εργαλεία ανάλυσης.": "Greek and US stocks, crypto and your portfolio, with live prices, alerts and analysis tools.",
+  "Τα αγαπημένα σου, οι ειδοποιήσεις και ό,τι έρχεται για τις μετοχές σου, με μια ματιά.": "Your favourites, alerts and what's coming up for your stocks, at a glance.",
+  "Οι μετοχές που ανέβηκαν και έπεσαν περισσότερο σήμερα, και οι μεγαλύτερες εταιρείες.": "Today's biggest gainers and losers, and the largest companies.",
+  "Πώς πάει σήμερα κάθε κλάδος, με βάρος την κεφαλαιοποίηση των εταιρειών του.": "How each sector is doing today, weighted by market cap.",
+  "Οι επόμενες και οι πρόσφατες αποκοπές μερισμάτων στο Χρηματιστήριο Αθηνών.": "Upcoming and recent ex-dividend dates on the Athens Exchange.",
+  "Κάθε μετοχή του Χ.Α. με τιμή, μεταβολή, κεφαλαιοποίηση και πορεία 7 ημερών.": "Every Athens stock with price, change, market cap and 7-day trend.",
+  "Οι μετοχές και τα crypto που σημείωσες με ☆, όλα μαζί.": "The stocks and crypto you starred, all together.",
+  "Ελλάδα · ΗΠΑ · Crypto": "Greece · US · Crypto",
+  "Αγορές": "Markets",
+  "Μετοχές & Crypto": "Stocks & Crypto",
+  "Μετοχές · Crypto · Χάρτης · Εργαλεία": "Stocks · Crypto · Heatmap · Tools",
+  "Οι επενδύσεις σου": "Your investments",
   "Ο πίνακάς μου": "My dashboard",
   "Προσαρμογή": "Customize",
   "Προσαρμογή αρχικής": "Customize home",
@@ -2179,86 +2464,10 @@ function applyTheme() {
   var t = THEME;
   if (t === "system") t = window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
   document.documentElement.setAttribute("data-ui", t);
-  var m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute("content", t === "light" ? "#f8fafd" : "#2a3040");
+  var m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute("content", t === "light" ? "#f8fafd" : "#1a1a35");
 }
 applyTheme();
 try { matchMedia("(prefers-color-scheme: light)").addEventListener("change", function () { if (THEME === "system") applyTheme(); }); } catch (e) {}
-/* ===================== Εμφάνιση: θέματα και προσαρμογή ===================== */
-var THM_PRESETS = {
-  def: { n: "Axiogram", mode: null },
-  oled: { n: "Μαύρο OLED", mode: "dark", acc: "blue", glow: false, bg: { bg: "#000000", "bg-top": "#060708", "bg-bottom": "#000000", surface: "#0e1013", line: "#23262d", "dk-a": "rgba(30,32,38,.75)", "dk-b": "rgba(12,13,16,.85)", "dk-line": "rgba(255,255,255,.07)", "dk-head": "rgba(255,255,255,.03)", "dk-glow": "rgba(120,150,255,.08)" } },
-  navy: { n: "Μπλε ναυτικό", mode: "dark", acc: "cyan", bg: { bg: "#0f1b2d", "bg-top": "#16273f", "bg-bottom": "#0a1320", surface: "#14223a", line: "#26395a", "dk-a": "rgba(32,56,94,.6)", "dk-b": "rgba(16,30,52,.72)", "dk-line": "rgba(150,190,255,.10)", "dk-head": "rgba(4,10,22,.45)", "dk-glow": "rgba(92,200,255,.14)" } },
-  term: { n: "Τερματικό", mode: "dark", acc: "orange", font: "mono", rad: 4, dens: "compact", glow: false, bg: { bg: "#050505", "bg-top": "#0b0b0b", "bg-bottom": "#030303", surface: "#121212", line: "#2b2b2b", "dk-a": "rgba(24,24,24,.95)", "dk-b": "rgba(14,14,14,.95)", "dk-line": "rgba(255,160,40,.14)", "dk-head": "rgba(255,140,0,.07)", "dk-glow": "rgba(255,150,30,.06)", muted: "#b39a7a" } },
-  forest: { n: "Δάσος", mode: "dark", acc: "green", bg: { bg: "#121e19", "bg-top": "#1a2c24", "bg-bottom": "#0d1712", surface: "#192a22", line: "#2a4235", "dk-a": "rgba(38,70,55,.55)", "dk-b": "rgba(20,36,29,.68)", "dk-line": "rgba(160,255,200,.08)", "dk-head": "rgba(4,14,9,.42)", "dk-glow": "rgba(110,227,165,.12)" } },
-  plum: { n: "Μωβ νύχτα", mode: "dark", acc: "purple", bg: { bg: "#1b1430", "bg-top": "#271d44", "bg-bottom": "#140e24", surface: "#231a3a", line: "#3a2e5b", "dk-a": "rgba(72,52,124,.5)", "dk-b": "rgba(36,26,62,.66)", "dk-line": "rgba(200,170,255,.10)", "dk-head": "rgba(10,5,24,.42)", "dk-glow": "rgba(183,148,255,.14)" } },
-  light: { n: "Φωτεινό καθαρό", mode: "light", acc: "blue", glow: false },
-  sand: { n: "Άμμος", mode: "light", acc: "orange", font: "serif", bg: { bg: "#f3eee5", "bg-top": "#faf7f1", "bg-bottom": "#ece5d8", surface: "#fffdf8", line: "#e2d9c9", fg: "#2a2118", muted: "#6e6253", "dk-a": "#fffdf8", "dk-b": "#f7f2e8", "dk-line": "#e5ddcd", "dk-head": "#f1eadd", "dk-glow": "rgba(194,97,12,.06)" } }
-};
-var THM_ACC = { blue: ["#8fb0ff", "#2457d6"], cyan: ["#5cc8ff", "#0b7fb5"], green: ["#62e0a4", "#0a8a55"], orange: ["#ffad4d", "#c2610c"], pink: ["#ff8fc8", "#c4246f"], purple: ["#b794ff", "#6a3fd6"], gold: ["#f2c94c", "#946600"], red: ["#ff8080", "#c93434"] };
-var THM_UD = { gd: null, bo: [["#5aa9ff", "#ffa64d"], ["#1f6fd1", "#c25e00"]], rg: [["#ff7b7b", "#4fd69a"], ["#c93434", "#0a8a55"]] };
-var THM_FONTS = {
-  def: { n: "Axiogram", d: '"Commissioner", "Segoe UI", system-ui, sans-serif', b: '"IBM Plex Sans", "Segoe UI", system-ui, sans-serif' },
-  inter: { n: "Inter", g: "Inter:wght@300;400;500;600;700;800", d: '"Inter", system-ui, sans-serif', b: '"Inter", system-ui, sans-serif' },
-  roboto: { n: "Roboto", g: "Roboto:wght@300;400;500;700;900", d: '"Roboto", system-ui, sans-serif', b: '"Roboto", system-ui, sans-serif' },
-  round: { n: "Comfortaa (στρογγυλή)", g: "Comfortaa:wght@300;400;500;600;700", d: '"Comfortaa", system-ui, sans-serif', b: '"Comfortaa", system-ui, sans-serif' },
-  serif: { n: "Noto Serif (κλασική)", g: "Noto+Serif:wght@300;400;500;600;700;800", d: '"Noto Serif", Georgia, serif', b: '"Noto Serif", Georgia, serif' },
-  mono: { n: "JetBrains Mono (τερματικό)", g: "JetBrains+Mono:wght@300;400;500;600;700;800", d: '"JetBrains Mono", ui-monospace, monospace', b: '"JetBrains Mono", ui-monospace, monospace' },
-  system: { n: "Του συστήματος", d: "system-ui, -apple-system, \"Segoe UI\", sans-serif", b: "system-ui, -apple-system, \"Segoe UI\", sans-serif" }
-};
-var THM_DEF = { p: "def", acc: null, ud: "gd", font: null, scale: 1, rad: null, dens: null, glow: null, motion: true };
-function thmLoad(k) { try { var v = JSON.parse(localStorage.getItem(k) || "null"); return v && typeof v === "object" ? v : null; } catch (e) { return null; } }
-var THM = thmLoad("agora-thm"), SITE_THM = thmLoad("agora-sitethm");
-function thmNorm(t) { var o = {}; for (var k in THM_DEF) o[k] = t && t[k] !== undefined ? t[k] : THM_DEF[k]; if (!THM_PRESETS[o.p]) o.p = "def"; return o; }
-function thmActive() { return thmNorm(THM || SITE_THM); }
-function lum(hex) { var m = /^#?([0-9a-f]{6})$/i.exec(hex || ""); if (!m) return .5; var n = parseInt(m[1], 16), c = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(function (v) { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; }
-function thmCss(t) {
-  var P = THM_PRESETS[t.p] || THM_PRESETS.def, css = "", vars = { dark: {}, light: {} };
-  var font = THM_FONTS[t.font || P.font || "def"] || THM_FONTS.def, rad = t.rad != null ? t.rad : P.rad, dens = t.dens || P.dens || "normal", glow = t.glow != null ? t.glow : P.glow !== false;
-  if (P.bg) { var m = P.mode || "dark"; for (var k in P.bg) vars[m][k] = P.bg[k]; }
-  var acc = t.acc || P.acc;
-  if (acc) {
-    var pair = THM_ACC[acc] || [acc, acc];
-    ["dark", "light"].forEach(function (m, i) { var a = pair[i]; vars[m].accent = a; vars[m]["accent-soft"] = "color-mix(in srgb, " + a + " 20%, var(--surface))"; vars[m]["on-accent"] = lum(a) > .35 ? "#14181f" : "#ffffff"; });
-  }
-  var ud = THM_UD[t.ud];
-  if (ud) ["dark", "light"].forEach(function (m, i) { vars[m].up = ud[i][0]; vars[m].down = ud[i][1]; vars[m]["up-soft"] = "color-mix(in srgb, " + ud[i][0] + " 18%, var(--surface))"; vars[m]["down-soft"] = "color-mix(in srgb, " + ud[i][1] + " 18%, var(--surface))"; });
-  vars.dark["font-display"] = vars.light["font-display"] = font.d; vars.dark["font-body"] = vars.light["font-body"] = font.b;
-  ["dark", "light"].forEach(function (m) { var s = ""; for (var k in vars[m]) s += "--" + k + ":" + vars[m][k] + ";"; if (s) css += ':root[data-ui="' + m + '"][data-ui]{' + s + "}"; });
-  if (!glow) css += ":root[data-ui] body{background:linear-gradient(180deg,var(--bg-top) 0%,var(--bg) 40%,var(--bg-bottom) 100%) fixed;background-color:var(--bg)}.stat::before,.panel.glow::before{display:none}";
-  if (t.scale && t.scale !== 1) css += ".wrap>:not(.top),.drawer,.authbox,.hovcard{zoom:" + t.scale + "}";
-  if (rad != null) css += ".panel,.stat,.secchip,.heat,.authbox,.dk,.dw,.hovcard,.calday,.curow,.svkpi>div{border-radius:" + rad + "px!important}.btn,.search,.seg2,.tab,.scrrng input,.alpick,.more{border-radius:" + Math.min(rad, 10) + "px!important}.seg2 button{border-radius:" + Math.max(0, Math.min(rad, 10) - 2) + "px!important}";
-  if (dens === "compact") css += "td,th{padding-top:5px!important;padding-bottom:5px!important}.mrow,.dwr,.calrow{padding-top:5px!important;padding-bottom:5px!important}.wrap{gap:12px}";
-  if (dens === "comfy") css += "td,th{padding-top:15px!important;padding-bottom:15px!important}.mrow,.dwr,.calrow{padding-top:12px!important;padding-bottom:12px!important}";
-  if (t.motion === false) css += "*,*::before,*::after{animation:none!important;transition:none!important}";
-  return { css: css, font: font };
-}
-var thmFontsLoaded = {};
-function thmApply() {
-  var t = thmActive(), P = THM_PRESETS[t.p] || THM_PRESETS.def, r = thmCss(t);
-  var el = document.getElementById("thmcss"); if (!el) { el = document.createElement("style"); el.id = "thmcss"; document.head.appendChild(el); }
-  el.textContent = r.css;
-  if (r.font.g && !thmFontsLoaded[r.font.g]) { thmFontsLoaded[r.font.g] = 1; var l = document.createElement("link"); l.rel = "stylesheet"; l.href = "https://fonts.googleapis.com/css2?family=" + r.font.g + "&display=swap"; document.head.appendChild(l); }
-  document.documentElement.classList.toggle("nomotion", t.motion === false);
-}
-function thmSiteMode() {
-  var P = !THM && SITE_THM && THM_PRESETS[SITE_THM.p];
-  var chosen = null; try { chosen = localStorage.getItem("agora-theme"); } catch (e) {}
-  if (P && P.mode && !chosen && THEME !== P.mode) { THEME = P.mode; applyTheme(); }
-}
-thmSiteMode(); thmApply();
-/* η προεπιλεγμένη εμφάνιση του site (ορίζεται από τον ιδιοκτήτη) */
-(function () {
-  if (typeof fetch !== "function" || !/^https?:/.test(location.protocol) || window.claude) return;
-  fetch("https://firestore.googleapis.com/v1/projects/agora-athinon/databases/(default)/documents/site/theme?key=AIzaSyDd3-HyjHU6Cji1DwPtZ6epuJxFUT6luws")
-    .then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (j) {
-      var raw = j && j.fields && j.fields.t && j.fields.t.stringValue, v = null;
-      try { v = raw ? JSON.parse(raw) : null; } catch (e) {}
-      if (JSON.stringify(v) === JSON.stringify(SITE_THM)) return;
-      SITE_THM = v; try { if (v) localStorage.setItem("agora-sitethm", JSON.stringify(v)); else localStorage.removeItem("agora-sitethm"); } catch (e) {}
-      if (!THM) { thmSiteMode(); thmApply(); if (window.__thmPaint) window.__thmPaint(); }
-    }).catch(function () {});
-})();
 window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); window.__bip = e; document.dispatchEvent(new Event("agora-bip")); });
 (function () {
   var b = document.getElementById("langbtn");
@@ -2947,7 +3156,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     saveWallets(); savePfs();
     if (!pfRef) { saveLocal(); return Promise.resolve(); }
     savePfs();
-    var body = { txns: txns.slice(), favs: Object.keys(favs), wallets: wallets.slice(), pfs: pfs.slice(), alerts: JSON.parse(JSON.stringify(ALERTS)), push: JSON.parse(JSON.stringify(PUSHT)), weekly: !!WEEKLY, home: window.__homeGet ? JSON.parse(JSON.stringify(window.__homeGet())) : null, theme: window.__thmGet && window.__thmGet() ? JSON.parse(JSON.stringify(window.__thmGet())) : null, updated: Date.now() };
+    var body = { txns: txns.slice(), favs: Object.keys(favs), wallets: wallets.slice(), pfs: pfs.slice(), alerts: JSON.parse(JSON.stringify(ALERTS)), push: JSON.parse(JSON.stringify(PUSHT)), weekly: !!WEEKLY, home: window.__homeGet ? JSON.parse(JSON.stringify(window.__homeGet())) : null, updated: Date.now() };
     if (WTEST) body.wtest = WTEST;
     try { localStorage.setItem("agora-alerts", JSON.stringify(ALERTS)); } catch (e) {}
     pfWriting = pfWriting.then(function () { return pfRef.set(body, { merge: true }); }).catch(function (e) {
@@ -3137,6 +3346,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
         var fdb = firebase.firestore();
         fbAuth.getRedirectResult().catch(function (err) { var t = authErr(err); if (t) toast(t); });
         fbAuth.onAuthStateChanged(function (user) {
+          window.__authReady = true;
           fbUser = user;
           if (fbUnsub) { fbUnsub(); fbUnsub = null; }
           renderAcctFb(user);
@@ -3168,7 +3378,6 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
               var ra = Array.isArray(d.alerts) ? d.alerts : [], ab = ra.length;
               ALERTS = mergeAlerts(ra, ALERTS); PUSHT = Array.isArray(d.push) ? d.push : []; WEEKLY = !!d.weekly;
               if (d.home && window.__homeSet) window.__homeSet(d.home);
-              if (d.theme && window.__thmSet) window.__thmSet(d.theme);
               if (ALERTS.length !== ab) pb = -1;
               if (!snap.exists || merged.length !== remote.length || Object.keys(f2).length !== before || mw.length !== wb || pfs.length !== pb) {
                 persist().then(function () { if (pfRef) { try { localStorage.removeItem(LKEY); } catch (e) {} } });
@@ -3182,7 +3391,6 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
               var prevA = ALERTS; ALERTS = Array.isArray(d.alerts) ? d.alerts : []; PUSHT = Array.isArray(d.push) ? d.push : []; WEEKLY = !!d.weekly;
               if (window.__alFired) window.__alFired(prevA, ALERTS);
               if (d.home && window.__homeSet) window.__homeSet(d.home);
-              if (d.theme && window.__thmSet) window.__thmSet(d.theme);
             }
             if (window.__alBadge) window.__alBadge();
             if (window.__dashRefresh) window.__dashRefresh();
@@ -3273,18 +3481,42 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       BYSYM[sym] = { sym: sym, dsym: DS(sym), name: name, price: price, chg: chg == null ? 0 : chg, diff: price - prev, prev: prev, sector: KIND_SEC[k], img: img, ext: k, mcap: null };
     });
   }
+  /* τιμές crypto του χαρτοφυλακίου: άμεσα από την τελευταία γνωστή τιμή (αποθηκευμένη), μετά ζωντανά από το CoinGecko */
+  var cgTry = 0, cgRetryT = 0;
+  (function () { try { var c = JSON.parse(localStorage.getItem("agora-cgp") || "null"); if (c && c.p && Date.now() - c.ts < 2 * 864e5) Object.keys(c.p).forEach(function (id) { if (!CGP[id]) CGP[id] = c.p[id]; }); } catch (e) {} })();
+  function saveCgp() { try { var o = {}; Object.keys(CGP).forEach(function (id) { o[id] = CGP[id]; }); localStorage.setItem("agora-cgp", JSON.stringify({ ts: Date.now(), p: o })); } catch (e) {} }
+  function cgFromTop() {
+    /* όσα είναι στο top 100 τα παίρνουμε κατευθείαν από τη λίστα που έχει ήδη φορτωθεί */
+    var n = 0; (CG100 || []).forEach(function (x) { if (x && x.id && x.current_price != null) { CGP[x.id] = { p: x.current_price, c: x.price_change_percentage_24h || 0 }; n++; } }); return n;
+  }
   function refreshCrypto(force) {
     var ids = {}; txns.forEach(function (t) { if (/^c:/.test(t.sym)) ids[t.sym.slice(2)] = 1; });
     var list = Object.keys(ids);
-    if (!list.length || cgBusy || (!force && Date.now() - cgAt < 60000) || typeof fetch !== "function") return;
+    if (!list.length || cgBusy || (!force && Date.now() - cgAt < 25000) || typeof fetch !== "function") return;
     cgBusy = true;
-    fetch("https://api.coingecko.com/api/v3/simple/price?vs_currencies=eur&include_24hr_change=true&ids=" + encodeURIComponent(list.join(",")))
+    var ctl = typeof AbortController === "function" ? new AbortController() : null, to = setTimeout(function () { if (ctl) ctl.abort(); }, 8000);
+    fetch("https://api.coingecko.com/api/v3/simple/price?vs_currencies=eur&include_24hr_change=true&ids=" + encodeURIComponent(list.join(",")), ctl ? { signal: ctl.signal, cache: "no-store" } : {})
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-      .then(function (j) { Object.keys(j).forEach(function (id) { if (j[id] && j[id].eur != null) CGP[id] = { p: j[id].eur, c: j[id].eur_24h_change || 0 }; }); cgAt = Date.now(); if (!document.getElementById("view-portfolio").hidden) renderPortfolio(); })
-      .catch(function () {})
-      .then(function () { cgBusy = false; });
+      .then(function (j) {
+        Object.keys(j).forEach(function (id) { if (j[id] && j[id].eur != null) CGP[id] = { p: j[id].eur, c: j[id].eur_24h_change || 0 }; });
+        cgAt = Date.now(); cgTry = 0; saveCgp();
+        if (!document.getElementById("view-portfolio").hidden) renderPortfolio();
+        if (window.__dashRefresh) window.__dashRefresh(); catPfSub();
+      })
+      .catch(function () {
+        /* το δωρεάν CoinGecko κόβει συχνά (429): ξαναδοκιμάζουμε γρήγορα, 4″ → 10″ → 25″ */
+        cgTry++; clearTimeout(cgRetryT);
+        if (cgTry <= 3) cgRetryT = setTimeout(function () { refreshCrypto(true); }, [4000, 10000, 25000][cgTry - 1]);
+      })
+      .then(function () { clearTimeout(to); cgBusy = false; });
   }
-  setInterval(function () { if (!document.hidden && !document.getElementById("view-portfolio").hidden) refreshCrypto(); }, 60000);
+  setInterval(function () {
+    if (document.hidden) return;
+    var pf = !document.getElementById("view-portfolio").hidden;
+    if (pf || Date.now() - cgAt > 120000) refreshCrypto();
+  }, 30000);
+  document.addEventListener("visibilitychange", function () { if (!document.hidden) refreshCrypto(); });
+  setTimeout(function () { refreshCrypto(); }, 300);
   function loadExtHist(sym) {
     LONG[sym] = "loading";
     var k = sym.charAt(0), id = sym.slice(2), url = null;
@@ -3876,17 +4108,18 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     });
     function th(k, label, extra) { var on = pfSort.k === k; return '<th data-k="' + k + '"' + (extra || "") + (on ? ' aria-sort="' + (pfSort.d > 0 ? "ascending" : "descending") + '"' : "") + ">" + label + (on ? '<span class="ar">' + (pfSort.d > 0 ? "▲" : "▼") + "</span>" : "") + "</th>"; }
     var table = H.list.length ? '<div class="dk dktable tablewrap"><table><thead><tr>' +
-      th("sym", "Μετοχή", ' class="l"') + th("qty", "Τεμάχια", ' class="hide-s"') + th("price", "Τιμή", ' class="hide-s"') + th("chg", "24ω") + th("value", "Αξία") + th("pl", "Κ/Ζ", ' class="hide-s"') + th("weight", "Μερίδιο", ' class="hide-s"') +
+      th("sym", "Μετοχή", ' class="l"') + th("qty", "Τεμάχια", ' class="hide-s"') + th("price", "Τιμή", ' class="hide-s"') + th("chg", "24ω") + th("value", "Αξία") + th("pl", "Κ/Ζ", ' class="hide-s"') + th("weight", "Μερίδιο", ' class="hide-s"') + '<th class="txoh"><span style="position:absolute;left:-9999px">Συναλλαγές</span></th>' +
       "</tr></thead><tbody>" +
       sorted.map(function (h) {
-        if (h.perp) return '<tr tabindex="0" data-pfs="' + esc(h.sym) + '"><td class="l"><div class="who">' + monoHtml("HL") + "<div><b>" + esc(h.w.n || "Hyperliquid") + "</b><span>" + esc(shortA(h.w.a)) + ' · Perpetuals</span></div></div></td><td class="num hide-s">—</td><td class="num hide-s">—</td><td>—</td><td class="num"><b class="sens">' + eur(h.value) + '</b><span class="sub2 show-s chg ' + cls(h.pl) + ' sens">' + sgn(h.pl) + nf2.format(Math.abs(h.pl) * RATE) + CS + '</span></td><td class="hide-s"><span class="sens">' + eurS(h.pl) + '</span><span class="sub2 chg ' + cls(h.plPct) + '">' + sgn(h.plPct) + nf2.format(Math.abs(h.plPct)) + '%</span></td><td class="hide-s"><div class="dkshare"><span class="num">' + nf2.format(h.weight) + '%</span><i><u style="width:' + Math.max(1, h.weight) + '%"></u></i></div></td></tr>';
+        if (h.perp) return '<tr tabindex="0" data-pfs="' + esc(h.sym) + '"><td class="l"><div class="who">' + monoHtml("HL") + "<div><b>" + esc(h.w.n || "Hyperliquid") + "</b><span>" + esc(shortA(h.w.a)) + ' · Perpetuals</span></div></div></td><td class="num hide-s">—</td><td class="num hide-s">—</td><td>—</td><td class="num"><b class="sens">' + eur(h.value) + '</b><span class="sub2 show-s chg ' + cls(h.pl) + ' sens">' + sgn(h.pl) + nf2.format(Math.abs(h.pl) * RATE) + CS + '</span></td><td class="hide-s"><span class="sens">' + eurS(h.pl) + '</span><span class="sub2 chg ' + cls(h.plPct) + '">' + sgn(h.plPct) + nf2.format(Math.abs(h.plPct)) + '%</span></td><td class="hide-s"><div class="dkshare"><span class="num">' + nf2.format(h.weight) + '%</span><i><u style="width:' + Math.max(1, h.weight) + '%"></u></i></div></td><td></td></tr>';
         var sub = esc(DS(h.sym)) + (h.row && h.row.sector ? " · " + esc(trS(h.row.sector)) : "");
         return '<tr tabindex="0" data-pfs="' + esc(h.sym) + '"><td class="l"><div class="who">' + assetIcon(h.sym) + "<div><b>" + esc(h.row && h.row.name ? h.row.name : DS(h.sym)) + "</b><span>" + sub + "</span></div></div></td>" +
           '<td class="num hide-s sens">' + fmtQty(h.qty) + '</td><td class="num hide-s"><span data-pk="' + esc(h.sym) + '" data-pv="' + h.price + '">' + fmtC(h.price) + "</span><span class=\"sub2 note sens\">μ.τ. " + fmtC(h.avg) + "</span></td>" +
           "<td>" + (h.row ? chip(h.row.chg) : "—") + "</td>" +
           '<td class="num"><b class="sens" data-pk="v:' + esc(h.sym) + '" data-pv="' + h.value + '">' + eur(h.value) + '</b><span class="sub2 show-s chg ' + cls(h.pl) + ' sens">' + sgn(h.pl) + nf2.format(Math.abs(h.pl) * RATE) + CS + "</span></td>" +
           '<td class="hide-s"><span class="sens">' + eurS(h.pl) + '</span><span class="sub2 chg ' + cls(h.plPct) + '">' + sgn(h.plPct) + nf2.format(Math.abs(h.plPct)) + "%</span></td>" +
-          '<td class="hide-s"><div class="dkshare"><span class="num">' + nf2.format(h.weight) + '%</span><i><u style="width:' + Math.max(1, h.weight) + '%"></u></i></div></td></tr>';
+          '<td class="hide-s"><div class="dkshare"><span class="num">' + nf2.format(h.weight) + '%</span><i><u style="width:' + Math.max(1, h.weight) + '%"></u></i></div></td>' +
+          '<td class="txoc"><button type="button" class="txo" data-txo="' + esc(h.sym) + '" aria-expanded="' + !!txOpen[h.sym] + '" title="Οι συναλλαγές του τίτλου" aria-label="Συναλλαγές ' + esc(DS(h.sym)) + '"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button></td></tr>' + (txOpen[h.sym] ? txRows(h) : "");
       }).join("") + "</tbody></table></div>" : '<div class="panel pempty"><h3>Δεν έχεις ανοιχτές θέσεις</h3><p>Όλες οι μετοχές έχουν πουληθεί. Το πραγματοποιημένο κέρδος ή η ζημιά φαίνεται στη σύνοψη.</p></div>';
     var stats = fbar + '<section class="dkrow">' + hero + alloc + "</section>" + kpis;
     var multiPf = pfs.length > 1, shownTx = pfTx();
@@ -3897,11 +4130,36 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       pfTx().sort(function (a, b) { return (b.date || "").localeCompare(a.date || "") || (b.ts || 0) - (a.ts || 0); }).map(function (t) {
         return '<tr>' + (multiPf ? '<td class="chk"><input type="checkbox" data-mv="' + esc(t.id) + '"' + (mvSel[t.id] ? " checked" : "") + ' aria-label="Επιλογή ' + esc(DS(t.sym)) + " " + fmtDate(t.date) + '"></td>' : "") + '<td class="l num hide-s">' + fmtDate(t.date) + '</td><td class="l"><span class="side ' + (t.side === "sell" ? "sell" : "buy") + '">' + (t.side === "sell" ? "Πώληση" : "Αγορά") + '</span></td><td class="l"><b>' + esc(DS(t.sym)) + "</b>" + (multiPf ? '<span class="pftag' + (pfSel === "all" ? "" : " opt") + '">' + esc(pfName(pfOf(t))) + "</span>" : "") + '</td><td class="num hide-s sens">' + fmtQty(t.qty) + '</td><td class="num hide-s">' + fmtC(effP(t)) + '</td><td class="num sens">' + eur(t.qty * effP(t)) + '</td><td style="white-space:nowrap"><button type="button" class="xbtn" data-edit="' + esc(t.id) + '" aria-label="Επεξεργασία συναλλαγής ' + esc(DS(t.sym)) + " " + fmtDate(t.date) + '">Επεξεργασία</button><button type="button" class="xbtn" data-del="' + esc(t.id) + '" aria-label="Διαγραφή συναλλαγής ' + esc(DS(t.sym)) + " " + fmtDate(t.date) + '">Διαγραφή</button></td></tr>';
       }).join("") + "</tbody></table></div>";
+    /* ο συνολικός πίνακας συναλλαγών αφαιρέθηκε: κάθε τίτλος δείχνει τις δικές του από το κουμπί «+».
+       Μένουν μόνο όσες αφορούν κλεισμένες θέσεις, που δεν έχουν πια γραμμή στον πίνακα. */
+    var openSyms = {}; H.list.forEach(function (h) { openSyms[h.sym] = 1; });
+    var closedTx = pfTx().filter(function (t) { return !openSyms[t.sym] && !/^p:/.test(t.sym); }).sort(function (a, b) { return (b.date || "").localeCompare(a.date || "") || (b.ts || 0) - (a.ts || 0); });
+    hist = closedTx.length ? '<div class="dk dktable tablewrap pf-panel"><h2>Κλεισμένες θέσεις</h2><p class="note" style="margin:0 0 8px">Οι συναλλαγές τίτλων που έχεις πουλήσει ολόκληρους.</p><table class="txtab"><thead><tr><th class="l">Ημερομηνία</th><th class="l">Είδος</th><th class="l">Τίτλος</th><th class="hide-s">Τεμάχια</th><th class="hide-s">Τιμή</th><th>Σύνολο</th><th><span style="position:absolute;left:-9999px">Ενέργειες</span></th></tr></thead><tbody>' +
+      closedTx.map(function (t) { return '<tr><td class="l num">' + fmtDate(t.date) + '</td><td class="l"><span class="side ' + (t.side === "sell" ? "sell" : "buy") + '">' + (t.side === "sell" ? "Πώληση" : "Αγορά") + '</span></td><td class="l"><b>' + esc(DS(t.sym)) + '</b></td><td class="num hide-s sens">' + fmtQty(t.qty) + '</td><td class="num hide-s">' + fmtC(effP(t)) + '</td><td class="num sens">' + eur(t.qty * effP(t)) + '</td><td class="txact"><button type="button" class="xbtn" data-edit="' + esc(t.id) + '"><span class="lgt">Επεξεργασία</span><span class="smt" aria-hidden="true">✎</span></button><button type="button" class="xbtn" data-del="' + esc(t.id) + '"><span class="lgt">Διαγραφή</span><span class="smt" aria-hidden="true">✕</span></button></td></tr>'; }).join("") +
+      "</tbody></table></div>" : "";
     pfBody.innerHTML = stats + table + divHtml(H) + perpsHtml() + hist + '<p class="foot">Το κόστος υπολογίζεται με τη μέση τιμή αγοράς. Οι αξίες υπολογίζονται με τις τιμές της σελίδας (καθυστέρηση 15 λεπτών). Είναι εικονικό χαρτοφυλάκιο για παρακολούθηση, όχι επενδυτική συμβουλή.</p>';
     if (H.list.length) { H.list.forEach(function (h) { if (h.row) loadLong(h.row); }); pfDraw(H); }
     refreshCrypto(); hlRefresh();
   }
+  /* οι συναλλαγές κάθε τίτλου, κάτω από τη γραμμή του */
+  var txOpen = {};
+  function txRows(h) {
+    var list = pfTx().filter(function (t) { return t.sym === h.sym; }).sort(function (a, b) { return (b.date || "").localeCompare(a.date || "") || (b.ts || 0) - (a.ts || 0); });
+    var buys = list.filter(function (t) { return t.side !== "sell"; }), sells = list.filter(function (t) { return t.side === "sell"; });
+    var inv = buys.reduce(function (a, t) { return a + t.qty * effP(t); }, 0), got = sells.reduce(function (a, t) { return a + t.qty * effP(t); }, 0);
+    var body = list.map(function (t) {
+      return '<tr><td class="l num">' + fmtDate(t.date) + '</td><td class="l"><span class="side ' + (t.side === "sell" ? "sell" : "buy") + '">' + (t.side === "sell" ? "Πώληση" : "Αγορά") + '</span></td><td class="num sens">' + fmtQty(t.qty) + '</td><td class="num">' + fmtC(effP(t)) + '</td><td class="num sens">' + eur(t.qty * effP(t)) + '</td><td class="txact"><button type="button" class="xbtn" data-edit="' + esc(t.id) + '" aria-label="Επεξεργασία συναλλαγής ' + fmtDate(t.date) + '"><span class="lgt">Επεξεργασία</span><span class="smt" aria-hidden="true">✎</span></button><button type="button" class="xbtn" data-del="' + esc(t.id) + '" aria-label="Διαγραφή συναλλαγής ' + fmtDate(t.date) + '"><span class="lgt">Διαγραφή</span><span class="smt" aria-hidden="true">✕</span></button></td></tr>';
+    }).join("");
+    return '<tr class="txrow"><td colspan="8"><div class="txbox">' +
+      '<div class="txhead"><div><b>Συναλλαγές ' + esc(DS(h.sym)) + '</b><span class="note">' + list.length + (list.length === 1 ? " συναλλαγή" : " συναλλαγές") + ' · αγορές <span class="sens">' + eur(inv) + "</span>" + (sells.length ? ' · πωλήσεις <span class="sens">' + eur(got) + "</span>" : "") + ' · μέση τιμή <span class="sens">' + fmtC(h.avg) + '</span></span></div><button type="button" class="btn sm primary" data-txadd="' + esc(h.sym) + '">+ Νέα συναλλαγή</button></div>' +
+      (list.length ? '<div class="tablewrap"><table class="txtab"><thead><tr><th class="l">Ημερομηνία</th><th class="l">Είδος</th><th>Τεμάχια</th><th>Τιμή</th><th>Σύνολο</th><th><span style="position:absolute;left:-9999px">Ενέργειες</span></th></tr></thead><tbody>' + body + "</tbody></table></div>" : '<p class="note" style="margin:0">Δεν βρέθηκαν συναλλαγές σε αυτό το χαρτοφυλάκιο.</p>') +
+      "</div></td></tr>";
+  }
   pfBody.addEventListener("click", function (e) {
+    var txo = e.target.closest("[data-txo]");
+    if (txo) { var k = txo.getAttribute("data-txo"); if (txOpen[k]) delete txOpen[k]; else txOpen[k] = 1; renderPortfolio(); var nb = pfBody.querySelector('[data-txo="' + k + '"]'); if (nb) nb.focus(); return; }
+    var txa = e.target.closest("[data-txadd]");
+    if (txa) { openForm(txa.getAttribute("data-txadd"), "buy"); return; }
     if (e.target.closest('[data-act="add"]')) { openForm("", "buy"); return; }
     var rm = e.target.closest("[data-hlrm]");
     if (rm) {
@@ -3927,7 +4185,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     if (tr) openStock(tr.getAttribute("data-pfs"), tr);
   });
   pfBody.addEventListener("keydown", function (e) {
-    if (e.key !== "Enter") return;
+    if (e.key !== "Enter" || e.target.closest("button, input, select, a")) return;
     var tr = e.target.closest("[data-pfs]"); if (tr) openStock(tr.getAttribute("data-pfs"), tr);
   });
 
@@ -4179,11 +4437,24 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     });
   })();
   function showView(v) {
+    if (!navPop && v !== curView) { try { history.pushState({ ax: 1, v: v }, ""); } catch (e) {} }
+    curView = v;
     if (window.matchMedia && matchMedia("(max-width: 640px)").matches) window.scrollTo(0, 0);
     ["market", "heat", "favs", "portfolio", "tools"].forEach(function (k) {
       document.getElementById("view-" + k).hidden = k !== v;
       document.getElementById("tab-" + k).setAttribute("aria-selected", k === v);
     });
+    var cat = v === "portfolio" ? "pf" : "mk";
+    if (cat === "mk") lastMk = v;
+    Array.prototype.forEach.call(document.querySelectorAll(".cat"), function (b) { var c = b.getAttribute("data-cat"); b.setAttribute("aria-pressed", c === "pf" ? v === "portfolio" : v === "market"); });
+    Array.prototype.forEach.call(document.querySelectorAll(".xtra"), function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-view") === v); });
+    document.querySelector(".views").hidden = cat === "pf";
+    var prevCat = document.body.getAttribute("data-cat");
+    document.body.setAttribute("data-cat", cat);
+    if (prevCat && prevCat !== cat) catSweep(cat);
+    var tm = document.querySelector('meta[name="theme-color"]'); if (tm && document.documentElement.getAttribute("data-ui") !== "light") tm.setAttribute("content", cat === "pf" ? "#121436" : "#1a1a35");
+    try { localStorage.setItem("agora-lastview", v); } catch (e) {}
+    catPfSub();
     if (v === "portfolio") renderPortfolio();
     if (v === "favs") renderFavs();
     if (v === "heat") renderHeat();
@@ -4192,6 +4463,67 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var ve = document.getElementById("view-" + v); if (ve) { ve.classList.remove("vin"); void ve.offsetWidth; ve.classList.add("vin"); }
   }
 
+  var lastMk = "market", lastPt = null;
+  document.addEventListener("pointerdown", function (e) { lastPt = { x: e.clientX, y: e.clientY, t: Date.now() }; }, true);
+  function catSweep(cat) {
+    var fx = document.getElementById("catfx"); if (!fx || (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)) return;
+    var p = lastPt && Date.now() - lastPt.t < 1500 ? lastPt : { x: innerWidth / 2, y: innerHeight / 3 };
+    fx.style.setProperty("--x", p.x + "px"); fx.style.setProperty("--y", p.y + "px");
+    fx.className = "catfx"; void fx.offsetWidth; fx.className = "catfx go " + cat;
+  }
+  /* ----- κουμπί «πίσω» (κινητό / browser): κλείνει παράθυρα και γυρίζει ενότητες αντί να βγαίνει από την εφαρμογή ----- */
+  var curView = "market", navPop = false, popSkip = 0;
+  try { history.replaceState({ ax: 1, v: "market", root: 1 }, ""); history.pushState({ ax: 1, v: "market", base: 1 }, ""); } catch (e) {}
+  var exitT = 0;
+  var OVS = ["drawer", "pf-form", "cuBox", "shBox", "svBox", "authBox", "cmpBox", "pfmBox", "hlBox", "mpBox", "allocBox", "setBox", "appBox"].map(function (id) { return document.getElementById(id); }).filter(Boolean);
+  function closeOv(el) {
+    if (el.id === "drawer") { closeStock(); return; }
+    if (el.id === "pf-form") { closeForm(); return; }
+    var b = el.querySelector(".ahead .close, button[id$='Close'], .close");
+    if (b) b.click(); else el.hidden = true;
+  }
+  function topOv() { var open = OVS.filter(function (el) { return !el.hidden; }); return open.length ? open[open.length - 1] : null; }
+  var ovObs = new MutationObserver(function (ms) {
+    ms.forEach(function (m) {
+      var el = m.target, vis = !el.hidden;
+      if (vis && !el.__ov) {
+        el.__ov = 1;
+        if (!navPop) { try { history.pushState({ ax: 1, v: curView, ov: el.id }, ""); } catch (e) {} }
+      } else if (!vis && el.__ov) {
+        el.__ov = 0;
+        if (!navPop) setTimeout(function () { if (history.state && history.state.ov === el.id) { popSkip++; history.back(); } }, 0);
+      }
+    });
+  });
+  OVS.forEach(function (el) { el.__ov = el.hidden ? 0 : 1; ovObs.observe(el, { attributes: true, attributeFilter: ["hidden"] }); });
+  window.addEventListener("popstate", function (e) {
+    if (popSkip) { popSkip--; return; }
+    navPop = true; setTimeout(function () { navPop = false; }, 0);
+    var o = topOv(), st = e.state || {};
+    if (o) { closeOv(o); if (st.root) { try { history.pushState({ ax: 1, v: curView, base: 1 }, ""); } catch (er) {} } return; }
+    if (st.root) {
+      /* στην αρχή: ένα «πίσω» δείχνει μήνυμα, δεύτερο μέσα σε 2,5″ βγαίνει από την εφαρμογή */
+      toast("Πάτα ξανά «πίσω» για έξοδο");
+      clearTimeout(exitT);
+      exitT = setTimeout(function () { if (history.state && history.state.root) { try { history.pushState({ ax: 1, v: curView, base: 1 }, ""); } catch (er) {} } }, 2500);
+      return;
+    }
+    if (st.v && st.v !== curView) { showView(st.v); return; }
+    if (st.ax && !st.root) { popSkip = 0; history.back(); }
+  });
+  function catPfSub() {
+    var el = document.getElementById("catPf"); if (!el) return;
+    if (!txns.length && !wallets.length) { el.textContent = "Οι επενδύσεις σου"; return; }
+    try {
+      var H = holdings(txns), pct = H.prevValue ? H.day / H.prevValue * 100 : 0;
+      el.innerHTML = '<span class="sens">' + nf0.format(H.value * RATE) + CS + "</span> · " + '<span class="chg ' + cls(pct) + '">' + pctS(pct, 2) + "</span> σήμερα";
+    } catch (e) {}
+  }
+  document.querySelector(".extras").addEventListener("click", function (e) { var b = e.target.closest(".xtra"); if (b) showView(b.getAttribute("data-view")); });
+  document.querySelector(".cats").addEventListener("click", function (e) {
+    var b = e.target.closest(".cat"); if (!b) return;
+    showView(b.getAttribute("data-cat") === "pf" ? "portfolio" : "market");
+  });
   /* ----- σύγκριση μετοχών / crypto ----- */
   var cmpKeys = (function () { try { var v = JSON.parse(localStorage.getItem("agora-cmp") || "[]"); return Array.isArray(v) ? v.slice(0, 4) : []; } catch (e) { return []; } })();
   var cmpR = "1Y", CMP_R = [["1M", "1Μ", 31], ["3M", "3Μ", 92], ["6M", "6Μ", 183], ["1Y", "1Χ", 366], ["5Y", "5Χ", 1827], ["ALL", "Όλο", 0]];
@@ -4315,6 +4647,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   var mkt = (function () { try { var m = localStorage.getItem("agora-mkt"); return m === "us" || m === "c" ? m : "gr"; } catch (e) { return "gr"; } })();
   var XS = { k: "m", d: -1 }, CG100 = null, cg100At = 0, cg100Busy = false, cg100Err = false;
   try { var c0 = JSON.parse(localStorage.getItem("agora-cg100") || "null"); if (c0 && Array.isArray(c0.d)) { CG100 = c0.d; cg100At = c0.at || 0; } } catch (e) {}
+  (CG100 || []).forEach(function (x) { if (x && x.id && x.current_price != null && !CGP[x.id]) CGP[x.id] = { p: x.current_price, c: x.price_change_percentage_24h || 0 }; });
   function xItems() {
     if (mkt === "us") { var u = usdEur(); return ((USD_ && USD_.s) || []).map(function (x, i) { return { k: "f", id: x.s, s: x.s, n: x.n, p: x.p * u, np: x.p, h1: null, c: x.c, w: x.w, m: x.m * u, v: x.v, vsh: true, img: x.l ? "https://s3-symbol-logo.tradingview.com/" + encodeURIComponent(x.l) + ".svg" : null, sub: x.x, rank: i + 1 }; }); }
     return (CG100 || []).map(function (x, i) { return { k: "c", id: x.id, s: String(x.symbol || "").toUpperCase(), n: x.name, p: x.current_price, np: x.current_price, h1: x.price_change_percentage_1h_in_currency, c: x.price_change_percentage_24h_in_currency != null ? x.price_change_percentage_24h_in_currency : x.price_change_percentage_24h, w: x.price_change_percentage_7d_in_currency, m: x.market_cap, v: x.total_volume, img: x.image, sp: x.sparkline_in_7d && x.sparkline_in_7d.price, rank: x.market_cap_rank || i + 1 }; });
@@ -4326,7 +4659,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (j) {
         if (!Array.isArray(j) || !j.length) throw new Error("empty");
-        CG100 = j; cg100At = Date.now(); cg100Err = false; setTimeout(function () { if (window.__dashRefresh) window.__dashRefresh(); }, 0);
+        CG100 = j; cg100At = Date.now(); cg100Err = false; if (cgFromTop()) { saveCgp(); if (!document.getElementById("view-portfolio").hidden) renderPortfolio(); } setTimeout(function () { if (window.__dashRefresh) window.__dashRefresh(); }, 0);
         j.forEach(function (x) { if (x.current_price != null) CGP[x.id] = { p: x.current_price, c: x.price_change_percentage_24h || 0 }; });
         try { localStorage.setItem("agora-cg100", JSON.stringify({ at: cg100At, d: j.map(function (x) { var y = Object.assign({}, x); if (y.sparkline_in_7d && y.sparkline_in_7d.price) y.sparkline_in_7d = { price: y.sparkline_in_7d.price.filter(function (_, i) { return i % 4 === 0; }) }; return y; }) })); } catch (e) {}
       })
@@ -4700,7 +5033,8 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   if (location.hash === "#portfolio") showView("portfolio");
   if (location.hash === "#favorites") showView("favs");
   if (location.hash === "#heatmap") showView("heat");
-  try { if (localStorage.getItem("agora-view") === "portfolio") { localStorage.removeItem("agora-view"); showView("portfolio"); } } catch (e) {}
+  try { if (localStorage.getItem("agora-view") === "portfolio") { localStorage.removeItem("agora-view"); showView("portfolio"); } else if (!location.hash) { var lv = localStorage.getItem("agora-lastview"); if (lv && ["heat", "favs", "portfolio", "tools"].indexOf(lv) > -1) showView(lv); } } catch (e) {}
+  catPfSub();
 
   /* εφαρμογή: εγκατάσταση και λειτουργία χωρίς internet (μόνο στο δημόσιο site) */
   (function () {
@@ -5314,7 +5648,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     if (!document.getElementById("view-heat").hidden) renderHeat();
     if (!document.getElementById("view-tools").hidden && window.__renderTools) window.__renderTools();
     if (!drawer.hidden && cur && chartKind !== "tv") { var st = drawer.scrollTop; paint(); drawer.scrollTop = st; }
-    renderDash(); alCheckLocal();
+    renderDash(); alCheckLocal(); catPfSub();
   }
   setInterval(function () { liveTick(false); }, 60000);
   setInterval(liveUs, 10 * 60000);
@@ -5480,7 +5814,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   window.addEventListener("scroll", function () { if (!finePtr && !hov.hidden) hovHide(); }, { passive: true });
 
   /* ===================== Ο πίνακάς μου (προσαρμοσμένη αρχική) ===================== */
-  var DW = [["pf", "Χαρτοφυλάκιο", "Αξία, μεταβολή ημέρας και οι μεγαλύτερες θέσεις"], ["favs", "Αγαπημένα", "Οι αγαπημένες σου μετοχές και crypto"], ["al", "Ειδοποιήσεις", "Όσες είναι πιο κοντά να χτυπήσουν"], ["cal", "Επόμενα γεγονότα", "Μερίσματα και αποτελέσματα για τις μετοχές σου"], ["mkts", "Αγορές με μια ματιά", "Γενικός Δείκτης, S&P 500, Bitcoin και άλλες"], ["fng", "Fear & Greed", "Η διάθεση της αγοράς crypto και η κυριαρχία του BTC"]];
+  var DW = [["favs", "Αγαπημένα", "Οι αγαπημένες σου μετοχές και crypto"], ["al", "Ειδοποιήσεις", "Όσες είναι πιο κοντά να χτυπήσουν"], ["cal", "Επόμενα γεγονότα", "Μερίσματα και αποτελέσματα για τις μετοχές σου"], ["mkts", "Αγορές με μια ματιά", "Γενικός Δείκτης, S&P 500, Bitcoin και άλλες"], ["fng", "Fear & Greed", "Η διάθεση της αγοράς crypto και η κυριαρχία του BTC"]];
   var DS_ = [["gstrip", "Παγκόσμιες αγορές (λωρίδα πάνω)"], ["stats", "Σύνοψη αγοράς"], ["movers", "Κορυφαίες κινήσεις"], ["sectors", "Κλάδοι"], ["divsec", "Ημερολόγιο μερισμάτων"]];
   var HOME = lsGet("agora-home", null);
   function normHome(h) {
@@ -5564,7 +5898,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     HOME.s.forEach(function (k) {
       var el = k === "movers" ? null : document.getElementById(k === "sectors" ? "secsec" : k);
       if (k === "gstrip") { var g = document.getElementById("gstrip"); g.classList.toggle("userhide", !HOME.on.gstrip); return; }
-      if (k === "movers") { var mt = document.getElementById("mvtabs"), mv = document.getElementById("movers"); mt.classList.toggle("userhide", !HOME.on.movers); mv.classList.toggle("userhide", !HOME.on.movers); vm.insertBefore(mt, anchor); vm.insertBefore(mv, anchor); return; }
+      if (k === "movers") { var mh = document.getElementById("mvhead"); mh.classList.toggle("userhide", !HOME.on.movers); vm.insertBefore(mh, anchor); var mt = document.getElementById("mvtabs"), mv = document.getElementById("movers"); mt.classList.toggle("userhide", !HOME.on.movers); mv.classList.toggle("userhide", !HOME.on.movers); vm.insertBefore(mt, anchor); vm.insertBefore(mv, anchor); return; }
       if (!el) return;
       el.classList.toggle("userhide", !HOME.on[k]); vm.insertBefore(el, anchor);
     });
@@ -5626,85 +5960,63 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   renderDash();
   setInterval(function () { if (!document.hidden && !document.getElementById("view-market").hidden && HOME.on.favs && Object.keys(favs).some(function (k) { return /^c:/.test(k); })) { loadFavCg(); } }, 60000);
 
-  /* ===================== Επεξεργαστής εμφάνισης ===================== */
-  var thBox = document.getElementById("thBox");
-  function thCur() { return thmNorm(THM || SITE_THM); }
-  function thSet(ch) {
-    var t = thCur(); for (var k in ch) t[k] = ch[k];
-    THM = t; try { localStorage.setItem("agora-thm", JSON.stringify(THM)); } catch (e) {}
-    thmApply(); thPaint();
-    clearTimeout(thSet.tm); thSet.tm = setTimeout(function () { if (pfRef) persist(); }, 800);
-  }
-  function swatch(p) {
-    var P = THM_PRESETS[p], dark = P.mode !== "light", bg = (P.bg && P.bg.bg) || (dark ? "#1f2430" : "#eef1f6"), sf = (P.bg && P.bg.surface) || (dark ? "#262c38" : "#ffffff"), ac = THM_ACC[P.acc || "blue"][dark ? 0 : 1], fg = (P.bg && P.bg.fg) || (dark ? "#e7eaef" : "#141a26");
-    return '<span class="thsw" style="background:' + bg + '"><i style="background:' + sf + ';color:' + fg + '"><b style="background:' + ac + '"></b><em style="background:' + fg + '"></em><em style="background:' + fg + ';width:40%"></em></i></span>';
-  }
-  function thPaint() {
-    if (!thBox || thBox.hidden) return;
-    var t = thCur(), P = THM_PRESETS[t.p] || THM_PRESETS.def, isLight = document.documentElement.getAttribute("data-ui") === "light";
-    var accNow = t.acc || P.acc || null, fontNow = t.font || P.font || "def", radNow = t.rad != null ? t.rad : P.rad != null ? P.rad : 18, densNow = t.dens || P.dens || "normal", glowNow = t.glow != null ? t.glow : P.glow !== false;
-    var seg = function (attr, items, curv) { return '<div class="seg2">' + items.map(function (x) { return '<button type="button" ' + attr + '="' + x[0] + '" aria-pressed="' + (String(x[0]) === String(curv)) + '">' + x[1] + "</button>"; }).join("") + "</div>"; };
-    var h = '<div class="thsec"><h3>Έτοιμα θέματα</h3><div class="thpre">' + Object.keys(THM_PRESETS).map(function (k) { return '<button type="button" class="thp" data-thp="' + k + '" aria-pressed="' + (t.p === k) + '">' + swatch(k) + "<span>" + esc(THM_PRESETS[k].n) + "</span></button>"; }).join("") + "</div></div>";
-    h += '<div class="thsec"><h3>Φωτεινό ή σκοτεινό</h3>' + seg("data-thm", [["dark", "Σκοτεινό"], ["light", "Φωτεινό"], ["system", "Αυτόματο"]], THEME) + "</div>";
-    h += '<div class="thsec"><h3>Κύριο χρώμα</h3><div class="thacc">' + Object.keys(THM_ACC).map(function (k) { var c = THM_ACC[k][isLight ? 1 : 0]; return '<button type="button" class="tha" data-tha="' + k + '" aria-pressed="' + (accNow === k) + '" style="background:' + c + '" aria-label="' + k + '"></button>'; }).join("") +
-      '<label class="thcustom" title="Δικό σου χρώμα"><input type="color" id="thColor" value="' + (accNow && accNow.charAt(0) === "#" ? accNow : (THM_ACC[accNow] || THM_ACC.blue)[isLight ? 1 : 0]) + '" aria-label="Δικό σου χρώμα"><span>+</span></label></div></div>';
-    h += '<div class="thsec"><h3>Χρώματα ανόδου και πτώσης</h3>' + seg("data-thud", [["gd", '<i class="thdot" style="background:#4fd69a"></i><i class="thdot" style="background:#ff7b7b"></i> Πράσινο / κόκκινο'], ["bo", '<i class="thdot" style="background:#5aa9ff"></i><i class="thdot" style="background:#ffa64d"></i> Μπλε / πορτοκαλί'], ["rg", '<i class="thdot" style="background:#ff7b7b"></i><i class="thdot" style="background:#4fd69a"></i> Ανάποδα']], t.ud) + '<p class="note">Το «μπλε / πορτοκαλί» ξεχωρίζει καλύτερα για όσους δυσκολεύονται με το πράσινο και το κόκκινο.</p></div>';
-    h += '<div class="thsec"><h3>Γραμματοσειρά</h3><div class="thfonts">' + Object.keys(THM_FONTS).map(function (k) { var f = THM_FONTS[k]; if (f.g && !thmFontsLoaded[f.g]) { thmFontsLoaded[f.g] = 1; var l = document.createElement("link"); l.rel = "stylesheet"; l.href = "https://fonts.googleapis.com/css2?family=" + f.g + "&display=swap"; document.head.appendChild(l); } return '<button type="button" class="thf" data-thf="' + k + '" aria-pressed="' + (fontNow === k) + '" style="font-family:' + esc(f.d) + '"><b>' + esc(f.n) + "</b><span>Αξία 12.345,67 € ▲ +2,15%</span></button>"; }).join("") + "</div></div>";
-    h += '<div class="thsec"><h3>Μέγεθος <span class="note" id="thScaleV">' + Math.round(t.scale * 100) + '%</span></h3><input type="range" id="thScale" min="85" max="125" step="5" value="' + Math.round(t.scale * 100) + '" aria-label="Μέγεθος"></div>';
-    h += '<div class="thsec"><h3>Γωνίες <span class="note" id="thRadV">' + radNow + ' px</span></h3><input type="range" id="thRad" min="0" max="28" step="2" value="' + radNow + '" aria-label="Στρογγυλότητα γωνιών"></div>';
-    h += '<div class="thsec"><h3>Πυκνότητα</h3>' + seg("data-thd", [["compact", "Συμπαγής"], ["normal", "Κανονική"], ["comfy", "Άνετη"]], densNow) + "</div>";
-    h += '<div class="thsec thtog"><label><span><b>Λάμψη φόντου</b><span class="note">Χρωματιστές αποχρώσεις πίσω από τη σελίδα</span></span><span class="sw"><input type="checkbox" id="thGlow"' + (glowNow ? " checked" : "") + "><i></i></span></label>" +
-      '<label><span><b>Κινήσεις</b><span class="note">Μεταβάσεις και αναλαμπές τιμών</span></span><span class="sw"><input type="checkbox" id="thMotion"' + (t.motion !== false ? " checked" : "") + "><i></i></span></label></div>";
-    var owner = fbUser && pfMode === "db";
-    h += '<div class="thsec thfoot"><button type="button" class="btn" id="thReset">' + (SITE_THM ? "Επαναφορά στην εμφάνιση του site" : "Επαναφορά") + "</button>" +
-      (owner ? '<div class="thown"><b>Για όλους τους επισκέπτες</b><span class="note">Κάνε αυτή την εμφάνιση προεπιλογή του site. Όποιος δεν έχει αλλάξει τη δική του, θα βλέπει αυτή. Λειτουργεί μόνο για τον ιδιοκτήτη.</span><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn primary" id="thSite">Ορισμός για όλους</button>' + (SITE_THM ? '<button type="button" class="btn" id="thSiteClr">Αφαίρεση</button>' : "") + "</div></div>" : "") + "</div>";
-    document.getElementById("thBody").innerHTML = h;
-  }
-  window.__thmPaint = thPaint;
-  window.__thmGet = function () { return THM; };
-  window.__thmSet = function (v) { if (!v || JSON.stringify(v) === JSON.stringify(THM)) return; THM = thmNorm(v); try { localStorage.setItem("agora-thm", JSON.stringify(THM)); } catch (e) {} thmApply(); thPaint(); };
-  function thOpen() { var sb = document.getElementById("setBox"); if (sb && !sb.hidden) document.getElementById("setClose").click(); thBox.hidden = false; thPaint(); document.getElementById("thClose").focus(); document.body.classList.add("thopen"); }
-  function thClose() { thBox.hidden = true; document.body.classList.remove("thopen"); }
-  document.getElementById("setTheme2").addEventListener("click", thOpen);
-  document.getElementById("thClose").addEventListener("click", thClose);
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !thBox.hidden) thClose(); });
-  thBox.addEventListener("click", function (e) {
-    var b;
-    if ((b = e.target.closest("[data-thp]"))) {
-      var p = b.getAttribute("data-thp"), P = THM_PRESETS[p];
-      if (P.mode) { THEME = P.mode; try { localStorage.setItem("agora-theme", THEME); } catch (er) {} applyTheme(); }
-      thSet({ p: p, acc: null, font: null, rad: null, dens: null, glow: null }); return;
-    }
-    if ((b = e.target.closest("[data-thm]"))) { THEME = b.getAttribute("data-thm"); try { localStorage.setItem("agora-theme", THEME); } catch (er) {} applyTheme(); thPaint(); if (!drawer.hidden && cur && chartKind === "tv") paint(); return; }
-    if ((b = e.target.closest("[data-tha]"))) { thSet({ acc: b.getAttribute("data-tha") }); return; }
-    if ((b = e.target.closest("[data-thud]"))) { thSet({ ud: b.getAttribute("data-thud") }); return; }
-    if ((b = e.target.closest("[data-thf]"))) { thSet({ font: b.getAttribute("data-thf") }); return; }
-    if ((b = e.target.closest("[data-thd]"))) { thSet({ dens: b.getAttribute("data-thd") }); return; }
-    if (e.target.closest("#thReset")) { THM = null; try { localStorage.removeItem("agora-thm"); } catch (er) {} thmSiteMode(); thmApply(); thPaint(); if (pfRef) persist(); toast("Η εμφάνιση επανήλθε"); return; }
-    if (e.target.closest("#thSite")) {
-      var val = thCur();
-      firebase.firestore().collection("site").doc("theme").set({ t: JSON.stringify(val), at: Date.now() })
-        .then(function () { SITE_THM = val; try { localStorage.setItem("agora-sitethm", JSON.stringify(val)); } catch (er) {} thPaint(); toast("Αυτή είναι πλέον η εμφάνιση του site για όλους"); })
-        .catch(function (er) { toast(er && er.code === "permission-denied" ? "Δεν επιτρέπεται: χρειάζεται ο κανόνας του Firestore για τον ιδιοκτήτη" : "Η αποθήκευση απέτυχε"); });
-      return;
-    }
-    if (e.target.closest("#thSiteClr")) {
-      firebase.firestore().collection("site").doc("theme").delete()
-        .then(function () { SITE_THM = null; try { localStorage.removeItem("agora-sitethm"); } catch (er) {} thmApply(); thPaint(); toast("Η εμφάνιση του site επανήλθε στην αρχική"); })
-        .catch(function () { toast("Δεν επιτρέπεται"); });
-    }
-  });
-  thBox.addEventListener("input", function (e) {
-    if (e.target.id === "thScale") { document.getElementById("thScaleV").textContent = e.target.value + "%"; thSet.raw = true; THM = thCur(); THM.scale = +e.target.value / 100; thmApply(); }
-    if (e.target.id === "thRad") { document.getElementById("thRadV").textContent = e.target.value + " px"; THM = thCur(); THM.rad = +e.target.value; thmApply(); }
-    if (e.target.id === "thColor") { THM = thCur(); THM.acc = e.target.value; thmApply(); }
-  });
-  thBox.addEventListener("change", function (e) {
-    if (e.target.id === "thScale" || e.target.id === "thRad" || e.target.id === "thColor") { thSet({}); return; }
-    if (e.target.id === "thGlow") thSet({ glow: e.target.checked });
-    if (e.target.id === "thMotion") thSet({ motion: e.target.checked });
-  });
 
+  /* σελίδα υποδοχής και κουμπιά ενοτήτων */
+  function heroUpd() {
+    var h = document.getElementById("hero"); if (!h) return;
+    var off = false; try { off = localStorage.getItem("agora-hero-off") === "1" || (localStorage.getItem("agora-signedin") === "1" && !authReady()) ; } catch (e) {}
+    if (fbUser) { try { localStorage.setItem("agora-signedin", "1"); } catch (e) {} }
+    else if (authReady()) { try { localStorage.removeItem("agora-signedin"); } catch (e) {} }
+    h.hidden = !!fbUser || off;
+    var n = document.getElementById("heroN"); if (n && rows.length) n.textContent = rows.length;
+    var app = document.getElementById("heroApp"); if (app) app.hidden = standalone();
+  }
+  function authReady() { return !FIREBASE_CONFIG || window.claude || window.__authReady === true; }
+  heroUpd(); setInterval(heroUpd, 1500);
+  document.getElementById("heroX").addEventListener("click", function () { try { localStorage.setItem("agora-hero-off", "1"); } catch (e) {} heroUpd(); });
+  document.getElementById("heroGo").addEventListener("click", function () { if (FIREBASE_CONFIG && !window.claude) openAuth("signin"); else showView("portfolio"); });
+  document.getElementById("heroApp").addEventListener("click", function () {
+    var p = window.__bip; if (p) { p.prompt(); p.userChoice.then(function () { window.__bip = null; heroUpd(); }).catch(function () {}); return; }
+    document.getElementById("appBox").hidden = false; document.getElementById("appScrim").hidden = false;
+  });
+  function goSec(w, el) {
+    if (w === "heat") showView("heat");
+    else if (w === "pf") showView("portfolio");
+    else if (w === "scr" || w === "cal" || w === "al") { showView("tools"); setTl(w); }
+    else if (w === "gr" || w === "us" || w === "c") { showView("market"); var b = document.querySelector('#mktsw [data-mkt="' + w + '"]'); if (b) b.click(); var t = document.getElementById(w === "gr" ? "allsec" : "xlist"); if (t) t.scrollIntoView({ behavior: "smooth", block: "start" }); }
+  }
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-sgo],[data-hgo]"); if (!b) return;
+    var w = b.getAttribute("data-sgo") || b.getAttribute("data-hgo"); goSec(w === "pf" && b.hasAttribute("data-hgo") ? "pf" : w, b);
+  });
+  /* αριστερή μπάρα του χαρτοφυλακίου */
+  (function () {
+    var rail = document.getElementById("pfrail"); if (!rail) return;
+    function holdEl() { return document.querySelector("#view-portfolio .dktable"); }
+    function setOn(k) { Array.prototype.forEach.call(rail.querySelectorAll("[data-rail=top],[data-rail=hold]"), function (b) { b.classList.toggle("on", b.getAttribute("data-rail") === k); }); }
+    function syncHide() { var h = document.getElementById("pf-hide"), b = rail.querySelector("[data-rail=hide]"); if (h && b) b.setAttribute("aria-pressed", h.getAttribute("aria-pressed") || "false"); }
+    rail.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-rail]"); if (!b) return;
+      var w = b.getAttribute("data-rail");
+      if (w === "top") { window.scrollTo({ top: 0, behavior: "smooth" }); setOn("top"); }
+      else if (w === "hold") { var t = holdEl(); if (t) { t.scrollIntoView({ behavior: "smooth", block: "start" }); setOn("hold"); } else toast("Δεν έχεις ακόμα θέσεις"); }
+      else if (w === "add") document.getElementById("pf-add").click();
+      else if (w === "ref") {
+        b.classList.remove("spin"); void b.offsetWidth; b.classList.add("spin");
+        try { liveTick(true); } catch (er) {} try { refreshCrypto(true); } catch (er) {} try { hlRefresh(true); } catch (er) {} try { liveUs(); } catch (er) {}
+        toast("Ανανέωση τιμών…");
+      }
+      else if (w === "api") document.getElementById("pf-hl").click();
+      else if (w === "theme") { THEME = document.documentElement.getAttribute("data-ui") === "light" ? "dark" : "light"; try { localStorage.setItem("agora-theme", THEME); } catch (er) {} applyTheme(); }
+      else if (w === "csv") document.getElementById("pf-csv").click();
+      else if (w === "hide") { document.getElementById("pf-hide").click(); setTimeout(syncHide, 50); }
+    });
+    window.addEventListener("scroll", function () {
+      if (document.body.getAttribute("data-cat") !== "pf") return;
+      var t = holdEl(); setOn(t && t.getBoundingClientRect().top < innerHeight * 0.45 ? "hold" : "top");
+    }, { passive: true });
+    setInterval(syncHide, 2000); syncHide();
+  })();
   window.__alBadge = function () { var n = ALERTS.filter(function (a) { return a.on; }).length, c = document.getElementById("alcnt"); c.hidden = !n; c.textContent = n; };
   window.__alBadge();
   render();

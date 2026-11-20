@@ -3497,18 +3497,42 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       BYSYM[sym] = { sym: sym, dsym: DS(sym), name: name, price: price, chg: chg == null ? 0 : chg, diff: price - prev, prev: prev, sector: KIND_SEC[k], img: img, ext: k, mcap: null };
     });
   }
+  /* τιμές crypto του χαρτοφυλακίου: άμεσα από την τελευταία γνωστή τιμή (αποθηκευμένη), μετά ζωντανά από το CoinGecko */
+  var cgTry = 0, cgRetryT = 0;
+  (function () { try { var c = JSON.parse(localStorage.getItem("agora-cgp") || "null"); if (c && c.p && Date.now() - c.ts < 2 * 864e5) Object.keys(c.p).forEach(function (id) { if (!CGP[id]) CGP[id] = c.p[id]; }); } catch (e) {} })();
+  function saveCgp() { try { var o = {}; Object.keys(CGP).forEach(function (id) { o[id] = CGP[id]; }); localStorage.setItem("agora-cgp", JSON.stringify({ ts: Date.now(), p: o })); } catch (e) {} }
+  function cgFromTop() {
+    /* όσα είναι στο top 100 τα παίρνουμε κατευθείαν από τη λίστα που έχει ήδη φορτωθεί */
+    var n = 0; (CG100 || []).forEach(function (x) { if (x && x.id && x.current_price != null) { CGP[x.id] = { p: x.current_price, c: x.price_change_percentage_24h || 0 }; n++; } }); return n;
+  }
   function refreshCrypto(force) {
     var ids = {}; txns.forEach(function (t) { if (/^c:/.test(t.sym)) ids[t.sym.slice(2)] = 1; });
     var list = Object.keys(ids);
-    if (!list.length || cgBusy || (!force && Date.now() - cgAt < 60000) || typeof fetch !== "function") return;
+    if (!list.length || cgBusy || (!force && Date.now() - cgAt < 25000) || typeof fetch !== "function") return;
     cgBusy = true;
-    fetch("https://api.coingecko.com/api/v3/simple/price?vs_currencies=eur&include_24hr_change=true&ids=" + encodeURIComponent(list.join(",")))
+    var ctl = typeof AbortController === "function" ? new AbortController() : null, to = setTimeout(function () { if (ctl) ctl.abort(); }, 8000);
+    fetch("https://api.coingecko.com/api/v3/simple/price?vs_currencies=eur&include_24hr_change=true&ids=" + encodeURIComponent(list.join(",")), ctl ? { signal: ctl.signal, cache: "no-store" } : {})
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-      .then(function (j) { Object.keys(j).forEach(function (id) { if (j[id] && j[id].eur != null) CGP[id] = { p: j[id].eur, c: j[id].eur_24h_change || 0 }; }); cgAt = Date.now(); if (!document.getElementById("view-portfolio").hidden) renderPortfolio(); })
-      .catch(function () {})
-      .then(function () { cgBusy = false; });
+      .then(function (j) {
+        Object.keys(j).forEach(function (id) { if (j[id] && j[id].eur != null) CGP[id] = { p: j[id].eur, c: j[id].eur_24h_change || 0 }; });
+        cgAt = Date.now(); cgTry = 0; saveCgp();
+        if (!document.getElementById("view-portfolio").hidden) renderPortfolio();
+        if (window.__dashRefresh) window.__dashRefresh(); catPfSub();
+      })
+      .catch(function () {
+        /* το δωρεάν CoinGecko κόβει συχνά (429): ξαναδοκιμάζουμε γρήγορα, 4″ → 10″ → 25″ */
+        cgTry++; clearTimeout(cgRetryT);
+        if (cgTry <= 3) cgRetryT = setTimeout(function () { refreshCrypto(true); }, [4000, 10000, 25000][cgTry - 1]);
+      })
+      .then(function () { clearTimeout(to); cgBusy = false; });
   }
-  setInterval(function () { if (!document.hidden && !document.getElementById("view-portfolio").hidden) refreshCrypto(); }, 60000);
+  setInterval(function () {
+    if (document.hidden) return;
+    var pf = !document.getElementById("view-portfolio").hidden;
+    if (pf || Date.now() - cgAt > 120000) refreshCrypto();
+  }, 30000);
+  document.addEventListener("visibilitychange", function () { if (!document.hidden) refreshCrypto(); });
+  setTimeout(function () { refreshCrypto(); }, 300);
   function loadExtHist(sym) {
     LONG[sym] = "loading";
     var k = sym.charAt(0), id = sym.slice(2), url = null;
@@ -4639,6 +4663,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   var mkt = (function () { try { var m = localStorage.getItem("agora-mkt"); return m === "us" || m === "c" ? m : "gr"; } catch (e) { return "gr"; } })();
   var XS = { k: "m", d: -1 }, CG100 = null, cg100At = 0, cg100Busy = false, cg100Err = false;
   try { var c0 = JSON.parse(localStorage.getItem("agora-cg100") || "null"); if (c0 && Array.isArray(c0.d)) { CG100 = c0.d; cg100At = c0.at || 0; } } catch (e) {}
+  (CG100 || []).forEach(function (x) { if (x && x.id && x.current_price != null && !CGP[x.id]) CGP[x.id] = { p: x.current_price, c: x.price_change_percentage_24h || 0 }; });
   function xItems() {
     if (mkt === "us") { var u = usdEur(); return ((USD_ && USD_.s) || []).map(function (x, i) { return { k: "f", id: x.s, s: x.s, n: x.n, p: x.p * u, np: x.p, h1: null, c: x.c, w: x.w, m: x.m * u, v: x.v, vsh: true, img: x.l ? "https://s3-symbol-logo.tradingview.com/" + encodeURIComponent(x.l) + ".svg" : null, sub: x.x, rank: i + 1 }; }); }
     return (CG100 || []).map(function (x, i) { return { k: "c", id: x.id, s: String(x.symbol || "").toUpperCase(), n: x.name, p: x.current_price, np: x.current_price, h1: x.price_change_percentage_1h_in_currency, c: x.price_change_percentage_24h_in_currency != null ? x.price_change_percentage_24h_in_currency : x.price_change_percentage_24h, w: x.price_change_percentage_7d_in_currency, m: x.market_cap, v: x.total_volume, img: x.image, sp: x.sparkline_in_7d && x.sparkline_in_7d.price, rank: x.market_cap_rank || i + 1 }; });
@@ -4650,7 +4675,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (j) {
         if (!Array.isArray(j) || !j.length) throw new Error("empty");
-        CG100 = j; cg100At = Date.now(); cg100Err = false; setTimeout(function () { if (window.__dashRefresh) window.__dashRefresh(); }, 0);
+        CG100 = j; cg100At = Date.now(); cg100Err = false; if (cgFromTop()) { saveCgp(); if (!document.getElementById("view-portfolio").hidden) renderPortfolio(); } setTimeout(function () { if (window.__dashRefresh) window.__dashRefresh(); }, 0);
         j.forEach(function (x) { if (x.current_price != null) CGP[x.id] = { p: x.current_price, c: x.price_change_percentage_24h || 0 }; });
         try { localStorage.setItem("agora-cg100", JSON.stringify({ at: cg100At, d: j.map(function (x) { var y = Object.assign({}, x); if (y.sparkline_in_7d && y.sparkline_in_7d.price) y.sparkline_in_7d = { price: y.sparkline_in_7d.price.filter(function (_, i) { return i % 4 === 0; }) }; return y; }) })); } catch (e) {}
       })
