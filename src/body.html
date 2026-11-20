@@ -921,6 +921,28 @@ body[data-cat="pf"] #view-portfolio.vin { animation: pfin .5s cubic-bezier(.2, .
 :root[data-ui="light"] .pvtint { background: linear-gradient(180deg, rgba(157, 77, 255, .10), rgba(157, 77, 255, .04)); }
 @media (prefers-reduced-motion: reduce) { .cat[data-cat="pf"][aria-pressed="true"] { animation: none; } }
 .phead .btn { white-space: nowrap; }
+/* ===== Χαρτοφυλάκιο: χρωματισμοί DECK (βαθύ indigo-μπλε, περιβάγκα, τιρκουάζ), λίγο πιο έντονοι ===== */
+:root { --led-p: #7c84ff; --led-p2: #4b4dff; --led-p3: #b3b9ff; }
+.bgfx .b1.pv { background: radial-gradient(circle, rgba(75, 77, 255, .46) 0%, rgba(75, 77, 255, .18) 35%, transparent 65%); }
+.bgfx .b2.pv { background: radial-gradient(circle, rgba(122, 76, 255, .34) 0%, rgba(98, 60, 220, .14) 40%, transparent 66%); }
+.bgfx .b3.pv { background: radial-gradient(circle, rgba(48, 203, 210, .22) 0%, rgba(60, 90, 220, .14) 45%, transparent 68%); }
+.pvtint { background: linear-gradient(160deg, rgba(23, 26, 90, .62) 0%, rgba(12, 12, 28, .55) 45%, rgba(40, 20, 90, .55) 100%); }
+body[data-cat="pf"] { --accent: #7c84ff; --accent-soft: rgba(110, 118, 255, .22); --on-accent: #0b0d2a; --dk-line: rgba(130, 142, 255, .2); --dk-a: rgba(42, 48, 128, .52); --dk-b: rgba(16, 20, 56, .78); --dk-head: rgba(10, 12, 36, .58); --line: #2c3274; --surface: #151a3f; --bp-line: rgba(120, 132, 255, .085); --bp-major: rgba(120, 132, 255, .14); }
+body[data-cat="pf"] .btn.primary { background: linear-gradient(135deg, #4b4dff, #7c6bff); color: #fff; box-shadow: 0 0 0 1px rgba(170, 178, 255, .45), 0 0 22px rgba(90, 100, 255, .65), 0 0 50px rgba(75, 77, 255, .28); }
+body[data-cat="pf"] .btn.primary:hover { box-shadow: 0 0 0 1px rgba(190, 196, 255, .6), 0 0 30px rgba(100, 110, 255, .85), 0 0 70px rgba(75, 77, 255, .38); }
+body[data-cat="pf"] .panel, body[data-cat="pf"] .dk { border-color: rgba(130, 142, 255, .24); box-shadow: 0 0 0 1px rgba(110, 118, 255, .07), 0 12px 36px rgba(20, 24, 110, .32); }
+body[data-cat="pf"] #view-portfolio .phead h2 { background: linear-gradient(90deg, #fff 0%, #cdd1ff 45%, #8b95ff 100%); -webkit-background-clip: text; background-clip: text; }
+.cat[data-cat="pf"] { --cc: #8b95ff; border-color: rgba(124, 132, 255, .45); box-shadow: 0 0 0 1px rgba(124, 132, 255, .12), 0 0 16px rgba(75, 77, 255, .25); }
+.cat[data-cat="pf"] .ci { color: #b3b9ff; background: rgba(75, 77, 255, .22); box-shadow: 0 0 12px rgba(110, 118, 255, .38); }
+.cat[data-cat="pf"][aria-pressed="true"] { border-color: #a8b0ff; background: linear-gradient(135deg, #3b40d6 0%, #23287f 48%, #13123f 100%); animation: ledp 2.8s ease-in-out infinite; }
+.cat[data-cat="pf"][aria-pressed="true"] .ci { background: linear-gradient(135deg, #7c84ff, #4b4dff); box-shadow: 0 0 18px rgba(110, 118, 255, .95); }
+.cat[data-cat="pf"][aria-pressed="true"] b { text-shadow: 0 0 14px rgba(170, 178, 255, .8); }
+.cat[data-cat="pf"][aria-pressed="true"] .ct > span { color: #d3d7ff; }
+@keyframes ledp { 0%, 100% { box-shadow: 0 0 0 1px #a8b0ff, 0 0 26px rgba(100, 110, 255, .75), 0 0 70px rgba(75, 77, 255, .35), inset 0 1px 0 rgba(255, 255, 255, .25); } 50% { box-shadow: 0 0 0 1px #c9cdff, 0 0 38px rgba(120, 130, 255, 1), 0 0 100px rgba(75, 77, 255, .55), inset 0 1px 0 rgba(255, 255, 255, .3); } }
+.catfx.go.pf { background: radial-gradient(circle at var(--x) var(--y), rgba(180, 188, 255, .55) 0%, rgba(75, 77, 255, .45) 18%, rgba(40, 30, 150, .25) 40%, transparent 70%); }
+:root[data-ui="light"] .pvtint { background: linear-gradient(180deg, rgba(75, 77, 255, .10), rgba(75, 77, 255, .04)); }
+.pftools { flex-wrap: wrap; }
+@media (max-width: 640px) { #pf-add { flex: 1 1 100%; } }
 </style>
 
 <div class="demo demo-band"><p id="banner"><strong>Στιγμιότυπο.</strong> Οι τιμές προέρχονται από το capital.gr (καθυστέρηση 15 λεπτών) και η κεφαλαιοποίηση με τα ονόματα από το euro2day.gr (23/10/2026, 12:58). Τα στοιχεία δεν ενημερώνονται αυτόματα και δεν αποτελούν επενδυτική πληροφόρηση.</p></div>
@@ -3859,7 +3881,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var prevCat = document.body.getAttribute("data-cat");
     document.body.setAttribute("data-cat", cat);
     if (prevCat && prevCat !== cat) catSweep(cat);
-    var tm = document.querySelector('meta[name="theme-color"]'); if (tm && document.documentElement.getAttribute("data-ui") !== "light") tm.setAttribute("content", cat === "pf" ? "#1a0b33" : "#1a1a35");
+    var tm = document.querySelector('meta[name="theme-color"]'); if (tm && document.documentElement.getAttribute("data-ui") !== "light") tm.setAttribute("content", cat === "pf" ? "#121436" : "#1a1a35");
     try { localStorage.setItem("agora-lastview", v); } catch (e) {}
     catPfSub();
     if (v === "portfolio") renderPortfolio();
