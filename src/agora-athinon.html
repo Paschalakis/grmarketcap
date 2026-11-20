@@ -1147,6 +1147,52 @@ body[data-cat="pf"] #view-portfolio .phead h2 { background: linear-gradient(90de
 :root[data-ui="light"] body[data-cat="pf"] #view-portfolio .phead h2 { background: linear-gradient(90deg, #1b1d5c 0%, #4b4dff 60%, #2398ab 100%); -webkit-background-clip: text; background-clip: text; color: transparent !important; }
 :root[data-ui="light"] body[data-cat="pf"] .btn.primary { box-shadow: 0 6px 20px rgba(75, 77, 255, .35); }
 :root[data-ui="light"] body[data-cat="pf"] .bgfx .pv { opacity: .45; }
+/* κουμπί αναζήτησης με περιστρεφόμενο φωτεινό περίγραμμα */
+.brandsub { display: inline-flex; align-items: center; align-self: center; }
+.aisearch { position: relative; isolation: isolate; overflow: hidden; border: 0; padding: 1.6px; border-radius: 999px; background: rgba(150, 160, 255, .22); cursor: pointer; margin-left: 14px; box-shadow: 0 0 18px rgba(124, 132, 255, .28), 0 0 34px rgba(255, 105, 64, .10); transition: transform .15s, box-shadow .2s; font: inherit; }
+.aisearch::before { content: ""; position: absolute; left: 50%; top: 50%; width: 260%; aspect-ratio: 1; z-index: -1; background: conic-gradient(from 0deg, transparent 0deg 210deg, rgba(124, 132, 255, .2) 240deg, #9aa0ff 290deg, #ffffff 318deg, #ff8a66 335deg, transparent 360deg); transform: translate(-50%, -50%) rotate(0deg); animation: aispin 3.2s linear infinite; }
+.aisearch:hover { transform: translateY(-1px); box-shadow: 0 0 22px rgba(124, 132, 255, .45), 0 0 40px rgba(255, 105, 64, .18); }
+.aisearch:active { transform: scale(.97); }
+.aisearch:focus-visible { outline: 2px solid #9aa0ff; outline-offset: 3px; }
+.aisx { display: inline-flex; align-items: center; gap: 9px; height: 40px; padding: 0 14px 0 13px; border-radius: 999px; background: radial-gradient(120% 140% at 15% 0%, #23255a 0%, #121331 55%, #0b0c22 100%); color: #f2f3ff; font-weight: 600; font-size: 15px; letter-spacing: .01em; white-space: nowrap; }
+.aisx .gsic { flex: none; filter: drop-shadow(0 0 6px rgba(124, 132, 255, .7)); }
+.aisx .gsk { font: 600 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace; color: #a9aee6; border: 1px solid rgba(169, 174, 230, .35); border-radius: 6px; padding: 3px 6px; margin-left: 2px; }
+@keyframes aispin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .aisearch::before { animation-duration: 12s; } }
+@media (max-width: 640px) {
+  header.top { display: grid !important; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "b t" "s s"; row-gap: 8px; }
+  header.top .brand { display: contents; }
+  header.top .brandh { grid-area: b; min-width: 0; }
+  header.top .topright { grid-area: t; }
+  header.top .brandsub { grid-area: s; justify-self: start; }
+}
+@media (max-width: 640px) { .aisearch { margin-left: 10px; flex: none; } .aisx { height: 34px; padding: 0 14px 0 11px; font-size: 14px; gap: 7px; } .aisx .gsic { width: 16px; height: 16px; } .aisx .gsk { display: none; } }
+@media (max-width: 360px) { #installbtn { display: none !important; } }
+@media (min-width: 641px) and (max-width: 900px) { .aisx .gsk { display: none; } }
+/* παράθυρο αναζήτησης */
+.gsscrim { z-index: 40; }
+.gsbox { position: fixed; z-index: 41; left: 50%; top: min(12vh, 110px); transform: translateX(-50%); width: min(620px, calc(100% - 24px)); max-height: calc(100% - min(12vh, 110px) - 24px); display: flex; flex-direction: column; border-radius: 22px; padding: 1.6px; overflow: hidden; isolation: isolate; background: rgba(150, 160, 255, .25); box-shadow: 0 30px 80px rgba(0, 0, 0, .45), 0 0 40px rgba(124, 132, 255, .25); }
+.gsbox::before { content: ""; position: absolute; left: 50%; top: 50%; width: 180%; aspect-ratio: 1; z-index: -1; background: conic-gradient(from 0deg, transparent 0deg 230deg, #9aa0ff 300deg, #ffffff 320deg, #ff8a66 338deg, transparent 360deg); transform: translate(-50%, -50%); animation: aispin 4.5s linear infinite; }
+.gsbox[hidden] { display: none; }
+.gsbox > * { background: #101130; }
+.gsin { display: flex; align-items: center; gap: 10px; padding: 14px 14px 14px 18px; border-radius: 20px 20px 0 0; border-bottom: 1px solid rgba(160, 170, 255, .14); }
+.gsin input { flex: 1; min-width: 0; background: none; border: 0; outline: none; color: #f2f3ff; font: 500 18px var(--font-body, inherit); }
+.gsin input::placeholder { color: #8e93c7; }
+.gsin input::-webkit-search-cancel-button { display: none; }
+.gsx { background: none; border: 1px solid rgba(169, 174, 230, .35); color: #a9aee6; border-radius: 8px; font: 600 11px ui-monospace, monospace; padding: 4px 7px; cursor: pointer; }
+.gsres { overflow-y: auto; padding: 6px; border-radius: 0 0 20px 20px; min-height: 60px; color: #eceeff; }
+.gsres .gsh { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #8e93c7; padding: 10px 12px 6px; }
+.gsres .gsr { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; background: none; border: 0; color: inherit; padding: 9px 12px; border-radius: 14px; cursor: pointer; font: inherit; }
+.gsres .gsr[aria-selected="true"], .gsres .gsr:hover { background: rgba(124, 132, 255, .16); }
+.gsres .gsr .cn { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.gsres .gsr .cn b { font-size: 15px; }
+.gsres .gsr .cn span { font-size: 12.5px; color: #a2a8d6; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gsres .gsm { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: rgba(124, 132, 255, .18); color: #b9bcff; white-space: nowrap; }
+.gsres .gsm.us { background: rgba(35, 152, 171, .22); color: #7fdbe8; } .gsres .gsm.c { background: rgba(255, 105, 64, .18); color: #ffb39c; }
+.gsres .gsp { text-align: right; font-size: 13px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.gsres .gsp small { display: block; font-size: 12px; }
+.gsres .gsnone { padding: 18px 12px; color: #a2a8d6; font-size: 14px; }
+@media (max-width: 640px) { .gsbox { top: 10px; max-height: calc(100% - 20px); } .gsin input { font-size: 16px; } }
 /* εισαγωγή συναλλαγών */
 .imbox.wide { width: min(980px, calc(100% - 24px)); }
 .imbody { display: flex; flex-direction: column; gap: 14px; }
@@ -1247,7 +1293,7 @@ tr.txrow > td { padding: 0 10px 14px !important; background: transparent !import
   <header class="top">
     <div class="brand">
       <h1 class="brandh"><svg class="brandmark" width="30" height="30" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="axg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4062f0"/><stop offset="1" stop-color="#7c4de6"/></linearGradient><linearGradient id="axs" x1="0.2" y1="0" x2="0.8" y2="1"><stop offset="0" stop-color="#eef1f6"/><stop offset=".3" stop-color="#b8c0ce"/><stop offset=".5" stop-color="#f6f8fc"/><stop offset=".75" stop-color="#96a0b2"/><stop offset="1" stop-color="#d6dce6"/></linearGradient></defs><rect width="100" height="100" rx="22" fill="url(#axg)"/><path d="M21 79 50 20 79 79" fill="none" stroke="url(#axs)" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M31 62 43 55 53 60 69 47" fill="none" stroke="#4fd69a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Axiogram</span></h1>
-      <button type="button" class="pill" id="pill" aria-controls="banner" aria-expanded="false">Στιγμιότυπο</button>
+      <span class="brandsub"><button type="button" class="pill" id="pill" aria-controls="banner" aria-expanded="false">Στιγμιότυπο</button><button type="button" class="aisearch" id="gsBtn" aria-label="Αναζήτηση μετοχής ή crypto" title="Αναζήτηση (πάτα /)"><span class="aisx"><svg class="gsic" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="gsg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b9bcff"/><stop offset=".55" stop-color="#7c84ff"/><stop offset="1" stop-color="#ff8a66"/></linearGradient></defs><path fill="url(#gsg)" d="M12 1.8c.5 4.9 2.3 7.6 7 8.6l1.3.3-1.3.3c-4.7 1-6.5 3.7-7 8.6-.5-4.9-2.3-7.6-7-8.6L3.7 11l1.3-.3c4.7-1 6.5-3.7 7-8.9z"/><path fill="url(#gsg)" opacity=".8" d="M19.4 15.6c.2 1.9.9 2.9 2.6 3.3-1.7.4-2.4 1.4-2.6 3.3-.2-1.9-.9-2.9-2.6-3.3 1.7-.4 2.4-1.4 2.6-3.3z"/></svg><span class="gsl">Αναζήτηση</span><kbd class="gsk">/</kbd></span></button></span>
     </div>
     <div class="topright">
       <div class="toprow">
@@ -1504,6 +1550,11 @@ tr.txrow > td { padding: 0 10px 14px !important; background: transparent !import
   <div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" class="btn" id="pfmCancel">Άκυρο</button><button type="submit" class="btn primary">Αποθήκευση</button></div>
 </form>
 <div class="scrim" id="hlScrim" hidden></div>
+<div class="scrim gsscrim" id="gsScrim" hidden></div>
+<div class="gsbox" id="gsBox" role="dialog" aria-modal="true" aria-label="Αναζήτηση" hidden>
+  <div class="gsin"><svg class="gsic" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="gsg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b9bcff"/><stop offset=".55" stop-color="#7c84ff"/><stop offset="1" stop-color="#ff8a66"/></linearGradient></defs><path fill="url(#gsg2)" d="M12 1.8c.5 4.9 2.3 7.6 7 8.6l1.3.3-1.3.3c-4.7 1-6.5 3.7-7 8.6-.5-4.9-2.3-7.6-7-8.6L3.7 11l1.3-.3c4.7-1 6.5-3.7 7-8.9z"/><path fill="url(#gsg2)" opacity=".8" d="M19.4 15.6c.2 1.9.9 2.9 2.6 3.3-1.7.4-2.4 1.4-2.6 3.3-.2-1.9-.9-2.9-2.6-3.3 1.7-.4 2.4-1.4 2.6-3.3z"/></svg><input id="gsQ" type="search" autocomplete="off" spellcheck="false" placeholder="Μετοχή Χ.Α., ΗΠΑ ή crypto…" aria-label="Αναζήτηση" aria-controls="gsRes" aria-autocomplete="list"><button type="button" class="gsx" id="gsClose" aria-label="Κλείσιμο">Esc</button></div>
+  <div class="gsres" id="gsRes" role="listbox" aria-label="Αποτελέσματα"></div>
+</div>
 <div class="scrim" id="imScrim" hidden></div>
 <div class="panel authbox imbox" id="imBox" role="dialog" aria-modal="true" aria-labelledby="imTitle" hidden>
   <div class="ahead"><h2 id="imTitle">Εισαγωγή συναλλαγών</h2><button type="button" class="close" id="imClose" aria-label="Κλείσιμο">×</button></div>
@@ -4128,16 +4179,59 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     scr.addEventListener("click", close);
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !box.hidden) close(); });
   })();
-  /* γρήγορη αναζήτηση με «/» */
-  document.addEventListener("keydown", function (e) {
-    if (e.key !== "/" || e.ctrlKey || e.metaKey || e.altKey) return;
-    var t = e.target, tag = t && t.tagName;
-    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (t && t.isContentEditable)) return;
-    if (!document.getElementById("drawer").hidden) return;
-    e.preventDefault(); showView("market");
-    var q = document.getElementById(mkt === "gr" ? "q" : "xq"); q.focus(); q.select();
-    q.scrollIntoView({ block: "center", behavior: "smooth" });
-  });
+  /* ===== αναζήτηση από την κορυφή (κουμπί με φωτεινό περίγραμμα, «/» ή Ctrl+K) ===== */
+  (function () {
+    var box = document.getElementById("gsBox"), scr = document.getElementById("gsScrim"), inp = document.getElementById("gsQ"), res = document.getElementById("gsRes"), sel = 0, items = [], last = null;
+    function priceOf(k) {
+      if (isExt(k)) { var x = xGet(k); return x && x.p != null ? { p: x.p, c: x.c } : null; }
+      var r = BYSYM[k]; return r && r.price != null ? { p: r.price, c: r.chg } : null;
+    }
+    function popular() {
+      var out = [];
+      rows.filter(function (r) { return r.mcap; }).sort(function (a, b) { return b.mcap - a.mcap; }).slice(0, 5).forEach(function (r) { out.push([0, r.sym, r.dsym, r.name || "", "Χ.Α.", monoHtml(r.dsym)]); });
+      ["NVDA", "AAPL", "MSFT"].forEach(function (t) { if (USQ[t]) out.push([0, "f:" + t, t, USQ[t].n || "", "ΗΠΑ", logoBox(t, fLogo("f:" + t))]); });
+      (CG100 || []).slice(0, 2).forEach(function (c) { out.push([0, "c:" + c.id, String(c.symbol).toUpperCase(), c.name, "Crypto", logoBox(String(c.symbol).toUpperCase(), c.image)]); });
+      return out;
+    }
+    function paint() {
+      var q = inp.value.trim();
+      items = q ? alSugg(q).concat([]) : popular();
+      if (q && items.length < 8) { /* και όλες οι μετοχές ΗΠΑ αν έχει φορτωθεί η πλήρης λίστα */
+        var have = {}; items.forEach(function (x) { have[x[1]] = 1; }); var ql = q.toLowerCase();
+        (UNIV || []).some(function (u) { if (items.length >= 10) return true; if (have["f:" + u[0]]) return false; if (u[0].toLowerCase().indexOf(ql) === 0 || (ql.length > 2 && String(u[1] || "").toLowerCase().indexOf(ql) > -1)) { items.push([3, "f:" + u[0], u[0], u[1] || "", "ΗΠΑ", logoBox(u[0], fLogo("f:" + u[0]))]); have["f:" + u[0]] = 1; } return false; });
+      }
+      sel = 0;
+      if (!items.length) { res.innerHTML = '<div class="gsnone">Δεν βρέθηκε τίποτα για «' + esc(q) + '». Δοκίμασε σύμβολο (π.χ. ΔΕΗ, AAPL, BTC) ή όνομα.</div>'; return; }
+      res.innerHTML = (q ? "" : '<div class="gsh">Δημοφιλή</div>') + items.map(function (x, i) {
+        var pr = priceOf(x[1]), mk = x[4] === "ΗΠΑ" ? "us" : x[4] === "Crypto" ? "c" : "";
+        return '<button type="button" class="gsr" role="option" id="gso' + i + '" data-gk="' + esc(x[1]) + '" aria-selected="' + (i === 0) + '">' + x[5] + '<span class="cn"><b>' + esc(x[2]) + "</b><span>" + esc(x[3]) + "</span></span>" +
+          (pr ? '<span class="gsp num">' + fmtP(pr.p) + (pr.c != null ? "<small>" + chgHtml(pr.c) + "</small>" : "") + "</span>" : "") + '<span class="gsm ' + mk + '">' + esc(x[4]) + "</span></button>";
+      }).join("");
+      inp.setAttribute("aria-activedescendant", "gso0");
+    }
+    function mark() { Array.prototype.forEach.call(res.querySelectorAll(".gsr"), function (b, i) { b.setAttribute("aria-selected", i === sel); if (i === sel) { b.scrollIntoView({ block: "nearest" }); inp.setAttribute("aria-activedescendant", b.id); } }); }
+    function open() { if (!box.hidden) return; last = document.activeElement; box.hidden = false; scr.hidden = false; inp.value = ""; paint(); setTimeout(function () { inp.focus(); }, 30); if (!CG100 || Date.now() - cg100At > 600000) { var had = CG100; loadCg100(); [1200, 3500].forEach(function (ms) { setTimeout(function () { if (!box.hidden && CG100 !== had) { had = CG100; var k = sel; paint(); } }, ms); }); } if (typeof loadUniv === "function") { var p = loadUniv(); if (p && p.then) p.then(function () { if (!box.hidden && inp.value.trim()) paint(); }); } }
+    function close() { box.hidden = true; scr.hidden = true; if (last && last.focus && document.body.contains(last)) last.focus(); }
+    function go(k) { close(); if (k) openKey(k); }
+    document.getElementById("gsBtn").addEventListener("click", open);
+    document.getElementById("gsClose").addEventListener("click", close);
+    scr.addEventListener("click", close);
+    var tm = 0; inp.addEventListener("input", function () { clearTimeout(tm); tm = setTimeout(paint, 60); });
+    inp.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowDown") { e.preventDefault(); if (items.length) { sel = (sel + 1) % items.length; mark(); } }
+      else if (e.key === "ArrowUp") { e.preventDefault(); if (items.length) { sel = (sel - 1 + items.length) % items.length; mark(); } }
+      else if (e.key === "Enter") { e.preventDefault(); if (items[sel]) go(items[sel][1]); }
+      else if (e.key === "Escape") { e.preventDefault(); close(); }
+    });
+    res.addEventListener("click", function (e) { var b = e.target.closest("[data-gk]"); if (b) go(b.getAttribute("data-gk")); });
+    document.addEventListener("keydown", function (e) {
+      var t = e.target, tag = t && t.tagName, typing = tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (t && t.isContentEditable);
+      if ((e.key === "k" || e.key === "K") && (e.ctrlKey || e.metaKey) && !e.altKey) { e.preventDefault(); if (box.hidden) open(); else close(); return; }
+      if (e.key !== "/" || e.ctrlKey || e.metaKey || e.altKey || typing) return;
+      if (!document.getElementById("drawer").hidden) return;
+      e.preventDefault(); open();
+    });
+  })();
   document.getElementById("q").setAttribute("title", "Πάτα / από οπουδήποτε για γρήγορη αναζήτηση");
   function renderPortfolio() {
     var H = pfH();
@@ -4561,7 +4655,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   var curView = "market", navPop = false, popSkip = 0;
   try { history.replaceState({ ax: 1, v: "market", root: 1 }, ""); history.pushState({ ax: 1, v: "market", base: 1 }, ""); } catch (e) {}
   var exitT = 0;
-  var OVS = ["drawer", "pf-form", "cuBox", "shBox", "svBox", "authBox", "cmpBox", "pfmBox", "hlBox", "imBox", "mpBox", "allocBox", "setBox", "appBox"].map(function (id) { return document.getElementById(id); }).filter(Boolean);
+  var OVS = ["drawer", "pf-form", "cuBox", "shBox", "svBox", "authBox", "cmpBox", "pfmBox", "hlBox", "imBox", "gsBox", "mpBox", "allocBox", "setBox", "appBox"].map(function (id) { return document.getElementById(id); }).filter(Boolean);
   function closeOv(el) {
     if (el.id === "drawer") { closeStock(); return; }
     if (el.id === "pf-form") { closeForm(); return; }
@@ -5838,7 +5932,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     q = q.trim().toLowerCase(); var out = [];
     if (!q) return out;
     rows.forEach(function (r) { var a = r.dsym.toLowerCase(), b = r.sym.toLowerCase(), n = (r.name || "").toLowerCase(); var sc = a === q || b === q ? 0 : a.indexOf(q) === 0 || b.indexOf(q) === 0 ? 1 : n.indexOf(q) > -1 ? 2 : -1; if (sc >= 0) out.push([sc - (r.mcap ? 0.5 : 0), r.sym, r.dsym, r.name || "", "Χ.Α.", monoHtml(r.dsym)]); });
-    Object.keys(USQ).forEach(function (s) { var u = USQ[s], a = s.toLowerCase(), n = (u.n || "").toLowerCase(); var sc = a === q ? 0 : a.indexOf(q) === 0 ? 1.2 : n.indexOf(q) > -1 ? 2.2 : -1; if (sc >= 0) out.push([sc, "f:" + s, s, u.n || "", "ΗΠΑ", logoBox(s, u.l ? logoUrl(u.l) : null)]); });
+    Object.keys(USQ).forEach(function (s) { var u = USQ[s], a = s.toLowerCase(), n = (u.n || "").toLowerCase(); var sc = a === q ? 0 : a.indexOf(q) === 0 ? 1.2 : n.indexOf(q) > -1 ? 2.2 : -1; if (sc >= 0) out.push([sc, "f:" + s, s, u.n || "", "ΗΠΑ", logoBox(s, fLogo("f:" + s))]); });
     (CG100 || []).forEach(function (c) { var a = String(c.symbol || "").toLowerCase(), n = String(c.name || "").toLowerCase(); var sc = a === q ? 0.1 : a.indexOf(q) === 0 || n.indexOf(q) === 0 ? 1.1 : n.indexOf(q) > -1 ? 2.1 : -1; if (sc >= 0) out.push([sc, "c:" + c.id, a.toUpperCase(), c.name, "Crypto", logoBox(a.toUpperCase(), c.image)]); });
     out.sort(function (x, y) { return x[0] - y[0]; });
     return out.slice(0, 8);
