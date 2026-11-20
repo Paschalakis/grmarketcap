@@ -6336,15 +6336,18 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
 
   /* ===================== Ο πίνακάς μου (προσαρμοσμένη αρχική) ===================== */
   var DW = [["favs", "Αγαπημένα", "Οι αγαπημένες σου μετοχές και crypto"], ["al", "Ειδοποιήσεις", "Όσες είναι πιο κοντά να χτυπήσουν"], ["cal", "Επόμενα γεγονότα", "Μερίσματα και αποτελέσματα για τις μετοχές σου"], ["mkts", "Αγορές με μια ματιά", "Γενικός Δείκτης, S&P 500, Bitcoin και άλλες"], ["fng", "Fear & Greed", "Η διάθεση της αγοράς crypto και η κυριαρχία του BTC"]];
-  var DS_ = [["gstrip", "Παγκόσμιες αγορές (λωρίδα πάνω)"], ["stats", "Σύνοψη αγοράς"], ["movers", "Κορυφαίες κινήσεις"], ["sectors", "Κλάδοι"], ["divsec", "Ημερολόγιο μερισμάτων"]];
+  var DS_ = [["gstrip", "Παγκόσμιες αγορές (λωρίδα πάνω)"], ["stats", "Σύνοψη αγοράς"], ["movers", "Κορυφαίες κινήσεις"], ["sectors", "Κλάδοι"], ["allsec", "Όλες οι μετοχές"], ["divsec", "Ημερολόγιο μερισμάτων"]];
   var HOME = lsGet("agora-home", null);
   function normHome(h) {
     h = h && typeof h === "object" ? h : {};
     var w = Array.isArray(h.w) ? h.w.filter(function (k) { return DW.some(function (d) { return d[0] === k; }); }) : [];
     DW.forEach(function (d) { if (w.indexOf(d[0]) < 0) w.push(d[0]); });
     var s = Array.isArray(h.s) ? h.s.filter(function (k) { return DS_.some(function (d) { return d[0] === k; }); }) : [];
+    /* «Όλες οι μετοχές» μπαίνει αμέσως μετά τους Κλάδους, πριν από το ημερολόγιο μερισμάτων */
+    if (s.length && s.indexOf("allsec") < 0) { var si = s.indexOf("sectors"); s.splice(si < 0 ? s.length : si + 1, 0, "allsec"); }
     DS_.forEach(function (d) { if (s.indexOf(d[0]) < 0) s.push(d[0]); });
     var on = h.on && typeof h.on === "object" ? h.on : { pf: true, favs: true, al: true, cal: true, mkts: false, fng: false, gstrip: true, stats: true, movers: true, sectors: true, divsec: true };
+    on.allsec = true;
     return { w: w, s: s, on: on };
   }
   HOME = normHome(HOME);
@@ -6415,7 +6418,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   }
   window.__dashRefresh = renderDash;
   function applySections() {
-    var vm = document.getElementById("view-market"), anchor = document.getElementById("allsec");
+    var vm = document.getElementById("view-market"), anchor = null;
     HOME.s.forEach(function (k) {
       var el = k === "movers" ? null : document.getElementById(k === "sectors" ? "secsec" : k);
       if (k === "gstrip") { var g = document.getElementById("gstrip"); g.classList.toggle("userhide", !HOME.on.gstrip); return; }
@@ -6433,7 +6436,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   /* παράθυρο προσαρμογής */
   var cuBox = document.getElementById("cuBox"), cuScrim = document.getElementById("cuScrim");
   function cuRow(id, lab, sub, grp) {
-    return '<li class="curow" data-cu="' + id + '" data-grp="' + grp + '"><button type="button" class="hdl" aria-label="Μετακίνηση: ' + esc(lab) + '" title="Σύρε για να αλλάξεις σειρά">⋮⋮</button><label class="sw"><input type="checkbox" data-cuon="' + id + '"' + (HOME.on[id] ? " checked" : "") + ' aria-label="' + esc(lab) + '"><i></i></label><span class="cn"><b>' + esc(lab) + "</b>" + (sub ? "<span>" + esc(sub) + "</span>" : "") + '</span><span class="cuar"><button type="button" data-cumv="-1" aria-label="Πάνω">↑</button><button type="button" data-cumv="1" aria-label="Κάτω">↓</button></span></li>';
+    return '<li class="curow" data-cu="' + id + '" data-grp="' + grp + '"><button type="button" class="hdl" aria-label="Μετακίνηση: ' + esc(lab) + '" title="Σύρε για να αλλάξεις σειρά">⋮⋮</button><label class="sw"><input type="checkbox" data-cuon="' + id + '"' + (HOME.on[id] ? " checked" : "") + (id === "allsec" ? " disabled" : "") + ' aria-label="' + esc(lab) + '"><i></i></label><span class="cn"><b>' + esc(lab) + "</b>" + (sub ? "<span>" + esc(sub) + "</span>" : "") + '</span><span class="cuar"><button type="button" data-cumv="-1" aria-label="Πάνω">↑</button><button type="button" data-cumv="1" aria-label="Κάτω">↓</button></span></li>';
   }
   function paintCu() {
     document.getElementById("cuW").innerHTML = HOME.w.map(function (k) { var d = DW.filter(function (x) { return x[0] === k; })[0]; return cuRow(k, d[1], d[2], "w"); }).join("");
