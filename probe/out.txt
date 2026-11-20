@@ -1,88 +1,101 @@
-ticker/AAPL => 200 text/html; charset=utf-8 259288
-ticker/AAPL/w/64/h/64/fallback/404/icon.png => 200 text/html; charset=utf-8 259288
-ticker/AAPL/fallback/404/w/64/h/64/icon.png => 200 text/html; charset=utf-8 259288
-ticker/ZZZZQX/fallback/404/icon => 200 text/html; charset=utf-8 259288
-ticker/ZZZZQX => 200 text/html; charset=utf-8 259288
-crypto/BTC/fallback/404/icon => 200 text/html; charset=utf-8 259288
-domain/dei.gr/w/64/h/64/fallback/404/icon.png => 200 text/html; charset=utf-8 259288
-ticker/BRK-B/fallback/404/icon => 200 text/html; charset=utf-8 259288
-ticker/BRK.B/fallback/404/icon => 200 text/html; charset=utf-8 259288
-GR ΕΕΕ coca-colahellenic.com => 200 text/html; charset=utf-8 259288
-GR ΕΥΡΩΒ eurobank.gr => 200 text/html; charset=utf-8 259288
-GR ΕΤΕ nbg.gr => 200 text/html; charset=utf-8 259288
-GR ΔΕΗ dei.gr => 200 text/html; charset=utf-8 259288
-GR ΠΕΙΡ piraeusbank.gr => 200 text/html; charset=utf-8 259288
-GR ΑΛΦΑ alpha.gr => 200 text/html; charset=utf-8 259288
-GR ALWN allwyn.com => 200 text/html; charset=utf-8 259288
-GR ΟΤΕ cosmote.gr => 200 text/html; charset=utf-8 259288
-GR ΜΟΗ moh.gr => 200 text/html; charset=utf-8 259288
-GR MTLN metlengroup.com => 200 text/html; charset=utf-8 259288
-GR ΓΕΚΤΕΡΝΑ gekterna.com => 200 text/html; charset=utf-8 259288
-GR ΕΛΠΕ helleniqenergy.gr => 200 text/html; charset=utf-8 259288
-GR CENER cenergyholdings.com => 200 text/html; charset=utf-8 259288
-GR BOCHGR bankofcyprus.com => 200 text/html; charset=utf-8 259288
-GR ΒΙΟ viohalco.com => 200 text/html; charset=utf-8 259288
-GR ΔΑΑ aia.gr => 200 text/html; charset=utf-8 259288
-GR ΜΠΕΛΑ jumbo.gr => 200 text/html; charset=utf-8 259288
-GR TITC titan-cement.com => 200 text/html; charset=utf-8 259288
-GR OPTIMA optimabank.gr => 200 text/html; charset=utf-8 259288
-GR SBLK starbulk.com => 200 text/html; charset=utf-8 259288
-GR AKTR aktor.gr => 200 text/html; charset=utf-8 259288
-GR BYLOT intralot.com => 200 text/html; charset=utf-8 259288
-GR CREDIA crediabank.gr => 200 text/html; charset=utf-8 259288
-GR ΑΔΜΗΕ admie.gr => 200 text/html; charset=utf-8 259288
-GR ΕΛΧΑ elvalhalcor.com => 200 text/html; charset=utf-8 259288
-GR ΕΥΔΑΠ eydap.gr => 200 text/html; charset=utf-8 259288
-GR ΚΡΙ kri-kri.gr => 200 text/html; charset=utf-8 259288
-GR ΚΑΡΕΛ karelia.gr => 200 text/html; charset=utf-8 259288
-GR ΟΛΠ olp.gr => 200 text/html; charset=utf-8 259288
-GR ΑΡΑΙΓ aegeanair.com => 200 text/html; charset=utf-8 259288
-GR ΛΑΜΔΑ lamdadev.com => 200 text/html; charset=utf-8 259288
-GR SB safebulkers.com => 200 text/html; charset=utf-8 259288
-GR ΣΑΡ sarantis.gr => 200 text/html; charset=utf-8 259288
-GR ΚΟΥΕΣ quest.gr => 200 text/html; charset=utf-8 259288
-GR ΕΧΑΕ athexgroup.gr => 200 text/html; charset=utf-8 259288
-GR ΑΒΑΞ avax.gr => 200 text/html; charset=utf-8 259288
-GR ΟΤΟΕΛ autohellas.gr => 200 text/html; charset=utf-8 259288
-GR ΠΛΑΚΡ plastikakritis.com => 200 text/html; charset=utf-8 259288
-GR ΕΛΛΑΚΤΩΡ ellaktor.com => 200 text/html; charset=utf-8 259288
-GR ΟΛΘ thpa.gr => 200 text/html; charset=utf-8 259288
-GR ACAG austriacard.com => 200 text/html; charset=utf-8 259288
-GR ΤΡΑΣΤΟΡ trastor.gr => 200 text/html; charset=utf-8 259288
-GR ΑΤΤΙΚΑ attica-group.com => 200 text/html; charset=utf-8 259288
-GR ΕΛΛ bankofgreece.gr => 200 text/html; charset=utf-8 259288
-GR ΙΝΤΕΚ idealholdings.gr => 200 text/html; charset=utf-8 259288
-GR DIMAND dimand.gr => 200 text/html; charset=utf-8 259288
-GR ΙΝΤΚΑ intracom.com => 200 text/html; charset=utf-8 259288
-GR ΛΑΒΙ lavipharm.com => 200 text/html; charset=utf-8 259288
-GR ΠΡΟΦ profilesw.com => 200 text/html; charset=utf-8 259288
-GR ΠΛΑΘ thraceplastics.com => 200 text/html; charset=utf-8 259288
-GR ΦΡΛΚ fourlis.gr => 200 text/html; charset=utf-8 259288
-GR ΑΛΜΥ alumil.com => 200 text/html; charset=utf-8 259288
-GR ADPS atticadps.gr => 200 text/html; charset=utf-8 259288
-GR ΕΥΑΠΣ eyath.gr => 200 text/html; charset=utf-8 259288
-GR ΠΡΕΜΙΑ premia.gr => 200 text/html; charset=utf-8 259288
-GR ΜΠΡΙΚ briqproperties.gr => 200 text/html; charset=utf-8 259288
-GR ΙΝΛΙΦ interlife.gr => 200 text/html; charset=utf-8 259288
-GR ΠΕΡΦ performance.gr => 200 text/html; charset=utf-8 259288
-GR ΙΑΤΡ iatriko.gr => 200 text/html; charset=utf-8 259288
-GR ΦΛΕΞΟ flexopack.com => 200 text/html; charset=utf-8 259288
-GR ΠΑΠ papoutsanis.gr => 200 text/html; charset=utf-8 259288
-GR ΑΒΕ ave.gr => 200 text/html; charset=utf-8 259288
-GR ΜΟΤΟ motodynamics.gr => 200 text/html; charset=utf-8 259288
-GR ΑΣΚΟ ascompany.gr => 200 text/html; charset=utf-8 259288
-GR ΕΛΤΟΝ elton.gr => 200 text/html; charset=utf-8 259288
-GR ΠΕΤΡΟ petropoulos.com => 200 text/html; charset=utf-8 259288
-GR ΕΛΣΤΡ elastron.gr => 200 text/html; charset=utf-8 259288
-GR ΣΠΕΙΣ space.gr => 200 text/html; charset=utf-8 259288
-GR ΕΛΙΝ elin.gr => 200 text/html; charset=utf-8 259288
-GR ΦΡΙΓΟ frigoglass.com => 200 text/html; charset=utf-8 259288
-GR ΚΟΥΑΛ qnr.com.gr => 200 text/html; charset=utf-8 259288
-GR ΡΕΒΟΙΛ revoil.gr => 200 text/html; charset=utf-8 259288
-GR ΒΙΟΚΑ biokarpet.gr => 200 text/html; charset=utf-8 259288
-GR ΙΚΤΙΝ iktinos.gr => 200 text/html; charset=utf-8 259288
-GR ΜΕΝΤΙ medicon.gr => 200 text/html; charset=utf-8 259288
-GR ΔΡΟΜΕ dromeas.gr => 200 text/html; charset=utf-8 259288
-GR CMFC capitalmaritime.com => 200 text/html; charset=utf-8 259288
-GR NOVAL noval.gr => 200 text/html; charset=utf-8 259288
-GR ΛΟΥΛΗ loulisfood.gr => 200 text/html; charset=utf-8 259288
+crypto/BTC/fallback/404/icon => error
+domain/admie.gr/w/64/h/64/fallback/404/icon.png#ΑΔΜΗΕ => timeout
+domain/aegeanair.com/w/64/h/64/fallback/404/icon.png#ΑΡΑΙΓ => timeout
+domain/aia.gr/w/64/h/64/fallback/404/icon.png#ΔΑΑ => error
+domain/aktor.gr/w/64/h/64/fallback/404/icon.png#AKTR => error
+domain/allwyn.com/w/64/h/64/fallback/404/icon.png#ALWN => error
+domain/alpha.gr/w/64/h/64/fallback/404/icon.png#ΑΛΦΑ => error
+domain/alumil.com/w/64/h/64/fallback/404/icon.png#ΑΛΜΥ => timeout
+domain/ascompany.gr/w/64/h/64/fallback/404/icon.png#ΑΣΚΟ => timeout
+domain/athexgroup.gr/w/64/h/64/fallback/404/icon.png#ΕΧΑΕ => error
+domain/attica-group.com/w/64/h/64/fallback/404/icon.png#ΑΤΤΙΚΑ => timeout
+domain/atticadps.gr/w/64/h/64/fallback/404/icon.png#ADPS => timeout
+domain/austriacard.com/w/64/h/64/fallback/404/icon.png#ACAG => error
+domain/autohellas.gr/w/64/h/64/fallback/404/icon.png#ΟΤΟΕΛ => error
+domain/avax.gr/w/64/h/64/fallback/404/icon.png#ΑΒΑΞ => error
+domain/ave.gr/w/64/h/64/fallback/404/icon.png#ΑΒΕ => timeout
+domain/bankofcyprus.com/w/64/h/64/fallback/404/icon.png#BOCHGR => error
+domain/bankofgreece.gr/w/64/h/64/fallback/404/icon.png#ΕΛΛ => error
+domain/biokarpet.gr/w/64/h/64/fallback/404/icon.png#ΒΙΟΚΑ => timeout
+domain/briqproperties.gr/w/64/h/64/fallback/404/icon.png#ΜΠΡΙΚ => timeout
+domain/capitalmaritime.com/w/64/h/64/fallback/404/icon.png#CMFC => timeout
+domain/cenergyholdings.com/w/64/h/64/fallback/404/icon.png#CENER => error
+domain/coca-colahellenic.com/w/64/h/64/fallback/404/icon.png#ΕΕΕ => error
+domain/cosmote.gr/w/64/h/64/fallback/404/icon.png#ΟΤΕ => error
+domain/crediabank.gr/w/64/h/64/fallback/404/icon.png#CREDIA => error
+domain/dei.gr/w/64/h/64/fallback/404/icon.png#ΔΕΗ => error
+domain/dimand.gr/w/64/h/64/fallback/404/icon.png#DIMAND => error
+domain/dromeas.gr/w/64/h/64/fallback/404/icon.png#ΔΡΟΜΕ => timeout
+domain/elastron.gr/w/64/h/64/fallback/404/icon.png#ΕΛΣΤΡ => timeout
+domain/elin.gr/w/64/h/64/fallback/404/icon.png#ΕΛΙΝ => timeout
+domain/ellaktor.com/w/64/h/64/fallback/404/icon.png#ΕΛΛΑΚΤΩΡ => error
+domain/elton.gr/w/64/h/64/fallback/404/icon.png#ΕΛΤΟΝ => timeout
+domain/elvalhalcor.com/w/64/h/64/fallback/404/icon.png#ΕΛΧΑ => error
+domain/eurobank.gr/w/64/h/64/fallback/404/icon.png#ΕΥΡΩΒ => error
+domain/eyath.gr/w/64/h/64/fallback/404/icon.png#ΕΥΑΠΣ => timeout
+domain/eydap.gr/w/64/h/64/fallback/404/icon.png#ΕΥΔΑΠ => error
+domain/flexopack.com/w/64/h/64/fallback/404/icon.png#ΦΛΕΞΟ => timeout
+domain/fourlis.gr/w/64/h/64/fallback/404/icon.png#ΦΡΛΚ => timeout
+domain/frigoglass.com/w/64/h/64/fallback/404/icon.png#ΦΡΙΓΟ => timeout
+domain/gekterna.com/w/64/h/64/fallback/404/icon.png#ΓΕΚΤΕΡΝΑ => error
+domain/helleniqenergy.gr/w/64/h/64/fallback/404/icon.png#ΕΛΠΕ => error
+domain/iatriko.gr/w/64/h/64/fallback/404/icon.png#ΙΑΤΡ => timeout
+domain/idealholdings.gr/w/64/h/64/fallback/404/icon.png#ΙΝΤΕΚ => error
+domain/iktinos.gr/w/64/h/64/fallback/404/icon.png#ΙΚΤΙΝ => timeout
+domain/interlife.gr/w/64/h/64/fallback/404/icon.png#ΙΝΛΙΦ => timeout
+domain/intracom.com/w/64/h/64/fallback/404/icon.png#ΙΝΤΚΑ => error
+domain/intralot.com/w/64/h/64/fallback/404/icon.png#BYLOT => error
+domain/jumbo.gr/w/64/h/64/fallback/404/icon.png#ΜΠΕΛΑ => error
+domain/karelia.gr/w/64/h/64/fallback/404/icon.png#ΚΑΡΕΛ => timeout
+domain/kri-kri.gr/w/64/h/64/fallback/404/icon.png#ΚΡΙ => error
+domain/lamdadev.com/w/64/h/64/fallback/404/icon.png#ΛΑΜΔΑ => timeout
+domain/lavipharm.com/w/64/h/64/fallback/404/icon.png#ΛΑΒΙ => timeout
+domain/loulisfood.gr/w/64/h/64/fallback/404/icon.png#ΛΟΥΛΗ => timeout
+domain/medicon.gr/w/64/h/64/fallback/404/icon.png#ΜΕΝΤΙ => timeout
+domain/metlengroup.com/w/64/h/64/fallback/404/icon.png#MTLN => error
+domain/moh.gr/w/64/h/64/fallback/404/icon.png#ΜΟΗ => error
+domain/motodynamics.gr/w/64/h/64/fallback/404/icon.png#ΜΟΤΟ => timeout
+domain/nbg.gr/w/64/h/64/fallback/404/icon.png#ΕΤΕ => error
+domain/noval.gr/w/64/h/64/fallback/404/icon.png#NOVAL => timeout
+domain/olp.gr/w/64/h/64/fallback/404/icon.png#ΟΛΠ => error
+domain/optimabank.gr/w/64/h/64/fallback/404/icon.png#OPTIMA => error
+domain/papoutsanis.gr/w/64/h/64/fallback/404/icon.png#ΠΑΠ => timeout
+domain/performance.gr/w/64/h/64/fallback/404/icon.png#ΠΕΡΦ => timeout
+domain/petropoulos.com/w/64/h/64/fallback/404/icon.png#ΠΕΤΡΟ => timeout
+domain/piraeusbank.gr/w/64/h/64/fallback/404/icon.png#ΠΕΙΡ => error
+domain/plastikakritis.com/w/64/h/64/fallback/404/icon.png#ΠΛΑΚΡ => error
+domain/premia.gr/w/64/h/64/fallback/404/icon.png#ΠΡΕΜΙΑ => timeout
+domain/profilesw.com/w/64/h/64/fallback/404/icon.png#ΠΡΟΦ => timeout
+domain/qnr.com.gr/w/64/h/64/fallback/404/icon.png#ΚΟΥΑΛ => timeout
+domain/quest.gr/w/64/h/64/fallback/404/icon.png#ΚΟΥΕΣ => timeout
+domain/revoil.gr/w/64/h/64/fallback/404/icon.png#ΡΕΒΟΙΛ => timeout
+domain/safebulkers.com/w/64/h/64/fallback/404/icon.png#SB => error
+domain/sarantis.gr/w/64/h/64/fallback/404/icon.png#ΣΑΡ => error
+domain/space.gr/w/64/h/64/fallback/404/icon.png#ΣΠΕΙΣ => timeout
+domain/starbulk.com/w/64/h/64/fallback/404/icon.png#SBLK => error
+domain/thpa.gr/w/64/h/64/fallback/404/icon.png#ΟΛΘ => timeout
+domain/thraceplastics.com/w/64/h/64/fallback/404/icon.png#ΠΛΑΘ => timeout
+domain/titan-cement.com/w/64/h/64/fallback/404/icon.png#TITC => error
+domain/trastor.gr/w/64/h/64/fallback/404/icon.png#ΤΡΑΣΤΟΡ => error
+domain/viohalco.com/w/64/h/64/fallback/404/icon.png#ΒΙΟ => error
+ticker/AAPL/fallback/404/icon => error
+ticker/AAPL/w/64/h/64/fallback/404/icon.png => error
+ticker/BRK-B/fallback/404/icon => error
+ticker/BRK.B/fallback/404/icon => error
+ticker/NVDA/fallback/404/icon => error
+ticker/ZZZZQX/fallback/404/icon => error
+
+node:internal/process/promises:391
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+page.setContent: Timeout 30000ms exceeded.
+Call log:
+  - setting frame content, waiting until "load"
+
+    at /home/runner/work/grmarketcap/grmarketcap/probe/tv.js:9:9 {
+  name: 'TimeoutError'
+}
+
+Node.js v20.20.2
+
