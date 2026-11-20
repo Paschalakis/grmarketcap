@@ -1053,11 +1053,48 @@ body[data-cat="pf"] #gstrip, body[data-cat="pf"] .extras { display: none !import
 :root[data-ui="light"] .bgfx i { opacity: .45; }
 @media (prefers-reduced-motion: reduce) { .bgfx i { animation: none !important; } }
 html.nomotion .bgfx i { animation: none !important; }
+/* ===== Χαρτοφυλάκιο: βαθύ ηλεκτρικό LED μωβ ===== */
+:root { --led-p: #9d4dff; --led-p2: #7a00ff; --led-p3: #c99bff; }
+.bgfx .pv { opacity: 0; transition: opacity 1.1s ease; }
+.bgfx .b1.pv { background: radial-gradient(circle, rgba(122, 0, 255, .42) 0%, rgba(122, 0, 255, .16) 35%, transparent 65%); }
+.bgfx .b2.pv { background: radial-gradient(circle, rgba(190, 110, 255, .30) 0%, rgba(140, 50, 255, .12) 40%, transparent 66%); }
+.bgfx .b3.pv { background: radial-gradient(circle, rgba(157, 77, 255, .30) 0%, rgba(90, 20, 200, .14) 45%, transparent 68%); }
+.bgfx i:not(.pv) { transition: opacity 1.1s ease; }
+.pvtint { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(40, 8, 90, .55), rgba(18, 4, 42, .35) 50%, rgba(30, 6, 70, .5)); opacity: 0; transition: opacity 1.1s ease; }
+body[data-cat="pf"] .bgfx .pv, body[data-cat="pf"] .pvtint { opacity: 1; }
+body[data-cat="pf"] .bgfx i:not(.pv) { opacity: 0; }
+body[data-cat="pf"] { --accent: #b57dff; --accent-soft: rgba(157, 77, 255, .2); --on-accent: #12021f; --dk-line: rgba(185, 125, 255, .2); --dk-a: rgba(74, 28, 140, .48); --dk-b: rgba(30, 8, 64, .72); --dk-head: rgba(20, 4, 44, .5); --line: #3e2470; --bp-line: rgba(175, 110, 255, .085); --bp-major: rgba(175, 110, 255, .14); --surface: #1c1133; }
+body[data-cat="pf"] .btn.primary { background: linear-gradient(135deg, var(--led-p2), #b14dff); color: #fff; box-shadow: 0 0 0 1px rgba(205, 160, 255, .45), 0 0 22px rgba(140, 60, 255, .65), 0 0 50px rgba(122, 0, 255, .25); }
+body[data-cat="pf"] .btn.primary:hover { box-shadow: 0 0 0 1px rgba(220, 180, 255, .6), 0 0 30px rgba(150, 70, 255, .85), 0 0 70px rgba(122, 0, 255, .35); }
+body[data-cat="pf"] .panel, body[data-cat="pf"] .dk { border-color: rgba(185, 125, 255, .22); box-shadow: 0 0 0 1px rgba(157, 77, 255, .06), 0 10px 34px rgba(60, 0, 140, .25); }
+body[data-cat="pf"] #view-portfolio .phead h2 { background: linear-gradient(90deg, #fff 0%, #e2c8ff 40%, #b57dff 100%); -webkit-background-clip: text; background-clip: text; color: transparent !important; text-shadow: none; }
+body[data-cat="pf"] .chg.up, body[data-cat="pf"] .up { text-shadow: none; }
+/* η κάρτα «Χαρτοφυλάκιο»: μωβ LED */
+.cat[data-cat="pf"] { --cc: #a96bff; border-color: rgba(157, 77, 255, .45); box-shadow: 0 0 0 1px rgba(157, 77, 255, .12), 0 0 16px rgba(122, 0, 255, .22); }
+.cat[data-cat="pf"] .ci { color: #c99bff; background: rgba(122, 0, 255, .2); box-shadow: 0 0 12px rgba(157, 77, 255, .35); }
+.cat[data-cat="pf"][aria-pressed="true"] { border-color: #c99bff; background: linear-gradient(135deg, #5b13cc 0%, #3a0a8a 45%, #1d0546 100%); box-shadow: 0 0 0 1px #c99bff, 0 0 30px rgba(157, 77, 255, .85), 0 0 80px rgba(122, 0, 255, .4), inset 0 1px 0 rgba(255, 255, 255, .25); animation: ledp 2.8s ease-in-out infinite; }
+.cat[data-cat="pf"][aria-pressed="true"] .ci { background: linear-gradient(135deg, #b14dff, #7a00ff); color: #fff; box-shadow: 0 0 18px rgba(177, 77, 255, .9); }
+.cat[data-cat="pf"][aria-pressed="true"] b { color: #fff; text-shadow: 0 0 14px rgba(201, 155, 255, .8); }
+.cat[data-cat="pf"][aria-pressed="true"] .ct > span { color: #e3cbff; }
+@keyframes ledp { 0%, 100% { box-shadow: 0 0 0 1px #c99bff, 0 0 26px rgba(157, 77, 255, .75), 0 0 70px rgba(122, 0, 255, .35), inset 0 1px 0 rgba(255, 255, 255, .25); } 50% { box-shadow: 0 0 0 1px #e0c4ff, 0 0 38px rgba(170, 90, 255, 1), 0 0 100px rgba(122, 0, 255, .55), inset 0 1px 0 rgba(255, 255, 255, .3); } }
+/* μετάβαση: κύμα χρώματος από το σημείο που πάτησες */
+.catfx { position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: 0; }
+.catfx.go { animation: catwave .8s cubic-bezier(.2, .7, .3, 1) forwards; }
+.catfx.go.pf { background: radial-gradient(circle at var(--x) var(--y), rgba(201, 155, 255, .55) 0%, rgba(122, 0, 255, .45) 18%, rgba(70, 0, 160, .25) 40%, transparent 70%); }
+.catfx.go.mk { background: radial-gradient(circle at var(--x) var(--y), rgba(255, 170, 120, .4) 0%, rgba(255, 105, 64, .3) 18%, rgba(64, 98, 240, .18) 40%, transparent 70%); }
+@keyframes catwave { 0% { opacity: 0; clip-path: circle(0 at var(--x) var(--y)); } 25% { opacity: 1; } 100% { opacity: 0; clip-path: circle(150vmax at var(--x) var(--y)); } }
+body[data-cat="pf"] #view-portfolio.vin { animation: pfin .5s cubic-bezier(.2, .8, .3, 1); }
+@keyframes pfin { from { opacity: 0; transform: translateY(14px) scale(.985); filter: saturate(1.6) hue-rotate(-10deg); } to { opacity: 1; transform: none; filter: none; } }
+:root[data-ui="light"] body[data-cat="pf"] { --surface: #fbf7ff; --line: #e2d2ff; }
+:root[data-ui="light"] .pvtint { background: linear-gradient(180deg, rgba(157, 77, 255, .10), rgba(157, 77, 255, .04)); }
+@media (prefers-reduced-motion: reduce) { .cat[data-cat="pf"][aria-pressed="true"] { animation: none; } }
+.phead .btn { white-space: nowrap; }
 </style>
 
 <div class="demo demo-band"><p id="banner"><strong>Στιγμιότυπο.</strong> Οι τιμές προέρχονται από το capital.gr (καθυστέρηση 15 λεπτών) και η κεφαλαιοποίηση με τα ονόματα από το euro2day.gr (23/10/2026, 12:58). Τα στοιχεία δεν ενημερώνονται αυτόματα και δεν αποτελούν επενδυτική πληροφόρηση.</p></div>
 
-<div class="bgfx" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
+<div class="bgfx" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i><i class="b1 pv"></i><i class="b2 pv"></i><i class="b3 pv"></i><span class="pvtint"></span></div>
+<div class="catfx" id="catfx" aria-hidden="true"></div>
 <div class="wrap">
   <header class="top">
     <div class="brand">
@@ -4278,7 +4315,10 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     Array.prototype.forEach.call(document.querySelectorAll(".cat"), function (b) { var c = b.getAttribute("data-cat"); b.setAttribute("aria-pressed", c === "pf" ? v === "portfolio" : v === "market"); });
     Array.prototype.forEach.call(document.querySelectorAll(".xtra"), function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-view") === v); });
     document.querySelector(".views").hidden = cat === "pf";
+    var prevCat = document.body.getAttribute("data-cat");
     document.body.setAttribute("data-cat", cat);
+    if (prevCat && prevCat !== cat) catSweep(cat);
+    var tm = document.querySelector('meta[name="theme-color"]'); if (tm && document.documentElement.getAttribute("data-ui") !== "light") tm.setAttribute("content", cat === "pf" ? "#1a0b33" : "#1a1a35");
     try { localStorage.setItem("agora-lastview", v); } catch (e) {}
     catPfSub();
     if (v === "portfolio") renderPortfolio();
@@ -4289,7 +4329,14 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var ve = document.getElementById("view-" + v); if (ve) { ve.classList.remove("vin"); void ve.offsetWidth; ve.classList.add("vin"); }
   }
 
-  var lastMk = "market";
+  var lastMk = "market", lastPt = null;
+  document.addEventListener("pointerdown", function (e) { lastPt = { x: e.clientX, y: e.clientY, t: Date.now() }; }, true);
+  function catSweep(cat) {
+    var fx = document.getElementById("catfx"); if (!fx || (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)) return;
+    var p = lastPt && Date.now() - lastPt.t < 1500 ? lastPt : { x: innerWidth / 2, y: innerHeight / 3 };
+    fx.style.setProperty("--x", p.x + "px"); fx.style.setProperty("--y", p.y + "px");
+    fx.className = "catfx"; void fx.offsetWidth; fx.className = "catfx go " + cat;
+  }
   /* ----- κουμπί «πίσω» (κινητό / browser): κλείνει παράθυρα και γυρίζει ενότητες αντί να βγαίνει από την εφαρμογή ----- */
   var curView = "market", navPop = false, popSkip = 0;
   try { history.replaceState({ ax: 1, v: "market", root: 1 }, ""); history.pushState({ ax: 1, v: "market", base: 1 }, ""); } catch (e) {}
