@@ -1,0 +1,19 @@
+name: Κανόνες Firestore
+# Όταν αλλάζει το firestore.rules, ανεβαίνει αυτόματα στο Firebase.
+on:
+  push:
+    branches: [main]
+    paths: [firestore.rules]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q requests google-auth
+      - run: python scripts/deploy_rules.py
+        env:
+          FIREBASE_SA: ${{ secrets.FIREBASE_SA }}
