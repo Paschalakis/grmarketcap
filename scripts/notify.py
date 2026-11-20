@@ -387,12 +387,71 @@ def run_weekly(db):
         except Exception: traceback.print_exc()
 
 
+# ---------------------------------------------------------------- σελίδα διαχείρισης (axiogram.eu/admin)
+CMD_WF = {"prices": "update-prices.yml", "foreign": "update-foreign.yml", "extras": "update-extras.yml",
+          "logos": "update-logos.yml", "longhist": "update-longhist.yml"}
+
+
+def to_ms(v):
+    """Το πεδίο updated μπορεί να είναι αριθμός (ms), κείμενο ISO ή Timestamp του Firestore."""
+    if v is None: return 0
+    if isinstance(v, (int, float)): return int(v if v > 1e11 else v * 1000)
+    if hasattr(v, "timestamp"): return int(v.timestamp() * 1000)
+    try: return int(datetime.fromisoformat(str(v).replace("Z", "+00:00")).timestamp() * 1000)
+    except Exception: return 0
+
+
+def write_stats(db):
+    """Μόνο αριθμοί (κανένα email ή στοιχείο χρήστη) στο site/stats, για την επισκόπηση."""
+    now = time.time() * 1000
+    st = {"users": 0, "act7": 0, "act30": 0, "withPf": 0, "txns": 0, "alertsOn": 0, "push": 0, "weekly": 0, "wallets": 0, "fired24": 0}
+    for doc in db.collection("users").stream():
+        d = doc.to_dict() or {}
+        st["users"] += 1
+        u = to_ms(d.get("updated"))
+        if u and now - u < 7 * 864e5: st["act7"] += 1
+        if u and now - u < 30 * 864e5: st["act30"] += 1
+        tx = d.get("txns") or []
+        if tx: st["withPf"] += 1
+        st["txns"] += len(tx)
+        al = d.get("alerts") or []
+        st["alertsOn"] += sum(1 for a in al if a.get("on"))
+        st["fired24"] += sum(1 for a in al if a.get("fired") and now - float(a["fired"]) < 864e5)
+        st["push"] += sum(1 for t in (d.get("push") or []) if t.get("t"))
+        if d.get("weekly"): st["weekly"] += 1
+        st["wallets"] += len(d.get("wallets") or [])
+    st["at"] = int(now)
+    db.collection("site").document("stats").set(st)
+    print("στατιστικά:", {k: v for k, v in st.items() if k != "at"})
+
+
+def run_cmds(db):
+    """Εκτελεί τα «Τρέξε τώρα» που ζήτησε ο ιδιοκτήτης από τη σελίδα διαχείρισης."""
+    ref = db.collection("site").document("cmd")
+    snap = ref.get()
+    runs = (snap.to_dict() or {}).get("runs") or {} if snap.exists else {}
+    tok = os.environ.get("GH_TOKEN"); repo = os.environ.get("GITHUB_REPOSITORY", "Paschalakis/grmarketcap")
+    for k, v in runs.items():
+        at, done = (v or {}).get("at") or 0, (v or {}).get("done") or 0
+        if not at or done >= at or k not in CMD_WF: continue
+        ok = False
+        if tok:
+            r = requests.post("https://api.github.com/repos/%s/actions/workflows/%s/dispatches" % (repo, CMD_WF[k]),
+                              headers={"Authorization": "Bearer " + tok, "Accept": "application/vnd.github+json"}, json={"ref": "main"}, timeout=20)
+            ok = r.status_code == 204
+            print("εκτέλεση", k, r.status_code, "" if ok else r.text[:200])
+        ref.set({"runs": {k: {"at": at, "done": int(time.time() * 1000), "ok": ok}}}, merge=True)
+
+
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else "alerts"
     try:
         db = init_fb()
         if db is not None:
             run_weekly(db) if mode == "weekly" else run_alerts(db)
+            for f in (run_cmds, write_stats):
+                try: f(db)
+                except Exception: traceback.print_exc()
     except Exception:
         traceback.print_exc()
     sys.exit(0)

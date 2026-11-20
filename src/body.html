@@ -844,6 +844,13 @@ body[data-cat="pf"] #gstrip, body[data-cat="pf"] .extras { display: none !import
 .dashsec .sechead, #mvhead { margin-top: 8px; }
 #allsec .sechead, #secsec .sechead, #divsec .sechead { margin-top: 14px; }
 /* σελίδα υποδοχής */
+.sitebn { display: flex; align-items: center; gap: 12px; padding: 11px 14px 11px 16px; border-radius: 16px; border: 1px solid color-mix(in srgb, var(--bn) 45%, transparent); background: linear-gradient(90deg, color-mix(in srgb, var(--bn) 22%, transparent), color-mix(in srgb, var(--bn) 8%, transparent)); color: var(--fg); font-size: 14.5px; line-height: 1.45; --bn: #7c84ff; box-shadow: 0 0 22px color-mix(in srgb, var(--bn) 18%, transparent); }
+.sitebn[hidden] { display: none; }
+.sitebn[data-k="warn"] { --bn: #feb438; } .sitebn[data-k="ok"] { --bn: #3fd18f; } .sitebn[data-k="promo"] { --bn: #ff6940; }
+.sitebn .bnd { width: 9px; height: 9px; border-radius: 50%; background: var(--bn); box-shadow: 0 0 10px var(--bn); flex: none; }
+.sitebn .bnt { flex: 1; min-width: 0; }
+.sitebn a { color: var(--bn); font-weight: 700; white-space: nowrap; margin-left: 6px; }
+.sitebn .bnx { background: none; border: 0; color: var(--muted); font-size: 20px; line-height: 1; cursor: pointer; padding: 2px 4px; flex: none; }
 .hero { position: relative; display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 24px; align-items: center; padding: 40px 40px 34px; border-radius: 26px; border: 1px solid var(--dk-line); overflow: hidden;
   background: radial-gradient(600px 300px at 0% 0%, rgba(255, 105, 64, .16), transparent 70%), radial-gradient(700px 360px at 100% 100%, rgba(124, 77, 230, .22), transparent 70%),
     linear-gradient(var(--bp-line) 1px, transparent 1px) 0 0 / 22px 22px, linear-gradient(90deg, var(--bp-line) 1px, transparent 1px) 0 0 / 22px 22px,
@@ -1046,6 +1053,7 @@ tr.txrow > td { padding: 0 10px 14px !important; background: transparent !import
 
   <div class="gstrip" id="gstrip" role="region" aria-label="Παγκόσμιες αγορές" hidden></div>
 
+  <div class="sitebn" id="siteBn" role="status" hidden></div>
   <div class="navrow">
   <nav class="cats" aria-label="Κατηγορίες">
     <button type="button" class="cat" data-cat="mk" aria-pressed="true"><span class="ci"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-5 4 3 8-8"/><path d="M15 7h5v5"/></svg></span><span class="ct"><b>Αγορές</b><span>Ελλάδα · ΗΠΑ · Crypto</span></span></button>
@@ -5519,6 +5527,55 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   renderDash();
   setInterval(function () { if (!document.hidden && !document.getElementById("view-market").hidden && HOME.on.favs && Object.keys(favs).some(function (k) { return /^c:/.test(k); })) { loadFavCg(); } }, 60000);
 
+
+  /* ===== ρυθμίσεις του site από τη σελίδα διαχείρισης (Firestore site/config) ===== */
+  var SITECFG = null;
+  try { SITECFG = JSON.parse(localStorage.getItem("agora-sitecfg") || "null"); } catch (e) {}
+  var CFG_OFF = {
+    heat: "#tab-heat", favs: "#tab-favs", tools: "#tab-tools",
+    us: '#mktsw [data-mkt="us"], .herolinks [data-hgo="us"]', c: '#mktsw [data-mkt="c"], .herolinks [data-hgo="c"]',
+    dash: "#dashsec, #cuOpen", movers: "#mvhead, #mvtabs, #movers", sectors: "#secsec", div: "#divsec", cmp: "#cmpOpen",
+    perps: "#pf-hl, .rapi", share: "#pf-share", alerts: '[data-tl="al"], .herolinks [data-hgo="al"]'
+  };
+  function cfgApply() {
+    var c = SITECFG || {}, off = c.off || {}, css = "";
+    Object.keys(CFG_OFF).forEach(function (k) { if (off[k]) css += CFG_OFF[k] + "{display:none!important}"; });
+    var st = document.getElementById("cfgcss"); if (!st) { st = document.createElement("style"); st.id = "cfgcss"; document.head.appendChild(st); }
+    st.textContent = css;
+    /* κείμενα σελίδας υποδοχής: κενό = το αρχικό */
+    var h = c.hero || {}, ht = document.getElementById("heroTitle"), hp = document.querySelector("#hero .herotxt > p"), he = document.querySelector("#hero .heroeye");
+    if (ht) { if (!ht.__def) ht.__def = ht.innerHTML; if (h.t1 || h.t2) { ht.textContent = ""; ht.appendChild(document.createTextNode(h.t1 || "")); if (h.t2) { ht.appendChild(document.createElement("br")); var em = document.createElement("em"); em.textContent = h.t2; ht.appendChild(em); } } else ht.innerHTML = ht.__def; }
+    if (hp) { if (hp.__def == null) hp.__def = hp.textContent; hp.textContent = h.sub || hp.__def; }
+    if (he) { if (he.__def == null) he.__def = he.textContent; he.textContent = h.eye || he.__def; }
+    /* μπάρα ανακοίνωσης */
+    var b = c.banner || {}, el = document.getElementById("siteBn"), seen = null;
+    try { seen = localStorage.getItem("agora-bn-x"); } catch (e) {}
+    if (el) {
+      var show = !!(b.on && b.text) && seen !== String(b.id || b.text) && !(b.until && Date.now() > b.until);
+      el.hidden = !show;
+      if (show) {
+        el.setAttribute("data-k", b.kind || "info"); el.innerHTML = "";
+        var d = document.createElement("span"); d.className = "bnd"; el.appendChild(d);
+        var t = document.createElement("span"); t.className = "bnt"; t.textContent = b.text;
+        if (b.link && /^https?:\/\//.test(b.link)) { var a = document.createElement("a"); a.href = b.link; a.target = "_blank"; a.rel = "noopener"; a.textContent = (b.linkText || "Δες περισσότερα") + " →"; t.appendChild(a); }
+        el.appendChild(t);
+        if (b.close !== false) { var x = document.createElement("button"); x.type = "button"; x.className = "bnx"; x.setAttribute("aria-label", "Κλείσιμο"); x.textContent = "×"; x.addEventListener("click", function () { try { localStorage.setItem("agora-bn-x", String(b.id || b.text)); } catch (e) {} el.hidden = true; }); el.appendChild(x); }
+      }
+    }
+  }
+  cfgApply();
+  if (typeof fetch === "function" && /^https?:/.test(location.protocol) && !window.claude && FIREBASE_CONFIG) {
+    fetch("https://firestore.googleapis.com/v1/projects/agora-athinon/databases/(default)/documents/site/config?key=" + FIREBASE_CONFIG.apiKey, { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : r.status === 404 ? { none: 1 } : null; })
+      .then(function (j) {
+        if (!j) return;
+        var raw = j.fields && j.fields.c && j.fields.c.stringValue, v = null;
+        try { v = raw ? JSON.parse(raw) : null; } catch (e) {}
+        if (JSON.stringify(v) === JSON.stringify(SITECFG)) return;
+        SITECFG = v; try { if (v) localStorage.setItem("agora-sitecfg", JSON.stringify(v)); else localStorage.removeItem("agora-sitecfg"); } catch (e) {}
+        cfgApply();
+      }).catch(function () {});
+  }
 
   /* σελίδα υποδοχής και κουμπιά ενοτήτων */
   function heroUpd() {
