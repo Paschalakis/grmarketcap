@@ -1,4 +1,50 @@
-  File "/home/runner/work/grmarketcap/grmarketcap/probe/probe.py", line 3
-    // 1795183488
-    ^^
-SyntaxError: invalid syntax
+d logos loaded 61 mono total 50
+
+g 500ms
+  -   waiting for element to be stable
+  -   element is not visible
+  - retrying scroll into view action, attempt #51
+  -   waiting 500ms
+  -   waiting for element to be stable
+  -   element is not visible
+  - retrying scroll into view action, attempt #52
+  -   waiting 500ms
+  -   waiting for element to be stable
+  -   element is not visible
+  - retrying scroll into view action, attempt #53
+  -   waiting 500ms
+  -   waiting for element to be stable
+  -   element is not visible
+  - retrying scroll into view action, attempt #54
+  -   waiting 500ms
+  -   waiting for element to be stable
+  -   element is not visible
+  - retrying scroll into view action, attempt #55
+  -   waiting 500ms
+  -   waiting for element to be stable
+  -   element is not visible
+  - retrying scroll into view action, attempt #56
+  -   waiting 500ms
+  -   waiting for element to be stable
+  -   element is not visible
+  - retrying scroll into view action, attempt #57
+  -   waiting 500ms
+  -   waiting for element to be stable
+  -   element is not visible
+  - retrying scroll into view action, attempt #58
+  -   waiting 500ms
+  -   waiting for element to be stable
+  -   element is not visible
+  - retrying scroll into view action, attempt #59
+  -   waiting 500ms
+  -   waiting for element to be stable
+  -   element is not visible
+  - retrying scroll into view action, attempt #60
+  -   waiting 500ms
+
+    at /home/runner/work/grmarketcap/grmarketcap/probe/tv.js:9:97 {
+  name: 'TimeoutError'
+}
+
+Node.js v20.20.2
+
