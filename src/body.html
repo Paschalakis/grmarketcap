@@ -995,6 +995,50 @@ body[data-cat="pf"] #view-portfolio .phead h2 { background: linear-gradient(90de
 :root[data-ui="light"] body[data-cat="pf"] #view-portfolio .phead h2 { background: linear-gradient(90deg, #1b1d5c 0%, #4b4dff 60%, #2398ab 100%); -webkit-background-clip: text; background-clip: text; color: transparent !important; }
 :root[data-ui="light"] body[data-cat="pf"] .btn.primary { box-shadow: 0 6px 20px rgba(75, 77, 255, .35); }
 :root[data-ui="light"] body[data-cat="pf"] .bgfx .pv { opacity: .45; }
+/* εισαγωγή συναλλαγών */
+.imbox.wide { width: min(980px, calc(100% - 24px)); }
+.imbody { display: flex; flex-direction: column; gap: 14px; }
+.imdrop { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; padding: 28px 16px; border: 1.5px dashed color-mix(in srgb, var(--accent) 55%, transparent); border-radius: 18px; cursor: pointer; background: color-mix(in srgb, var(--accent) 7%, transparent); transition: background .15s, border-color .15s; }
+.imdrop:hover, .imdrop.over { background: color-mix(in srgb, var(--accent) 15%, transparent); border-color: var(--accent); }
+.imdrop input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.imdrop .imico { width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; color: var(--accent); background: color-mix(in srgb, var(--accent) 16%, transparent); margin-bottom: 4px; }
+.imdrop b { font-size: 16px; }
+.imhow summary { cursor: pointer; font-weight: 600; font-size: 14px; color: var(--accent); }
+.imhow ul { margin: 8px 0 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+.imhow b { color: var(--fg); }
+.imsafe { display: flex; align-items: center; gap: 7px; margin: 0; }
+.imhead { display: flex; align-items: center; gap: 12px; justify-content: space-between; flex-wrap: wrap; }
+.imhead > div { display: flex; flex-direction: column; min-width: 0; }
+.imhead b { overflow-wrap: anywhere; }
+.immap { border: 1px solid var(--dk-line); border-radius: 14px; padding: 10px 14px; }
+.immap summary { cursor: pointer; font-weight: 600; font-size: 14px; }
+.immapg { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; margin-top: 10px; }
+.immapg label { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; color: var(--muted); }
+.immapg select, .impf select, .imfix select, .imfix input { width: 100%; padding: 7px 10px; font-size: 13.5px; }
+.imsum { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; font-size: 14px; }
+.imsum .w { color: #c98a00; } .imsum .e { color: var(--down); }
+:root:not([data-ui="light"]) .imsum .w { color: var(--amber, #feb438); }
+.impf { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+.impf select { width: auto; min-width: 130px; }
+.imtw { max-height: min(52vh, 520px); overflow: auto; padding: 0; }
+.imtab { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.imtab th { position: sticky; top: 0; background: var(--surface); z-index: 1; text-align: left; font-size: 11.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); padding: 9px 10px; border-bottom: 1px solid var(--dk-line); }
+.imtab td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--dk-line); vertical-align: middle; }
+.imtab .r { text-align: right; } .imtab .nw { white-space: nowrap; }
+.imtab tr.bad td { background: color-mix(in srgb, var(--down) 6%, transparent); }
+.imtab .imt { min-width: 150px; } .imtab .imt b { display: block; } .imtab .imt .note { display: block; font-size: 12px; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.imtab .imraw { opacity: .7; }
+.imfix { display: flex; gap: 6px; min-width: 210px; } .imfix select { width: 92px; flex: none; } .imfix input.bad { border-color: var(--down); }
+.imside { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+.imside.buy { color: var(--up); background: var(--up-soft, color-mix(in srgb, var(--up) 15%, transparent)); } .imside.sell { color: var(--down); background: var(--down-soft, color-mix(in srgb, var(--down) 15%, transparent)); }
+.imst { font-size: 12.5px; font-weight: 600; white-space: nowrap; } .imst.ok { color: var(--up); } .imst.w { color: #c98a00; } .imst.e { color: var(--down); }
+:root:not([data-ui="light"]) .imst.w { color: #feb438; }
+.imfoot { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+.imdone { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: 10px 0 0; }
+.imdone .imok { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; font-size: 28px; color: #fff; background: var(--up); box-shadow: 0 0 24px color-mix(in srgb, var(--up) 55%, transparent); }
+.imdone h3 { margin: 4px 0 0; font-size: 19px; }
+.imdone .imfoot { width: 100%; justify-content: center; margin-top: 6px; }
+@media (max-width: 640px) { .immapg { grid-template-columns: 1fr 1fr; } .impf { margin-left: 0; width: 100%; } .impf select { flex: 1; } .imtw { max-height: 48vh; } }
 /* κουμπί συναλλαγών τίτλου */
 .txoh, .txoc { width: 52px; text-align: center; padding-left: 4px !important; padding-right: 10px !important; }
 .txo { width: 36px; height: 36px; display: inline-grid; place-items: center; border-radius: 11px; cursor: pointer; color: #fff; border: 1px solid rgba(190, 196, 255, .55);
@@ -1202,7 +1246,7 @@ tr.txrow > td { padding: 0 10px 14px !important; background: transparent !import
       </div>
       <div class="pftools">
         <button type="button" class="btn dkicon" id="pf-hide" aria-pressed="false" title="Απόκρυψη ποσών" aria-label="Απόκρυψη ποσών"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
-        <button type="button" class="btn dkicon" id="pf-csv" title="Εξαγωγή σε CSV (Excel)" aria-label="Εξαγωγή σε CSV (Excel)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 19h16"/></svg></button>
+        <button type="button" class="btn dkicon" id="pf-imp" title="Εισαγωγή συναλλαγών από αρχείο broker" aria-label="Εισαγωγή συναλλαγών από αρχείο broker"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4"/><path d="M7 9l5-5 5 5"/><path d="M5 20h14"/></svg></button><button type="button" class="btn dkicon" id="pf-csv" title="Εξαγωγή σε CSV (Excel)" aria-label="Εξαγωγή σε CSV (Excel)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 19h16"/></svg></button>
         <button type="button" class="btn dkicon" id="pf-theme" title="Φωτεινό ή σκοτεινό χαρτοφυλάκιο" aria-label="Φωτεινό ή σκοτεινό χαρτοφυλάκιο" aria-pressed="false"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/></svg></button><button type="button" class="btn dkicon" id="pf-share" title="Κοινοποίηση χαρτοφυλακίου" aria-label="Κοινοποίηση χαρτοφυλακίου"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button>
         <button type="button" class="btn" id="pf-hl" title="Παρακολούθηση θέσεων Perpetuals από το Hyperliquid">+ Perps</button>
         <button type="button" class="btn primary" id="pf-add">+ Προσθήκη συναλλαγής</button>
@@ -1308,6 +1352,11 @@ tr.txrow > td { padding: 0 10px 14px !important; background: transparent !import
   <div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" class="btn" id="pfmCancel">Άκυρο</button><button type="submit" class="btn primary">Αποθήκευση</button></div>
 </form>
 <div class="scrim" id="hlScrim" hidden></div>
+<div class="scrim" id="imScrim" hidden></div>
+<div class="panel authbox imbox" id="imBox" role="dialog" aria-modal="true" aria-labelledby="imTitle" hidden>
+  <div class="ahead"><h2 id="imTitle">Εισαγωγή συναλλαγών</h2><button type="button" class="close" id="imClose" aria-label="Κλείσιμο">×</button></div>
+  <div id="imBody" class="imbody"></div>
+</div>
 <form class="panel authbox" id="hlBox" role="dialog" aria-modal="true" aria-labelledby="hlTitle" hidden novalidate>
   <div class="ahead"><h2 id="hlTitle">Perpetuals από Hyperliquid</h2><button type="button" class="close" id="hlClose" aria-label="Κλείσιμο">×</button></div>
   <p class="note" style="margin:0">Γράψε τη διεύθυνση του πορτοφολιού σου (0x…). Οι θέσεις διαβάζονται δημόσια από το Hyperliquid, χωρίς κλειδιά και χωρίς σύνδεση πορτοφολιού. Το site δεν μπορεί να κάνει καμία συναλλαγή.</p>
@@ -4071,7 +4120,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   var curView = "market", navPop = false, popSkip = 0;
   try { history.replaceState({ ax: 1, v: "market", root: 1 }, ""); history.pushState({ ax: 1, v: "market", base: 1 }, ""); } catch (e) {}
   var exitT = 0;
-  var OVS = ["drawer", "pf-form", "cuBox", "shBox", "svBox", "authBox", "cmpBox", "pfmBox", "hlBox", "mpBox", "allocBox", "setBox", "appBox"].map(function (id) { return document.getElementById(id); }).filter(Boolean);
+  var OVS = ["drawer", "pf-form", "cuBox", "shBox", "svBox", "authBox", "cmpBox", "pfmBox", "hlBox", "imBox", "mpBox", "allocBox", "setBox", "appBox"].map(function (id) { return document.getElementById(id); }).filter(Boolean);
   function closeOv(el) {
     if (el.id === "drawer") { closeStock(); return; }
     if (el.id === "pf-form") { closeForm(); return; }
@@ -4597,6 +4646,421 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   var heatRT = 0; window.addEventListener("resize", function () { clearTimeout(heatRT); heatRT = setTimeout(renderHeat, 150); });
   document.getElementById("favgo").addEventListener("click", function () { showView("market"); });
 
+  /* ===================== Εισαγωγή συναλλαγών από αρχείο broker ===================== */
+  (function () {
+    var box = document.getElementById("imBox"), scr = document.getElementById("imScrim"), ibody = document.getElementById("imBody");
+    if (!box) return;
+    var last = null, ST = null, LASTIMP = null;
+    var FIELDS = [["date", "Ημερομηνία"], ["side", "Είδος (αγορά / πώληση)"], ["sym", "Σύμβολο / ticker"], ["name", "Όνομα τίτλου"], ["qty", "Τεμάχια"], ["price", "Τιμή ανά τεμάχιο"], ["cur", "Νόμισμα τιμής"], ["total", "Συνολικό ποσό"], ["totcur", "Νόμισμα συνόλου"], ["fx", "Ισοτιμία"], ["cat", "Κατηγορία (μετοχή / crypto)"]];
+    var FN = {}; FIELDS.forEach(function (f) { FN[f[0]] = f[1]; });
+    /* αναγνώριση στηλών από τον τίτλο τους (ελληνικά και αγγλικά) */
+    var GUESS = [
+      ["totcur", /^currency \(total\)$|^currency \(result\)$/],
+      ["cur", /^(currency|ccy|νομισμα|νομ\.?|currency \(price ?\/ ?share\)|trade currency|νομισμα τιμης)$/],
+      ["fx", /(exchange rate|fx rate|^fx$|ισοτιμια)/],
+      ["cat", /^(asset category|asset class|asset type|κατηγορια)$/],
+      ["qty", /(quantity|^qty|shares|units|ποσοτητα|τεμαχια|^τεμ)/],
+      ["price", /(price|τιμη)/],
+      ["total", /(total|amount|value|proceeds|αξια|ποσο|συνολο|καθαρο|αντιτιμο)/],
+      ["date", /(date|time|ημερομηνια|ημ\/νια|^ημερ|completed|executed)/],
+      ["side", /^(action|type|side|operation|transaction type|transaction|buy\/sell|b\/s|ειδος|πραξη|κινηση|τυπος|ειδος συναλλαγης|εντολη)$/],
+      ["sym", /^(ticker|symbol|συμβολο|κωδικος|code|asset|μετοχη|τιτλος|security|instrument|κωδ\.?)$/],
+      ["name", /^(name|description|περιγραφη|ονομα|επωνυμια|company|instrument name|ονομασια|τιτλος μετοχης)$/]
+    ];
+    function deacc(s) { return String(s == null ? "" : s).normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
+    function hnorm(s) { return deacc(s).toLowerCase().replace(/\s+/g, " ").trim(); }
+    function guessMap(head) {
+      var map = {}, used = {};
+      GUESS.forEach(function (g) {
+        for (var i = 0; i < head.length; i++) { if (used[i]) continue; var h = hnorm(head[i]); if (h && g[1].test(h)) { map[g[0]] = i; used[i] = 1; return; } }
+      });
+      if (map.sym == null) head.forEach(function (h, i) { if (map.sym == null && !used[i] && /^isin$/.test(hnorm(h))) { map.sym = i; used[i] = 1; } });
+      return map;
+    }
+    function score(m) { return Object.keys(m).length + (m.qty != null ? 2 : 0) + (m.sym != null || m.name != null ? 2 : 0); }
+
+    /* ---------- ανάγνωση αρχείου ---------- */
+    function splitCsv(text) {
+      var lines = text.replace(/^\ufeff/, "").split(/\r\n|\n|\r/).slice(0, 30), cands = [";", ",", "\t", "|"], best = ",", bs = -1;
+      cands.forEach(function (d) {
+        var counts = lines.filter(function (l) { return l.trim(); }).map(function (l) { var n = 0, q = false; for (var i = 0; i < l.length; i++) { var c = l[i]; if (c === '"') q = !q; else if (c === d && !q) n++; } return n; });
+        var mx = Math.max.apply(null, counts.concat([0])), same = counts.filter(function (n) { return n === mx; }).length;
+        var s = mx ? same * 10 + mx : -1; if (s > bs) { bs = s; best = d; }
+      });
+      var out = [], row = [], cell = "", q = false, t = text.replace(/^\ufeff/, "");
+      for (var i = 0; i < t.length; i++) {
+        var c = t[i];
+        if (q) { if (c === '"') { if (t[i + 1] === '"') { cell += '"'; i++; } else q = false; } else cell += c; continue; }
+        if (c === '"') { q = true; continue; }
+        if (c === best) { row.push(cell); cell = ""; continue; }
+        if (c === "\r" || c === "\n") { if (c === "\r" && t[i + 1] === "\n") i++; row.push(cell); out.push(row); row = []; cell = ""; continue; }
+        cell += c;
+      }
+      if (cell !== "" || row.length) { row.push(cell); out.push(row); }
+      return out.filter(function (r) { return r.some(function (x) { return String(x).trim(); }); });
+    }
+    function loadXlsx() {
+      if (window.XLSX) return Promise.resolve(window.XLSX);
+      return new Promise(function (res, rej) {
+        var s = document.createElement("script"); s.src = "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js";
+        s.onload = function () { window.XLSX ? res(window.XLSX) : rej(new Error("xlsx")); }; s.onerror = function () { rej(new Error("xlsx")); };
+        document.head.appendChild(s);
+      });
+    }
+    function readFile(f) {
+      var isX = /\.(xlsx|xlsm|xls|ods)$/i.test(f.name);
+      return new Promise(function (res, rej) {
+        var r = new FileReader();
+        r.onerror = function () { rej(new Error("read")); };
+        r.onload = function () {
+          if (isX) {
+            loadXlsx().then(function (X) {
+              var wb = X.read(new Uint8Array(r.result), { type: "array", cellDates: true }), sheets = [];
+              wb.SheetNames.forEach(function (n) { sheets.push(X.utils.sheet_to_json(wb.Sheets[n], { header: 1, raw: true, defval: "" })); });
+              res({ sheets: sheets });
+            }).catch(function () { rej(new Error("xlsxlib")); });
+            return;
+          }
+          var buf = new Uint8Array(r.result), txt = new TextDecoder("utf-8").decode(buf);
+          if (/\ufffd/.test(txt)) { try { txt = new TextDecoder("windows-1253").decode(buf); } catch (e) {} }
+          res({ text: txt });
+        };
+        r.readAsArrayBuffer(f);
+      });
+    }
+
+    /* ---------- αριθμοί, ημερομηνίες, νομίσματα ---------- */
+    var CURSYM = { "€": "EUR", "$": "USD", "£": "GBP", "₣": "CHF" };
+    function curOf(s) {
+      if (s == null || typeof s !== "string") return null;
+      var m = /\b(EUR|USD|GBP|CHF|JPY|CAD|AUD|SEK|NOK|DKK|PLN|HKD|USDT|USDC)\b/i.exec(s); if (m) return m[1].toUpperCase();
+      for (var k in CURSYM) if (s.indexOf(k) > -1) return CURSYM[k];
+      if (/ευρω|ευρώ/i.test(s)) return "EUR";
+      return null;
+    }
+    function parseNum(v, dec) {
+      if (typeof v === "number") return v;
+      if (v == null) return NaN;
+      var s = String(v).trim(); if (!s) return NaN;
+      var neg = /^\(.*\)$/.test(s) || /^-|−/.test(s);
+      s = s.replace(/[^\d.,]/g, "");
+      if (!s) return NaN;
+      var hasC = s.indexOf(",") > -1, hasD = s.indexOf(".") > -1;
+      if (hasC && hasD) { if (s.lastIndexOf(",") > s.lastIndexOf(".")) s = s.replace(/\./g, "").replace(",", "."); else s = s.replace(/,/g, ""); }
+      else if (hasC) { if (dec === "," || !/^\d{1,3}(,\d{3})+$/.test(s)) s = s.replace(/,(?=\d*$)/, ".").replace(/,/g, ""); else s = s.replace(/,/g, ""); }
+      else if (hasD && dec === "," && /^\d{1,3}(\.\d{3})+$/.test(s)) s = s.replace(/\./g, "");
+      var n = parseFloat(s); return isNaN(n) ? NaN : neg ? -n : n;
+    }
+    function decOf(rows, cols) {
+      var c = 0, d = 0;
+      rows.slice(0, 400).forEach(function (r) { cols.forEach(function (i) { var v = r[i]; if (typeof v !== "string") return; v = v.replace(/[^\d.,]/g, ""); if (/\d,\d{1,2}$|\d\.\d{3},\d/.test(v)) c++; else if (/\d\.\d{1,2}$|\d,\d{3}\.\d|\d\.\d{4,}$/.test(v)) d++; }); });
+      return c > d ? "," : d > c ? "." : null;
+    }
+    function pad(n) { return (n < 10 ? "0" : "") + n; }
+    function ymd(y, m, d) { if (!(y > 1970 && y < 2100 && m >= 1 && m <= 12 && d >= 1 && d <= 31)) return null; return y + "-" + pad(m) + "-" + pad(d); }
+    function parseDate(v, order) {
+      if (v instanceof Date && !isNaN(v)) { var dd = new Date(v.getTime() - v.getTimezoneOffset() * 60000 + 12 * 3600e3); return ymd(dd.getUTCFullYear(), dd.getUTCMonth() + 1, dd.getUTCDate()); }
+      if (typeof v === "number" && v > 20000 && v < 80000) { var dt = new Date(Math.round((v - 25569) * 864e5)); return ymd(dt.getUTCFullYear(), dt.getUTCMonth() + 1, dt.getUTCDate()); }
+      var s = String(v == null ? "" : v).trim(), m;
+      if ((m = /^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})/.exec(s))) return ymd(+m[1], +m[2], +m[3]);
+      if ((m = /^(\d{4})(\d{2})(\d{2})(?:[;,\s]|$)/.exec(s))) return ymd(+m[1], +m[2], +m[3]);
+      if ((m = /^(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{2,4})/.exec(s))) {
+        var a = +m[1], b = +m[2], y = +m[3]; if (y < 100) y += 2000;
+        if (a > 12) return ymd(y, b, a); if (b > 12) return ymd(y, a, b);
+        return order === "mdy" ? ymd(y, a, b) : ymd(y, b, a);
+      }
+      var t = Date.parse(s); if (!isNaN(t)) { var x = new Date(t); return ymd(x.getFullYear(), x.getMonth() + 1, x.getDate()); }
+      return null;
+    }
+    function dateOrder(rows, i) {
+      var mdy = 0, dmy = 0;
+      rows.forEach(function (r) { var m = /^(\d{1,2})[\/.\-](\d{1,2})[\/.\-]/.exec(String(r[i] || "")); if (m) { if (+m[2] > 12) mdy++; if (+m[1] > 12) dmy++; } });
+      return mdy > dmy ? "mdy" : "dmy";
+    }
+    function sideOf(v) {
+      var s = hnorm(v);
+      if (!s) return null;
+      if (/(^|\W)(buy|bought|purchase|αγορα|αγορ|long)(\W|$)|^b$|^α$|buy -|market buy|limit buy|stop buy/.test(s)) return "buy";
+      if (/(^|\W)(sell|sold|sale|πωληση|πωλ|short)(\W|$)|^s$|^π$|sell -|market sell|limit sell|stop sell/.test(s)) return "sell";
+      return "other";
+    }
+
+    /* ---------- αντιστοίχιση συμβόλων ---------- */
+    var USSET = null;
+    function usIdx() {
+      if (USSET) return USSET;
+      USSET = {};
+      (UNIV || []).forEach(function (u) { USSET[u[0]] = { s: u[0], n: u[1], ex: u[2], cur: u[3] || "USD" }; });
+      Object.keys(USQ).forEach(function (s) { var u = USQ[s]; USSET[s] = USSET[s] || { s: s, n: u.n, ex: u.x, cur: "USD" }; });
+      return USSET;
+    }
+    function cgList() { return (typeof CG100 !== "undefined" && CG100) || []; }
+    var GR_ALIAS = { "ΟΠΑΠ": "ALWN", "OPAP": "ALWN", "ALLWYN": "ALWN" };
+    function grRow(s) {
+      var u = deacc(s).toUpperCase();
+      if (GR_ALIAS[u] && BYSYM[GR_ALIAS[u]]) return BYSYM[GR_ALIAS[u]];
+      if (LEGACY[u] && BYSYM[LEGACY[u]]) return BYSYM[LEGACY[u]];
+      if (BYSYM[u]) return BYSYM[u];
+      if (SYM_BACK[u] && BYSYM[SYM_BACK[u]]) return BYSYM[SYM_BACK[u]];
+      return null;
+    }
+    function byName(n) {
+      var q = deacc(n).toUpperCase().replace(/[^A-ZΑ-Ω0-9 ]/g, " ").replace(/\b(SA|S A|AE|A E|ΑΕ|Α Ε|HOLDINGS?|GROUP|PLC|INC|CORP|CO|LTD|ΣΥΜΜΕΤΟΧΩΝ)\b/g, "").replace(/\s+/g, " ").trim();
+      if (q.length < 3) return null;
+      var hit = null;
+      rows.some(function (r) { var rn = deacc(r.name || "").toUpperCase().replace(/[^A-ZΑ-Ω0-9 ]/g, " ").replace(/\s+/g, " ").trim(); if (rn && (rn === q || (q.length >= 5 && (rn.indexOf(q) === 0 || q.indexOf(rn) === 0)))) { hit = r; return true; } return false; });
+      return hit;
+    }
+    function resolve(raw, name, hint, cur) {
+      var s = String(raw == null ? "" : raw).trim(), ath = false, us = false;
+      if (!s && !name) return null;
+      s = s.replace(/^(ATHEX|ASE|XATH|NASDAQ|NYSE|AMEX|ARCA|BATS|CRYPTO|BINANCE|COINBASE)\s*:\s*/i, function (m) { if (/athex|ase|xath/i.test(m)) ath = true; else if (!/crypto|binance|coinbase/i.test(m)) us = true; return ""; });
+      s = s.replace(/(\.AT|\.ATH|\.AA|\s+GA|\s+GR|\.GR)$/i, function () { ath = true; return ""; }).replace(/(\.US|\s+US|\s+UN|\s+UW|\s+UQ)$/i, function () { us = true; return ""; }).trim();
+      var up = s.toUpperCase();
+      if (/^GR[A-Z0-9]{9}\d$/.test(up)) { up = ""; ath = true; }
+      if (/^US[A-Z0-9]{9}\d$/.test(up)) { up = ""; us = true; }
+      function crypto(sy) {
+        var low = sy.toLowerCase().replace(/-?(eur|usd|usdt|usdc)$/i, ""), hit = null;
+        cgList().forEach(function (x) { if (!hit && x.symbol && x.symbol.toLowerCase() === low) hit = x; });
+        if (!hit && CGSRCH[low]) hit = CGSRCH[low];
+        if (!hit) return null;
+        return { sym: "c:" + hit.id, kind: "c", lab: (hit.symbol || low).toUpperCase(), n: hit.name, m: { s: (hit.symbol || low).toUpperCase(), n: hit.name, img: hit.image || hit.thumb || null, ex: null, cur: null }, pc: null };
+      }
+      if (hint === "c") return up ? crypto(up) : null;
+      if (up && !us) { var g = grRow(up); if (g && (ath || cur === "EUR" || !cur || !usIdx()[up])) return { sym: g.sym, kind: "gr", lab: DS(g.sym), n: g.name, pc: "EUR" }; }
+      if (up && !ath) {
+        var I = usIdx(), k = I[up] ? up : I[up.replace(/\./g, "-")] ? up.replace(/\./g, "-") : I[up.replace(/-/g, ".")] ? up.replace(/-/g, ".") : null;
+        if (k && hint !== "gr") { var u = I[k]; return { sym: "f:" + k, kind: "f", lab: k, n: u.n, m: { s: k, n: u.n, img: null, ex: u.ex || null, cur: u.cur || "USD" }, pc: u.cur || "USD" }; }
+      }
+      if (name && !us) { var b = byName(name); if (b) return { sym: b.sym, kind: "gr", lab: DS(b.sym), n: b.name, pc: "EUR" }; }
+      if (up && hint !== "gr" && hint !== "f") { var c = crypto(up); if (c) return c; }
+      return null;
+    }
+    var CGSRCH = {};
+    function cgSearch(list) {
+      list = list.filter(function (s) { return s && CGSRCH[s.toLowerCase()] === undefined; }).slice(0, 12);
+      if (!list.length || typeof fetch !== "function") return Promise.resolve();
+      return Promise.all(list.map(function (s, i) {
+        var low = s.toLowerCase();
+        return new Promise(function (r) { setTimeout(r, i * 250); }).then(function () {
+          return fetch("https://api.coingecko.com/api/v3/search?query=" + encodeURIComponent(low)).then(function (r) { return r.ok ? r.json() : null; });
+        }).then(function (j) {
+          var best = null; ((j && j.coins) || []).forEach(function (c) { if (c.symbol && c.symbol.toLowerCase() === low && (!best || (c.market_cap_rank || 1e9) < (best.market_cap_rank || 1e9))) best = c; });
+          CGSRCH[low] = best ? { id: best.id, symbol: best.symbol, name: best.name, thumb: best.large || best.thumb } : null;
+        }).catch(function () { CGSRCH[low] = null; });
+      }));
+    }
+
+    /* ---------- από τον πίνακα στις συναλλαγές ---------- */
+    function detect(table, fname) {
+      /* Interactive Brokers: αναφορά με ενότητες (Trades,Header / Trades,Data) */
+      var ib = table.filter(function (r) { return r[0] === "Trades" && (r[1] === "Header" || r[1] === "Data"); });
+      if (ib.length > 1) {
+        var hd = ib.filter(function (r) { return r[1] === "Header"; })[0].slice(2), di = hd.indexOf("DataDiscriminator");
+        var data = ib.filter(function (r) { return r[1] === "Data" && (di < 0 || /^(Order|Trade)$/.test(r[2 + di])); }).map(function (r) { return r.slice(2); });
+        var mp = guessMap(hd), ti = hd.indexOf("T. Price"); if (ti > -1) mp.price = ti;
+        var di2 = hd.indexOf("Date/Time"); if (di2 > -1) mp.date = di2;
+        return { fmt: "Interactive Brokers", head: hd, rows: data, map: mp, known: true };
+      }
+      var bi = 0, bm = null, bs = -1;
+      for (var i = 0; i < Math.min(table.length, 40); i++) { var m = guessMap(table[i].map(String)), sc = score(m); if (sc > bs) { bs = sc; bi = i; bm = m; } }
+      var head = (table[bi] || []).map(function (x) { return String(x).trim(); }), H = head.map(hnorm), has = function (x) { return H.indexOf(x) > -1; };
+      var fmt = null, hint = null;
+      if (has("action") && has("no. of shares")) fmt = "Trading 212";
+      else if (has("ticker") && has("price per share") && (has("total amount") || has("type"))) fmt = "Revolut (μετοχές)";
+      else if (has("symbol") && has("type") && has("quantity") && has("price") && (has("value") || has("fees")) && !has("ticker")) { fmt = "Revolut (crypto)"; hint = "c"; }
+      else if ((has("ημερομηνια") && has("ειδος") && has("συμβολο") && has("τεμαχια")) || (has("date") && has("type") && has("symbol") && has("shares") && has("price (eur)"))) fmt = "Axiogram";
+      else if (/freedom|ffin/i.test(fname || "")) fmt = "Freedom24";
+      return { fmt: fmt, head: head, rows: table.slice(bi + 1), map: bm || {}, hint: hint, known: !!fmt && fmt !== "Freedom24", hdrScore: bs };
+    }
+    function build() {
+      var S = ST, mp = S.map, dec = decOf(S.rows, [mp.qty, mp.price, mp.total].filter(function (x) { return x != null; }));
+      var order = mp.date != null ? dateOrder(S.rows, mp.date) : "dmy", items = [], skipped = 0;
+      var cell = function (r, k) { return mp[k] == null ? "" : r[mp[k]]; };
+      S.rows.forEach(function (r, ri) {
+        if (S.fmt === "Axiogram" && /^(ΘΕΣΕΙΣ|HOLDINGS)$/.test(String(r[0]))) return;
+        var rawQty = parseNum(cell(r, "qty"), dec);
+        var sd = mp.side != null ? sideOf(cell(r, "side")) : (rawQty < 0 ? "sell" : rawQty > 0 ? "buy" : null);
+        if (sd === "other" || sd == null) { if (String(cell(r, "sym") || cell(r, "name")).trim() || mp.side != null) skipped++; return; }
+        if (mp.side != null && rawQty < 0 && sd === "buy") sd = "sell";
+        var it = { i: ri, on: true, side: sd, raw: String(cell(r, "sym") || "").trim(), name: String(cell(r, "name") || "").trim(), qty: Math.abs(rawQty), err: null, warn: null };
+        var pcell = cell(r, "price"), tcell = cell(r, "total");
+        it.price = Math.abs(parseNum(pcell, dec)); var tot = Math.abs(parseNum(tcell, dec));
+        it.cur = curOf(String(cell(r, "cur") || "")) || curOf(typeof pcell === "string" ? pcell : "") || null;
+        var tc = curOf(String(cell(r, "totcur") || "")) || curOf(typeof tcell === "string" ? tcell : "") || null;
+        if (!(it.price > 0) && tot > 0 && it.qty > 0) { it.price = tot / it.qty; it.cur = it.cur || tc; }
+        it.tot = tot; it.totcur = tc; it.fx = parseNum(cell(r, "fx"), dec);
+        it.date = parseDate(cell(r, "date"), order);
+        var cat = hnorm(cell(r, "cat"));
+        it.hint = S.hint || (/crypto|κρυπτο/.test(cat) ? "c" : null);
+        if (S.fmt === "Axiogram") it.cur = "EUR";
+        items.push(it);
+      });
+      S.items = items; S.skipped = skipped;
+      resolveAll();
+    }
+    function eurPrice(it) {
+      var pc = it.pc || it.cur || "EUR";
+      if (pc === "EUR") return { p: it.price, approx: false };
+      if (it.totcur === "EUR" && it.tot > 0 && it.qty > 0) return { p: it.tot / it.qty, approx: false };
+      var now = fxTo(pc);
+      if (it.fx > 0 && now) { if (Math.abs(it.fx / now - 1) < .3) return { p: it.price / it.fx, approx: false }; if (Math.abs(1 / it.fx / now - 1) < .3) return { p: it.price * it.fx, approx: false }; }
+      if (now) return { p: it.price / now, approx: true };
+      return null;
+    }
+    function check(it) {
+      it.err = null; it.warn = null;
+      if (!it.r) it.err = "Δεν βρέθηκε ο τίτλος";
+      else if (!it.date) it.err = "Λάθος ημερομηνία";
+      else if (!(it.qty > 0)) it.err = "Λείπουν τα τεμάχια";
+      else if (!(it.price > 0)) it.err = "Λείπει η τιμή";
+      if (it.r && !it.err) {
+        it.pcur = it.cur || it.r.pc || "EUR";
+        var e = eurPrice({ pc: it.pcur, price: it.price, tot: it.tot, totcur: it.totcur, qty: it.qty, fx: it.fx });
+        if (!e) it.err = "Χωρίς ισοτιμία για " + it.pcur;
+        else { it.eur = e.p; if (e.approx) it.warn = "Με τη σημερινή ισοτιμία"; }
+      }
+      if (!it.err && it.date > today()) it.err = "Μελλοντική ημερομηνία";
+      it.dup = false;
+      if (!it.err) {
+        it.dup = txns.some(function (t) { return t.sym === it.r.sym && t.side === it.side && t.date === it.date && Math.abs(t.qty - it.qty) < 1e-6 && Math.abs(t.price / it.eur - 1) < .01; });
+        if (it.dup) it.warn = "Υπάρχει ήδη";
+      }
+      if (it.err || it.dup) it.on = false;
+    }
+    function resolveAll() {
+      ST.items.forEach(function (it) { if (!it.manual) it.r = resolve(it.raw, it.name, it.hint, it.cur); check(it); });
+      /* μένουν άγνωστα σύμβολα: δοκιμάζουμε αν είναι crypto */
+      var need = {}; ST.items.forEach(function (it) { if (!it.r && it.raw && /^[A-Za-z0-9]{2,10}$/.test(it.raw.replace(/-?(eur|usd|usdt)$/i, ""))) need[it.raw.replace(/-?(eur|usd|usdt)$/i, "")] = 1; });
+      var ks = Object.keys(need);
+      if (ks.length && !ST.cgTried) {
+        ST.cgTried = true;
+        cgSearch(ks).then(function () { if (!ST) return; ST.items.forEach(function (it) { if (!it.r && !it.manual) { it.r = resolve(it.raw, it.name, it.hint || (CGSRCH[it.raw.toLowerCase().replace(/-?(eur|usd|usdt)$/i, "")] ? "c" : null), it.cur); if (it.r) { it.on = true; check(it); } } }); paint(); });
+      }
+    }
+
+    /* ---------- εμφάνιση ---------- */
+    function fmtP(v, cur) { var a = Math.abs(v), d = a >= 100 ? 2 : a >= 1 ? 3 : 6; return new Intl.NumberFormat(LOC, { maximumFractionDigits: d, minimumFractionDigits: Math.min(2, d) }).format(v) + " " + ({ EUR: "€", USD: "$", GBP: "£" }[cur] || cur || ""); }
+    function pfOpts(sel) { var o = '<option value="main">' + esc((pfs.filter(function (p) { return p.id === "main"; })[0] || {}).n || "Κύριο") + "</option>"; pfs.forEach(function (p) { if (p.id !== "main") o += '<option value="' + esc(p.id) + '"' + (sel === p.id ? " selected" : "") + ">" + esc(p.n || p.id) + "</option>"; }); return o; }
+    function step1() {
+      ST = null;
+      ibody.innerHTML =
+        '<label class="imdrop" id="imDrop"><input type="file" id="imFile" accept=".csv,.tsv,.txt,.xlsx,.xls,.xlsm,.ods,text/csv"><span class="imico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4"/><path d="M7 9l5-5 5 5"/><path d="M5 20h14"/></svg></span><b>Διάλεξε ή σύρε εδώ το αρχείο</b><span class="note">CSV ή Excel από το broker ή την τράπεζά σου</span></label>' +
+        '<p class="note" style="margin:0">Αναγνωρίζονται αυτόματα: <b>Trading 212</b>, <b>Revolut</b> (μετοχές και crypto), <b>Interactive Brokers</b> και το αρχείο εξαγωγής του Axiogram. Για άλλους (Πειραιώς, Eurobank, Εθνική, Alpha, Freedom24 κ.ά.) δείχνεις εσύ ποια στήλη είναι τι.</p>' +
+        '<details class="imhow"><summary>Πώς βγάζω το αρχείο;</summary><ul>' +
+        "<li><b>Trading 212:</b> Ιστορικό (History) → εικονίδιο εξαγωγής → διάλεξε διάστημα → CSV.</li>" +
+        "<li><b>Revolut:</b> Επενδύσεις ή Crypto → ⋯ → Έγγραφα / Statements → Account statement → Excel ή CSV.</li>" +
+        "<li><b>Interactive Brokers:</b> Performance &amp; Reports → Statements → Activity → μορφή CSV.</li>" +
+        "<li><b>Ελληνικές τράπεζες και χρηματιστηριακές:</b> e-banking → Επενδύσεις / Χρεόγραφα → Κινήσεις ή Εκκαθαρίσεις → Εξαγωγή σε Excel.</li>" +
+        '</ul></details>' +
+        '<details class="imhow"><summary>Ή επικόλλησε τον πίνακα</summary><textarea id="imPaste" class="search" rows="5" placeholder="Αντέγραψε τις γραμμές από το e-banking ή το Excel, μαζί με τους τίτλους των στηλών, και επικόλλησέ τες εδώ." style="width:100%;font-size:13px"></textarea><div style="display:flex;justify-content:flex-end;margin-top:8px"><button type="button" class="btn sm" id="imPasteGo">Συνέχεια</button></div></details>' +
+        '<p class="note imsafe"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Το αρχείο διαβάζεται μόνο στη συσκευή σου. Δεν ανεβαίνει πουθενά.</p>' +
+        '<p class="err" id="imErr" role="alert" style="margin:0"></p>';
+      var drop = document.getElementById("imDrop");
+      ["dragenter", "dragover"].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add("over"); }); });
+      ["dragleave", "drop"].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove("over"); }); });
+      drop.addEventListener("drop", function (e) { var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]; if (f) take(f); });
+      document.getElementById("imFile").addEventListener("change", function (e) { var f = e.target.files && e.target.files[0]; if (f) take(f); });
+      document.getElementById("imPasteGo").addEventListener("click", function () { var t = document.getElementById("imPaste").value; if (t.trim()) start({ text: t }, "Επικόλληση"); });
+    }
+    function take(f) {
+      document.getElementById("imErr").textContent = "";
+      if (f.size > 15 * 1024 * 1024) { document.getElementById("imErr").textContent = "Το αρχείο είναι πολύ μεγάλο (πάνω από 15 MB)."; return; }
+      ibody.querySelector(".imdrop b").textContent = "Διαβάζω το " + f.name + "…";
+      readFile(f).then(function (res) { start(res, f.name); }).catch(function (e) {
+        step1(); document.getElementById("imErr").textContent = e && e.message === "xlsxlib" ? "Δεν φορτώθηκε ο αναγνώστης Excel. Έλεγξε τη σύνδεση ή αποθήκευσε το αρχείο ως CSV." : "Δεν διαβάστηκε το αρχείο.";
+      });
+    }
+    function start(res, fname) {
+      var p = loadUniv(); var go = function () {
+        USSET = null;
+        var cands = res.sheets ? res.sheets : [splitCsv(res.text)], best = null;
+        cands.forEach(function (t) { if (!t || !t.length) return; var d = detect(t, fname); var sc = (d.known ? 100 : 0) + (d.hdrScore || 0) + Math.min(d.rows.length, 50) / 100; if (!best || sc > best.sc) { best = d; best.sc = sc; } });
+        if (!best || !best.rows.length) { step1(); document.getElementById("imErr").textContent = "Δεν βρέθηκε πίνακας με συναλλαγές στο αρχείο."; return; }
+        ST = best; ST.fname = fname; ST.pf = pfSel !== "all" ? pfSel : "main";
+        if (ST.map.qty == null || (ST.map.sym == null && ST.map.name == null) || ST.map.date == null || (ST.map.price == null && ST.map.total == null)) ST.showMap = true;
+        build(); paint();
+      };
+      if (p && p.then) p.then(go, go); else go();
+    }
+    function paint() {
+      if (!ST) return;
+      var S = ST, ok = S.items.filter(function (it) { return it.on && !it.err; }), bad = S.items.filter(function (it) { return it.err; }).length, dups = S.items.filter(function (it) { return it.dup; }).length;
+      var opts = function (k) { var o = '<option value="">—</option>'; S.head.forEach(function (h, i) { o += '<option value="' + i + '"' + (S.map[k] === i ? " selected" : "") + ">" + esc(h || "Στήλη " + (i + 1)) + "</option>"; }); return o; };
+      var h = '<div class="imhead"><div><b>' + esc(S.fname) + '</b><span class="note">' + (S.fmt ? "Μορφή: " + esc(S.fmt) : S.showMap ? "Δείξε ποια στήλη είναι τι, παρακάτω" : "Οι στήλες αναγνωρίστηκαν αυτόματα· έλεγξε τις γραμμές") + "</span></div>" +
+        '<button type="button" class="btn sm" id="imAgain">Άλλο αρχείο</button></div>';
+      h += '<details class="immap"' + (S.showMap ? " open" : "") + '><summary>Ποια στήλη είναι τι</summary><div class="immapg">' + FIELDS.map(function (f) { return '<label><span>' + f[1] + "</span><select class=\"search\" data-imf=\"" + f[0] + '">' + opts(f[0]) + "</select></label>"; }).join("") + "</div>" +
+        '<p class="note" style="margin:8px 0 0">Χρειάζονται τουλάχιστον: ημερομηνία, σύμβολο ή όνομα, τεμάχια και τιμή ή σύνολο. Αν δεν υπάρχει στήλη «Είδος», οι αρνητικές ποσότητες θεωρούνται πωλήσεις.</p></details>';
+      h += '<div class="imsum"><span><b>' + ok.length + "</b> για εισαγωγή</span>" + (dups ? '<span class="w">' + dups + " υπάρχουν ήδη</span>" : "") + (bad ? '<span class="e">' + bad + " με πρόβλημα</span>" : "") + (S.skipped ? '<span class="note">' + S.skipped + " άλλες κινήσεις (μερίσματα, καταθέσεις κ.λπ.) παραλείφθηκαν</span>" : "") +
+        '<label class="impf">Στο χαρτοφυλάκιο <select class="search" id="imPf">' + pfOpts(S.pf) + "</select></label></div>";
+      var list = S.items.slice(0, 600);
+      h += '<div class="panel tablewrap imtw"><table class="imtab"><thead><tr><th><input type="checkbox" id="imAll" aria-label="Επιλογή όλων"' + (ok.length && ok.length === S.items.filter(function (it) { return !it.err; }).length ? " checked" : "") + "></th><th>Ημερομηνία</th><th>Είδος</th><th>Τίτλος</th><th class=\"r\">Τεμάχια</th><th class=\"r\">Τιμή</th><th>Κατάσταση</th></tr></thead><tbody>" +
+        list.map(function (it, k) {
+          var tit = it.r ? '<b>' + esc(it.r.lab) + '</b><span class="note">' + esc((it.r.kind === "gr" ? "Χ.Α." : it.r.kind === "f" ? "ΗΠΑ" : "Crypto") + (it.r.n ? " · " + it.r.n : "")) + "</span>" :
+            '<div class="imfix"><select class="search" data-imk="' + k + '" aria-label="Αγορά"><option value="">Αυτόματα</option><option value="gr"' + (it.fixk === "gr" ? " selected" : "") + '>Χ.Α.</option><option value="f"' + (it.fixk === "f" ? " selected" : "") + '>ΗΠΑ</option><option value="c"' + (it.fixk === "c" ? " selected" : "") + '>Crypto</option></select><input class="search" data-ims="' + k + '" value="' + esc(it.fix != null ? it.fix : it.raw || it.name) + '" placeholder="π.χ. ΔΕΗ, AAPL, BTC" aria-label="Σύμβολο"></div>';
+          var st = it.err ? '<span class="imst e">' + esc(it.err) + "</span>" : it.warn ? '<span class="imst w">' + esc(it.warn) + "</span>" : '<span class="imst ok">Έτοιμη</span>';
+          return '<tr class="' + (it.err ? "bad" : "") + '"><td><input type="checkbox" data-imon="' + k + '"' + (it.on ? " checked" : "") + (it.err ? " disabled" : "") + ' aria-label="Εισαγωγή γραμμής"></td><td class="nw">' + esc(it.date ? fmtDate(it.date) : "—") + '</td><td><span class="imside ' + it.side + '">' + (it.side === "sell" ? "Πώληση" : "Αγορά") + "</span></td><td class=\"imt\">" + tit + (it.raw && it.r && it.raw.toUpperCase() !== it.r.lab ? '<span class="note imraw">' + esc(it.raw) + "</span>" : "") + '</td><td class="r num">' + (it.qty > 0 ? fmtQty(it.qty) : "—") + '</td><td class="r num nw">' + (it.price > 0 ? esc(fmtP(it.price, it.pcur || it.cur || (it.r && it.r.pc) || "EUR")) : "—") + "</td><td>" + st + "</td></tr>";
+        }).join("") + "</tbody></table></div>" + (S.items.length > 600 ? '<p class="note">Εμφανίζονται οι πρώτες 600 από ' + S.items.length + " γραμμές· εισάγονται όλες όσες είναι επιλεγμένες.</p>" : "");
+      if (!S.items.length) h += '<p class="note">Δεν βρέθηκαν αγορές ή πωλήσεις. Έλεγξε στο «Ποια στήλη είναι τι» ότι οι στήλες είναι σωστές.</p>';
+      h += '<div class="imfoot"><button type="button" class="btn" id="imCancel2">Άκυρο</button><button type="button" class="btn primary" id="imGo"' + (ok.length ? "" : " disabled") + ">Εισαγωγή " + ok.length + " συναλλαγ" + (ok.length === 1 ? "ής" : "ών") + "</button></div>";
+      ibody.innerHTML = h;
+      box.classList.add("wide");
+    }
+    function fmtDate(d) { var p = d.split("-"); return p[2] + "/" + p[1] + "/" + p[0]; }
+    function doImport() {
+      var S = ST, pf = document.getElementById("imPf").value || "main", add = [], base = Date.now();
+      S.items.forEach(function (it, k) {
+        if (!it.on || it.err) return;
+        var tx = { id: "t" + base.toString(36) + k.toString(36) + Math.random().toString(36).slice(2, 5), ts: base + k, side: it.side, sym: it.r.sym, qty: it.qty, price: it.eur, date: it.date, pn: it.price, pc: it.pcur, imp: 1 };
+        if (pf !== "main") tx.pf = pf;
+        if (it.r.m) tx.m = it.r.m;
+        add.push(tx);
+      });
+      if (!add.length) return;
+      add.forEach(function (t) { txns.push(t); });
+      var fs = {}; add.forEach(function (t) { if (/^f:/.test(t.sym)) fs[t.sym.slice(2)] = 1; }); Object.keys(fs).forEach(trackForeign);
+      if (add.some(function (t) { return /^c:/.test(t.sym); })) { cgAt = 0; refreshCrypto(true); }
+      LASTIMP = add.map(function (t) { return t.id; });
+      renderPortfolio(); persist();
+      var nb = add.filter(function (t) { return t.side === "buy"; }).length, ns = add.length - nb, ntit = Object.keys(add.reduce(function (o, t) { o[t.sym] = 1; return o; }, {})).length;
+      ibody.innerHTML = '<div class="imdone"><span class="imok">✓</span><h3>Προστέθηκαν ' + add.length + " συναλλαγ" + (add.length === 1 ? "ή" : "ές") + '</h3><p class="note">' + nb + " αγορ" + (nb === 1 ? "ά" : "ές") + (ns ? " και " + ns + (ns === 1 ? " πώληση" : " πωλήσεις") : "") + " σε " + ntit + " τίτλ" + (ntit === 1 ? "ο" : "ους") + ". Αν κάτι δεν πήγε όπως ήθελες, μπορείς να τις αφαιρέσεις όλες μαζί.</p>" +
+        '<div class="imfoot"><button type="button" class="btn" id="imUndo">Αναίρεση εισαγωγής</button><button type="button" class="btn primary" id="imDone">Τέλος</button></div></div>';
+      box.classList.remove("wide");
+    }
+    function undo() {
+      if (!LASTIMP) return; var ids = {}; LASTIMP.forEach(function (i) { ids[i] = 1; });
+      for (var i = txns.length - 1; i >= 0; i--) if (ids[txns[i].id]) txns.splice(i, 1);
+      LASTIMP = null; renderPortfolio(); persist(); toast("Η εισαγωγή αναιρέθηκε"); close();
+    }
+    ibody.addEventListener("change", function (e) {
+      var t = e.target, k;
+      if (t.matches("[data-imf]")) { var f = t.getAttribute("data-imf"); if (t.value === "") delete ST.map[f]; else { var v = +t.value; Object.keys(ST.map).forEach(function (x) { if (ST.map[x] === v) delete ST.map[x]; }); ST.map[f] = v; } ST.showMap = true; ST.cgTried = false; build(); paint(); return; }
+      if (t.matches("[data-imon]")) { ST.items[+t.getAttribute("data-imon")].on = t.checked; paint(); return; }
+      if (t.id === "imAll") { ST.items.forEach(function (it) { if (!it.err) it.on = t.checked; }); paint(); return; }
+      if (t.id === "imPf") { ST.pf = t.value; return; }
+      if (t.matches("[data-ims]") || t.matches("[data-imk]")) {
+        k = +(t.getAttribute("data-ims") || t.getAttribute("data-imk")); var it = ST.items[k];
+        var inp = ibody.querySelector('[data-ims="' + k + '"]'), ks = ibody.querySelector('[data-imk="' + k + '"]');
+        it.fix = inp.value; it.fixk = ks.value || null;
+        var r = resolve(it.fix, "", it.fixk, it.fixk === "gr" ? "EUR" : null);
+        var go = function () { if (r) { it.r = r; it.manual = true; it.on = true; check(it); if (it.err) it.on = false; } paint(); if (!r) { var x = ibody.querySelector('[data-ims="' + k + '"]'); if (x) { x.classList.add("bad"); x.focus(); } } };
+        if (!r && it.fix && (it.fixk === "c" || !it.fixk)) { cgSearch([it.fix]).then(function () { r = resolve(it.fix, "", it.fixk || "c", null); go(); }); } else go();
+      }
+    });
+    ibody.addEventListener("click", function (e) {
+      if (e.target.closest("#imAgain")) { box.classList.remove("wide"); step1(); return; }
+      if (e.target.closest("#imCancel2") || e.target.closest("#imDone")) { close(); return; }
+      if (e.target.closest("#imGo")) { doImport(); return; }
+      if (e.target.closest("#imUndo")) { undo(); }
+    });
+    function open() { last = document.activeElement; box.classList.remove("wide"); step1(); box.hidden = false; scr.hidden = false; loadUniv(); document.getElementById("imClose").focus(); }
+    function close() { box.hidden = true; scr.hidden = true; ST = null; if (last && last.focus) last.focus(); }
+    document.getElementById("pf-imp").addEventListener("click", open);
+    document.getElementById("imClose").addEventListener("click", close);
+    scr.addEventListener("click", close);
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !box.hidden) close(); });
+    window.__impTest = { parseNum: parseNum, parseDate: parseDate, resolve: resolve, splitCsv: splitCsv };
+  })();
   /* θέμα χαρτοφυλακίου: κουμπί ήλιου (στήλη αριστερά σε υπολογιστή, εργαλεία σε κινητό) */
   function pfThemeToggle() {
     THEME_PF = document.documentElement.getAttribute("data-ui") === "light" ? "dark" : "light";
