@@ -844,6 +844,11 @@ body[data-cat="pf"] #gstrip, body[data-cat="pf"] .extras { display: none !import
 .dashsec .sechead, #mvhead { margin-top: 8px; }
 #allsec .sechead, #secsec .sechead, #divsec .sechead { margin-top: 14px; }
 /* σελίδα υποδοχής */
+.srcfoot { margin-top: 26px; padding: 18px 4px 6px; border-top: 1px solid var(--dk-line); color: var(--muted); font-size: 12.5px; line-height: 1.6; display: flex; flex-direction: column; gap: 6px; }
+.srcfoot p { margin: 0; }
+.srcfoot a { color: inherit; text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); text-underline-offset: 2px; }
+.srcfoot a:hover { color: var(--fg); }
+.srcfoot .srcc { opacity: .75; }
 .sitebn { display: flex; align-items: center; gap: 12px; padding: 11px 14px 11px 16px; border-radius: 16px; border: 1px solid color-mix(in srgb, var(--bn) 45%, transparent); background: linear-gradient(90deg, color-mix(in srgb, var(--bn) 22%, transparent), color-mix(in srgb, var(--bn) 8%, transparent)); color: var(--fg); font-size: 14.5px; line-height: 1.45; --bn: #7c84ff; box-shadow: 0 0 22px color-mix(in srgb, var(--bn) 18%, transparent); }
 .sitebn[hidden] { display: none; }
 .sitebn[data-k="warn"] { --bn: #feb438; } .sitebn[data-k="ok"] { --bn: #3fd18f; } .sitebn[data-k="promo"] { --bn: #ff6940; }
@@ -1257,6 +1262,11 @@ tr.txrow > td { padding: 0 10px 14px !important; background: transparent !import
     <div id="tl-cal" class="tlpane" hidden></div>
     <div id="tl-al" class="tlpane" hidden></div>
   </div>
+  <footer class="srcfoot" id="srcfoot">
+    <p><b>Πηγές δεδομένων.</b> Τιμές Χ.Α.: <a href="https://www.capital.gr" target="_blank" rel="noopener">capital.gr</a> · Κεφαλαιοποίηση: <a href="https://www.euro2day.gr" target="_blank" rel="noopener">euro2day.gr</a> · Διαγράμματα, μετοχές ΗΠΑ και θεμελιώδη: <a href="https://www.tradingview.com" target="_blank" rel="noopener">TradingView</a> και Yahoo Finance · Crypto: <a href="https://www.coingecko.com/en/api" target="_blank" rel="noopener">Data provided by CoinGecko</a> · Perpetuals: <a href="https://hyperliquid.xyz" target="_blank" rel="noopener">Hyperliquid</a>.</p>
+    <p>Οι τιμές έχουν καθυστέρηση έως 15 λεπτά και δίνονται μόνο για ενημέρωση. Δεν αποτελούν επενδυτική συμβουλή ούτε πρόταση αγοράς ή πώλησης. Τα σήματα και τα ονόματα ανήκουν στους κατόχους τους.</p>
+    <p class="srcc">© <span id="srcY">2026</span> Axiogram</p>
+  </footer>
 <div class="toast" id="toast" role="status" hidden></div>
 <div class="scrim" id="cuScrim" hidden></div>
 <div class="panel authbox cubox" id="cuBox" role="dialog" aria-modal="true" aria-labelledby="cuTitle" hidden>
@@ -1782,6 +1792,8 @@ var EN_EXACT = {
   "Νόμισμα": "Currency",
   "Θέμα": "Theme",
   "Θέμα Αγορών": "Markets theme",
+  "Πηγές δεδομένων.": "Data sources.",
+  "Τιμές Χ.Α.:": "Athens prices:",
   "Φωτεινό ή σκοτεινό χαρτοφυλάκιο": "Light or dark portfolio",
   "Φωτεινό": "Light",
   "Σκοτεινό": "Dark",
@@ -2107,6 +2119,9 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   function isExt(s) { return /^[cfmp]:/.test(s || ""); }
   /* λογότυπα (TradingView), με κλειδί και το ελληνικό και το λατινικό σύμβολο */
   var LOGO_D = {};
+  /* λογότυπα μετοχών: προς το παρόν απενεργοποιημένα (το TradingView δεν επιτρέπει εμπορική χρήση των εικόνων του).
+     Για να μπουν ξανά από πηγή με άδεια, αρκεί να επιστρέφει εδώ τη διεύθυνση της εικόνας. */
+  function logoUrl(id) { return null; }
   (function () {
     var L = window.__LOGOS || {};
     ((window.__US && window.__US.s) || []).forEach(function (u) { if (u.l) { LOGO_D["f:" + u.s] = u.l; } });
@@ -2182,8 +2197,8 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
   function monoHtml(sym) {
     var h = 0; for (var i = 0; i < sym.length; i++) h = (h * 31 + sym.charCodeAt(i)) % 360;
-    var lg = LOGO_D[sym];
-    return '<div class="mono hc' + (lg ? " haslogo" : "") + '" style="--h:' + h + '" aria-hidden="true">' + esc(sym.slice(0, 2)) + (lg ? '<img src="https://s3-symbol-logo.tradingview.com/' + encodeURIComponent(lg) + '.svg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.classList.remove(\'haslogo\');this.remove()">' : "") + "</div>";
+    var lg = LOGO_D[sym] ? logoUrl(LOGO_D[sym]) : null;
+    return '<div class="mono hc' + (lg ? " haslogo" : "") + '" style="--h:' + h + '" aria-hidden="true">' + esc(sym.slice(0, 2)) + (lg ? '<img src="' + esc(lg) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.classList.remove(\'haslogo\');this.remove()">' : "") + "</div>";
   }
   function barPos(v) {
     var w = Math.min(Math.abs(v), 10) / 10 * 50;
@@ -3147,7 +3162,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   });
   function assetIcon(sym, label) {
     var m = EXTMETA[sym];
-    if (/^f:/.test(sym) && LOGO_D[sym]) return logoBox(DS(sym), "https://s3-symbol-logo.tradingview.com/" + encodeURIComponent(LOGO_D[sym]) + ".svg");
+    if (/^f:/.test(sym) && LOGO_D[sym]) return logoBox(DS(sym), logoUrl(LOGO_D[sym]));
     if (LOGO_D[sym] && !(m && m.img)) return monoHtml(DS(sym));
     if (m && m.img) return '<img class="cimg" src="' + esc(m.img) + '" alt="" loading="lazy" referrerpolicy="no-referrer">';
     return monoHtml(label || DS(sym));
@@ -4230,7 +4245,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   try { var c0 = JSON.parse(localStorage.getItem("agora-cg100") || "null"); if (c0 && Array.isArray(c0.d)) { CG100 = c0.d; cg100At = c0.at || 0; } } catch (e) {}
   (CG100 || []).forEach(function (x) { if (x && x.id && x.current_price != null && !CGP[x.id]) CGP[x.id] = { p: x.current_price, c: x.price_change_percentage_24h || 0 }; });
   function xItems() {
-    if (mkt === "us") { var u = usdEur(); return ((USD_ && USD_.s) || []).map(function (x, i) { return { k: "f", id: x.s, s: x.s, n: x.n, p: x.p * u, np: x.p, h1: null, c: x.c, w: x.w, m: x.m * u, v: x.v, vsh: true, img: x.l ? "https://s3-symbol-logo.tradingview.com/" + encodeURIComponent(x.l) + ".svg" : null, sub: x.x, rank: i + 1 }; }); }
+    if (mkt === "us") { var u = usdEur(); return ((USD_ && USD_.s) || []).map(function (x, i) { return { k: "f", id: x.s, s: x.s, n: x.n, p: x.p * u, np: x.p, h1: null, c: x.c, w: x.w, m: x.m * u, v: x.v, vsh: true, img: x.l ? logoUrl(x.l) : null, sub: x.x, rank: i + 1 }; }); }
     return (CG100 || []).map(function (x, i) { return { k: "c", id: x.id, s: String(x.symbol || "").toUpperCase(), n: x.name, p: x.current_price, np: x.current_price, h1: x.price_change_percentage_1h_in_currency, c: x.price_change_percentage_24h_in_currency != null ? x.price_change_percentage_24h_in_currency : x.price_change_percentage_24h, w: x.price_change_percentage_7d_in_currency, m: x.market_cap, v: x.total_volume, img: x.image, sp: x.sparkline_in_7d && x.sparkline_in_7d.price, rank: x.market_cap_rank || i + 1 }; });
   }
   function loadCg100(force) {
@@ -4325,9 +4340,9 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       return { k: "c", id: id, s: m.s || id.toUpperCase(), n: m.n || id, p: CGP[id] ? CGP[id].p : null, c: CGP[id] ? CGP[id].c : null, img: m.img || null, partial: true };
     }
     var q = USQ[id], rank = null;
-    if (q) { ((USD_ && USD_.s) || []).forEach(function (x, i) { if (x.s === id) rank = i + 1; }); return { k: "f", id: id, s: id, n: q.n, p: q.p * u, np: q.p, c: q.c, w: q.w, m: q.m * u, v: q.v, vsh: true, img: q.l ? "https://s3-symbol-logo.tradingview.com/" + encodeURIComponent(q.l) + ".svg" : null, sub: q.x, sec: q.sec, rank: rank }; }
+    if (q) { ((USD_ && USD_.s) || []).forEach(function (x, i) { if (x.s === id) rank = i + 1; }); return { k: "f", id: id, s: id, n: q.n, p: q.p * u, np: q.p, c: q.c, w: q.w, m: q.m * u, v: q.v, vsh: true, img: q.l ? logoUrl(q.l) : null, sub: q.x, sec: q.sec, rank: rank }; }
     var f = FOREIGN && FOREIGN.q && FOREIGN.q[id];
-    if (f) return { k: "f", id: id, s: id, n: f.n, p: f.pe, np: f.p, ncur: f.cur, c: f.c, img: LOGO_D["f:" + id] ? "https://s3-symbol-logo.tradingview.com/" + encodeURIComponent(LOGO_D["f:" + id]) + ".svg" : null, sub: f.ex };
+    if (f) return { k: "f", id: id, s: id, n: f.n, p: f.pe, np: f.p, ncur: f.cur, c: f.c, img: LOGO_D["f:" + id] ? logoUrl(LOGO_D["f:" + id]) : null, sub: f.ex };
     return { k: "f", id: id, s: id, n: m.n || id, p: null, c: null, img: null, partial: true };
   }
   function tvSymbol(id) {
@@ -4630,7 +4645,16 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   (function () {
     var btn = document.getElementById("installbtn"), box = document.getElementById("appBox"), scr = document.getElementById("appScrim");
     if (!btn || window.claude || !FIREBASE_CONFIG) return;
-    if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(function () {});
+    if ("serviceWorker" in navigator) {
+      /* νέα έκδοση του site: η εφαρμογή ανανεώνεται μόνη της (όχι όσο είναι ανοιχτή φόρμα ή παράθυρο) */
+      var hadCtrl = !!navigator.serviceWorker.controller, swPend = false;
+      var swReload = function () { if (document.querySelector('.authbox:not([hidden]), #pf-form:not([hidden]), #drawer:not([hidden])')) { swPend = true; return; } swPend = false; location.reload(); };
+      navigator.serviceWorker.addEventListener("controllerchange", function () { if (!hadCtrl) { hadCtrl = true; return; } swReload(); });
+      navigator.serviceWorker.register("sw.js").then(function (reg) {
+        setInterval(function () { reg.update().catch(function () {}); }, 30 * 60000);
+        document.addEventListener("visibilitychange", function () { if (document.hidden) return; if (swPend) swReload(); else reg.update().catch(function () {}); });
+      }).catch(function () {});
+    }
     var standalone = (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone;
     if (standalone) return;
     var ios = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
@@ -4713,7 +4737,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   }
   function itemLogo(it) {
     if (it.mk === "gr") return monoHtml(it.lab);
-    return logoBox(it.lab, it.o && it.o.logo ? "https://s3-symbol-logo.tradingview.com/" + encodeURIComponent(it.o.logo) + ".svg" : null);
+    return logoBox(it.lab, it.o && it.o.logo ? logoUrl(it.o.logo) : null);
   }
   function fmtP(v) { return Math.abs(v * RATE) >= 1 ? nf2.format(v * RATE) + CS : fmtC(v); }
   function pctS(v, d) { return v == null ? "—" : sgn(v) + new Intl.NumberFormat(LOC, { maximumFractionDigits: d == null ? 1 : d }).format(Math.abs(v)) + "%"; }
@@ -4909,14 +4933,14 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     q = q.trim().toLowerCase(); var out = [];
     if (!q) return out;
     rows.forEach(function (r) { var a = r.dsym.toLowerCase(), b = r.sym.toLowerCase(), n = (r.name || "").toLowerCase(); var sc = a === q || b === q ? 0 : a.indexOf(q) === 0 || b.indexOf(q) === 0 ? 1 : n.indexOf(q) > -1 ? 2 : -1; if (sc >= 0) out.push([sc - (r.mcap ? 0.5 : 0), r.sym, r.dsym, r.name || "", "Χ.Α.", monoHtml(r.dsym)]); });
-    Object.keys(USQ).forEach(function (s) { var u = USQ[s], a = s.toLowerCase(), n = (u.n || "").toLowerCase(); var sc = a === q ? 0 : a.indexOf(q) === 0 ? 1.2 : n.indexOf(q) > -1 ? 2.2 : -1; if (sc >= 0) out.push([sc, "f:" + s, s, u.n || "", "ΗΠΑ", logoBox(s, u.l ? "https://s3-symbol-logo.tradingview.com/" + encodeURIComponent(u.l) + ".svg" : null)]); });
+    Object.keys(USQ).forEach(function (s) { var u = USQ[s], a = s.toLowerCase(), n = (u.n || "").toLowerCase(); var sc = a === q ? 0 : a.indexOf(q) === 0 ? 1.2 : n.indexOf(q) > -1 ? 2.2 : -1; if (sc >= 0) out.push([sc, "f:" + s, s, u.n || "", "ΗΠΑ", logoBox(s, u.l ? logoUrl(u.l) : null)]); });
     (CG100 || []).forEach(function (c) { var a = String(c.symbol || "").toLowerCase(), n = String(c.name || "").toLowerCase(); var sc = a === q ? 0.1 : a.indexOf(q) === 0 || n.indexOf(q) === 0 ? 1.1 : n.indexOf(q) > -1 ? 2.1 : -1; if (sc >= 0) out.push([sc, "c:" + c.id, a.toUpperCase(), c.name, "Crypto", logoBox(a.toUpperCase(), c.image)]); });
     out.sort(function (x, y) { return x[0] - y[0]; });
     return out.slice(0, 8);
   }
   function alKeyInfo(k) {
     if (/^c:/.test(k)) { var it = xGet(k); return { lab: it.s, n: it.n, img: it.img }; }
-    if (/^f:/.test(k)) { var q = USQ[k.slice(2)]; return { lab: k.slice(2), n: q ? q.n : k.slice(2), img: q && q.l ? "https://s3-symbol-logo.tradingview.com/" + encodeURIComponent(q.l) + ".svg" : null }; }
+    if (/^f:/.test(k)) { var q = USQ[k.slice(2)]; return { lab: k.slice(2), n: q ? q.n : k.slice(2), img: q && q.l ? logoUrl(q.l) : null }; }
     var r = BYSYM[k]; return { lab: r ? r.dsym : k, n: r ? r.name : "" };
   }
   function alLogo(a) { return /^[cf]:/.test(a.k) ? logoBox(a.lab, a.img || null) : monoHtml(a.lab); }
@@ -5168,7 +5192,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       '<div class="svkpi">' + (tp != null ? '<div><span class="note">Απόδοση από την αγορά</span><b class="chg ' + cls(tp) + '">' + pctS(tp, 2) + "</b></div>" : "") + '<div><span class="note">Σήμερα</span><b class="chg ' + cls(day) + '">' + pctS(day, 2) + "</b></div></div>" +
       '<div class="svbar">' + bar + "</div>" +
       '<div class="svlist">' + items.map(function (it, i) {
-        var logo = /^[cf]:/.test(it.k) ? logoBox(it.lab, it.img || (/^f:/.test(it.k) && LOGO_D[it.k] ? "https://s3-symbol-logo.tradingview.com/" + encodeURIComponent(LOGO_D[it.k]) + ".svg" : null)) : monoHtml(it.lab);
+        var logo = /^[cf]:/.test(it.k) ? logoBox(it.lab, it.img || (/^f:/.test(it.k) && LOGO_D[it.k] ? logoUrl(LOGO_D[it.k]) : null)) : monoHtml(it.lab);
         return '<div class="svrow"><i class="dot" style="background:' + pfColor(i) + '"></i>' + logo + '<div class="cn"><b>' + esc(it.lab) + "</b><span>" + esc(it.n || "") + '</span></div><span class="num w">' + n1(it.w) + "%</span>" + (it.chg == null ? '<span class="note">—</span>' : chgHtml(it.chg)) + (d.perf ? '<span class="pf chg ' + (it.perf == null ? "" : cls(it.perf)) + '" title="Απόδοση από την αγορά">' + pctS(it.perf) + "</span>" : "") + "</div>";
       }).join("") + "</div>" +
       '<p class="note" style="margin:0">Οι τιμές είναι οι τρέχουσες. Οι αναλογίες αλλάζουν με τις τιμές από τη μέρα της κοινοποίησης.</p>' +
@@ -5325,7 +5349,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     }
     if (/^f:/.test(k)) {
       var id = k.slice(2), x = xGet(k), sc = SCR && SCR.us.filter(function (r) { return r.k === id; })[0];
-      o.lab = id; o.n = x.n; o.logo = logoBox(id, x.img || (LOGO_D[k] ? "https://s3-symbol-logo.tradingview.com/" + encodeURIComponent(LOGO_D[k]) + ".svg" : null)); o.p = x.p; o.c = x.c;
+      o.lab = id; o.n = x.n; o.logo = logoBox(id, x.img || (LOGO_D[k] ? logoUrl(LOGO_D[k]) : null)); o.p = x.p; o.c = x.c;
       var sv = SPARK && SPARK[k]; if (sv && sv.length > 1) { o.sp = sv; o.spl = "3 μήνες"; o.spc = (sv[sv.length - 1] / sv[0] - 1) * 100; }
       if (x.m) o.kv.push(["Κεφαλαιοποίηση", money(x.m)]);
       if (sc && sc.pe > 0) o.kv.push(["P/E", n1(sc.pe)]);
@@ -5437,7 +5461,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var keys = Object.keys(favs);
     if (!keys.length) return dashCard("favs", "Αγαπημένα", '<p class="note">Πάτα ☆ δίπλα σε μια μετοχή ή ένα crypto για να το βλέπεις εδώ.</p>');
     var items = keys.map(function (k) {
-      if (isExt(k)) { var x = xGet(k); return { k: k, lab: x.s, n: x.n, logo: logoBox(x.s, x.img || (LOGO_D[k] ? "https://s3-symbol-logo.tradingview.com/" + encodeURIComponent(LOGO_D[k]) + ".svg" : null)), p: x.p, c: x.c, m: x.m || 0 }; }
+      if (isExt(k)) { var x = xGet(k); return { k: k, lab: x.s, n: x.n, logo: logoBox(x.s, x.img || (LOGO_D[k] ? logoUrl(LOGO_D[k]) : null)), p: x.p, c: x.c, m: x.m || 0 }; }
       var r = BYSYM[k]; return r ? { k: k, lab: r.dsym, n: r.name, logo: monoHtml(r.dsym), p: r.price, c: r.chg, m: r.mcap || 0 } : null;
     }).filter(Boolean);
     return dashCard("favs", "Αγαπημένα <span class=\"note\">· " + items.length + "</span>", '<div class="dwlist">' + items.slice(0, 6).map(function (x) { return miniRow(x.k, x.lab, x.n, x.logo, x.p, x.c); }).join("") + "</div>", items.length > 6 ? '<button type="button" class="linkbtn" data-dgo="favs">Όλα →</button>' : "");
@@ -5587,6 +5611,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     }
   }
   cfgApply();
+  try { document.getElementById("srcY").textContent = new Date().getFullYear(); } catch (e) {}
   if (typeof fetch === "function" && /^https?:/.test(location.protocol) && !window.claude && FIREBASE_CONFIG) {
     fetch("https://firestore.googleapis.com/v1/projects/agora-athinon/databases/(default)/documents/site/config?key=" + FIREBASE_CONFIG.apiKey, { cache: "no-store" })
       .then(function (r) { return r.ok ? r.json() : r.status === 404 ? { none: 1 } : null; })
