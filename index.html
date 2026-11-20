@@ -4165,6 +4165,8 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     });
   })();
   function showView(v) {
+    if (!navPop && v !== curView) { try { history.pushState({ ax: 1, v: v }, ""); } catch (e) {} }
+    curView = v;
     if (window.matchMedia && matchMedia("(max-width: 640px)").matches) window.scrollTo(0, 0);
     ["market", "heat", "favs", "portfolio", "tools"].forEach(function (k) {
       document.getElementById("view-" + k).hidden = k !== v;
@@ -4187,6 +4189,46 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   }
 
   var lastMk = "market";
+  /* ----- κουμπί «πίσω» (κινητό / browser): κλείνει παράθυρα και γυρίζει ενότητες αντί να βγαίνει από την εφαρμογή ----- */
+  var curView = "market", navPop = false, popSkip = 0;
+  try { history.replaceState({ ax: 1, v: "market", root: 1 }, ""); history.pushState({ ax: 1, v: "market", base: 1 }, ""); } catch (e) {}
+  var exitT = 0;
+  var OVS = ["drawer", "pf-form", "cuBox", "shBox", "svBox", "authBox", "cmpBox", "pfmBox", "hlBox", "mpBox", "allocBox", "setBox", "appBox"].map(function (id) { return document.getElementById(id); }).filter(Boolean);
+  function closeOv(el) {
+    if (el.id === "drawer") { closeStock(); return; }
+    if (el.id === "pf-form") { closeForm(); return; }
+    var b = el.querySelector(".ahead .close, button[id$='Close'], .close");
+    if (b) b.click(); else el.hidden = true;
+  }
+  function topOv() { var open = OVS.filter(function (el) { return !el.hidden; }); return open.length ? open[open.length - 1] : null; }
+  var ovObs = new MutationObserver(function (ms) {
+    ms.forEach(function (m) {
+      var el = m.target, vis = !el.hidden;
+      if (vis && !el.__ov) {
+        el.__ov = 1;
+        if (!navPop) { try { history.pushState({ ax: 1, v: curView, ov: el.id }, ""); } catch (e) {} }
+      } else if (!vis && el.__ov) {
+        el.__ov = 0;
+        if (!navPop) setTimeout(function () { if (history.state && history.state.ov === el.id) { popSkip++; history.back(); } }, 0);
+      }
+    });
+  });
+  OVS.forEach(function (el) { el.__ov = el.hidden ? 0 : 1; ovObs.observe(el, { attributes: true, attributeFilter: ["hidden"] }); });
+  window.addEventListener("popstate", function (e) {
+    if (popSkip) { popSkip--; return; }
+    navPop = true; setTimeout(function () { navPop = false; }, 0);
+    var o = topOv(), st = e.state || {};
+    if (o) { closeOv(o); if (st.root) { try { history.pushState({ ax: 1, v: curView, base: 1 }, ""); } catch (er) {} } return; }
+    if (st.root) {
+      /* στην αρχή: ένα «πίσω» δείχνει μήνυμα, δεύτερο μέσα σε 2,5″ βγαίνει από την εφαρμογή */
+      toast("Πάτα ξανά «πίσω» για έξοδο");
+      clearTimeout(exitT);
+      exitT = setTimeout(function () { if (history.state && history.state.root) { try { history.pushState({ ax: 1, v: curView, base: 1 }, ""); } catch (er) {} } }, 2500);
+      return;
+    }
+    if (st.v && st.v !== curView) { showView(st.v); return; }
+    if (st.ax && !st.root) { popSkip = 0; history.back(); }
+  });
   function catPfSub() {
     var el = document.getElementById("catPf"); if (!el) return;
     if (!txns.length && !wallets.length) { el.textContent = "Οι επενδύσεις σου"; return; }
