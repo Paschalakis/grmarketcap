@@ -1309,6 +1309,7 @@ tr.txrow > td { padding: 0 10px 14px !important; background: transparent !import
   <div class="setrow"><span>Γλώσσα</span><div class="seg2" id="setLang" role="group" aria-label="Γλώσσα"><button type="button" data-v="el">Ελληνικά</button><button type="button" data-v="en">English</button></div></div>
   <div class="setrow"><span>Νόμισμα</span><div class="seg2" id="setCur" role="group" aria-label="Νόμισμα"><button type="button" data-v="EUR">€ EUR</button><button type="button" data-v="USD">$ USD</button><button type="button" data-v="CHF">CHF</button></div></div>
   <div class="setrow"><span>Θέμα</span><div class="seg2" id="setTheme" role="group" aria-label="Θέμα"><button type="button" data-v="light">Φωτεινό</button><button type="button" data-v="dark">Σκοτεινό</button><button type="button" data-v="system">Σύστημα</button></div></div>
+  <div class="setrow"><span>Σελίδα υποδοχής</span><label class="sw"><input type="checkbox" id="setHero" aria-label="Εμφάνιση σελίδας υποδοχής"><i></i></label></div>
   <p class="note" id="setNote" style="margin:0"></p>
 </div>
 <div class="scrim" id="appScrim" hidden></div>
@@ -1342,6 +1343,7 @@ document.documentElement.lang = LANG;
 var EN_EXACT = {
   "Αγορά Αθηνών": "Athens Market",
   "Στιγμιότυπο": "Snapshot",
+  "Σελίδα υποδοχής": "Welcome page",
   "Καθυστέρηση 15′": "15′ delay",
   "Αγορά κλειστή": "Market closed",
   "Καθυστερεί": "Delayed",
@@ -5521,16 +5523,24 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   /* σελίδα υποδοχής και κουμπιά ενοτήτων */
   function heroUpd() {
     var h = document.getElementById("hero"); if (!h) return;
-    var off = false; try { off = localStorage.getItem("agora-hero-off") === "1" || (localStorage.getItem("agora-signedin") === "1" && !authReady()) ; } catch (e) {}
+    /* agora-hero: "on" = πάντα (και συνδεδεμένοι), "off" = ποτέ, κενό = μόνο χωρίς σύνδεση */
+    var pref = null, off = false; try { pref = localStorage.getItem("agora-hero"); if (!pref && localStorage.getItem("agora-hero-off") === "1") pref = "off"; off = localStorage.getItem("agora-signedin") === "1" && !authReady(); } catch (e) {}
     if (fbUser) { try { localStorage.setItem("agora-signedin", "1"); } catch (e) {} }
     else if (authReady()) { try { localStorage.removeItem("agora-signedin"); } catch (e) {} }
-    h.hidden = !!fbUser || off;
+    h.hidden = pref === "on" ? false : pref === "off" ? true : (!!fbUser || off);
+    var signed = !!fbUser || off, go = document.getElementById("heroGo"); if (go) go.hidden = signed;
+    var sh = document.getElementById("setHero"); if (sh) sh.checked = !h.hidden;
     var n = document.getElementById("heroN"); if (n && rows.length) n.textContent = rows.length;
     var app = document.getElementById("heroApp"); if (app) app.hidden = standalone();
   }
   function authReady() { return !FIREBASE_CONFIG || window.claude || window.__authReady === true; }
   heroUpd(); setInterval(heroUpd, 1500);
-  document.getElementById("heroX").addEventListener("click", function () { try { localStorage.setItem("agora-hero-off", "1"); } catch (e) {} heroUpd(); });
+  document.getElementById("heroX").addEventListener("click", function () { try { localStorage.setItem("agora-hero", "off"); } catch (e) {} heroUpd(); toast("Η σελίδα υποδοχής κρύφτηκε. Την ξανανοίγεις από τις Ρυθμίσεις."); });
+  document.getElementById("setHero").addEventListener("change", function (e) {
+    try { localStorage.setItem("agora-hero", e.target.checked ? "on" : "off"); localStorage.removeItem("agora-hero-off"); } catch (er) {}
+    heroUpd();
+    if (e.target.checked) { document.getElementById("setClose").click(); if (typeof showView === "function") showView("market"); setTimeout(function () { var h = document.getElementById("hero"); if (h) h.scrollIntoView({ behavior: "smooth", block: "start" }); }, 120); }
+  });
   document.getElementById("heroGo").addEventListener("click", function () { if (FIREBASE_CONFIG && !window.claude) openAuth("signin"); else showView("portfolio"); });
   document.getElementById("heroApp").addEventListener("click", function () {
     var p = window.__bip; if (p) { p.prompt(); p.userChoice.then(function () { window.__bip = null; heroUpd(); }).catch(function () {}); return; }
