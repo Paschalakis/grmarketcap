@@ -1,3 +1,88 @@
-1366 data-ui light theme-mk in page light bg rgb(238, 241, 246)
-390 data-ui light theme-mk in page light bg rgb(238, 241, 246)
-
+ticker/AAPL => 200 text/html; charset=utf-8 259288
+ticker/AAPL/w/64/h/64/fallback/404/icon.png => 200 text/html; charset=utf-8 259288
+ticker/AAPL/fallback/404/w/64/h/64/icon.png => 200 text/html; charset=utf-8 259288
+ticker/ZZZZQX/fallback/404/icon => 200 text/html; charset=utf-8 259288
+ticker/ZZZZQX => 200 text/html; charset=utf-8 259288
+crypto/BTC/fallback/404/icon => 200 text/html; charset=utf-8 259288
+domain/dei.gr/w/64/h/64/fallback/404/icon.png => 200 text/html; charset=utf-8 259288
+ticker/BRK-B/fallback/404/icon => 200 text/html; charset=utf-8 259288
+ticker/BRK.B/fallback/404/icon => 200 text/html; charset=utf-8 259288
+GR ΕΕΕ coca-colahellenic.com => 200 text/html; charset=utf-8 259288
+GR ΕΥΡΩΒ eurobank.gr => 200 text/html; charset=utf-8 259288
+GR ΕΤΕ nbg.gr => 200 text/html; charset=utf-8 259288
+GR ΔΕΗ dei.gr => 200 text/html; charset=utf-8 259288
+GR ΠΕΙΡ piraeusbank.gr => 200 text/html; charset=utf-8 259288
+GR ΑΛΦΑ alpha.gr => 200 text/html; charset=utf-8 259288
+GR ALWN allwyn.com => 200 text/html; charset=utf-8 259288
+GR ΟΤΕ cosmote.gr => 200 text/html; charset=utf-8 259288
+GR ΜΟΗ moh.gr => 200 text/html; charset=utf-8 259288
+GR MTLN metlengroup.com => 200 text/html; charset=utf-8 259288
+GR ΓΕΚΤΕΡΝΑ gekterna.com => 200 text/html; charset=utf-8 259288
+GR ΕΛΠΕ helleniqenergy.gr => 200 text/html; charset=utf-8 259288
+GR CENER cenergyholdings.com => 200 text/html; charset=utf-8 259288
+GR BOCHGR bankofcyprus.com => 200 text/html; charset=utf-8 259288
+GR ΒΙΟ viohalco.com => 200 text/html; charset=utf-8 259288
+GR ΔΑΑ aia.gr => 200 text/html; charset=utf-8 259288
+GR ΜΠΕΛΑ jumbo.gr => 200 text/html; charset=utf-8 259288
+GR TITC titan-cement.com => 200 text/html; charset=utf-8 259288
+GR OPTIMA optimabank.gr => 200 text/html; charset=utf-8 259288
+GR SBLK starbulk.com => 200 text/html; charset=utf-8 259288
+GR AKTR aktor.gr => 200 text/html; charset=utf-8 259288
+GR BYLOT intralot.com => 200 text/html; charset=utf-8 259288
+GR CREDIA crediabank.gr => 200 text/html; charset=utf-8 259288
+GR ΑΔΜΗΕ admie.gr => 200 text/html; charset=utf-8 259288
+GR ΕΛΧΑ elvalhalcor.com => 200 text/html; charset=utf-8 259288
+GR ΕΥΔΑΠ eydap.gr => 200 text/html; charset=utf-8 259288
+GR ΚΡΙ kri-kri.gr => 200 text/html; charset=utf-8 259288
+GR ΚΑΡΕΛ karelia.gr => 200 text/html; charset=utf-8 259288
+GR ΟΛΠ olp.gr => 200 text/html; charset=utf-8 259288
+GR ΑΡΑΙΓ aegeanair.com => 200 text/html; charset=utf-8 259288
+GR ΛΑΜΔΑ lamdadev.com => 200 text/html; charset=utf-8 259288
+GR SB safebulkers.com => 200 text/html; charset=utf-8 259288
+GR ΣΑΡ sarantis.gr => 200 text/html; charset=utf-8 259288
+GR ΚΟΥΕΣ quest.gr => 200 text/html; charset=utf-8 259288
+GR ΕΧΑΕ athexgroup.gr => 200 text/html; charset=utf-8 259288
+GR ΑΒΑΞ avax.gr => 200 text/html; charset=utf-8 259288
+GR ΟΤΟΕΛ autohellas.gr => 200 text/html; charset=utf-8 259288
+GR ΠΛΑΚΡ plastikakritis.com => 200 text/html; charset=utf-8 259288
+GR ΕΛΛΑΚΤΩΡ ellaktor.com => 200 text/html; charset=utf-8 259288
+GR ΟΛΘ thpa.gr => 200 text/html; charset=utf-8 259288
+GR ACAG austriacard.com => 200 text/html; charset=utf-8 259288
+GR ΤΡΑΣΤΟΡ trastor.gr => 200 text/html; charset=utf-8 259288
+GR ΑΤΤΙΚΑ attica-group.com => 200 text/html; charset=utf-8 259288
+GR ΕΛΛ bankofgreece.gr => 200 text/html; charset=utf-8 259288
+GR ΙΝΤΕΚ idealholdings.gr => 200 text/html; charset=utf-8 259288
+GR DIMAND dimand.gr => 200 text/html; charset=utf-8 259288
+GR ΙΝΤΚΑ intracom.com => 200 text/html; charset=utf-8 259288
+GR ΛΑΒΙ lavipharm.com => 200 text/html; charset=utf-8 259288
+GR ΠΡΟΦ profilesw.com => 200 text/html; charset=utf-8 259288
+GR ΠΛΑΘ thraceplastics.com => 200 text/html; charset=utf-8 259288
+GR ΦΡΛΚ fourlis.gr => 200 text/html; charset=utf-8 259288
+GR ΑΛΜΥ alumil.com => 200 text/html; charset=utf-8 259288
+GR ADPS atticadps.gr => 200 text/html; charset=utf-8 259288
+GR ΕΥΑΠΣ eyath.gr => 200 text/html; charset=utf-8 259288
+GR ΠΡΕΜΙΑ premia.gr => 200 text/html; charset=utf-8 259288
+GR ΜΠΡΙΚ briqproperties.gr => 200 text/html; charset=utf-8 259288
+GR ΙΝΛΙΦ interlife.gr => 200 text/html; charset=utf-8 259288
+GR ΠΕΡΦ performance.gr => 200 text/html; charset=utf-8 259288
+GR ΙΑΤΡ iatriko.gr => 200 text/html; charset=utf-8 259288
+GR ΦΛΕΞΟ flexopack.com => 200 text/html; charset=utf-8 259288
+GR ΠΑΠ papoutsanis.gr => 200 text/html; charset=utf-8 259288
+GR ΑΒΕ ave.gr => 200 text/html; charset=utf-8 259288
+GR ΜΟΤΟ motodynamics.gr => 200 text/html; charset=utf-8 259288
+GR ΑΣΚΟ ascompany.gr => 200 text/html; charset=utf-8 259288
+GR ΕΛΤΟΝ elton.gr => 200 text/html; charset=utf-8 259288
+GR ΠΕΤΡΟ petropoulos.com => 200 text/html; charset=utf-8 259288
+GR ΕΛΣΤΡ elastron.gr => 200 text/html; charset=utf-8 259288
+GR ΣΠΕΙΣ space.gr => 200 text/html; charset=utf-8 259288
+GR ΕΛΙΝ elin.gr => 200 text/html; charset=utf-8 259288
+GR ΦΡΙΓΟ frigoglass.com => 200 text/html; charset=utf-8 259288
+GR ΚΟΥΑΛ qnr.com.gr => 200 text/html; charset=utf-8 259288
+GR ΡΕΒΟΙΛ revoil.gr => 200 text/html; charset=utf-8 259288
+GR ΒΙΟΚΑ biokarpet.gr => 200 text/html; charset=utf-8 259288
+GR ΙΚΤΙΝ iktinos.gr => 200 text/html; charset=utf-8 259288
+GR ΜΕΝΤΙ medicon.gr => 200 text/html; charset=utf-8 259288
+GR ΔΡΟΜΕ dromeas.gr => 200 text/html; charset=utf-8 259288
+GR CMFC capitalmaritime.com => 200 text/html; charset=utf-8 259288
+GR NOVAL noval.gr => 200 text/html; charset=utf-8 259288
+GR ΛΟΥΛΗ loulisfood.gr => 200 text/html; charset=utf-8 259288
