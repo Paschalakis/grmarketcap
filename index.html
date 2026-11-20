@@ -5059,7 +5059,9 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   if (location.hash === "#portfolio") showView("portfolio");
   if (location.hash === "#favorites") showView("favs");
   if (location.hash === "#heatmap") showView("heat");
-  try { if (localStorage.getItem("agora-view") === "portfolio") { localStorage.removeItem("agora-view"); showView("portfolio"); } else if (!location.hash) { var lv = localStorage.getItem("agora-lastview"); if (lv && ["heat", "favs", "portfolio", "tools"].indexOf(lv) > -1) showView(lv); } } catch (e) {}
+  try { if (localStorage.getItem("agora-view") === "portfolio") { localStorage.removeItem("agora-view"); showView("portfolio"); } } catch (e) {}
+  /* κάθε άνοιγμα ξεκινά από τις Αγορές, στην κορυφή (εκτός αν ο σύνδεσμος ζητά κάτι άλλο, π.χ. #portfolio) */
+  try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (e) {}
   catPfSub();
 
   /* εφαρμογή: εγκατάσταση και λειτουργία χωρίς internet (μόνο στο δημόσιο site) */
