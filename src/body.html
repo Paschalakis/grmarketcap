@@ -354,7 +354,7 @@ body.pfhide .sens { filter: blur(9px); user-select: none; }
 .brandh .brandmark { flex: none; border-radius: 8px; box-shadow: 0 4px 14px rgba(91, 124, 250, .35); }
 @media (max-width: 640px) { .brandh .brandmark { width: 26px; height: 26px; } .brandh { gap: 8px; } }
 .mktsw { align-self: flex-start; }
-#view-market[data-mkt="us"] > *:not(.mktrow):not(#xlist), #view-market[data-mkt="c"] > *:not(.mktrow):not(#xlist) { display: none !important; }
+#view-market[data-mkt="us"] > *:not(.mktrow):not(#xlist):not(#hero):not(#dashsec), #view-market[data-mkt="c"] > *:not(.mktrow):not(#xlist):not(#hero):not(#dashsec) { display: none !important; }
 .mktrow { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
 .cmpbtn { gap: 6px; height: 38px; }
 .cmpsel { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
@@ -819,6 +819,60 @@ body[data-cat="pf"] .views + .view, body[data-cat="pf"] #view-portfolio { margin
 .xtra[aria-pressed="true"] .vi svg { filter: none; }
 /* το Χαρτοφυλάκιο χωρίς τα στοιχεία των αγορών */
 body[data-cat="pf"] #gstrip, body[data-cat="pf"] .extras { display: none !important; }
+/* ===== Ύφος based: κοραλί δεύτερο χρώμα, blueprint, κουμπιά-χάπια, καθαρές ενότητες ===== */
+:root { --coral: #ff6940; --coral-2: #ff8a5c; --on-coral: #1d0a03; --bp-line: rgba(150, 170, 255, .07); --bp-major: rgba(150, 170, 255, .11); }
+:root[data-ui="light"] { --bp-line: rgba(40, 70, 160, .06); --bp-major: rgba(40, 70, 160, .10); }
+.wrap { position: relative; isolation: isolate; }
+.wrap::before { content: ""; position: absolute; left: 50%; top: 0; width: 100vw; transform: translateX(-50%); height: 640px; z-index: -1; pointer-events: none;
+  background: linear-gradient(var(--bp-line) 1px, transparent 1px) 0 0 / 24px 24px, linear-gradient(90deg, var(--bp-line) 1px, transparent 1px) 0 0 / 24px 24px, linear-gradient(var(--bp-major) 1px, transparent 1px) 0 0 / 120px 120px, linear-gradient(90deg, var(--bp-major) 1px, transparent 1px) 0 0 / 120px 120px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 90% at 50% 0%, #000 30%, transparent 75%); mask-image: radial-gradient(ellipse 70% 90% at 50% 0%, #000 30%, transparent 75%); }
+/* κουμπιά σε σχήμα χαπιού */
+.btn, .tab, .seg2, .seg2 button, .langbtn, .more, .dkicon { border-radius: 999px !important; }
+.btn { padding: 9px 18px; font-weight: 600; background: transparent; border: 1px solid color-mix(in srgb, var(--fg) 22%, transparent); }
+.btn:hover { border-color: color-mix(in srgb, var(--fg) 45%, transparent); background: color-mix(in srgb, var(--fg) 6%, transparent); }
+.btn.primary { background: linear-gradient(135deg, var(--coral), var(--coral-2)); border-color: transparent; color: var(--on-coral); font-weight: 700; box-shadow: 0 6px 20px rgba(255, 105, 64, .32); }
+.btn.primary:hover { filter: brightness(1.06); box-shadow: 0 8px 26px rgba(255, 105, 64, .45); }
+.btn.sm { padding: 6px 14px; font-size: 13px; white-space: nowrap; }
+.btn.big { padding: 13px 26px; font-size: 16px; display: inline-flex; align-items: center; gap: 8px; }
+.dkicon { padding: 0; width: 40px; height: 40px; display: inline-grid; place-items: center; }
+.cnt { background: var(--coral) !important; color: var(--on-coral) !important; }
+/* καθαρές ενότητες: τίτλος, μία πρόταση, κουμπί */
+.sechead { align-items: flex-end; gap: 8px 16px; }
+.sechead h2, .phead h2 { font-family: var(--font-display); font-size: 21px; font-weight: 800; letter-spacing: -.01em; margin: 0; }
+.secdesc { margin: 4px 0 0; color: var(--muted); font-size: 14px; max-width: 62ch; line-height: 1.45; }
+.secdesc .note { font-size: 13px; }
+.dashsec .sechead, #mvhead { margin-top: 8px; }
+#allsec .sechead, #secsec .sechead, #divsec .sechead { margin-top: 14px; }
+/* σελίδα υποδοχής */
+.hero { position: relative; display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 24px; align-items: center; padding: 40px 40px 34px; border-radius: 26px; border: 1px solid var(--dk-line); overflow: hidden;
+  background: radial-gradient(600px 300px at 0% 0%, rgba(255, 105, 64, .16), transparent 70%), radial-gradient(700px 360px at 100% 100%, rgba(124, 77, 230, .22), transparent 70%),
+    linear-gradient(var(--bp-line) 1px, transparent 1px) 0 0 / 22px 22px, linear-gradient(90deg, var(--bp-line) 1px, transparent 1px) 0 0 / 22px 22px,
+    linear-gradient(var(--bp-major) 1px, transparent 1px) 0 0 / 110px 110px, linear-gradient(90deg, var(--bp-major) 1px, transparent 1px) 0 0 / 110px 110px,
+    linear-gradient(160deg, var(--dk-a), var(--dk-b)); }
+.hero[hidden] { display: none; }
+.heroX { position: absolute; top: 14px; right: 14px; }
+.herotxt { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.heroeye { align-self: flex-start; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--coral); padding: 5px 12px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--coral) 45%, transparent); background: rgba(255, 105, 64, .08); }
+.hero h1 { margin: 0; font-family: var(--font-display); font-size: clamp(32px, 5vw, 56px); line-height: 1.04; font-weight: 800; letter-spacing: -.025em; }
+.hero h1 em { font-style: normal; background: linear-gradient(90deg, var(--coral), #feb438); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero p { margin: 0; font-size: 17px; line-height: 1.5; color: var(--muted); max-width: 52ch; }
+.heroact { display: flex; flex-wrap: wrap; gap: 10px; }
+.herolinks { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.herolinks button { border: 0; background: none; padding: 2px 0; color: var(--fg); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; border-bottom: 1px solid transparent; opacity: .85; }
+.herolinks button::after { content: " ↗"; color: var(--coral); }
+.herolinks button:hover { opacity: 1; border-bottom-color: var(--coral); }
+.herostat { display: flex; flex-direction: column; gap: 14px; padding-left: 24px; border-left: 1px solid var(--dk-line); }
+.herostat div { display: flex; flex-direction: column; }
+.herostat b { font-family: var(--font-display); font-size: 40px; font-weight: 800; letter-spacing: -.02em; line-height: 1; }
+.herostat span { color: var(--muted); font-size: 13px; margin-top: 4px; }
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; padding: 28px 20px 24px; border-radius: 20px; }
+  .herostat { flex-direction: row; justify-content: space-between; padding: 16px 0 0; border-left: 0; border-top: 1px solid var(--dk-line); }
+  .herostat b { font-size: 26px; }
+  .hero p { font-size: 15px; }
+  .btn.big { padding: 12px 20px; font-size: 15px; }
+}
+.sechead h2, .phead h2 { text-transform: none !important; letter-spacing: -.01em !important; color: var(--fg) !important; }
 </style>
 
 <div class="demo demo-band"><p id="banner"><strong>Στιγμιότυπο.</strong> Οι τιμές προέρχονται από το capital.gr (καθυστέρηση 15 λεπτών) και η κεφαλαιοποίηση με τα ονόματα από το euro2day.gr (23/10/2026, 12:58). Τα στοιχεία δεν ενημερώνονται αυτόματα και δεν αποτελούν επενδυτική πληροφόρηση.</p></div>
@@ -859,7 +913,18 @@ body[data-cat="pf"] #gstrip, body[data-cat="pf"] .extras { display: none !import
       </nav>
 
   <div class="view" id="view-market" role="tabpanel" aria-labelledby="tab-market" data-mkt="gr">
-  <section class="dashsec" id="dashsec" aria-label="Ο πίνακάς μου" hidden><div class="sechead"><h2>Ο πίνακάς μου</h2><button type="button" class="linkbtn" id="dashCu">Προσαρμογή</button></div><div class="dash" id="dash"></div></section>
+  <section class="hero" id="hero" aria-labelledby="heroTitle" hidden>
+    <button type="button" class="close heroX" id="heroX" aria-label="Απόκρυψη">×</button>
+    <div class="herotxt">
+      <span class="heroeye">Axiogram · δωρεάν</span>
+      <h1 id="heroTitle">Όλες οι επενδύσεις σου,<br><em>σε ένα μέρος.</em></h1>
+      <p>Ελληνικές και αμερικανικές μετοχές, crypto και το χαρτοφυλάκιό σου, με ζωντανές τιμές, ειδοποιήσεις και εργαλεία ανάλυσης.</p>
+      <div class="heroact"><button type="button" class="btn primary big" id="heroGo">Ξεκίνα</button><button type="button" class="btn big" id="heroApp"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Κατέβασε την εφαρμογή</button></div>
+      <div class="herolinks" aria-label="Γρήγορη πρόσβαση"><button type="button" data-hgo="gr">Μετοχές Χ.Α.</button><button type="button" data-hgo="us">Μετοχές ΗΠΑ</button><button type="button" data-hgo="c">Crypto</button><button type="button" data-hgo="pf">Χαρτοφυλάκιο</button><button type="button" data-hgo="al">Ειδοποιήσεις</button></div>
+    </div>
+    <div class="herostat"><div><b id="heroN">290+</b><span>μετοχές του Χ.Α.</span></div><div><b>500</b><span>μετοχές ΗΠΑ</span></div><div><b>100</b><span>κορυφαία crypto</span></div></div>
+  </section>
+  <section class="dashsec" id="dashsec" aria-label="Ο πίνακάς μου" hidden><div class="sechead"><div><h2>Ο πίνακάς μου</h2><p class="secdesc">Τα αγαπημένα σου, οι ειδοποιήσεις και ό,τι έρχεται για τις μετοχές σου, με μια ματιά.</p></div><button type="button" class="btn sm" id="dashCu">Προσαρμογή</button></div><div class="dash" id="dash"></div></section>
   <div class="mktrow"><div class="seg2 mktsw" id="mktsw" role="group" aria-label="Αγορά"><button type="button" data-mkt="gr" aria-pressed="true">Ελλάδα</button><button type="button" data-mkt="us" aria-pressed="false"><span>ΗΠΑ</span><span class="t100"> · Top 100</span></button><button type="button" data-mkt="c" aria-pressed="false">Crypto<span class="t100"> · Top 100</span></button></div><button type="button" class="btn cmpbtn" id="cmpOpen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-5 4 3 9-9"/><path d="M3 9l5 3 4-5 9 6" opacity=".55"/></svg> <span>Σύγκριση</span></button><button type="button" class="btn dkicon" id="cuOpen" title="Προσαρμογή αρχικής" aria-label="Προσαρμογή αρχικής"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/></svg></button></div>
   <section id="xlist" class="xlist" hidden>
     <div class="phead"><div><h2 id="xtitle"></h2><div class="storage" id="xnote"></div></div>
@@ -870,6 +935,7 @@ body[data-cat="pf"] #gstrip, body[data-cat="pf"] .extras { display: none !import
   </section>
   <section class="stats" aria-label="Σύνοψη αγοράς" id="stats"></section>
 
+  <div class="sechead" id="mvhead"><div><h2>Κορυφαίες κινήσεις</h2><p class="secdesc">Οι μετοχές που ανέβηκαν και έπεσαν περισσότερο σήμερα, και οι μεγαλύτερες εταιρείες.</p></div><button type="button" class="btn sm" data-sgo="heat">Χάρτης αγοράς <span aria-hidden="true">→</span></button></div>
   <div class="seg2 mvtabs" id="mvtabs" role="group" aria-label="Κορυφαίες κινήσεις"><button type="button" data-mv="0" aria-pressed="true">Άνοδοι</button><button type="button" data-mv="1" aria-pressed="false">Πτώσεις</button><button type="button" data-mv="2" aria-pressed="false">Μεγαλύτερες</button></div>
   <section class="movers" id="movers" data-mv="0" aria-label="Κορυφαίες κινήσεις">
     <div class="panel"><h2>Κορυφαίες άνοδοι (αξία από 50 εκ. €)</h2><div id="gainers"></div></div>
@@ -878,12 +944,13 @@ body[data-cat="pf"] #gstrip, body[data-cat="pf"] .extras { display: none !import
   </section>
 
   <section style="display:flex;flex-direction:column;gap:10px" aria-label="Κλάδοι" id="secsec">
-    <div class="sechead"><h2>Κλάδοι</h2><span class="note">Η κατηγοριοποίηση είναι δική μου και όχι η επίσημη του ATHEX.</span></div>
+    <div class="sechead"><div><h2>Κλάδοι</h2><p class="secdesc">Πώς πάει σήμερα κάθε κλάδος, με βάρος την κεφαλαιοποίηση των εταιρειών του.</p></div><button type="button" class="btn sm" data-sgo="heat">Δες τον χάρτη <span aria-hidden="true">→</span></button></div>
     <div class="sectors" id="sectors"></div>
+    <p class="note" style="margin:0">Η κατηγοριοποίηση είναι δική μου και όχι η επίσημη του ATHEX.</p>
   </section>
 
   <section style="display:flex;flex-direction:column;gap:10px" aria-label="Ημερολόγιο μερισμάτων" id="divsec" hidden>
-    <div class="sechead"><h2>Ημερολόγιο μερισμάτων</h2><span class="note" id="divnote"></span></div>
+    <div class="sechead"><div><h2>Ημερολόγιο μερισμάτων</h2><p class="secdesc">Οι επόμενες και οι πρόσφατες αποκοπές μερισμάτων στο Χρηματιστήριο Αθηνών. <span id="divnote"></span></p></div><button type="button" class="btn sm" data-sgo="cal">Όλο το ημερολόγιο <span aria-hidden="true">→</span></button></div>
     <div class="divcal">
       <div class="panel"><h2>Επόμενες αποκοπές</h2><div id="divnext"></div></div>
       <div class="panel"><h2>Πρόσφατες αποκοπές</h2><div id="divrecent"></div></div>
@@ -891,6 +958,7 @@ body[data-cat="pf"] #gstrip, body[data-cat="pf"] .extras { display: none !import
   </section>
 
   <section style="display:flex;flex-direction:column;gap:12px" aria-label="Όλες οι μετοχές" id="allsec">
+    <div class="sechead"><div><h2>Όλες οι μετοχές</h2><p class="secdesc">Κάθε μετοχή του Χ.Α. με τιμή, μεταβολή, κεφαλαιοποίηση και πορεία 7 ημερών.</p></div><button type="button" class="btn sm" data-sgo="scr">Φίλτρο μετοχών <span aria-hidden="true">→</span></button></div>
     <div class="controls">
       <div class="ctrlrow">
         <div class="tabs" id="tabs" role="group" aria-label="Φίλτρο κίνησης"></div>
@@ -933,7 +1001,7 @@ body[data-cat="pf"] #gstrip, body[data-cat="pf"] .extras { display: none !import
   </div>
 
   <div class="view" id="view-favs" role="tabpanel" aria-labelledby="tab-favs" hidden>
-    <div class="phead"><div><h2>Τα αγαπημένα μου</h2><div class="storage">Οι μετοχές που σημείωσες με ☆, για να τις βλέπεις όλες μαζί.</div></div></div>
+    <div class="phead"><div><h2>Τα αγαπημένα μου</h2><div class="storage">Οι μετοχές και τα crypto που σημείωσες με ☆, όλα μαζί.</div></div><button type="button" class="btn sm" data-sgo="al">Νέα ειδοποίηση <span aria-hidden="true">→</span></button></div>
     <div class="panel tablewrap" id="favwrap">
       <table>
         <thead>
@@ -1017,7 +1085,7 @@ body[data-cat="pf"] #gstrip, body[data-cat="pf"] .extras { display: none !import
   </div>
 </div>
 <div class="view" id="view-tools" role="tabpanel" aria-labelledby="tab-tools" hidden>
-    <div class="phead"><div><h2>Εργαλεία</h2><div class="storage">Βρες μετοχές με κριτήρια, δες τι έρχεται και όρισε ειδοποιήσεις τιμών.</div></div></div>
+    <div class="phead"><div><h2>Εργαλεία</h2><div class="storage">Βρες μετοχές με κριτήρια, δες τι έρχεται και όρισε ειδοποιήσεις τιμών.</div></div><button type="button" class="btn sm" data-sgo="pf">Το χαρτοφυλάκιό μου <span aria-hidden="true">→</span></button></div>
     <div class="seg2 tltabs" id="tlTabs" role="tablist" aria-label="Εργαλεία"><button type="button" role="tab" data-tl="scr" aria-selected="true">Φίλτρο μετοχών</button><button type="button" role="tab" data-tl="cal" aria-selected="false">Ημερολόγιο</button><button type="button" role="tab" data-tl="al" aria-selected="false">Ειδοποιήσεις</button></div>
     <div id="tl-scr" class="tlpane"></div>
     <div id="tl-cal" class="tlpane" hidden></div>
@@ -1564,6 +1632,25 @@ var EN_EXACT = {
   "Όλο": "All",
   "Δεν υπάρχουν ακόμα αρκετά στοιχεία για αυτό το διάστημα. Το ιστορικό συλλέγεται καθημερινά.": "Not enough data for this range yet. History is collected daily.",
   "Η εφαρμογή εγκαταστάθηκε": "The app was installed",
+  "Όλες οι επενδύσεις σου,": "All your investments,",
+  "σε ένα μέρος.": "in one place.",
+  "Ξεκίνα": "Get started",
+  "Κατέβασε την εφαρμογή": "Get the app",
+  "Axiogram · δωρεάν": "Axiogram · free",
+  "Μετοχές Χ.Α.": "Athens stocks",
+  "Μετοχές ΗΠΑ": "US stocks",
+  "μετοχές του Χ.Α.": "Athens stocks",
+  "μετοχές ΗΠΑ": "US stocks",
+  "κορυφαία crypto": "top crypto",
+  "Δες τον χάρτη": "See the map",
+  "Όλο το ημερολόγιο": "Full calendar",
+  "Ελληνικές και αμερικανικές μετοχές, crypto και το χαρτοφυλάκιό σου, με ζωντανές τιμές, ειδοποιήσεις και εργαλεία ανάλυσης.": "Greek and US stocks, crypto and your portfolio, with live prices, alerts and analysis tools.",
+  "Τα αγαπημένα σου, οι ειδοποιήσεις και ό,τι έρχεται για τις μετοχές σου, με μια ματιά.": "Your favourites, alerts and what's coming up for your stocks, at a glance.",
+  "Οι μετοχές που ανέβηκαν και έπεσαν περισσότερο σήμερα, και οι μεγαλύτερες εταιρείες.": "Today's biggest gainers and losers, and the largest companies.",
+  "Πώς πάει σήμερα κάθε κλάδος, με βάρος την κεφαλαιοποίηση των εταιρειών του.": "How each sector is doing today, weighted by market cap.",
+  "Οι επόμενες και οι πρόσφατες αποκοπές μερισμάτων στο Χρηματιστήριο Αθηνών.": "Upcoming and recent ex-dividend dates on the Athens Exchange.",
+  "Κάθε μετοχή του Χ.Α. με τιμή, μεταβολή, κεφαλαιοποίηση και πορεία 7 ημερών.": "Every Athens stock with price, change, market cap and 7-day trend.",
+  "Οι μετοχές και τα crypto που σημείωσες με ☆, όλα μαζί.": "The stocks and crypto you starred, all together.",
   "Ελλάδα · ΗΠΑ · Crypto": "Greece · US · Crypto",
   "Αγορές": "Markets",
   "Μετοχές & Crypto": "Stocks & Crypto",
@@ -2666,6 +2753,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
         var fdb = firebase.firestore();
         fbAuth.getRedirectResult().catch(function (err) { var t = authErr(err); if (t) toast(t); });
         fbAuth.onAuthStateChanged(function (user) {
+          window.__authReady = true;
           fbUser = user;
           if (fbUnsub) { fbUnsub(); fbUnsub = null; }
           renderAcctFb(user);
@@ -5156,7 +5244,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     HOME.s.forEach(function (k) {
       var el = k === "movers" ? null : document.getElementById(k === "sectors" ? "secsec" : k);
       if (k === "gstrip") { var g = document.getElementById("gstrip"); g.classList.toggle("userhide", !HOME.on.gstrip); return; }
-      if (k === "movers") { var mt = document.getElementById("mvtabs"), mv = document.getElementById("movers"); mt.classList.toggle("userhide", !HOME.on.movers); mv.classList.toggle("userhide", !HOME.on.movers); vm.insertBefore(mt, anchor); vm.insertBefore(mv, anchor); return; }
+      if (k === "movers") { var mh = document.getElementById("mvhead"); mh.classList.toggle("userhide", !HOME.on.movers); vm.insertBefore(mh, anchor); var mt = document.getElementById("mvtabs"), mv = document.getElementById("movers"); mt.classList.toggle("userhide", !HOME.on.movers); mv.classList.toggle("userhide", !HOME.on.movers); vm.insertBefore(mt, anchor); vm.insertBefore(mv, anchor); return; }
       if (!el) return;
       el.classList.toggle("userhide", !HOME.on[k]); vm.insertBefore(el, anchor);
     });
@@ -5219,6 +5307,34 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   setInterval(function () { if (!document.hidden && !document.getElementById("view-market").hidden && HOME.on.favs && Object.keys(favs).some(function (k) { return /^c:/.test(k); })) { loadFavCg(); } }, 60000);
 
 
+  /* σελίδα υποδοχής και κουμπιά ενοτήτων */
+  function heroUpd() {
+    var h = document.getElementById("hero"); if (!h) return;
+    var off = false; try { off = localStorage.getItem("agora-hero-off") === "1" || (localStorage.getItem("agora-signedin") === "1" && !authReady()) ; } catch (e) {}
+    if (fbUser) { try { localStorage.setItem("agora-signedin", "1"); } catch (e) {} }
+    else if (authReady()) { try { localStorage.removeItem("agora-signedin"); } catch (e) {} }
+    h.hidden = !!fbUser || off;
+    var n = document.getElementById("heroN"); if (n && rows.length) n.textContent = rows.length;
+    var app = document.getElementById("heroApp"); if (app) app.hidden = standalone();
+  }
+  function authReady() { return !FIREBASE_CONFIG || window.claude || window.__authReady === true; }
+  heroUpd(); setInterval(heroUpd, 1500);
+  document.getElementById("heroX").addEventListener("click", function () { try { localStorage.setItem("agora-hero-off", "1"); } catch (e) {} heroUpd(); });
+  document.getElementById("heroGo").addEventListener("click", function () { if (FIREBASE_CONFIG && !window.claude) openAuth("signin"); else showView("portfolio"); });
+  document.getElementById("heroApp").addEventListener("click", function () {
+    var p = window.__bip; if (p) { p.prompt(); p.userChoice.then(function () { window.__bip = null; heroUpd(); }).catch(function () {}); return; }
+    document.getElementById("appBox").hidden = false; document.getElementById("appScrim").hidden = false;
+  });
+  function goSec(w, el) {
+    if (w === "heat") showView("heat");
+    else if (w === "pf") showView("portfolio");
+    else if (w === "scr" || w === "cal" || w === "al") { showView("tools"); setTl(w); }
+    else if (w === "gr" || w === "us" || w === "c") { showView("market"); var b = document.querySelector('#mktsw [data-mkt="' + w + '"]'); if (b) b.click(); var t = document.getElementById(w === "gr" ? "allsec" : "xlist"); if (t) t.scrollIntoView({ behavior: "smooth", block: "start" }); }
+  }
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-sgo],[data-hgo]"); if (!b) return;
+    var w = b.getAttribute("data-sgo") || b.getAttribute("data-hgo"); goSec(w === "pf" && b.hasAttribute("data-hgo") ? "pf" : w, b);
+  });
   window.__alBadge = function () { var n = ALERTS.filter(function (a) { return a.on; }).length, c = document.getElementById("alcnt"); c.hidden = !n; c.textContent = n; };
   window.__alBadge();
   render();
