@@ -822,7 +822,7 @@ body[data-cat="pf"] #gstrip, body[data-cat="pf"] .extras { display: none !import
 /* ===== Ύφος based: κοραλί δεύτερο χρώμα, blueprint, κουμπιά-χάπια, καθαρές ενότητες ===== */
 :root { --coral: #ff6940; --coral-2: #ff8a5c; --on-coral: #1d0a03; --bp-line: rgba(150, 170, 255, .07); --bp-major: rgba(150, 170, 255, .11); }
 :root[data-ui="light"] { --bp-line: rgba(40, 70, 160, .06); --bp-major: rgba(40, 70, 160, .10); }
-.wrap { position: relative; isolation: isolate; }
+.wrap { position: relative; }
 .wrap::before { content: ""; position: absolute; left: 50%; top: 0; width: 100vw; transform: translateX(-50%); height: 640px; z-index: -1; pointer-events: none;
   background: linear-gradient(var(--bp-line) 1px, transparent 1px) 0 0 / 24px 24px, linear-gradient(90deg, var(--bp-line) 1px, transparent 1px) 0 0 / 24px 24px, linear-gradient(var(--bp-major) 1px, transparent 1px) 0 0 / 120px 120px, linear-gradient(90deg, var(--bp-major) 1px, transparent 1px) 0 0 / 120px 120px;
   -webkit-mask-image: radial-gradient(ellipse 70% 90% at 50% 0%, #000 30%, transparent 75%); mask-image: radial-gradient(ellipse 70% 90% at 50% 0%, #000 30%, transparent 75%); }
