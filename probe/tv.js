@@ -1,11 +1,11 @@
-const {chromium}=require('playwright');const fs=require('fs');
-(async()=>{const b=await chromium.launch();const p=await b.newPage();
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch({args:['--disable-blink-features=AutomationControlled']});
+const c=await b.newContext({userAgent:'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'});
+const p=await c.newPage();
+p.on('response',async r=>{if(/brandfetch/.test(r.url())){const h=r.headers();console.log('RESP',r.status(),h['content-type'],h['x-bf-error']||'',r.url().replace('1idw-IXGU7tFB4ds1WN','ID'));}});
 await p.goto('https://axiogram.eu/',{waitUntil:'domcontentloaded'});
-const d=JSON.parse(fs.readFileSync('probe/grdom.json','utf8'));
-const paths=["ticker/AAPL/w/64/h/64/fallback/404/icon.png","ticker/AAPL/fallback/404/icon","ticker/ZZZZQX/fallback/404/icon","ticker/NVDA/fallback/404/icon","ticker/BRK-B/fallback/404/icon","ticker/BRK.B/fallback/404/icon","crypto/BTC/fallback/404/icon"].concat(Object.entries(d).map(([k,v])=>"domain/"+v+"/w/64/h/64/fallback/404/icon.png#"+k));
-const res=await p.evaluate(async(paths)=>{const out=[];await Promise.all(paths.map(pth=>new Promise(r=>{const i=new Image();const t=setTimeout(()=>{out.push([pth,'timeout']);r()},15000);i.onload=()=>{clearTimeout(t);out.push([pth,'ok '+i.naturalWidth+'x'+i.naturalHeight]);r()};i.onerror=()=>{clearTimeout(t);out.push([pth,'error']);r()};i.src="https://cdn.brandfetch.io/"+pth.split('#')[0]+"?c=1idw-IXGU7tFB4ds1WN";})));return out;},paths);
-res.sort().forEach(r=>console.log(r[0],'=>',r[1]));
-// screenshot grid
-await p.setContent('<body style="background:#fff;display:flex;flex-wrap:wrap;gap:6px">'+paths.map(x=>'<div style="width:90px;font:10px sans-serif;text-align:center"><img style="width:48px;height:48px;object-fit:contain" src="https://cdn.brandfetch.io/'+x.split('#')[0]+'?c=1idw-IXGU7tFB4ds1WN"><br>'+(x.split('#')[1]||x.slice(0,14))+'</div>').join('')+'</body>');
-await p.waitForTimeout(8000);await p.screenshot({path:'probe/grid.png',fullPage:true});
+const C='?c=1idw-IXGU7tFB4ds1WN';
+const urls=['apple.com','apple.com/w/64/h/64','domain/apple.com','ticker/AAPL','ticker/AAPL/icon','apple.com/fallback/404/icon','dei.gr','domain/dei.gr','crypto/BTC','nbg.gr/w/64/h/64/icon.png'];
+for(const u of urls){const r=await p.evaluate(src=>new Promise(res=>{const i=new Image();i.onload=()=>res('ok '+i.naturalWidth);i.onerror=()=>res('error');i.src=src;setTimeout(()=>res('timeout'),12000)}),'https://cdn.brandfetch.io/'+u+C);console.log(u,'=>',r);}
+const r2=await p.request.get('https://cdn.brandfetch.io/apple.com'+C,{headers:{Referer:'https://axiogram.eu/',Accept:'image/avif,image/webp,image/*,*/*'}});console.log('direct',r2.status(),r2.headers()['content-type'],(await r2.text()).slice(0,300).replace(/\s+/g,' '));
 await b.close();})();
