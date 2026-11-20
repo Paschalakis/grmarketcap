@@ -976,6 +976,39 @@ body[data-cat="pf"] #view-portfolio .phead h2 { background: linear-gradient(90de
   linear-gradient(160deg, rgba(23, 26, 90, .62) 0%, rgba(12, 12, 28, .55) 45%, rgba(40, 20, 90, .45) 100%); }
 .bgfx .b3.pv { background: radial-gradient(circle, rgba(35, 152, 171, .40) 0%, rgba(34, 123, 151, .18) 40%, transparent 68%); bottom: -24vmax; }
 :root[data-ui="light"] .pvtint { background: linear-gradient(180deg, rgba(75, 77, 255, .08) 0%, rgba(75, 77, 255, .03) 45%, rgba(35, 152, 171, .12) 100%); }
+/* κουμπί συναλλαγών τίτλου */
+.txoh, .txoc { width: 52px; text-align: center; padding-left: 4px !important; padding-right: 10px !important; }
+.txo { width: 36px; height: 36px; display: inline-grid; place-items: center; border-radius: 11px; cursor: pointer; color: #fff; border: 1px solid rgba(190, 196, 255, .55);
+  background: linear-gradient(135deg, #7c84ff, #4b4dff); box-shadow: 0 0 0 1px rgba(124, 132, 255, .25), 0 0 16px rgba(100, 110, 255, .55), inset 0 1px 0 rgba(255, 255, 255, .25); transition: transform .15s, box-shadow .2s, background .2s; }
+.txo:hover { box-shadow: 0 0 0 1px rgba(200, 206, 255, .7), 0 0 24px rgba(120, 130, 255, .9), inset 0 1px 0 rgba(255, 255, 255, .3); }
+.txo:active { transform: scale(.92); }
+.txo svg { transition: transform .25s cubic-bezier(.2, .8, .3, 1); }
+.txo[aria-expanded="true"] { background: linear-gradient(135deg, #2398ab, #227592); border-color: rgba(120, 220, 235, .6); box-shadow: 0 0 0 1px rgba(35, 162, 177, .3), 0 0 18px rgba(35, 162, 177, .6); }
+.txo[aria-expanded="true"] svg { transform: rotate(45deg); }
+tr.txrow > td { padding: 0 10px 14px !important; background: transparent !important; border-bottom: 1px solid var(--dk-line); }
+.txbox { border-radius: 16px; border: 1px solid rgba(35, 162, 177, .35); background: linear-gradient(180deg, rgba(35, 152, 171, .10), rgba(20, 24, 60, .35)); box-shadow: inset 0 0 24px rgba(35, 152, 171, .08); padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; animation: vin .25s ease-out; }
+.txhead { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 14px; }
+.txhead > div { display: flex; flex-direction: column; gap: 2px; }
+.txhead b { font-size: 15px; }
+.txhead .note { font-size: 12.5px; }
+.txtab { width: 100%; }
+.txtab th { font-size: 11px; }
+.txtab td, .txtab th { padding: 8px 10px !important; }
+.txact { white-space: nowrap; text-align: right; }
+@media (max-width: 640px) { .txoh, .txoc { width: 44px; padding-right: 6px !important; } .txo { width: 32px; height: 32px; border-radius: 10px; } .txtab .xbtn { padding: 4px 6px; } }
+.txbox { text-align: left; max-width: calc(100vw - 48px); }
+.txbox .tablewrap { overflow-x: auto; }
+.txtab .smt { display: none; }
+@media (max-width: 640px) { .txtab .lgt { display: none; } .txtab .smt { display: inline; font-size: 15px; } .txtab td, .txtab th { padding: 8px 6px !important; } .txbox { max-width: calc(100vw - 84px); } tr.txrow > td { padding: 0 6px 12px !important; } }
+.txhead .note { white-space: normal; }
+@media (max-width: 640px) {
+  .txoh, .txoc { width: 38px !important; padding-left: 0 !important; padding-right: 14px !important; }
+  .txo { width: 30px; height: 30px; border-radius: 9px; }
+  .txo svg { width: 15px; height: 15px; }
+  .txtab { font-size: 13px; }
+  .txtab th:nth-child(2), .txtab td:nth-child(2) { padding-left: 2px !important; padding-right: 2px !important; }
+}
+@media (max-width: 640px) { .txoh, .txoc { width: 34px !important; padding-right: 8px !important; } #view-portfolio .dktable td:first-child .who span { max-width: 96px; } }
 </style>
 
 <div class="demo demo-band"><p id="banner"><strong>Στιγμιότυπο.</strong> Οι τιμές προέρχονται από το capital.gr (καθυστέρηση 15 λεπτών) και η κεφαλαιοποίηση με τα ονόματα από το euro2day.gr (23/10/2026, 12:58). Τα στοιχεία δεν ενημερώνονται αυτόματα και δεν αποτελούν επενδυτική πληροφόρηση.</p></div>
@@ -3608,17 +3641,18 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     });
     function th(k, label, extra) { var on = pfSort.k === k; return '<th data-k="' + k + '"' + (extra || "") + (on ? ' aria-sort="' + (pfSort.d > 0 ? "ascending" : "descending") + '"' : "") + ">" + label + (on ? '<span class="ar">' + (pfSort.d > 0 ? "▲" : "▼") + "</span>" : "") + "</th>"; }
     var table = H.list.length ? '<div class="dk dktable tablewrap"><table><thead><tr>' +
-      th("sym", "Μετοχή", ' class="l"') + th("qty", "Τεμάχια", ' class="hide-s"') + th("price", "Τιμή", ' class="hide-s"') + th("chg", "24ω") + th("value", "Αξία") + th("pl", "Κ/Ζ", ' class="hide-s"') + th("weight", "Μερίδιο", ' class="hide-s"') +
+      th("sym", "Μετοχή", ' class="l"') + th("qty", "Τεμάχια", ' class="hide-s"') + th("price", "Τιμή", ' class="hide-s"') + th("chg", "24ω") + th("value", "Αξία") + th("pl", "Κ/Ζ", ' class="hide-s"') + th("weight", "Μερίδιο", ' class="hide-s"') + '<th class="txoh"><span style="position:absolute;left:-9999px">Συναλλαγές</span></th>' +
       "</tr></thead><tbody>" +
       sorted.map(function (h) {
-        if (h.perp) return '<tr tabindex="0" data-pfs="' + esc(h.sym) + '"><td class="l"><div class="who">' + monoHtml("HL") + "<div><b>" + esc(h.w.n || "Hyperliquid") + "</b><span>" + esc(shortA(h.w.a)) + ' · Perpetuals</span></div></div></td><td class="num hide-s">—</td><td class="num hide-s">—</td><td>—</td><td class="num"><b class="sens">' + eur(h.value) + '</b><span class="sub2 show-s chg ' + cls(h.pl) + ' sens">' + sgn(h.pl) + nf2.format(Math.abs(h.pl) * RATE) + CS + '</span></td><td class="hide-s"><span class="sens">' + eurS(h.pl) + '</span><span class="sub2 chg ' + cls(h.plPct) + '">' + sgn(h.plPct) + nf2.format(Math.abs(h.plPct)) + '%</span></td><td class="hide-s"><div class="dkshare"><span class="num">' + nf2.format(h.weight) + '%</span><i><u style="width:' + Math.max(1, h.weight) + '%"></u></i></div></td></tr>';
+        if (h.perp) return '<tr tabindex="0" data-pfs="' + esc(h.sym) + '"><td class="l"><div class="who">' + monoHtml("HL") + "<div><b>" + esc(h.w.n || "Hyperliquid") + "</b><span>" + esc(shortA(h.w.a)) + ' · Perpetuals</span></div></div></td><td class="num hide-s">—</td><td class="num hide-s">—</td><td>—</td><td class="num"><b class="sens">' + eur(h.value) + '</b><span class="sub2 show-s chg ' + cls(h.pl) + ' sens">' + sgn(h.pl) + nf2.format(Math.abs(h.pl) * RATE) + CS + '</span></td><td class="hide-s"><span class="sens">' + eurS(h.pl) + '</span><span class="sub2 chg ' + cls(h.plPct) + '">' + sgn(h.plPct) + nf2.format(Math.abs(h.plPct)) + '%</span></td><td class="hide-s"><div class="dkshare"><span class="num">' + nf2.format(h.weight) + '%</span><i><u style="width:' + Math.max(1, h.weight) + '%"></u></i></div></td><td></td></tr>';
         var sub = esc(DS(h.sym)) + (h.row && h.row.sector ? " · " + esc(trS(h.row.sector)) : "");
         return '<tr tabindex="0" data-pfs="' + esc(h.sym) + '"><td class="l"><div class="who">' + assetIcon(h.sym) + "<div><b>" + esc(h.row && h.row.name ? h.row.name : DS(h.sym)) + "</b><span>" + sub + "</span></div></div></td>" +
           '<td class="num hide-s sens">' + fmtQty(h.qty) + '</td><td class="num hide-s"><span data-pk="' + esc(h.sym) + '" data-pv="' + h.price + '">' + fmtC(h.price) + "</span><span class=\"sub2 note sens\">μ.τ. " + fmtC(h.avg) + "</span></td>" +
           "<td>" + (h.row ? chip(h.row.chg) : "—") + "</td>" +
           '<td class="num"><b class="sens" data-pk="v:' + esc(h.sym) + '" data-pv="' + h.value + '">' + eur(h.value) + '</b><span class="sub2 show-s chg ' + cls(h.pl) + ' sens">' + sgn(h.pl) + nf2.format(Math.abs(h.pl) * RATE) + CS + "</span></td>" +
           '<td class="hide-s"><span class="sens">' + eurS(h.pl) + '</span><span class="sub2 chg ' + cls(h.plPct) + '">' + sgn(h.plPct) + nf2.format(Math.abs(h.plPct)) + "%</span></td>" +
-          '<td class="hide-s"><div class="dkshare"><span class="num">' + nf2.format(h.weight) + '%</span><i><u style="width:' + Math.max(1, h.weight) + '%"></u></i></div></td></tr>';
+          '<td class="hide-s"><div class="dkshare"><span class="num">' + nf2.format(h.weight) + '%</span><i><u style="width:' + Math.max(1, h.weight) + '%"></u></i></div></td>' +
+          '<td class="txoc"><button type="button" class="txo" data-txo="' + esc(h.sym) + '" aria-expanded="' + !!txOpen[h.sym] + '" title="Οι συναλλαγές του τίτλου" aria-label="Συναλλαγές ' + esc(DS(h.sym)) + '"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg></button></td></tr>' + (txOpen[h.sym] ? txRows(h) : "");
       }).join("") + "</tbody></table></div>" : '<div class="panel pempty"><h3>Δεν έχεις ανοιχτές θέσεις</h3><p>Όλες οι μετοχές έχουν πουληθεί. Το πραγματοποιημένο κέρδος ή η ζημιά φαίνεται στη σύνοψη.</p></div>';
     var stats = fbar + '<section class="dkrow">' + hero + alloc + "</section>" + kpis;
     var multiPf = pfs.length > 1, shownTx = pfTx();
@@ -3633,7 +3667,25 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     if (H.list.length) { H.list.forEach(function (h) { if (h.row) loadLong(h.row); }); pfDraw(H); }
     refreshCrypto(); hlRefresh();
   }
+  /* οι συναλλαγές κάθε τίτλου, κάτω από τη γραμμή του */
+  var txOpen = {};
+  function txRows(h) {
+    var list = pfTx().filter(function (t) { return t.sym === h.sym; }).sort(function (a, b) { return (b.date || "").localeCompare(a.date || "") || (b.ts || 0) - (a.ts || 0); });
+    var buys = list.filter(function (t) { return t.side !== "sell"; }), sells = list.filter(function (t) { return t.side === "sell"; });
+    var inv = buys.reduce(function (a, t) { return a + t.qty * effP(t); }, 0), got = sells.reduce(function (a, t) { return a + t.qty * effP(t); }, 0);
+    var body = list.map(function (t) {
+      return '<tr><td class="l num">' + fmtDate(t.date) + '</td><td class="l"><span class="side ' + (t.side === "sell" ? "sell" : "buy") + '">' + (t.side === "sell" ? "Πώληση" : "Αγορά") + '</span></td><td class="num sens">' + fmtQty(t.qty) + '</td><td class="num">' + fmtC(effP(t)) + '</td><td class="num sens">' + eur(t.qty * effP(t)) + '</td><td class="txact"><button type="button" class="xbtn" data-edit="' + esc(t.id) + '" aria-label="Επεξεργασία συναλλαγής ' + fmtDate(t.date) + '"><span class="lgt">Επεξεργασία</span><span class="smt" aria-hidden="true">✎</span></button><button type="button" class="xbtn" data-del="' + esc(t.id) + '" aria-label="Διαγραφή συναλλαγής ' + fmtDate(t.date) + '"><span class="lgt">Διαγραφή</span><span class="smt" aria-hidden="true">✕</span></button></td></tr>';
+    }).join("");
+    return '<tr class="txrow"><td colspan="8"><div class="txbox">' +
+      '<div class="txhead"><div><b>Συναλλαγές ' + esc(DS(h.sym)) + '</b><span class="note">' + list.length + (list.length === 1 ? " συναλλαγή" : " συναλλαγές") + ' · αγορές <span class="sens">' + eur(inv) + "</span>" + (sells.length ? ' · πωλήσεις <span class="sens">' + eur(got) + "</span>" : "") + ' · μέση τιμή <span class="sens">' + fmtC(h.avg) + '</span></span></div><button type="button" class="btn sm primary" data-txadd="' + esc(h.sym) + '">+ Νέα συναλλαγή</button></div>' +
+      (list.length ? '<div class="tablewrap"><table class="txtab"><thead><tr><th class="l">Ημερομηνία</th><th class="l">Είδος</th><th>Τεμάχια</th><th>Τιμή</th><th>Σύνολο</th><th><span style="position:absolute;left:-9999px">Ενέργειες</span></th></tr></thead><tbody>' + body + "</tbody></table></div>" : '<p class="note" style="margin:0">Δεν βρέθηκαν συναλλαγές σε αυτό το χαρτοφυλάκιο.</p>') +
+      "</div></td></tr>";
+  }
   pfBody.addEventListener("click", function (e) {
+    var txo = e.target.closest("[data-txo]");
+    if (txo) { var k = txo.getAttribute("data-txo"); if (txOpen[k]) delete txOpen[k]; else txOpen[k] = 1; renderPortfolio(); var nb = pfBody.querySelector('[data-txo="' + k + '"]'); if (nb) nb.focus(); return; }
+    var txa = e.target.closest("[data-txadd]");
+    if (txa) { openForm(txa.getAttribute("data-txadd"), "buy"); return; }
     if (e.target.closest('[data-act="add"]')) { openForm("", "buy"); return; }
     var rm = e.target.closest("[data-hlrm]");
     if (rm) {
@@ -3659,7 +3711,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     if (tr) openStock(tr.getAttribute("data-pfs"), tr);
   });
   pfBody.addEventListener("keydown", function (e) {
-    if (e.key !== "Enter") return;
+    if (e.key !== "Enter" || e.target.closest("button, input, select, a")) return;
     var tr = e.target.closest("[data-pfs]"); if (tr) openStock(tr.getAttribute("data-pfs"), tr);
   });
 
