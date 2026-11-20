@@ -1,9 +1,23 @@
-import urllib.request, json, os, io, zipfile
-H={"Authorization":"Bearer "+os.environ.get("GH_TOKEN",""),"Accept":"application/vnd.github+json"}
-r=urllib.request.urlopen(urllib.request.Request("https://api.github.com/repos/Paschalakis/grmarketcap/actions/runs/44277409885/logs",headers=H),timeout=60)
-z=zipfile.ZipFile(io.BytesIO(r.read()))
-for n in z.namelist():
-    if "Ειδοποι" in n:
-        t=z.read(n).decode("utf8","ignore").splitlines()
-        i=[k for k,l in enumerate(t) if "χρήστες" in l][0]
-        print("\n".join(l[29:] for l in t[i:]))
+import json, os, urllib.request
+from google.oauth2 import service_account
+import google.auth.transport.requests as gr
+sa=json.loads(os.environ["FIREBASE_SA"]); pid=sa["project_id"]
+cr=service_account.Credentials.from_service_account_info(sa,scopes=["https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/firebase"])
+cr.refresh(gr.Request()); H={"Authorization":"Bearer "+cr.token}
+def get(u):
+    try: return json.load(urllib.request.urlopen(urllib.request.Request(u,headers=H),timeout=30))
+    except Exception as e: return {"ERR":str(e)}
+rel=get("https://firebaserules.googleapis.com/v1/projects/%s/releases/cloud.firestore"%pid)
+print("release", rel.get("rulesetName"), rel.get("ERR"))
+if rel.get("rulesetName"):
+    rs=get("https://firebaserules.googleapis.com/v1/"+rel["rulesetName"])
+    for f in rs.get("source",{}).get("files",[]): print("----",f.get("name")); print(f.get("content"))
+# τεστ δικαιώματος
+req=urllib.request.Request("https://cloudresourcemanager.googleapis.com/v1/projects/%s:testIamPermissions"%pid,data=json.dumps({"permissions":["firebaserules.rulesets.create","firebaserules.releases.update","datastore.entities.update"]}).encode(),headers={**H,"Content-Type":"application/json"})
+try: print("perms",json.load(urllib.request.urlopen(req,timeout=30)))
+except Exception as e: print("perms ERR",e)
+import firebase_admin
+from firebase_admin import auth, credentials
+firebase_admin.initialize_app(credentials.Certificate(sa))
+try: print("owner uid", auth.get_user_by_email(os.environ["GMAIL_USER"]).uid)
+except Exception as e: print("owner ERR", type(e).__name__)
