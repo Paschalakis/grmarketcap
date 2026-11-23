@@ -10,5 +10,5 @@ jobs:
         with: { node-version: 20 }
       - run: npm i playwright@1.47.0 && npx playwright install --with-deps chromium
       - run: python3 probe/probe.py > probe/out.txt 2>&1 || true
-        env: { GH_TOKEN: "${{ github.token }}" }
+        env: { GH_TOKEN: "${{ github.token }}", CMC_API_KEY: "${{ secrets.CMC_API_KEY }}" }
       - run: git config user.name Claude && git config user.email noreply@anthropic.com && git add probe && git commit -qm out && git push -q
