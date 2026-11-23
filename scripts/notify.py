@@ -49,6 +49,8 @@ def fmt_px(v, cur):
     d = 2 if a >= 100 else 3 if a >= 1 else 6
     s = fmt_num(v, d)
     if "," in s: s = s.rstrip("0").rstrip(",") if d > 2 else s
+    if cur == "PT": return fmt_num(v, 0)
+    if cur == "%": return fmt_num(v, 2) + "%"
     return s + " " + {"EUR": "€", "USD": "$"}.get(cur, cur)
 
 
@@ -67,7 +69,7 @@ class Prices:
             for row in scr.get(mk) or []:
                 o = dict(zip(cols, row))
                 self.scr[o["k"] if mk == "gr" else "f:" + o["k"]] = o
-        self.us, self.cg = {}, {}
+        self.us, self.cg, self.mki = {}, {}, {}
         upd = self.data.get("updated") or ""
         self.gr_today = upd[:10] == datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
@@ -86,7 +88,8 @@ class Prices:
                     if k in f and v.get("close") is not None and k not in self.us:
                         self.us[k] = {"p": float(v["close"]), "c": v.get("change"), "w": v.get("Perf.W"), "cur": v.get("currency") or "USD", "n": v.get("description")}
             except Exception as e: print("TradingView:", e)
-        if c and getattr(self, "db", None):
+        m = any(k.startswith("m:") for k in keys)
+        if (c or m) and getattr(self, "db", None):
             # πρώτα από το CoinMarketCap (site/crypto, γράφεται από το update-crypto.yml)
             try:
                 snap = self.db.collection("site").document("crypto").get()
@@ -94,6 +97,19 @@ class Prices:
                 upd = doc.get("updated")
                 fresh = upd and (datetime.now(timezone.utc) - datetime.fromisoformat(upd.replace("Z", "+00:00"))).total_seconds() < 3 * 3600
                 if fresh:
+                    self.mki = {}
+                    g = doc.get("g") or {}
+                    if g.get("btc") is not None: self.mki["btcd"] = float(g["btc"])
+                    def ts(x):
+                        t = x.get("t")
+                        try: return float(t)
+                        except Exception:
+                            try: return datetime.fromisoformat(str(t).replace("Z", "+00:00")).timestamp()
+                            except Exception: return 0
+                    f = sorted(doc.get("fng") or [], key=ts, reverse=True)
+                    if f and f[0].get("v") is not None: self.mki["fng"] = float(f[0]["v"])
+                    print("Δείκτες CMC:", self.mki)
+                if fresh and c:
                     want = set(c)
                     for row in doc.get("c") or []:
                         slug = row[1]
@@ -119,6 +135,11 @@ class Prices:
 
     def get(self, k):
         """{eur, usd, nat, cur, c (ημέρα %), w (εβδομάδα %), live}"""
+        if k.startswith("m:"):
+            v = self.mki.get(k[2:])
+            if v is None: return None
+            cur = "PT" if k == "m:fng" else "%"
+            return {"eur": v, "usd": v, "nat": v, "cur": cur, "c": None, "w": None, "live": True}
         if k.startswith("c:"):
             q = self.cg.get(k[2:])
             if not q: return None

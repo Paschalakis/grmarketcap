@@ -770,6 +770,9 @@ th[aria-sort] button { color: var(--accent); }
 @media (max-width: 640px) { .alform { grid-template-columns: 1fr 1fr; } .alform .alsym { grid-column: 1 / -1; } }
 .alh { margin: 6px 0 0; font-size: 15px; }
 .allist { padding: 0; }
+.almki { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; font-size: 12.5px; color: var(--muted); }
+.almki .chip { font: inherit; font-weight: 600; color: var(--fg); background: var(--accent-soft); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; cursor: pointer; }
+.almki .chip:hover { border-color: var(--accent); }
 .alrow { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--dk-line); }
 .alrow:last-child { border-bottom: 0; }
 .alrow.off { opacity: .6; }
@@ -6113,13 +6116,30 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   /* ---------- ειδοποιήσεις τιμών ---------- */
   var AL_OP = { gt: "Η τιμή ανέβει πάνω από", lt: "Η τιμή πέσει κάτω από", mv: "Η ημερήσια μεταβολή ξεπεράσει ±" };
   var alPick = null, alOp = "gt";
+  /* δείκτες αγοράς από το CoinMarketCap (site/crypto): Fear & Greed και κυριαρχία BTC */
+  var MKI = {
+    "m:fng": { lab: "Fear & Greed", n: "Δείκτης φόβου/απληστίας · CoinMarketCap", cur: "PT", ex: "π.χ. 25 (φόβος) ή 75 (απληστία)", mono: "😨" },
+    "m:btcd": { lab: "BTC dominance", n: "Κυριαρχία Bitcoin στην αγορά · CoinMarketCap", cur: "%", ex: "π.χ. 60", mono: "₿%" }
+  };
+  function fngLatest(doc) {
+    var f = doc && doc.fng; if (!f || !f.length) return null;
+    var t = function (x) { return +new Date(isNaN(+x.t) ? x.t : +x.t * 1000) || 0; };
+    return f.slice().sort(function (a, b) { return t(b) - t(a); })[0];
+  }
+  function mkiVal(k) {
+    var d = CMCDOC; if (!d) return null;
+    if (k === "m:fng") { var f = fngLatest(d); return f ? { p: +f.v, c: null, cur: "PT", cls: fngTitle(f.c) } : null; }
+    if (k === "m:btcd") return d.g && d.g.btc != null ? { p: +d.g.btc, c: null, cur: "%" } : null;
+    return null;
+  }
   function alPrice(k) {
+    if (/^m:/.test(k)) return mkiVal(k);
     /* τρέχουσα τιμή στο νόμισμα της ειδοποίησης: Χ.Α. σε €, ΗΠΑ και crypto σε $ */
     if (/^c:/.test(k)) { var id = k.slice(2), c = (CG100 || []).filter(function (x) { return x.id === id; })[0]; var pe = c ? c.current_price : CGP[id] ? CGP[id].p : null; var ch = c ? c.price_change_percentage_24h : CGP[id] ? CGP[id].c : null; return pe == null ? null : { p: pe / usdEur(), c: ch, cur: "USD" }; }
     if (/^f:/.test(k)) { var q = USQ[k.slice(2)]; if (q) return { p: q.p, c: q.c, cur: "USD" }; var f = FOREIGN && FOREIGN.q && FOREIGN.q[k.slice(2)]; return f ? { p: f.p, c: f.c, cur: f.cur || "USD" } : null; }
     var r = BYSYM[k]; return r ? { p: r.price, c: r.chg, cur: "EUR" } : null;
   }
-  function fmtNat(v, c) { var a = Math.abs(v); return new Intl.NumberFormat(LOC, { maximumFractionDigits: a >= 100 ? 2 : a >= 1 ? 3 : 6 }).format(v) + " " + curSym(c); }
+  function fmtNat(v, c) { if (c === "PT") return n1(v, 0); if (c === "%") return n1(v, 2) + "%"; var a = Math.abs(v); return new Intl.NumberFormat(LOC, { maximumFractionDigits: a >= 100 ? 2 : a >= 1 ? 3 : 6 }).format(v) + " " + curSym(c); }
   function alLabel(a) { return a.op === "mv" ? "Ημέρα ±" + n1(a.v, 2) + "%" : (a.op === "gt" ? "Πάνω από " : "Κάτω από ") + fmtNat(a.v, a.cur); }
   function alSugg(q) {
     q = q.trim().toLowerCase(); var out = [];
@@ -6127,15 +6147,17 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     rows.forEach(function (r) { var a = r.dsym.toLowerCase(), b = r.sym.toLowerCase(), n = (r.name || "").toLowerCase(); var sc = a === q || b === q ? 0 : a.indexOf(q) === 0 || b.indexOf(q) === 0 ? 1 : n.indexOf(q) > -1 ? 2 : -1; if (sc >= 0) out.push([sc - (r.mcap ? 0.5 : 0), r.sym, r.dsym, r.name || "", "Χ.Α.", monoHtml(r.dsym)]); });
     Object.keys(USQ).forEach(function (s) { var u = USQ[s], a = s.toLowerCase(), n = (u.n || "").toLowerCase(); var sc = a === q ? 0 : a.indexOf(q) === 0 ? 1.2 : n.indexOf(q) > -1 ? 2.2 : -1; if (sc >= 0) out.push([sc, "f:" + s, s, u.n || "", "ΗΠΑ", logoBox(s, fLogo("f:" + s))]); });
     (CG100 || []).forEach(function (c) { var a = String(c.symbol || "").toLowerCase(), n = String(c.name || "").toLowerCase(); var sc = a === q ? 0.1 : a.indexOf(q) === 0 || n.indexOf(q) === 0 ? 1.1 : n.indexOf(q) > -1 ? 2.1 : -1; if (sc >= 0) out.push([sc, "c:" + c.id, a.toUpperCase(), c.name, "Crypto", logoBox(a.toUpperCase(), c.image)]); });
+    Object.keys(MKI).forEach(function (k) { var m = MKI[k], hay = (m.lab + " " + m.n + (k === "m:fng" ? " fng φόβος απληστία sentiment" : " btc.d dominance κυριαρχία")).toLowerCase(); if (hay.indexOf(q) > -1) out.push([1.5, k, m.lab, m.n.split(" · ")[0], "Δείκτης", monoHtml(m.mono)]); });
     out.sort(function (x, y) { return x[0] - y[0]; });
     return out.slice(0, 8);
   }
   function alKeyInfo(k) {
+    if (MKI[k]) return { lab: MKI[k].lab, n: MKI[k].n };
     if (/^c:/.test(k)) { var it = xGet(k); return { lab: it.s, n: it.n, img: it.img }; }
     if (/^f:/.test(k)) { var q = USQ[k.slice(2)]; return { lab: k.slice(2), n: q ? q.n : k.slice(2), img: fLogo(k) }; }
     var r = BYSYM[k]; return { lab: r ? r.dsym : k, n: r ? r.name : "" };
   }
-  function alLogo(a) { return /^[cf]:/.test(a.k) ? logoBox(a.lab, a.img || null) : monoHtml(a.lab); }
+  function alLogo(a) { if (MKI[a.k]) return monoHtml(MKI[a.k].mono); return /^[cf]:/.test(a.k) ? logoBox(a.lab, a.img || null) : monoHtml(a.lab); }
   function isIOS() { return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1); }
   function standalone() { return (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true; }
   function pushState() {
@@ -6162,16 +6184,18 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       off: 'Ενεργοποίησε τις ειδοποιήσεις σε αυτή τη συσκευή για να έρχονται ακόμα κι όταν το site είναι κλειστό. <button type="button" class="btn primary" data-al="push">Ενεργοποίηση ειδοποιήσεων</button>',
       on: '<span class="chg up">✓</span> Οι ειδοποιήσεις είναι ενεργές σε αυτή τη συσκευή. <button type="button" class="linkbtn" data-al="test">Στείλε μου μια δοκιμαστική</button>'
     }[st];
-    var p = alPick ? alPrice(alPick.k) : null, unit = alOp === "mv" ? "%" : p ? curSym(p.cur) : "";
+    var isM = !!(alPick && MKI[alPick.k]); if (isM && alOp === "mv") alOp = "gt";
+    var p = alPick ? alPrice(alPick.k) : null, unit = alOp === "mv" ? "%" : isM ? (MKI[alPick.k].cur === "%" ? "%" : "μονάδες 0–100") : p ? curSym(p.cur) : "";
     var form = '<form class="panel alform" id="alForm" novalidate><h3>Νέα ειδοποίηση</h3>' +
-      '<label class="alsym"><span>Μετοχή ή crypto</span>' + (alPick ? '<div class="alpick">' + alLogo(alPick) + "<b>" + esc(alPick.lab) + "</b><span>" + esc(alPick.n || "") + "</span>" + (p ? '<span class="num" style="margin-left:auto">' + fmtNat(p.p, p.cur) + "</span>" : "") + '<button type="button" class="close" data-al="unpick" aria-label="Αλλαγή">×</button></div>' : '<input id="alQ" class="search" autocomplete="off" placeholder="Γράψε σύμβολο ή όνομα, π.χ. ΔΕΗ, NVDA, BTC" aria-controls="alSugg"><div class="sugg" id="alSugg" role="listbox" hidden></div>') + "</label>" +
-      '<label><span>Όταν</span><select id="alOp" class="search">' + Object.keys(AL_OP).map(function (k) { return '<option value="' + k + '"' + (k === alOp ? " selected" : "") + ">" + AL_OP[k] + "</option>"; }).join("") + "</select></label>" +
-      '<label><span>Τιμή (' + (unit || "—") + ')</span><input id="alV" inputmode="decimal" autocomplete="off" placeholder="' + (alOp === "mv" ? "π.χ. 5" : p ? "π.χ. " + fmtNat(p.p * (alOp === "gt" ? 1.1 : 0.9), p.cur).replace(/ \S+$/, "") : "") + '"></label>' +
+      '<label class="alsym"><span>Μετοχή, crypto ή δείκτης</span>' + (alPick ? '<div class="alpick">' + alLogo(alPick) + "<b>" + esc(alPick.lab) + "</b><span>" + esc(alPick.n || "") + "</span>" + (p ? '<span class="num" style="margin-left:auto">' + fmtNat(p.p, p.cur) + "</span>" : "") + '<button type="button" class="close" data-al="unpick" aria-label="Αλλαγή">×</button></div>' : '<input id="alQ" class="search" autocomplete="off" placeholder="Γράψε σύμβολο ή όνομα, π.χ. ΔΕΗ, NVDA, BTC" aria-controls="alSugg"><div class="sugg" id="alSugg" role="listbox" hidden></div><div class="almki"><span>Δείκτες CoinMarketCap:</span>' + Object.keys(MKI).map(function (k) { var v = mkiVal(k); return '<button type="button" class="chip" data-alk="' + k + '">' + esc(MKI[k].lab) + (v ? " · " + fmtNat(v.p, v.cur) : "") + "</button>"; }).join("") + "</div>") + "</label>" +
+      '<label><span>Όταν</span><select id="alOp" class="search">' + Object.keys(AL_OP).filter(function (k) { return !(isM && k === "mv"); }).map(function (k) { return '<option value="' + k + '"' + (k === alOp ? " selected" : "") + ">" + (isM ? AL_OP[k].replace("Η τιμή", "Ο δείκτης") : AL_OP[k]) + "</option>"; }).join("") + "</select></label>" +
+      '<label><span>Τιμή (' + (unit || "—") + ')</span><input id="alV" inputmode="decimal" autocomplete="off" placeholder="' + (alOp === "mv" ? "π.χ. 5" : isM ? MKI[alPick.k].ex : p ? "π.χ. " + fmtNat(p.p * (alOp === "gt" ? 1.1 : 0.9), p.cur).replace(/ \S+$/, "") : "") + '"></label>' +
       '<div class="alact"><span class="err" id="alErr" role="alert"></span><button type="submit" class="btn primary">Προσθήκη</button></div></form>';
     var mine = ALERTS.slice().sort(function (a, b) { return (b.on ? 1 : 0) - (a.on ? 1 : 0) || (b.at || 0) - (a.at || 0); });
     var list = mine.length ? '<div class="panel allist">' + mine.map(function (a) {
       var pp = alPrice(a.k), dist = "";
-      if (pp && a.op !== "mv" && pp.cur === a.cur) dist = '<span class="note">τώρα ' + fmtNat(pp.p, pp.cur) + " · " + pctS((a.v / pp.p - 1) * 100) + "</span>";
+      if (pp && MKI[a.k]) dist = '<span class="note">τώρα ' + fmtNat(pp.p, pp.cur) + (pp.cls ? " (" + esc(pp.cls) + ")" : "") + "</span>";
+      else if (pp && a.op !== "mv" && pp.cur === a.cur) dist = '<span class="note">τώρα ' + fmtNat(pp.p, pp.cur) + " · " + pctS((a.v / pp.p - 1) * 100) + "</span>";
       if (pp && a.op === "mv" && pp.c != null) dist = '<span class="note">σήμερα ' + pctS(pp.c, 2) + "</span>";
       return '<div class="alrow' + (a.on ? "" : " off") + '">' + alLogo(a) + '<div class="aln"><b>' + esc(a.lab) + "</b><span>" + esc(alLabel(a)) + "</span>" + dist + "</div>" +
         (a.fired && !a.on ? '<span class="altag">Ειδοποιήθηκες ' + esc(new Date(a.fired).toLocaleDateString(LOC, { day: "numeric", month: "short" })) + "</span>" : "") +
@@ -6230,8 +6254,9 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       if (!alPick) { err.textContent = "Διάλεξε μετοχή ή crypto."; var q = document.getElementById("alQ"); if (q) q.focus(); return; }
       if (!(v > 0)) { err.textContent = "Γράψε έναν θετικό αριθμό."; document.getElementById("alV").focus(); return; }
       var p = alPrice(alPick.k);
+      if (MKI[alPick.k] && v > 100) { err.textContent = "Ο δείκτης κυμαίνεται από 0 έως 100."; return; }
       if (alOp !== "mv" && p && (alOp === "gt" ? p.p >= v : p.p <= v)) { err.textContent = "Η τιμή είναι ήδη " + (alOp === "gt" ? "πάνω" : "κάτω") + " από " + fmtNat(v, p.cur) + "."; return; }
-      ALERTS.push({ id: "a" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), k: alPick.k, lab: alPick.lab, n: alPick.n || "", img: alPick.img || null, op: alOp, v: v, cur: alOp === "mv" ? "%" : p ? p.cur : (/^[cf]:/.test(alPick.k) ? "USD" : "EUR"), on: true, at: Date.now(), fired: null });
+      ALERTS.push({ id: "a" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), k: alPick.k, lab: alPick.lab, n: alPick.n || "", img: alPick.img || null, op: alOp, v: v, cur: alOp === "mv" ? "%" : MKI[alPick.k] ? MKI[alPick.k].cur : p ? p.cur : (/^[cf]:/.test(alPick.k) ? "USD" : "EUR"), on: true, at: Date.now(), fired: null });
       alPick = null; alSave(); renderAlerts(); toast("Η ειδοποίηση προστέθηκε");
       if (pushState() === "off") toast("Πάτα «Ενεργοποίηση ειδοποιήσεων» για να έρχονται και με το site κλειστό");
     });
@@ -6273,7 +6298,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     });
     if (!document.getElementById("view-tools").hidden && TL === "al") renderAlerts();
   }
-  setInterval(function () { if (ALERTS.some(function (a) { return a.on && /^c:/.test(a.k); })) refreshAlertCrypto(); alCheckLocal(); }, 60000);
+  setInterval(function () { if (ALERTS.some(function (a) { return a.on && /^c:/.test(a.k); })) refreshAlertCrypto(); if (ALERTS.some(function (a) { return a.on && /^m:/.test(a.k); }) && (!CMCDOC || Date.now() - Date.parse(CMCDOC.updated) > 12 * 60000)) loadCg100(); alCheckLocal(); }, 60000);
   function refreshAlertCrypto() {
     var ids = {}; ALERTS.forEach(function (a) { if (a.on && /^c:/.test(a.k)) ids[a.k.slice(2)] = 1; });
     var list = Object.keys(ids).filter(function (id) { return !(CG100 || []).some(function (x) { return x.id === id; }); });
