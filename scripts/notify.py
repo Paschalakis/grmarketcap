@@ -86,6 +86,22 @@ class Prices:
                     if k in f and v.get("close") is not None and k not in self.us:
                         self.us[k] = {"p": float(v["close"]), "c": v.get("change"), "w": v.get("Perf.W"), "cur": v.get("currency") or "USD", "n": v.get("description")}
             except Exception as e: print("TradingView:", e)
+        if c and getattr(self, "db", None):
+            # πρώτα από το CoinMarketCap (site/crypto, γράφεται από το update-crypto.yml)
+            try:
+                snap = self.db.collection("site").document("crypto").get()
+                doc = json.loads((snap.to_dict() or {}).get("c") or "{}") if snap.exists else {}
+                upd = doc.get("updated")
+                fresh = upd and (datetime.now(timezone.utc) - datetime.fromisoformat(upd.replace("Z", "+00:00"))).total_seconds() < 3 * 3600
+                if fresh:
+                    want = set(c)
+                    for row in doc.get("c") or []:
+                        slug = row[1]
+                        if slug in want and row[5] is not None:
+                            self.cg[slug] = {"eur": float(row[5]), "c": row[7], "w": row[8], "s": row[2], "n": row[3], "usd": float(row[5]) * self.usd}
+                    c = [x for x in c if x not in self.cg]
+                    print("CoinMarketCap:", len(self.cg), "νομίσματα · από CoinGecko:", len(c))
+            except Exception as e: print("CoinMarketCap:", e)
         if c:
             try:
                 for i in range(0, len(c), 200):
@@ -157,7 +173,7 @@ def us_open(n):
 
 
 def run_alerts(db):
-    P = Prices()
+    P = Prices(); P.db = db
     users = [(d.id, d.to_dict() or {}) for d in db.collection("users").stream()]
     print("χρήστες:", len(users))
     keys = set()
@@ -378,7 +394,7 @@ def send_email(user, pw, to, v_now, change, pct, rows, movers, ev, bench, fired,
 
 
 def run_weekly(db):
-    P = Prices()
+    P = Prices(); P.db = db
     for doc in db.collection("users").stream():
         d = doc.to_dict() or {}
         if not d.get("weekly"): continue

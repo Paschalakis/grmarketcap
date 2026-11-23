@@ -582,6 +582,8 @@ th[aria-sort] button { color: var(--accent); }
 .calrow .ct.div, .calrow .ct.pay { background: var(--up-soft); }
 .calrow .ct.earn { background: rgba(139, 123, 255, .16); }
 .calday .more { margin: 8px auto 12px; display: block; }
+.xmorerow td { text-align: center; padding: 14px 8px !important; }
+.xmorerow .more { display: inline-block; }
 @media (max-width: 640px) { .calrow { flex-wrap: wrap; } .calrow .ct { margin-left: 42px; } }
 .alstate { padding: 14px 16px; line-height: 1.6; }
 .alstate .btn { margin-top: 10px; display: flex; }
@@ -1362,7 +1364,7 @@ tr.txrow > td { padding: 0 10px 14px !important; background: transparent !import
     <div id="tl-al" class="tlpane" hidden></div>
   </div>
   <footer class="srcfoot" id="srcfoot">
-    <p><b>Πηγές δεδομένων.</b> Τιμές Χ.Α.: <a href="https://www.capital.gr" target="_blank" rel="noopener">capital.gr</a> · Κεφαλαιοποίηση: <a href="https://www.euro2day.gr" target="_blank" rel="noopener">euro2day.gr</a> · Διαγράμματα, μετοχές ΗΠΑ και θεμελιώδη: <a href="https://www.tradingview.com" target="_blank" rel="noopener">TradingView</a> και Yahoo Finance · Crypto: <a href="https://www.coingecko.com/en/api" target="_blank" rel="noopener">Data provided by CoinGecko</a> · Perpetuals: <a href="https://hyperliquid.xyz" target="_blank" rel="noopener">Hyperliquid</a> · Λογότυπα: <a href="https://brandfetch.com" target="_blank" rel="noopener">Brandfetch</a>.</p>
+    <p><b>Πηγές δεδομένων.</b> Τιμές Χ.Α.: <a href="https://www.capital.gr" target="_blank" rel="noopener">capital.gr</a> · Κεφαλαιοποίηση: <a href="https://www.euro2day.gr" target="_blank" rel="noopener">euro2day.gr</a> · Διαγράμματα, μετοχές ΗΠΑ και θεμελιώδη: <a href="https://www.tradingview.com" target="_blank" rel="noopener">TradingView</a> και Yahoo Finance · Crypto: <a href="https://coinmarketcap.com/api/" target="_blank" rel="noopener">CoinMarketCap API</a> (εφεδρικά και διαγράμματα: <a href="https://www.coingecko.com/en/api" target="_blank" rel="noopener">Data provided by CoinGecko</a>) · Perpetuals: <a href="https://hyperliquid.xyz" target="_blank" rel="noopener">Hyperliquid</a> · Λογότυπα: <a href="https://brandfetch.com" target="_blank" rel="noopener">Brandfetch</a>.</p>
     <p>Οι τιμές έχουν καθυστέρηση έως 15 λεπτά και δίνονται μόνο για ενημέρωση. Δεν αποτελούν επενδυτική συμβουλή ούτε πρόταση αγοράς ή πώλησης. Τα σήματα και τα ονόματα ανήκουν στους κατόχους τους.</p>
     <p class="srcc">© <span id="srcY">2026</span> Axiogram</p>
   </footer>
@@ -3195,6 +3197,9 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   function refreshCrypto(force) {
     var ids = {}; txns.forEach(function (t) { if (/^c:/.test(t.sym)) ids[t.sym.slice(2)] = 1; });
     var list = Object.keys(ids);
+    /* όσα είναι στα 500 του CoinMarketCap έχουν ήδη τιμή· από το CoinGecko μόνο τα υπόλοιπα */
+    if (CMC_ON && !cmcLast) { loadCg100(); return; }
+    if (CMCDOC && CG100) { var have = {}; CG100.forEach(function (x) { have[x.id] = 1; }); list = list.filter(function (id) { return !have[id]; }); if (!list.length) { if (typeof loadCg100 === "function") loadCg100(); return; } }
     if (!list.length || cgBusy || (!force && Date.now() - cgAt < 25000) || typeof fetch !== "function") return;
     cgBusy = true;
     var ctl = typeof AbortController === "function" ? new AbortController() : null, to = setTimeout(function () { if (ctl) ctl.abort(); }, 8000);
@@ -3223,7 +3228,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   function loadExtHist(sym) {
     LONG[sym] = "loading";
     var k = sym.charAt(0), id = sym.slice(2), url = null;
-    if (k === "c") url = "https://api.coingecko.com/api/v3/coins/" + encodeURIComponent(id) + "/market_chart?vs_currency=eur&days=365";
+    if (k === "c") url = "https://api.coingecko.com/api/v3/coins/" + encodeURIComponent(cgIdOf(id)) + "/market_chart?vs_currency=eur&days=365";
     else if (k === "f" && canLong()) url = DATA_URL.replace(/data\.json(\?.*)?$/, "hist/F_" + encodeURIComponent(id.replace(/[^A-Z0-9.\-]/gi, "_")) + ".json");
     if (!url || typeof fetch !== "function") { LONG[sym] = null; return; }
     fetch(url).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (j) {
@@ -4016,6 +4021,13 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   }
   function searchCrypto(q) {
     var seq = ++suggSeq;
+    /* πρώτα στα 500 του CoinMarketCap (χωρίς αναμονή)· το CoinGecko μόνο αν δεν βρεθεί εκεί */
+    if (CMCDOC && CG100) {
+      var lo = q.trim().toLowerCase(), loc = [];
+      CG100.forEach(function (x) { var s = x.symbol, n = String(x.name || "").toLowerCase(), sc = s === lo ? 0 : s.indexOf(lo) === 0 ? 1 : n.indexOf(lo) === 0 ? 2 : n.indexOf(lo) > -1 ? 3 : -1; if (sc >= 0) loc.push([sc, x]); });
+      loc.sort(function (a, b) { return a[0] - b[0] || (a[1].market_cap_rank || 1e9) - (b[1].market_cap_rank || 1e9); });
+      if (loc.length) { showSugg(loc.slice(0, 8).map(function (z) { var c = z[1]; return { sym: "c:" + c.id, m: { s: c.symbol.toUpperCase(), n: c.name, img: c.image }, extra: "#" + c.market_cap_rank }; })); return; }
+    }
     sugg.innerHTML = '<div class="msg">Αναζήτηση…</div>'; sugg.hidden = false;
     fetch("https://api.coingecko.com/api/v3/search?query=" + encodeURIComponent(q.trim()))
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
@@ -4396,11 +4408,84 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   (CG100 || []).forEach(function (x) { if (x && x.id && x.current_price != null && !CGP[x.id]) CGP[x.id] = { p: x.current_price, c: x.price_change_percentage_24h || 0 }; });
   function xItems() {
     if (mkt === "us") { var u = usdEur(); return ((USD_ && USD_.s) || []).map(function (x, i) { return { k: "f", id: x.s, s: x.s, n: x.n, p: x.p * u, np: x.p, h1: null, c: x.c, w: x.w, m: x.m * u, v: x.v, vsh: true, img: logoUrl("ticker/" + x.s), sub: x.x, rank: i + 1 }; }); }
-    return (CG100 || []).map(function (x, i) { return { k: "c", id: x.id, s: String(x.symbol || "").toUpperCase(), n: x.name, p: x.current_price, np: x.current_price, h1: x.price_change_percentage_1h_in_currency, c: x.price_change_percentage_24h_in_currency != null ? x.price_change_percentage_24h_in_currency : x.price_change_percentage_24h, w: x.price_change_percentage_7d_in_currency, m: x.market_cap, v: x.total_volume, img: x.image, sp: x.sparkline_in_7d && x.sparkline_in_7d.price, rank: x.market_cap_rank || i + 1 }; });
+    return (CG100 || []).map(function (x, i) { return { k: "c", id: x.id, s: String(x.symbol || "").toUpperCase(), n: x.name, p: x.current_price, np: x.current_price, h1: x.price_change_percentage_1h_in_currency, c: x.price_change_percentage_24h_in_currency != null ? x.price_change_percentage_24h_in_currency : x.price_change_percentage_24h, w: x.price_change_percentage_7d_in_currency, m: x.market_cap, v: x.total_volume, img: x.image, sp: x.sparkline_in_7d && x.sparkline_in_7d.price, rank: x.market_cap_rank || i + 1, cmc: x.cmc }; });
   }
+  /* ===== Crypto από το CoinMarketCap API (GitHub Actions → Firestore site/crypto, ανανέωση κάθε 1–10 λεπτά) =====
+     Αν δεν φτάσει, εφεδρικά το CoinGecko για τα 100 μεγαλύτερα, όπως πριν. */
+  var CMC_ON = true, CMCDOC = null, cmcTry = 0, CSPARK = null, csparkBusy = false, cmcMig = false;
+  /* ids του CoinGecko που διαφέρουν από το slug του CoinMarketCap */
+  var CG2CMC = { binancecoin: "bnb", ripple: "xrp", "avalanche-2": "avalanche", "the-open-network": "toncoin", near: "near-protocol", "leo-token": "unus-sed-leo", dai: "multi-collateral-dai", "crypto-com-chain": "cronos", "hedera-hashgraph": "hedera", "render-token": "render", "injective-protocol": "injective", "matic-network": "polygon", "staked-ether": "steth", "bitget-token": "bitget-token-new", "kucoin-shares": "kucoin-token", "elrond-erd-2": "multiversx-egld", "theta-token": "theta-network", "havven": "synthetix-network-token", "axie-infinity": "axie-infinity", "blockstack": "stacks", "bonk": "bonk1", "dogwifcoin": "dogwifhat", "flare-networks": "flare", "ondo-finance": "ondo-finance", "worldcoin-wld": "worldcoin-org", "sei-network": "sei", "official-trump": "official-trump", "usds": "usds", "ethena": "ethena" };
+  var CMC2CG = {}; Object.keys(CG2CMC).forEach(function (k) { CMC2CG[CG2CMC[k]] = k; });
+  function cgIdOf(id) { return CMC2CG[id] || id; }
+  function fngTitle(c) { return String(c || "").replace(/\b\w/g, function (m) { return m.toUpperCase(); }); }
+  function cmcObjs(doc) {
+    var spk = (CSPARK && CSPARK.d) || {};
+    return doc.c.map(function (c) {
+      var sp = spk[c[1]];
+      return { id: c[1], cmc: c[0], symbol: String(c[2] || "").toLowerCase(), name: c[3], image: "https://s2.coinmarketcap.com/static/img/coins/64x64/" + c[0] + ".png", market_cap_rank: c[4], current_price: c[5],
+        price_change_percentage_1h_in_currency: c[6], price_change_percentage_24h_in_currency: c[7], price_change_percentage_24h: c[7], price_change_percentage_7d_in_currency: c[8],
+        market_cap: c[9], total_volume: c[10], circulating_supply: c[11], sparkline_in_7d: sp && sp.length > 1 ? { price: sp.concat([c[5]]) } : null };
+    });
+  }
+  function cmcMigrate() {
+    /* παλιές συναλλαγές/αγαπημένα/ειδοποιήσεις με id του CoinGecko → slug του CoinMarketCap (μόνο όπου ταιριάζει σίγουρα) */
+    if (cmcMig || !CG100) return; cmcMig = true;
+    var slugs = {}, bySym = {}, nrm = function (x) { return String(x || "").toLowerCase().replace(/[^a-z0-9]/g, ""); };
+    CG100.forEach(function (x) { slugs[x.id] = x; var k = x.symbol.toUpperCase(); (bySym[k] = bySym[k] || []).push(x); });
+    var fix = function (id, sym, name) {
+      if (slugs[id]) return null;
+      if (CG2CMC[id] && slugs[CG2CMC[id]]) return CG2CMC[id];
+      var c = sym && bySym[String(sym).toUpperCase()];
+      if (c && name) { var hit = c.filter(function (x) { return nrm(x.name) === nrm(name); })[0]; if (hit) return hit.id; }
+      return null;
+    };
+    var ch = 0;
+    txns.forEach(function (t) { if (/^c:/.test(t.sym)) { var n = fix(t.sym.slice(2), t.m && t.m.s, t.m && t.m.n); if (n) { t.sym = "c:" + n; ch++; } } });
+    Object.keys(favs).forEach(function (k) { if (/^c:/.test(k)) { var m = FAVMETA[k] || {}, n = fix(k.slice(2), m.s, m.n); if (n) { delete favs[k]; favs["c:" + n] = 1; ch++; } } });
+    ALERTS.forEach(function (a) { if (/^c:/.test(a.k || "")) { var n = fix(a.k.slice(2), a.lab, a.n); if (n) { a.k = "c:" + n; ch++; } } });
+    if (ch) { try { localStorage.setItem("agora-portfolio", JSON.stringify(txns)); } catch (e) {} saveFavs(); lsSet("agora-alerts", ALERTS); if (pfRef) persist(); renderPortfolio(); }
+  }
+  function cmcApply(doc) {
+    CMCDOC = doc;
+    var j = cmcObjs(doc);
+    CG100 = j; cg100At = Date.parse(doc.updated) || Date.now(); cg100Err = false;
+    if (doc.g) CGLOB = { total_market_cap: { eur: doc.g.mc }, total_volume: { eur: doc.g.vol }, market_cap_percentage: { btc: doc.g.btc, eth: doc.g.eth }, market_cap_change_percentage_24h_usd: doc.g.mcch, src: "cmc" };
+    if (doc.fng && doc.fng.length) FNG = doc.fng.slice().sort(function (a, b) { return (+new Date(isNaN(+b.t) ? b.t : +b.t * 1000)) - (+new Date(isNaN(+a.t) ? a.t : +a.t * 1000)); }).map(function (x) { return { value: String(x.v), value_classification: fngTitle(x.c), timestamp: x.t, src: "cmc" }; });
+    j.forEach(function (x) { if (x.current_price != null) CGP[x.id] = { p: x.current_price, c: x.price_change_percentage_24h || 0 }; });
+    saveCgp(); cmcMigrate();
+    if (!document.getElementById("view-portfolio").hidden) renderPortfolio();
+    setTimeout(function () { if (window.__dashRefresh) window.__dashRefresh(); }, 0);
+    try { localStorage.setItem("agora-cmc", JSON.stringify(doc)); } catch (e) {}
+  }
+  function loadCSpark() {
+    if (CSPARK || csparkBusy || typeof fetch !== "function") return;
+    csparkBusy = true;
+    fetch(DATA_URL.replace(/data\.json(\?.*)?$/, "cspark.json")).then(function (r) { if (!r.ok) throw 0; return r.json(); })
+      .then(function (s) { CSPARK = s; if (CMCDOC) { CG100 = cmcObjs(CMCDOC); if (mkt === "c") renderX(); } }).catch(function () {}).then(function () { csparkBusy = false; });
+  }
+  function loadCmc() {
+    if (!CMC_ON || typeof fetch !== "function") return Promise.resolve(false);
+    var fsUrl = typeof FIREBASE_CONFIG !== "undefined" && FIREBASE_CONFIG && /^https?:/.test(location.protocol) ? "https://firestore.googleapis.com/v1/projects/agora-athinon/databases/(default)/documents/site/crypto?key=" + FIREBASE_CONFIG.apiKey : null;
+    var fromFs = fsUrl ? fetch(fsUrl, { cache: "no-store" }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (j) { return JSON.parse(j.fields.c.stringValue); }) : Promise.reject(0);
+    return fromFs.catch(function () {
+      return fetch(DATA_URL.replace(/data\.json(\?.*)?$/, "crypto.json") + "?t=" + Math.floor(Date.now() / 60000), { cache: "no-store" }).then(function (r) { if (!r.ok) throw 0; return r.json(); });
+    }).then(function (doc) {
+      if (!doc || !Array.isArray(doc.c) || doc.c.length < 50) return false;
+      if (Date.now() - Date.parse(doc.updated) > 3 * 3600e3) return false;   /* πολύ παλιά: εφεδρικά CoinGecko */
+      cmcApply(doc); loadCSpark(); return true;
+    }).catch(function (e) { if (window.console) console.warn("CMC", e); return false; });
+  }
+  (function () { try { var c = JSON.parse(localStorage.getItem("agora-cmc") || "null"); if (c && Array.isArray(c.c) && Date.now() - Date.parse(c.updated) < 6 * 3600e3) { CMCDOC = c; CG100 = cmcObjs(c); cg100At = Date.parse(c.updated); } } catch (e) {} })();
+  var cmcLast = 0;
   function loadCg100(force) {
-    if (cg100Busy || typeof fetch !== "function" || (!force && Date.now() - cg100At < 60000)) return;
-    cg100Busy = true;
+    if (cg100Busy || typeof fetch !== "function" || (!force && Date.now() - Math.max(cg100At, cmcLast) < 60000)) return;
+    cg100Busy = true; cmcLast = Date.now();
+    loadCmc().then(function (ok) {
+      if (ok) { cg100Busy = false; if (mkt === "c") renderX(); renderGlobal(); if (heatMkt === "c") renderHeat(); renderCStats(); return; }
+      loadCgGecko(); cstatAt = 0; loadCStats();
+    });
+  }
+  function loadCgGecko() {
     fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d")
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (j) {
@@ -4418,6 +4503,9 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   function fngCls(c) { return LANG === "en" ? c : FNG_GR[c] || c; }
   function fngColor(v) { return v < 25 ? "#e5484d" : v < 45 ? "#f2994a" : v < 56 ? "#d9b84a" : v < 75 ? "#8cc152" : "#3fb67f"; }
   function loadCStats() {
+    if (CGLOB && CGLOB.src === "cmc" && FNG && FNG[0] && FNG[0].src === "cmc") return;
+    if (CMC_ON && !cmcLast) { loadCg100(); return; }      /* πρώτα το CoinMarketCap· το CoinGecko μόνο αν αποτύχει */
+    if (CMC_ON && cg100Busy) return;
     if (cstatBusy || typeof fetch !== "function" || Date.now() - cstatAt < 300000) return;
     cstatBusy = true;
     Promise.all([
@@ -4451,6 +4539,8 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     box.innerHTML = h; box.hidden = !h;
   }
   function pctCell(v) { return v == null || isNaN(v) ? '<span class="chg flat">—</span>' : chgHtml(v); }
+  var xShown = 100;
+  document.addEventListener("click", function (e) { if (e.target.closest("#xMore")) { xShown += 100; renderX(); } });
   function renderX() {
     var box = document.getElementById("xlist"), vm = document.getElementById("view-market");
     vm.setAttribute("data-mkt", mkt);
@@ -4459,10 +4549,10 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     renderCStats();
     if (mkt === "gr") return;
     var isC = mkt === "c", items = xItems(), q = document.getElementById("xq").value.trim().toLowerCase();
-    document.getElementById("xtitle").textContent = isC ? "Τα 100 μεγαλύτερα κρυπτονομίσματα" : "Οι 100 μεγαλύτερες μετοχές ΗΠΑ";
+    document.getElementById("xtitle").textContent = isC ? "Τα " + ((CG100 && CG100.length > 100) ? CG100.length : 100) + " μεγαλύτερα κρυπτονομίσματα" : "Οι 100 μεγαλύτερες μετοχές ΗΠΑ";
     var t = isC ? (cg100At ? new Date(cg100At).toLocaleTimeString(LOC, { hour: "2-digit", minute: "2-digit" }) : "") : (USD_ && USD_.updated ? new Date(USD_.updated).toLocaleString(LOC, { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "");
-    document.getElementById("xnote").textContent = isC ? "Ζωντανές τιμές από το CoinGecko, ενημέρωση κάθε λεπτό" + (t ? " · τελευταία " + t : "") + "." : "Κατάταξη κατά κεφαλαιοποίηση (NYSE, Nasdaq), ενημέρωση κάθε ώρα" + (t ? " · τελευταία " + t : "") + ".";
-    document.getElementById("xfoot").textContent = isC ? "Πάτα μια γραμμή για να ανοίξει στο CoinGecko ή το + για να την προσθέσεις στο Χαρτοφυλάκιο." : "Πάτα μια γραμμή για να ανοίξει στο Yahoo Finance ή το + για να την προσθέσεις στο Χαρτοφυλάκιο. Οι τιμές έχουν καθυστέρηση.";
+    document.getElementById("xnote").textContent = isC ? (CMCDOC && CG100 && CG100[0] && CG100[0].cmc ? "Τιμές από το CoinMarketCap, ανανέωση κάθε " + Math.max(1, Math.round((CMCDOC.every || 600) / 60)) + "′" : "Ζωντανές τιμές από το CoinGecko, ενημέρωση κάθε λεπτό") + (t ? " · τελευταία " + t : "") + "." : "Κατάταξη κατά κεφαλαιοποίηση (NYSE, Nasdaq), ενημέρωση κάθε ώρα" + (t ? " · τελευταία " + t : "") + ".";
+    document.getElementById("xfoot").textContent = isC ? "Πάτα μια γραμμή για να ανοίξει στο CoinMarketCap ή το + για να την προσθέσεις στο Χαρτοφυλάκιο." : "Πάτα μια γραμμή για να ανοίξει στο Yahoo Finance ή το + για να την προσθέσεις στο Χαρτοφυλάκιο. Οι τιμές έχουν καθυστέρηση.";
     var cols = [["", "", "starcol"], ["rank", "#", "l hide-s"], ["n", "Όνομα", "l"], ["p", "Τιμή", ""]].concat(isC ? [["h1", "1ω", "hide-s"]] : []).concat([["c", "24ω", ""], ["w", "7ημ", "hide-s"], ["m", "Κεφαλαιοποίηση", "hide-s"], ["v", isC ? "Όγκος 24ω" : "Όγκος", "hide-s"]]).concat(isC ? [["", "7 ημέρες", "hide-s"]] : []).concat([["", "", ""]]);
     document.getElementById("xhead").innerHTML = "<tr>" + cols.map(function (c) { var on = c[0] && XS.k === c[0]; return '<th class="' + c[2] + '"' + (c[0] ? ' data-xk="' + c[0] + '"' : "") + (on ? ' aria-sort="' + (XS.d > 0 ? "ascending" : "descending") + '"' : "") + ">" + c[1] + (on ? " " + (XS.d > 0 ? "▲" : "▼") : "") + "</th>"; }).join("") + "</tr>";
     if (q) items = items.filter(function (x) { return x.s.toLowerCase().indexOf(q) > -1 || x.n.toLowerCase().indexOf(q) > -1; });
@@ -4470,18 +4560,19 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var emp = document.getElementById("xempty");
     emp.hidden = items.length > 0;
     if (!items.length && !q && isC && !cg100Err) { emp.innerHTML = skel(8); } else emp.textContent = items.length ? "" : q ? "Δεν βρέθηκε τίποτα." : isC ? (cg100Err ? "Οι τιμές crypto δεν είναι διαθέσιμες τώρα. Ξαναδοκιμάζω σε ένα λεπτό." : "Φόρτωση…") : "Η λίστα θα εμφανιστεί μετά την επόμενη ενημέρωση.";
+    var xTot = items.length; if (isC && !q && xTot > xShown) items = items.slice(0, xShown);
     document.getElementById("xrows").innerHTML = items.map(function (x) {
       var sp = x.sp && x.sp.length > 1 ? sparkHtml(x.sp.filter(function (_, i) { return i % Math.ceil(x.sp.length / 40) === 0; }).map(function (v) { return { y: v }; }), 110, 32) : "";
       var fk = x.k + ":" + x.id;
       return '<tr tabindex="0" data-xid="' + esc(fk) + '"><td class="starcol"><button type="button" class="star" data-xstar="' + esc(fk) + '" aria-pressed="' + !!favs[fk] + '" aria-label="Αγαπημένο: ' + esc(x.s) + '">' + (favs[fk] ? "★" : "☆") + '</button></td><td class="l num hide-s" style="color:var(--muted)">' + x.rank + '</td><td class="l"><div class="who">' + logoBox(x.s, x.img) + "<div><b>" + esc(x.n) + "</b><span>" + esc(x.s + (x.sub ? " · " + x.sub : "")) + "</span></div></div></td>" +
         '<td class="num price" data-pk="' + esc(fk) + '" data-pv="' + x.p + '">' + fmtC(x.p) + "</td>" + (isC ? '<td class="num hide-s">' + pctCell(x.h1) + "</td>" : "") + '<td class="num">' + pctCell(x.c) + '</td><td class="num hide-s">' + pctCell(x.w) + '</td><td class="num hide-s">' + money(x.m) + '</td><td class="num hide-s">' + (x.vsh ? compactN(x.v) : money(x.v)) + "</td>" +
         (isC ? '<td class="hide-s">' + sp + "</td>" : "") + '<td><button type="button" class="xadd" data-xadd="1" title="Προσθήκη στο Χαρτοφυλάκιο" aria-label="Προσθήκη στο Χαρτοφυλάκιο: ' + esc(x.n) + '">+</button></td></tr>';
-    }).join("");
+    }).join("") + (isC && !q && xTot > items.length ? '<tr class="xmorerow"><td colspan="12"><button type="button" class="more" id="xMore">Εμφάνιση περισσότερων (' + (xTot - items.length) + " ακόμα)</button></td></tr>" : "");
     box._items = xItems();
   }
   /* στοιχεία για ένα crypto / ξένη μετοχή, από όποια λίστα το έχει */
   var FAVCG = {}, favCgAt = 0, favCgBusy = false, FAVMETA = (function () { try { return JSON.parse(localStorage.getItem("agora-favmeta") || "{}") || {}; } catch (e) { return {}; } })();
-  function cgItem(x, i) { return { k: "c", id: x.id, s: String(x.symbol || "").toUpperCase(), n: x.name, p: x.current_price, np: x.current_price, h1: x.price_change_percentage_1h_in_currency, c: x.price_change_percentage_24h_in_currency != null ? x.price_change_percentage_24h_in_currency : x.price_change_percentage_24h, w: x.price_change_percentage_7d_in_currency, m: x.market_cap, v: x.total_volume, img: x.image, sp: x.sparkline_in_7d && x.sparkline_in_7d.price, rank: x.market_cap_rank || (i != null ? i + 1 : null), raw: x }; }
+  function cgItem(x, i) { return { k: "c", id: x.id, s: String(x.symbol || "").toUpperCase(), n: x.name, p: x.current_price, np: x.current_price, h1: x.price_change_percentage_1h_in_currency, c: x.price_change_percentage_24h_in_currency != null ? x.price_change_percentage_24h_in_currency : x.price_change_percentage_24h, w: x.price_change_percentage_7d_in_currency, m: x.market_cap, v: x.total_volume, img: x.image, sp: x.sparkline_in_7d && x.sparkline_in_7d.price, rank: x.market_cap_rank || (i != null ? i + 1 : null), raw: x , cmc: x.cmc}; }
   function xGet(key) {
     var k = key.charAt(0), id = key.slice(2), u = usdEur(), m = EXTMETA[key] || FAVMETA[key] || {};
     if (k === "c") {
@@ -4583,7 +4674,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   function loadXH(id, days) {
     var key = id + "|" + days; if (XH[key] !== undefined) return;
     XH[key] = "loading";
-    fetch("https://api.coingecko.com/api/v3/coins/" + encodeURIComponent(id) + "/market_chart?vs_currency=eur&days=" + days)
+    fetch("https://api.coingecko.com/api/v3/coins/" + encodeURIComponent(cgIdOf(id)) + "/market_chart?vs_currency=eur&days=" + days)
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (j) {
         XH[key] = (j.prices || []).map(function (p) { var d = new Date(p[0]); return { x: days === "1" ? d.toLocaleTimeString(LOC, { hour: "2-digit", minute: "2-digit" }) : d.toLocaleDateString(LOC, days === "365" ? { day: "2-digit", month: "2-digit", year: "numeric" } : { day: "2-digit", month: "2-digit" }) + (days === "7" ? " " + d.toLocaleTimeString(LOC, { hour: "2-digit", minute: "2-digit" }) : ""), v: p[1] }; });
@@ -4627,7 +4718,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var chart = isC
       ? '<div class="ctool">' + seg("data-xr", [["1", "24ω"], ["7", "7Η"], ["30", "1Μ"], ["365", "1Χ"]], xRange, "Διάστημα") + '<span id="xro" class="num" style="margin-left:auto"></span></div>' + indBar(xRange !== "365", "Διαθέσιμοι στο διάστημα 1Χ") + '<div class="xchart" id="xchart"></div><div id="xrsi"></div>'
       : tv ? '<div class="tvbox" id="xtv"></div>' : '<div class="chartempty">Το διάγραμμα είναι διαθέσιμο στο δημόσιο site.</div>';
-    var ext = isC ? "https://www.coingecko.com/" + (LANG === "en" ? "en" : "el") + "/coins/" + encodeURIComponent(it.id) : "https://finance.yahoo.com/quote/" + encodeURIComponent(it.id);
+    var ext = isC ? (it.cmc ? "https://coinmarketcap.com/currencies/" + encodeURIComponent(it.id) + "/" : "https://www.coingecko.com/" + (LANG === "en" ? "en" : "el") + "/coins/" + encodeURIComponent(it.id)) : "https://finance.yahoo.com/quote/" + encodeURIComponent(it.id);
     drawer.innerHTML =
       '<div class="dh"><div class="xdh">' + logoBox(it.s, it.img) + '<div style="min-width:0"><h2 id="dname">' + esc(it.s) + " · " + esc(it.n) + '</h2><div class="sec">' + (isC ? "Κρυπτονόμισμα" + (it.rank ? " · #" + it.rank : "") : esc(it.sub || "ΗΠΑ") + " · Ξένη μετοχή") + '</div></div></div><button type="button" class="close" id="dclose" aria-label="Κλείσιμο">×</button></div>' +
       '<div class="bigp"><span class="p num" data-pk="' + esc(xcur) + '" data-pv="' + it.p + '">' + (it.p == null ? "—" : fmtC(it.p)) + "</span>" + (it.c == null ? "" : chgHtml(it.c)) + '<span class="sec" style="color:var(--muted)">24 ώρες</span></div>' +
@@ -4707,7 +4798,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   var STABLE = /^(usdt|usdc|dai|fdusd|usde|usds|tusd|pyusd|usd1|rlusd|usdd|gho|eurc|usdg|usdtb|usd0|bfusd|frax|lusd|crvusd|susds|susde|buidl|usyc|ustb)$/i;
   function heatItems() {
     if (heatMkt === "us") return ((USD_ && USD_.s) || []).map(function (x) { return { key: "f:" + x.s, lab: x.s, name: x.n, mcap: x.m * usdEur(), sector: usSec(x.sec), chg: x.c, w7: x.w }; });
-    if (heatMkt === "c") return (CG100 || []).filter(function (x) { return x.market_cap; }).map(function (x) {
+    if (heatMkt === "c") return (CG100 || []).slice(0, 100).filter(function (x) { return x.market_cap; }).map(function (x) {
       var sym = String(x.symbol || "").toUpperCase(), st = STABLE.test(sym);
       return { key: "c:" + x.id, lab: sym, name: x.name, mcap: x.market_cap, sector: x.id === "bitcoin" ? "Bitcoin" : x.id === "ethereum" ? "Ethereum" : st ? "Stablecoins" : "Altcoins", chg: x.price_change_percentage_24h_in_currency != null ? x.price_change_percentage_24h_in_currency : x.price_change_percentage_24h, w7: x.price_change_percentage_7d_in_currency };
     });
