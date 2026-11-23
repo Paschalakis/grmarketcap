@@ -208,13 +208,15 @@ def run_alerts(db):
     for uid, d in users:
         try:
             upd, tokens = {}, [t for t in (d.get("push") or []) if t.get("t")]
+            en = d.get("lang") == "en"
+            L = (lambda g, e: e) if en else (lambda g, e: g)
             alerts = d.get("alerts") or []
             # δοκιμαστικές ειδοποιήσεις
             tested = False
             for t in tokens:
                 if t.get("test") and t.get("test") != t.get("tested"):
                     print(uid[:6], "δοκιμαστική ειδοποίηση")
-                    bad = send_push([t], "Axiogram", "Οι ειδοποιήσεις λειτουργούν σε αυτή τη συσκευή ✓", "test")
+                    bad = send_push([t], "Axiogram", L("Οι ειδοποιήσεις λειτουργούν σε αυτή τη συσκευή ✓", "Alerts are working on this device ✓"), "test")
                     if bad: t["dead"] = True
                     t["tested"] = t["test"]; tested = True
             if tested:
@@ -232,7 +234,7 @@ def run_alerts(db):
                     ok_time = (not stock) or (str(a.get("k")).startswith("f:") and us_open(n)) or (not str(a.get("k")).startswith("f:") and q["live"] and now_ath().weekday() < 5)
                     if ok_time and q.get("c") is not None and abs(float(q["c"])) >= float(a.get("v") or 0) and a.get("last") != today:
                         hit = True; a["last"] = today
-                        body = "Μεταβολή σήμερα " + fmt_pct(float(q["c"])) + " · τιμή " + fmt_px(q["nat"] if q["cur"] != "EUR" else q["eur"], q["cur"])
+                        body = L("Μεταβολή σήμερα ", "Today's move ") + fmt_pct(float(q["c"])) + L(" · τιμή ", " · price ") + fmt_px(q["nat"] if q["cur"] != "EUR" else q["eur"], q["cur"])
                 else:
                     cur = a.get("cur") or "EUR"
                     px = q["eur"] if cur == "EUR" else q["usd"] if cur == "USD" else (q["nat"] if q["cur"] == cur else None)
@@ -240,7 +242,7 @@ def run_alerts(db):
                     v = float(a.get("v") or 0)
                     if (a.get("op") == "gt" and px >= v) or (a.get("op") == "lt" and px <= v):
                         hit = True; a["on"] = False; a["fired"] = int(time.time() * 1000)
-                        body = ("Ανέβηκε πάνω από " if a.get("op") == "gt" else "Έπεσε κάτω από ") + fmt_px(v, cur) + " · τώρα " + fmt_px(px, cur)
+                        body = (L("Ανέβηκε πάνω από ", "Rose above ") if a.get("op") == "gt" else L("Έπεσε κάτω από ", "Fell below ")) + fmt_px(v, cur) + L(" · τώρα ", " · now ") + fmt_px(px, cur)
                 if hit:
                     changed = True
                     print(uid[:6], "ειδοποίηση", a.get("lab"), body)
