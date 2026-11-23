@@ -295,7 +295,13 @@ tbody tr:hover { background: var(--bg); }
 .viewbtn .vi { display: none; }
 .viewbtn .vl { display: inline; }
 .viewbtn .vi .cnt, .viewbtn .cnt { margin-left: 6px; }
-button.pill { border: 0; font: inherit; cursor: default; }
+button.pill { border: 0; font: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+button.pill::after { content: ""; width: 6px; height: 6px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg) translateY(-2px); }
+button.pill[aria-expanded="true"]::after { transform: rotate(-135deg) translateY(-1px); }
+button.pill.pwarn { width: 24px; height: 24px; padding: 0; justify-content: center; border-radius: 50%; background: var(--down-soft); color: var(--down); font-weight: 800; font-size: 14px; line-height: 1; }
+button.pill.pwarn::after { display: none; }
+.demo-band { display: none; }
+body.showband .demo-band { display: block; }
 .seg2.mvtabs { display: none; }
 @media (max-width: 900px) {
   .seg2.mvtabs { display: flex; align-self: flex-start; }
@@ -2513,6 +2519,8 @@ var EN_EXACT = {
   "Φόρτωση ημερολογίου…": "Loading calendar…"
 };
 Object.assign(EN_EXACT, {
+"Οι τιμές καθυστερούν. Πάτα για λεπτομέρειες": "Prices are delayed. Tap for details",
+"Οι τιμές καθυστερούν": "Prices are delayed",
 "Όρισε μια τιμή-στόχο και θα σε ειδοποιήσουμε όταν τη φτάσει.": "Set a target price and we'll notify you when it's reached.",
 "Όσες είναι πιο κοντά να χτυπήσουν": "The ones closest to triggering",
 "Γενικός Δείκτης, S&P 500, Bitcoin και άλλες": "Athens General Index, S&P 500, Bitcoin and more",
@@ -6018,10 +6026,10 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var banner = document.getElementById("banner");
     if (late) {
       banner.parentNode.classList.add("warn");
-      document.getElementById("pill").textContent = "Καθυστερεί";
+      var pl = document.getElementById("pill"); pl.textContent = "!"; pl.classList.add("pwarn"); pl.setAttribute("aria-label", "Οι τιμές καθυστερούν. Πάτα για λεπτομέρειες"); pl.title = "Οι τιμές καθυστερούν";
       banner.innerHTML = "<strong>Οι τιμές καθυστερούν.</strong> Η τελευταία ενημέρωση ήταν " + esc(when) + sep + "Κανονικά ενημερώνονται κάθε 15 λεπτά, οπότε οι τιμές που βλέπεις μπορεί να μην είναι οι τρέχουσες. Δεν αποτελεί επενδυτική πληροφόρηση.";
     } else {
-      document.getElementById("pill").textContent = open ? "Καθυστέρηση 15′" : "Αγορά κλειστή";
+      var pl2 = document.getElementById("pill"); pl2.classList.remove("pwarn"); pl2.removeAttribute("aria-label"); pl2.removeAttribute("title"); pl2.textContent = open ? "Καθυστέρηση 15′" : "Αγορά κλειστή";
       banner.innerHTML = (open ? "<strong>Τιμές με καθυστέρηση 15 λεπτών.</strong> Τελευταία ενημέρωση: " : "<strong>Η αγορά είναι κλειστή.</strong> Τελευταίες τιμές: ") + esc(when) + sep + "Οι τιμές ενημερώνονται αυτόματα κάθε 15 λεπτά στις ώρες συνεδρίασης (10:15–17:20). Πηγές: capital.gr (τιμές), euro2day.gr (κεφαλαιοποίηση). Δεν αποτελεί επενδυτική πληροφόρηση.";
     }
     document.getElementById("asof").textContent = "Ενημέρωση: " + when;
