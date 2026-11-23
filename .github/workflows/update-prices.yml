@@ -72,6 +72,19 @@ jobs:
             return 1
           }
 
+          # Αν η εκκίνηση ήρθε πριν ανοίξει η αγορά (σε εργάσιμη), περιμένουμε ως τις 09:30
+          # αντί να τελειώσουμε: το GitHub συχνά παραλείπει τις υπόλοιπες προγραμματισμένες
+          # εκκινήσεις της ημέρας και τότε οι τιμές έμεναν χωρίς ενημέρωση.
+          dow0=$(TZ=Europe/Athens date +%u); hm0=$((10#$(TZ=Europe/Athens date +%H%M)))
+          if [ "$dow0" -le 5 ] && [ "$hm0" -lt 930 ] && [ "$GITHUB_EVENT_NAME" != "workflow_dispatch" ]; then
+            target=$(TZ=Europe/Athens date -d "today 09:30" +%s)
+            wait_s=$(( target - $(date +%s) ))
+            if [ "$wait_s" -gt 0 ] && [ "$wait_s" -lt 14400 ]; then
+              echo "Η αγορά ανοίγει σε $(( wait_s / 60 )) λεπτά· περιμένω."
+              sleep "$wait_s"
+            fi
+          fi
+
           while :; do
             if { [ $first -eq 1 ] && [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; } || in_session; then
               echo "=== $(TZ=Europe/Athens date '+%d/%m %H:%M') ώρα Ελλάδας ==="
