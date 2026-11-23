@@ -2519,6 +2519,28 @@ var EN_EXACT = {
   "Φόρτωση ημερολογίου…": "Loading calendar…"
 };
 Object.assign(EN_EXACT, {
+"Ρίσκο μετοχών": "Stock risk",
+"με μέγεθος εταιρείας, beta και συγκέντρωση": "using company size, beta and concentration",
+"Μεγάλες εταιρείες": "Large companies",
+"Μεσαίες": "Mid-sized",
+"Μικρές": "Small",
+"Πολύ μικρές": "Very small",
+"Χωρίς στοιχεία": "No data",
+"Κατανομή μετοχών ανά μέγεθος εταιρείας": "Stock allocation by company size",
+"Οι μετοχές είναι το": "Stocks make up",
+"Η μεγαλύτερη θέση,": "Your largest position,",
+"των μετοχών σου: μεγάλη συγκέντρωση σε μία εταιρεία.": "of your stocks: a heavy concentration in one company.",
+"των μετοχών σου.": "of your stocks.",
+"Ο κλάδος": "The sector",
+"των μετοχών σου: μεγάλη εξάρτηση από έναν κλάδο.": "of your stocks: heavy reliance on a single sector.",
+"Μέσο beta": "Average beta",
+": οι μετοχές σου κινούνται κατά μέσο όρο πιο έντονα από την αγορά.": ": your stocks move more sharply than the market on average.",
+": οι μετοχές σου κινούνται κατά μέσο όρο πιο ήπια από την αγορά.": ": your stocks move more gently than the market on average.",
+"σε μικρές εταιρείες (κεφαλαιοποίηση κάτω από 1 δισ. €): λιγότερη ρευστότητα και μεγαλύτερες διακυμάνσεις.": "in small companies (market cap under €1bn): less liquidity and bigger swings.",
+"σε μετοχές ΗΠΑ: επηρεάζεσαι και από την ισοτιμία δολαρίου-ευρώ.": "in US stocks: you're also exposed to the dollar-euro exchange rate.",
+"Έχεις μόνο": "You only have",
+"θέσεις μετοχών: περισσότερες θέσεις σε διαφορετικούς κλάδους μειώνουν το ρίσκο.": "stock positions: more positions across different sectors reduce risk.",
+"Απλή εκτίμηση από το μέγεθος των εταιρειών, το beta και τη συγκέντρωση των θέσεων. Δεν αποτελεί επενδυτική συμβουλή.": "A simple estimate based on company size, beta and position concentration. Not investment advice.",
 "Κορυφαίες άνοδοι": "Top gainers",
 "Κορυφαίες πτώσεις": "Top losers",
 "Οι τιμές καθυστερούν. Πάτα για λεπτομέρειες": "Prices are delayed. Tap for details",
@@ -4126,6 +4148,53 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       (D.rec.length > 6 ? '<div style="padding:10px 8px 2px"><button type="button" class="more" data-divall="1">' + (divAll ? "Λιγότερα" : "Όλα τα μερίσματα (" + D.rec.length + ")") + "</button></div>" : "") : '<p class="note" style="margin:0 8px 8px">Δεν έχει περάσει ακόμα αποκοπή μερίσματος από τότε που αγόρασες.</p>';
     return '<div class="dk dktable tablewrap perps" id="pfdivs"><div class="perphead"><h2>Μερίσματα</h2><span class="note">ποσά πριν από τον φόρο 5% · μόνο μετοχές Χ.Α.</span></div><div style="padding:0 8px">' + k + "</div>" + nx + tb + "</div>";
   }
+
+  /* ===== Ρίσκο μετοχών: μέγεθος εταιρείας, beta και συγκέντρωση ===== */
+  var STK_B = [["l", "Μεγάλες εταιρείες", "#3fb67f", 0.5], ["m", "Μεσαίες", "#4b8bff", 1.8], ["s", "Μικρές", "#f2994a", 3.2], ["xs", "Πολύ μικρές", "#e5484d", 4.5], ["n", "Χωρίς στοιχεία", "#8a93a6", 3]];
+  var stkAsked = false;
+  function stockRiskHtml(H) {
+    var ss = H.list.filter(function (h) { return (!isExt(h.sym) || /^f:/.test(h.sym)) && h.value > 0; });
+    if (!ss.length) return "";
+    if (!SCR) {
+      if (typeof scrQ === "undefined" || !scrQ) { setTimeout(function () { renderPortfolio(); }, 700); return ""; }   /* σε πρώιμη σχεδίαση τα δεδομένα φίλτρου δεν έχουν οριστεί ακόμα */
+      if (!scrErr && !stkAsked) { stkAsked = true; loadScr(function () { renderPortfolio(); }); }
+      if (!SCR) return "";
+    }
+    var u = usdEur(), tot = 0, b = { l: 0, m: 0, s: 0, xs: 0, n: 0 }, bw = 0, bv = 0, usv = 0, big = null, secs = {}, score = 0;
+    ss.forEach(function (h) {
+      var us = /^f:/.test(h.sym), id = us ? h.sym.slice(2) : h.sym;
+      var r = (us ? SCR.us : SCR.gr).filter(function (o) { return o.k === id; })[0];
+      var mc = r && r.m ? r.m * (us ? u : 1) / 1e9 : null;
+      var k = mc == null ? "n" : mc >= 10 ? "l" : mc >= 1 ? "m" : mc >= 0.2 ? "s" : "xs";
+      tot += h.value; b[k] += h.value; if (us) usv += h.value;
+      if (r && r.beta != null && isFinite(r.beta)) { bw += r.beta * h.value; bv += h.value; }
+      var sec = r && r.sec ? r.sec : null; if (sec) secs[sec] = (secs[sec] || 0) + h.value;
+      if (!big || h.value > big.v) big = { v: h.value, s: DS(h.sym) };
+    });
+    STK_B.forEach(function (r) { score += b[r[0]] / tot * r[3]; });
+    var beta = bv ? bw / bv : null;
+    if (beta != null) score += Math.max(-0.5, Math.min(1, beta - 1));
+    var bshare = big.v / tot;
+    score += Math.max(0, bshare - 0.25) * 2;
+    score = Math.max(0, Math.min(5, score));
+    var lvl = score < 1.5 ? ["Χαμηλό", "#3fb67f"] : score < 2.8 ? ["Μέτριο", "#d9b84a"] : score < 3.8 ? ["Υψηλό", "#f2994a"] : ["Πολύ υψηλό", "#e5484d"];
+    var pc = function (v) { return nf1.format(v / tot * 100) + "%"; };
+    var bar = '<div class="rkbar" role="img" aria-label="Κατανομή μετοχών ανά μέγεθος εταιρείας">' + STK_B.map(function (r) { var w = b[r[0]] / tot * 100; return w > 0 ? '<i style="width:' + w.toFixed(2) + "%;background:" + r[2] + '" title="' + esc(r[1]) + " " + pc(b[r[0]]) + '"></i>' : ""; }).join("") + "</div>";
+    var leg = '<div class="rkleg">' + STK_B.filter(function (r) { return b[r[0]] > 0; }).map(function (r) { return '<div><i style="background:' + r[2] + '"></i><span>' + esc(r[1]) + '</span><b class="num">' + pc(b[r[0]]) + '</b><span class="num sens note">' + eur(b[r[0]]) + "</span></div>"; }).join("") + "</div>";
+    var tips = [], share = H.value ? tot / H.value * 100 : 0;
+    tips.push("Οι μετοχές είναι το <b>" + nf1.format(share) + "%</b> του χαρτοφυλακίου σου.");
+    if (ss.length > 1) tips.push("Η μεγαλύτερη θέση, <b>" + esc(big.s) + "</b>, είναι το <b>" + pc(big.v) + "</b> των μετοχών σου" + (bshare > 0.4 ? ": μεγάλη συγκέντρωση σε μία εταιρεία." : "."));
+    var ts = Object.keys(secs).sort(function (x, y) { return secs[y] - secs[x]; })[0];
+    if (ts && ss.length > 1 && secs[ts] / tot > 0.5) tips.push("Ο κλάδος <b>" + esc(usSec(ts)) + "</b> είναι το <b>" + pc(secs[ts]) + "</b> των μετοχών σου: μεγάλη εξάρτηση από έναν κλάδο.");
+    if (beta != null && Math.abs(beta - 1) >= 0.15) tips.push("Μέσο beta <b>" + nf1.format(beta) + "</b>" + (beta > 1 ? ": οι μετοχές σου κινούνται κατά μέσο όρο πιο έντονα από την αγορά." : ": οι μετοχές σου κινούνται κατά μέσο όρο πιο ήπια από την αγορά."));
+    if (b.s + b.xs > tot * 0.3) tips.push("<b>" + pc(b.s + b.xs) + "</b> σε μικρές εταιρείες (κεφαλαιοποίηση κάτω από 1 δισ. €): λιγότερη ρευστότητα και μεγαλύτερες διακυμάνσεις.");
+    if (usv > tot * 0.3) tips.push("<b>" + pc(usv) + "</b> σε μετοχές ΗΠΑ: επηρεάζεσαι και από την ισοτιμία δολαρίου-ευρώ.");
+    if (ss.length < 5) tips.push("Έχεις μόνο <b>" + ss.length + "</b> θέσεις μετοχών: περισσότερες θέσεις σε διαφορετικούς κλάδους μειώνουν το ρίσκο.");
+    return '<div class="dk dktable perps" id="pfstkrisk"><div class="perphead"><h2>Ρίσκο μετοχών</h2><span class="note">με μέγεθος εταιρείας, beta και συγκέντρωση</span></div>' +
+      '<div class="rkwrap"><div class="rkscore"><span class="note">Δείκτης ρίσκου</span><b class="num" style="color:' + lvl[1] + '">' + nf1.format(score) + '<small>/5</small></b><span class="rklvl" style="color:' + lvl[1] + '">' + lvl[0] + '</span></div><div class="rkmain">' + bar + leg + "</div></div>" +
+      '<ul class="rktips">' + tips.map(function (t) { return "<li>" + t + "</li>"; }).join("") + "</ul>" +
+      '<p class="note" style="margin:0 10px 10px">Απλή εκτίμηση από το μέγεθος των εταιρειών, το beta και τη συγκέντρωση των θέσεων. Δεν αποτελεί επενδυτική συμβουλή.</p></div>';
+  }
   /* ===== Ρίσκο crypto του χαρτοφυλακίου, με κατάταξη, κεφαλαιοποίηση και κατηγορίες του CoinMarketCap ===== */
   var RISK_B = [["st", "Stablecoins", "#3fb67f", 0], ["t10", "Top 10", "#4b8bff", 1], ["t100", "Θέσεις 11–100", "#8b7dff", 2.5], ["t500", "Θέσεις 101–500", "#f2994a", 4], ["out", "Εκτός 500", "#e5484d", 5]];
   function cryptoRiskHtml(H) {
@@ -4558,7 +4627,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     hist = closedTx.length ? '<div class="dk dktable tablewrap pf-panel"><h2>Κλεισμένες θέσεις</h2><p class="note" style="margin:0 0 8px">Οι συναλλαγές τίτλων που έχεις πουλήσει ολόκληρους.</p><table class="txtab"><thead><tr><th class="l">Ημερομηνία</th><th class="l">Είδος</th><th class="l">Τίτλος</th><th class="hide-s">Τεμάχια</th><th class="hide-s">Τιμή</th><th>Σύνολο</th><th><span style="position:absolute;left:-9999px">Ενέργειες</span></th></tr></thead><tbody>' +
       closedTx.map(function (t) { return '<tr><td class="l num">' + fmtDate(t.date) + '</td><td class="l"><span class="side ' + (t.side === "sell" ? "sell" : "buy") + '">' + (t.side === "sell" ? "Πώληση" : "Αγορά") + '</span></td><td class="l"><b>' + esc(DS(t.sym)) + '</b></td><td class="num hide-s sens">' + fmtQty(t.qty) + '</td><td class="num hide-s">' + fmtC(effP(t)) + '</td><td class="num sens">' + eur(t.qty * effP(t)) + '</td><td class="txact"><button type="button" class="xbtn" data-edit="' + esc(t.id) + '"><span class="lgt">Επεξεργασία</span><span class="smt" aria-hidden="true">✎</span></button><button type="button" class="xbtn" data-del="' + esc(t.id) + '"><span class="lgt">Διαγραφή</span><span class="smt" aria-hidden="true">✕</span></button></td></tr>'; }).join("") +
       "</tbody></table></div>" : "";
-    pfBody.innerHTML = stats + table + cryptoRiskHtml(H) + divHtml(H) + perpsHtml() + hist + '<p class="foot">Το κόστος υπολογίζεται με τη μέση τιμή αγοράς. Οι αξίες υπολογίζονται με τις τιμές της σελίδας (καθυστέρηση 15 λεπτών). Είναι εικονικό χαρτοφυλάκιο για παρακολούθηση, όχι επενδυτική συμβουλή.</p>';
+    pfBody.innerHTML = stats + table + stockRiskHtml(H) + cryptoRiskHtml(H) + divHtml(H) + perpsHtml() + hist + '<p class="foot">Το κόστος υπολογίζεται με τη μέση τιμή αγοράς. Οι αξίες υπολογίζονται με τις τιμές της σελίδας (καθυστέρηση 15 λεπτών). Είναι εικονικό χαρτοφυλάκιο για παρακολούθηση, όχι επενδυτική συμβουλή.</p>';
     if (H.list.length) { H.list.forEach(function (h) { if (h.row) loadLong(h.row); }); pfDraw(H); }
     refreshCrypto(); hlRefresh();
   }
