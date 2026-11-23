@@ -2233,6 +2233,7 @@ var EN_RX = [
   [/^(.+) σήμερα$/, "$1 today"],
   [/^σήμερα (.+)$/, "today $1"],
   [/^Μετακίνηση: (.+)$/, function (m, a) { return "Move: " + trText(a); }],
+  [/^(Αποκοπή μερίσματος|Πληρωμή μερίσματος|Αποτελέσματα) · (.+)$/, function (m, a, c) { return EN_EXACT[a] + " · " + c; }],
   [/^Τίποτα για τις μετοχές σου τους επόμενους (\d+) μήνες\.$/, "Nothing coming up for your stocks in the next $1 months."],
   [/^τώρα (.+)$/, function (m, a) { return "now " + a; }],
   [/^· (\d+) ενεργές$/, "· $1 active"],
