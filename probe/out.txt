@@ -1,16 +1,13 @@
-Ανανέωση κάθε 300 δευτ. (χωρίς κλειδί: δοκιμαστικά)
-CMC /v1/cryptocurrency/listings/latest 429 1022 You've reached the limit for anonymous access. Sign in to activate a free API plan or upgrade for higher limits.
-CMC /v1/cryptocurrency/listings/latest 429 1022 You've reached the limit for anonymous access. Sign in to activate a free API plan or upgrade for higher limits.
-CMC /v3/fear-and-greed/historical 200 0 
-CMC /v3/fear-and-greed/historical 200 0 
-CMC /v3/fear-and-greed/historical 200 0 
-CMC /v3/fear-and-greed/latest 200 0 
-CMC /v3/fear-and-greed/latest 200 0 
-CMC /v3/fear-and-greed/latest 429 1022 You've reached the limit for anonymous access. Sign in to activate a free API plan or upgrade for higher limits.
-07:22:03 → 500 νομίσματα, 49 KB · BTC 55788.8 € · μονάδες 8
-cspark.json ενημερώθηκε
-Λήψεις: 1 · μονάδες: 8
+firestore: updated 2026-11-23T07:54:35Z cur USD every 623 coins 500 BTC 61452.6 g {'mc': 2096567299157, 'vol': 60376337265, 'mcch': 3.24, 'btc': 58.95, 'eth': 10.03, 'n': 7900} fng [{'v': 8, 'c': 'Extreme fear', 't': '1795305600'}, {'v': 8, 'c': 'Extreme fear', 't': '1795219200'}]
+d Τα 500 μεγαλύτερα κρυπτονομίσματα | Τιμές από το CoinMarketCap, ανανέωση κάθε 10′ · τελευταία 07:54 π.μ..
+d rows 101 logos 49 spark 0
+d first ☆ 1 BT Bitcoin BTC 61.452,60 $ 0,00% ▲ +4,07% ▼ −5,38% 1,24 τρισ. $ 27,94 δισ. $ +
+d cstats Συνολική κεφαλαιοποίηση crypto2,10 τρισ. $▲ +3,24%Όγκος 24ω: 60,38 δισ. $ΚυριαρχίαBTC 58,95%Bitcoin 58,95%Ethereum 10,03%Υπόλοιπα 31,02%Δείκτης Fear & Greed8Ακρ
+d errors []
+m Τα 500 μεγαλύτερα κρυπτονομίσματα | Τιμές από το CoinMarketCap, ανανέωση κάθε 10′ · τελευταία 07:54 π.μ..
+m rows 101 logos 44 spark 0
+m first BT Bitcoin BTC 61.452,60 $ ▲ +4,07% +
+m cstats Συνολική κεφαλαιοποίηση crypto2,10 τρισ. $▲ +3,24%Όγκος 24ω: 60,38 δισ. $ΚυριαρχίαBTC 58,95%Bitcoin 58,95%Ethereum 10,03%Υπόλοιπα 31,02%Δείκτης Fear & Greed8Ακρ
+m errors []
 
 
-coins 500 g {'mc': 1905707099464, 'vol': 54509583854, 'mcch': 3.03, 'btc': 58.9, 'eth': 10.04, 'n': 7901} fng [] slugs ['bitcoin', 'ethereum', 'tether', 'bnb', 'usd-coin', 'xrp', 'solana', 'tron', 'hyperliquid', 'zcash', 'monero', 'dogecoin', 'unus-sed-leo', 'chainlink', 'cardano', 'ethena-usde', 'stellar', 'multi-collateral-dai', 'bitcoin-cash', 'near-protocol', 'litecoin', 'canton-network', 'avalanche', 'uniswap', 'gram', 'ripple-usd', 'usd1', 'sui', 'tether-gold', 'global-dollar-usdg', 'paypal-usd', 'hedera', 'bittensor', 'shiba-inu', 'cronos', 'memecore', 'quant', 'okb', 'united-stables', 'pax-gold']
-spark n 500 len btc 84 size 350 KB
