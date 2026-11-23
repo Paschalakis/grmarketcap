@@ -726,6 +726,10 @@ th[aria-sort] button { color: var(--accent); }
 .scrrng input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
 .scrfoot { display: flex; justify-content: flex-end; padding: 0 16px 14px; }
 .scrcount { font-size: 14px; }
+.scrcount .scrcov { display: block; margin-top: 4px; font-size: 12.5px; }
+.scrwhy { margin: 2px 0 0; padding: 10px 14px; border-radius: 14px; font-size: 13.5px; line-height: 1.5; color: var(--fg); background: color-mix(in srgb, var(--accent) 10%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); }
+.scrwhy b { color: var(--accent); }
+.scrtab th.xcol, .scrtab td.xcol { background: color-mix(in srgb, var(--accent) 7%, transparent); }
 .scrtab th button { white-space: nowrap; }
 .scrtab td .who span { max-width: 210px; }
 @media (max-width: 640px) { .scrtab td .who span { max-width: 110px; } .scrgrid { grid-template-columns: 1fr 1fr; padding: 12px; gap: 10px; } }
@@ -5763,13 +5767,25 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   if (!SF || typeof SF !== "object") SF = { m: "gr", sec: "", cap: 0, f: {}, pre: "", k: "m", d: -1 };
   var SFIELDS = [["pe", "P/E"], ["dy", "Μερισματική απόδοση %"], ["roe", "ROE %"], ["y", "Απόδοση 1 έτους %"], ["rg", "Αύξηση πωλήσεων %"], ["pb", "P/B"], ["rsi", "RSI (14)"], ["de", "Χρέος / Ίδια κεφάλαια"]];
   var SPRE = [
-    ["div", "Υψηλό μέρισμα", { dy: [4, null] }],
-    ["cheap", "Χαμηλό P/E", { pe: [0.01, 10] }],
-    ["qual", "Ποιότητα", { roe: [15, null], de: [null, 1] }],
-    ["grow", "Ανάπτυξη", { rg: [20, null] }],
-    ["mom", "Ισχυρή άνοδος", { y: [30, null] }],
-    ["over", "Υπερπουλημένες", { rsi: [null, 30] }]
+    ["div", "Υψηλό μέρισμα", { dy: [4, null] }, "Μερισματική απόδοση 4% και πάνω: πληρώνει τουλάχιστον 4% της τιμής της τον χρόνο σε μερίσματα."],
+    ["cheap", "Χαμηλό P/E", { pe: [0.01, 10] }, "P/E έως 10: η μετοχή κοστίζει λιγότερο από 10 φορές τα ετήσια κέρδη της. Οι ζημιογόνες εξαιρούνται."],
+    ["qual", "Ποιότητα", { roe: [15, null], de: [null, 1] }, "ROE 15% και πάνω και Χρέος / Ίδια κεφάλαια έως 1: κερδοφόρα με τα κεφάλαιά της, χωρίς πολύ δανεισμό."],
+    ["grow", "Ανάπτυξη", { rg: [20, null] }, "Αύξηση πωλήσεων 20% και πάνω σε σχέση με πέρσι: τα έσοδά της μεγαλώνουν γρήγορα."],
+    ["mom", "Ισχυρή άνοδος", { y: [30, null] }, "Απόδοση 1 έτους 30% και πάνω: η τιμή της ανέβηκε τουλάχιστον 30% τον τελευταίο χρόνο."],
+    ["over", "Υπερπουλημένες", { rsi: [null, 30] }, "RSI (14) έως 30: έπεσε απότομα τις τελευταίες ~14 συνεδριάσεις. Συχνά ακολουθεί αναπήδηση, αλλά δεν είναι εγγύηση."]
   ];
+  /* στήλες που μπαίνουν στον πίνακα μόνο όταν τις χρησιμοποιεί κάποιο κριτήριο */
+  var SXCOL = { rg: ["Πωλήσεις ±", function (v) { return chgHtml(v); }], de: ["Χρέος / Ίδια", function (v) { return n1(v, 2); }], pb: ["P/B", function (v) { return n1(v, 2); }] };
+  function scrWhy() {
+    var p = SF.pre && SPRE.filter(function (x) { return x[0] === SF.pre; })[0];
+    if (p) return "<b>" + esc(p[1]) + ":</b> " + esc(p[3]);
+    var parts = [];
+    SFIELDS.forEach(function (f) { var r = SF.f[f[0]]; if (!r || (r[0] == null && r[1] == null)) return; var u = /%/.test(f[1]) ? "%" : ""; var nm = f[1].replace(/\s*%$/, "");
+      parts.push(esc(nm) + " " + (r[0] != null && r[1] != null ? "από " + n1(r[0], 2) + u + " έως " + n1(r[1], 2) + u : r[0] != null ? n1(r[0], 2) + u + " και πάνω" : "έως " + n1(r[1], 2) + u)); });
+    if (SF.sec) parts.push("κλάδος: " + esc(SF.sec));
+    if (+SF.cap) parts.push("κεφαλαιοποίηση " + esc((SCAPS.filter(function (c) { return c[0] === +SF.cap; })[0] || [0, ""])[1]));
+    return parts.length ? "<b>Κριτήρια:</b> " + parts.join(" · ") : "";
+  }
   var SCAPS = [[0, "Όλες"], [1e8, "πάνω από 100 εκ."], [1e9, "πάνω από 1 δισ."], [1e10, "πάνω από 10 δισ."], [1e11, "πάνω από 100 δισ."]];
   var scrShown = 60;
   function scrSave() { lsSet("agora-scr", SF); }
@@ -5807,23 +5823,26 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var secList = Object.keys(secs).sort(function (a, b) { return a.localeCompare(b, "el"); });
     if (SF.sec && !secs[SF.sec]) SF.sec = "";
     var list = scrList(), anyF = SF.sec || SF.cap || Object.keys(SF.f).some(function (k) { var r = SF.f[k]; return r && (r[0] != null || r[1] != null); });
+    var xc = Object.keys(SXCOL).filter(function (k) { var r = SF.f[k]; return r && (r[0] != null || r[1] != null); });
     var th = function (k, t, c) { return '<th' + (c ? ' class="' + c + '"' : "") + ' data-sk="' + k + '" aria-sort="' + (SF.k === k ? (SF.d > 0 ? "ascending" : "descending") : "none") + '"><button type="button">' + t + "</button></th>"; };
     var rowsH = list.slice(0, scrShown).map(function (it) {
       var o = it.o;
       return '<tr tabindex="0" data-open="' + esc(it.key) + '"><td class="l"><div class="who">' + itemLogo(it) + "<div><b>" + esc(it.lab) + "</b><span>" + esc(it.n || "") + "</span></div></div></td>" +
         '<td class="num" data-pk="' + esc(it.key) + '" data-pv="' + it.p + '">' + (it.p == null ? "—" : fmtP(it.p)) + '</td><td class="hide-s">' + (it.c == null ? "—" : chgHtml(it.c)) + '</td><td class="num hide-s">' + (it.m ? money(it.m) : "—") + "</td>" +
+        xc.map(function (k) { return '<td class="num xcol">' + (o[k] == null ? "—" : SXCOL[k][1](o[k])) + "</td>"; }).join("") +
         '<td class="num">' + (o.pe == null || o.pe <= 0 ? "—" : n1(o.pe)) + '</td><td class="num">' + (o.dy ? n1(o.dy, 2) + "%" : "—") + '</td><td class="num hide-s">' + (o.roe == null ? "—" : n1(o.roe) + "%") + '</td><td class="hide-s">' + (o.y == null ? "—" : chgHtml(o.y)) + '</td><td class="num hide-s">' + (o.rsi == null ? "—" : rsiTag(o.rsi)) + "</td></tr>";
     }).join("");
     box.innerHTML =
       '<div class="scrtop"><div class="seg2" role="group" aria-label="Αγορά" id="scrMkt"><button type="button" data-v="gr" aria-pressed="' + (SF.m === "gr") + '">Ελλάδα</button><button type="button" data-v="us" aria-pressed="' + (SF.m === "us") + '">ΗΠΑ · 500</button></div>' +
       '<div class="scrpre" role="group" aria-label="Έτοιμα φίλτρα">' + SPRE.map(function (p) { return '<button type="button" class="tab" data-pre="' + p[0] + '" aria-pressed="' + (SF.pre === p[0]) + '">' + esc(p[1]) + "</button>"; }).join("") + "</div></div>" +
+      (scrWhy() ? '<p class="scrwhy" role="status">' + scrWhy() + "</p>" : "") +
       '<details class="panel scrf"' + (anyF && !SF.pre ? " open" : "") + '><summary><span>Κριτήρια</span><span class="note">' + (anyF ? "ενεργά φίλτρα" : "όλες οι μετοχές") + "</span></summary>" +
       '<div class="scrgrid"><label><span>Κλάδος</span><select id="scrSec" class="search"><option value="">Όλοι οι κλάδοι</option>' + secList.map(function (s) { return '<option' + (s === SF.sec ? " selected" : "") + ">" + esc(s) + "</option>"; }).join("") + "</select></label>" +
       '<label><span>Κεφαλαιοποίηση</span><select id="scrCap" class="search">' + SCAPS.map(function (c) { return '<option value="' + c[0] + '"' + (+SF.cap === c[0] ? " selected" : "") + ">" + esc(c[1]) + "</option>"; }).join("") + "</select></label>" +
       SFIELDS.map(function (f) { var r = scrRange(f[0]); return '<div class="scrrng"><span>' + esc(f[1]) + '</span><div><input inputmode="decimal" data-fk="' + f[0] + '" data-fi="0" placeholder="από" aria-label="' + esc(f[1]) + ' από" value="' + scrInVal(r[0]) + '"><span>–</span><input inputmode="decimal" data-fk="' + f[0] + '" data-fi="1" placeholder="έως" aria-label="' + esc(f[1]) + ' έως" value="' + scrInVal(r[1]) + '"></div></div>'; }).join("") +
       '</div><div class="scrfoot"><button type="button" class="btn" id="scrReset">Καθαρισμός</button></div></details>' +
-      '<div class="scrcount"><b>' + list.length + "</b> " + (list.length === 1 ? "μετοχή" : "μετοχές") + '<span class="note"> · πάτα μια στήλη για ταξινόμηση</span></div>' +
-      '<div class="panel tablewrap"><table class="scrtab"><thead><tr>' + th("lab", "Μετοχή", "l") + th("p", "Τιμή") + th("c", "Ημέρα %", "hide-s") + th("m", "Κεφαλαιοποίηση", "hide-s") + th("pe", "P/E") + th("dy", "Μέρ. %") + th("roe", "ROE", "hide-s") + th("y", "1 έτος", "hide-s") + th("rsi", "RSI", "hide-s") + "</tr></thead><tbody>" + rowsH + "</tbody></table>" +
+      '<div class="scrcount"><b>' + list.length + "</b> " + (list.length === 1 ? "μετοχή" : "μετοχές") + '<span class="note"> · πάτα μια στήλη για ταξινόμηση</span>' + (SF.m === "gr" ? '<span class="note scrcov">Θεμελιώδη στοιχεία έχουν <b>' + (SCR.gr || []).length + "</b> από τις <b>" + rows.length + "</b> μετοχές του Χ.Α. Οι υπόλοιπες, κυρίως πολύ μικρές εταιρείες, δεν εμφανίζονται στο φίλτρο.</span>" : "") + '</div>' +
+      '<div class="panel tablewrap"><table class="scrtab"><thead><tr>' + th("lab", "Μετοχή", "l") + th("p", "Τιμή") + th("c", "Ημέρα %", "hide-s") + th("m", "Κεφαλαιοποίηση", "hide-s") + xc.map(function (k) { return th(k, SXCOL[k][0], "xcol"); }).join("") + th("pe", "P/E") + th("dy", "Μέρ. %") + th("roe", "ROE", "hide-s") + th("y", "1 έτος", "hide-s") + th("rsi", "RSI", "hide-s") + "</tr></thead><tbody>" + rowsH + "</tbody></table>" +
       (list.length ? "" : '<div class="empty">Καμία μετοχή δεν ταιριάζει. Χαλάρωσε κάποιο κριτήριο.</div>') + "</div>" +
       (list.length > scrShown ? '<button type="button" class="more" id="scrMore">Εμφάνιση περισσότερων (' + (list.length - scrShown) + " ακόμα)</button>" : "") +
       '<p class="foot">Θεμελιώδη στοιχεία από το TradingView, ενημέρωση τρεις φορές την ημέρα (' + esc(fmtUpd(SCR.updated)) + "). Οι τιμές των ελληνικών μετοχών είναι οι τρέχουσες του site. Το P/E, η μερισματική απόδοση και το ROE αφορούν τους τελευταίους 12 μήνες. Δεν αποτελεί επενδυτική συμβουλή.</p>";
