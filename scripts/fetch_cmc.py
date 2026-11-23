@@ -79,6 +79,14 @@ def interval_sec():
     return int(min(max(sec, 60), 1800))
 
 
+def flags(tags):
+    """s = stablecoin, m = meme (από τα tags του CoinMarketCap)."""
+    t = set(tags); f = ""
+    if "stablecoin" in t or any(x.endswith("-stablecoin") for x in t): f += "s"
+    if "memes" in t or "meme" in t: f += "m"
+    return f
+
+
 def coins():
     d = api("/v1/cryptocurrency/listings/latest", start=1, limit=LIMIT, convert="USD", sort="market_cap")
     if not d:
@@ -91,7 +99,7 @@ def coins():
         out.append([c["id"], c.get("slug"), c.get("symbol"), c.get("name"), c.get("cmc_rank"), sig(q.get("price")),
                     r2(q.get("percent_change_1h")), r2(q.get("percent_change_24h")), r2(q.get("percent_change_7d")),
                     int(q["market_cap"]) if q.get("market_cap") else None, int(q["volume_24h"]) if q.get("volume_24h") else None,
-                    int(c["circulating_supply"]) if c.get("circulating_supply") else None])
+                    int(c["circulating_supply"]) if c.get("circulating_supply") else None, flags(c.get("tags") or [])])
     return out
 
 
@@ -175,7 +183,7 @@ def main():
             if not G or t0 - gAt > 3600:
                 G = glob() or G; F = fng() or F; gAt = t0
             doc = {"src": "CoinMarketCap", "cur": "USD", "updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-                   "every": every, "cols": ["id", "slug", "sym", "name", "rank", "p", "h1", "h24", "d7", "mc", "vol", "circ"],
+                   "every": every, "cols": ["id", "slug", "sym", "name", "rank", "p", "h1", "h24", "d7", "mc", "vol", "circ", "fl"],
                    "c": cs, "g": G, "fng": F}
             body = json.dumps(doc, ensure_ascii=False, separators=(",", ":"))
             if db:

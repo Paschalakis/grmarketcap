@@ -1054,6 +1054,21 @@ body[data-cat="pf"] #view-portfolio .phead h2 { background: linear-gradient(90de
 .gsres .gsp small { display: block; font-size: 12px; }
 .gsres .gsnone { padding: 18px 12px; color: #a2a8d6; font-size: 14px; }
 @media (max-width: 640px) { .gsbox { top: 10px; max-height: calc(100% - 20px); } .gsin input { font-size: 16px; } }
+/* ρίσκο crypto */
+#pfrisk .rkwrap { display: flex; gap: 18px; align-items: center; padding: 4px 12px 8px; flex-wrap: wrap; }
+#pfrisk .rkscore { display: flex; flex-direction: column; align-items: flex-start; min-width: 120px; }
+#pfrisk .rkscore b { font-family: var(--font-display); font-size: 34px; line-height: 1.1; }
+#pfrisk .rkscore small { font-size: 15px; color: var(--muted); margin-left: 2px; }
+#pfrisk .rklvl { font-weight: 700; font-size: 14px; }
+#pfrisk .rkmain { flex: 1; min-width: 240px; }
+#pfrisk .rkbar { display: flex; height: 14px; border-radius: 999px; overflow: hidden; background: color-mix(in srgb, var(--fg) 8%, transparent); gap: 2px; }
+#pfrisk .rkbar i { display: block; height: 100%; }
+#pfrisk .rkleg { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 6px 16px; margin-top: 10px; font-size: 13.5px; }
+#pfrisk .rkleg div { display: flex; align-items: center; gap: 7px; }
+#pfrisk .rkleg i { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+#pfrisk .rkleg b { margin-left: auto; }
+#pfrisk .rktips { margin: 4px 12px 10px; padding-left: 18px; display: flex; flex-direction: column; gap: 5px; font-size: 13.5px; line-height: 1.5; }
+.dwseg { margin-left: auto; } .dwseg button { padding: 4px 10px; font-size: 12px; }
 /* εισαγωγή συναλλαγών */
 .imbox.wide { width: min(980px, calc(100% - 24px)); }
 .imbody { display: flex; flex-direction: column; gap: 14px; }
@@ -2292,6 +2307,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
 
   var nf = new Intl.NumberFormat(LOC, { minimumFractionDigits: 2, maximumFractionDigits: 4 });
   var nf2 = new Intl.NumberFormat(LOC, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  var nf1 = new Intl.NumberFormat(LOC, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   /* νόμισμα εμφάνισης: όλες οι αξίες αποθηκεύονται σε €, μετατρέπονται μόνο για εμφάνιση */
   var FX = (META && META.fx) || {};
   var CUR = (function () { try { return localStorage.getItem("agora-cur") || "EUR"; } catch (e) { return "EUR"; } })();
@@ -3489,6 +3505,37 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       (D.rec.length > 6 ? '<div style="padding:10px 8px 2px"><button type="button" class="more" data-divall="1">' + (divAll ? "Λιγότερα" : "Όλα τα μερίσματα (" + D.rec.length + ")") + "</button></div>" : "") : '<p class="note" style="margin:0 8px 8px">Δεν έχει περάσει ακόμα αποκοπή μερίσματος από τότε που αγόρασες.</p>';
     return '<div class="dk dktable tablewrap perps" id="pfdivs"><div class="perphead"><h2>Μερίσματα</h2><span class="note">ποσά πριν από τον φόρο 5% · μόνο μετοχές Χ.Α.</span></div><div style="padding:0 8px">' + k + "</div>" + nx + tb + "</div>";
   }
+  /* ===== Ρίσκο crypto του χαρτοφυλακίου, με κατάταξη, κεφαλαιοποίηση και κατηγορίες του CoinMarketCap ===== */
+  var RISK_B = [["st", "Stablecoins", "#3fb67f", 0], ["t10", "Top 10", "#4b8bff", 1], ["t100", "Θέσεις 11–100", "#8b7dff", 2.5], ["t500", "Θέσεις 101–500", "#f2994a", 4], ["out", "Εκτός 500", "#e5484d", 5]];
+  function cryptoRiskHtml(H) {
+    if (!CMCDOC || !CG100) return "";
+    var by = {}; CG100.forEach(function (x) { by[x.id] = x; });
+    var cs = H.list.filter(function (h) { return /^c:/.test(h.sym) && h.value > 0; });
+    if (!cs.length) return "";
+    var tot = 0, b = { st: 0, t10: 0, t100: 0, t500: 0, out: 0 }, meme = 0, big = null, score = 0;
+    cs.forEach(function (h) {
+      var x = by[h.sym.slice(2)], v = h.value, k = !x ? "out" : /s/.test(x.fl || "") ? "st" : x.market_cap_rank <= 10 ? "t10" : x.market_cap_rank <= 100 ? "t100" : "t500";
+      tot += v; b[k] += v; if (x && /m/.test(x.fl || "")) meme += v;
+      if (!big || v > big.v) big = { v: v, s: x ? x.symbol.toUpperCase() : h.sym.slice(2).toUpperCase() };
+    });
+    RISK_B.forEach(function (r) { score += b[r[0]] / tot * r[3]; });
+    score = Math.min(5, score + meme / tot * 1.5);
+    var lvl = score < 1.5 ? ["Χαμηλό", "#3fb67f"] : score < 2.8 ? ["Μέτριο", "#d9b84a"] : score < 3.8 ? ["Υψηλό", "#f2994a"] : ["Πολύ υψηλό", "#e5484d"];
+    var pc = function (v) { return nf1.format(v / tot * 100) + "%"; };
+    var bar = '<div class="rkbar" role="img" aria-label="Κατανομή crypto ανά κατηγορία">' + RISK_B.map(function (r) { var w = b[r[0]] / tot * 100; return w > 0 ? '<i style="width:' + w.toFixed(2) + "%;background:" + r[2] + '" title="' + esc(r[1]) + " " + pc(b[r[0]]) + '"></i>' : ""; }).join("") + "</div>";
+    var leg = '<div class="rkleg">' + RISK_B.filter(function (r) { return b[r[0]] > 0; }).map(function (r) { return '<div><i style="background:' + r[2] + '"></i><span>' + esc(r[1]) + '</span><b class="num">' + pc(b[r[0]]) + '</b><span class="num sens note">' + eur(b[r[0]]) + "</span></div>"; }).join("") + "</div>";
+    var tips = [];
+    var share = H.value ? tot / H.value * 100 : 0;
+    tips.push("Τα crypto είναι το <b>" + nf1.format(share) + "%</b> του χαρτοφυλακίου σου.");
+    if (big && cs.length > 1) tips.push("Το μεγαλύτερο νόμισμα, <b>" + esc(big.s) + "</b>, είναι το <b>" + pc(big.v) + "</b> των crypto σου" + (big.v / tot > 0.6 ? ": μεγάλη συγκέντρωση σε ένα νόμισμα." : "."));
+    if (b.st) tips.push("<b>" + pc(b.st) + "</b> σε stablecoins: κρατούν σταθερή αξία και μειώνουν τις διακυμάνσεις.");
+    if (meme) tips.push("<b>" + pc(meme) + "</b> σε meme coins (κατηγορία «Memes» του CoinMarketCap): πολύ μεγάλες διακυμάνσεις.");
+    if (b.t500 + b.out > tot * 0.3) tips.push("Πάνω από το 30% είναι σε μικρά νομίσματα (εκτός Top 100): λιγότερη ρευστότητα και μεγαλύτερο ρίσκο.");
+    return '<div class="dk dktable perps" id="pfrisk"><div class="perphead"><h2>Ρίσκο crypto</h2><span class="note">με κατάταξη, κεφαλαιοποίηση και κατηγορίες του CoinMarketCap</span></div>' +
+      '<div class="rkwrap"><div class="rkscore"><span class="note">Δείκτης ρίσκου</span><b class="num" style="color:' + lvl[1] + '">' + nf1.format(score) + '<small>/5</small></b><span class="rklvl" style="color:' + lvl[1] + '">' + lvl[0] + '</span></div><div class="rkmain">' + bar + leg + "</div></div>" +
+      '<ul class="rktips">' + tips.map(function (t) { return "<li>" + t + "</li>"; }).join("") + "</ul>" +
+      '<p class="note" style="margin:0 10px 10px">Απλή εκτίμηση από τη θέση κάθε νομίσματος στην κατάταξη του CoinMarketCap. Δεν αποτελεί επενδυτική συμβουλή.</p></div>';
+  }
   var divAll = false, mvSel = {}, mvTo = "main";
   function pfBar() {
     var multi = pfs.length > 1, h = '<div class="pfbar" role="group" aria-label="Χαρτοφυλάκια"><span class="note">Χαρτοφυλάκιο:</span>';
@@ -3890,7 +3937,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     hist = closedTx.length ? '<div class="dk dktable tablewrap pf-panel"><h2>Κλεισμένες θέσεις</h2><p class="note" style="margin:0 0 8px">Οι συναλλαγές τίτλων που έχεις πουλήσει ολόκληρους.</p><table class="txtab"><thead><tr><th class="l">Ημερομηνία</th><th class="l">Είδος</th><th class="l">Τίτλος</th><th class="hide-s">Τεμάχια</th><th class="hide-s">Τιμή</th><th>Σύνολο</th><th><span style="position:absolute;left:-9999px">Ενέργειες</span></th></tr></thead><tbody>' +
       closedTx.map(function (t) { return '<tr><td class="l num">' + fmtDate(t.date) + '</td><td class="l"><span class="side ' + (t.side === "sell" ? "sell" : "buy") + '">' + (t.side === "sell" ? "Πώληση" : "Αγορά") + '</span></td><td class="l"><b>' + esc(DS(t.sym)) + '</b></td><td class="num hide-s sens">' + fmtQty(t.qty) + '</td><td class="num hide-s">' + fmtC(effP(t)) + '</td><td class="num sens">' + eur(t.qty * effP(t)) + '</td><td class="txact"><button type="button" class="xbtn" data-edit="' + esc(t.id) + '"><span class="lgt">Επεξεργασία</span><span class="smt" aria-hidden="true">✎</span></button><button type="button" class="xbtn" data-del="' + esc(t.id) + '"><span class="lgt">Διαγραφή</span><span class="smt" aria-hidden="true">✕</span></button></td></tr>'; }).join("") +
       "</tbody></table></div>" : "";
-    pfBody.innerHTML = stats + table + divHtml(H) + perpsHtml() + hist + '<p class="foot">Το κόστος υπολογίζεται με τη μέση τιμή αγοράς. Οι αξίες υπολογίζονται με τις τιμές της σελίδας (καθυστέρηση 15 λεπτών). Είναι εικονικό χαρτοφυλάκιο για παρακολούθηση, όχι επενδυτική συμβουλή.</p>';
+    pfBody.innerHTML = stats + table + cryptoRiskHtml(H) + divHtml(H) + perpsHtml() + hist + '<p class="foot">Το κόστος υπολογίζεται με τη μέση τιμή αγοράς. Οι αξίες υπολογίζονται με τις τιμές της σελίδας (καθυστέρηση 15 λεπτών). Είναι εικονικό χαρτοφυλάκιο για παρακολούθηση, όχι επενδυτική συμβουλή.</p>';
     if (H.list.length) { H.list.forEach(function (h) { if (h.row) loadLong(h.row); }); pfDraw(H); }
     refreshCrypto(); hlRefresh();
   }
@@ -4427,7 +4474,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
       if (k !== 1) { c = c.slice(); c[5] = c[5] * k; c[9] = c[9] && c[9] * k; c[10] = c[10] && c[10] * k; if (sp) sp = sp.map(function (v) { return v * k; }); }
       return { id: c[1], cmc: c[0], symbol: String(c[2] || "").toLowerCase(), name: c[3], image: "https://s2.coinmarketcap.com/static/img/coins/64x64/" + c[0] + ".png", market_cap_rank: c[4], current_price: c[5],
         price_change_percentage_1h_in_currency: c[6], price_change_percentage_24h_in_currency: c[7], price_change_percentage_24h: c[7], price_change_percentage_7d_in_currency: c[8],
-        market_cap: c[9], total_volume: c[10], circulating_supply: c[11], sparkline_in_7d: sp && sp.length > 1 ? { price: sp.concat([c[5]]) } : null };
+        market_cap: c[9], total_volume: c[10], circulating_supply: c[11], fl: c[12] || "", sparkline_in_7d: sp && sp.length > 1 ? { price: sp.concat([c[5]]) } : null };
     });
   }
   function cmcMigrate() {
@@ -6114,7 +6161,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   window.addEventListener("scroll", function () { if (!finePtr && !hov.hidden) hovHide(); }, { passive: true });
 
   /* ===================== Ο πίνακάς μου (προσαρμοσμένη αρχική) ===================== */
-  var DW = [["favs", "Αγαπημένα", "Οι αγαπημένες σου μετοχές και crypto"], ["al", "Ειδοποιήσεις", "Όσες είναι πιο κοντά να χτυπήσουν"], ["cal", "Επόμενα γεγονότα", "Μερίσματα και αποτελέσματα για τις μετοχές σου"], ["mkts", "Αγορές με μια ματιά", "Γενικός Δείκτης, S&P 500, Bitcoin και άλλες"], ["fng", "Fear & Greed", "Η διάθεση της αγοράς crypto και η κυριαρχία του BTC"]];
+  var DW = [["favs", "Αγαπημένα", "Οι αγαπημένες σου μετοχές και crypto"], ["al", "Ειδοποιήσεις", "Όσες είναι πιο κοντά να χτυπήσουν"], ["cal", "Επόμενα γεγονότα", "Μερίσματα και αποτελέσματα για τις μετοχές σου"], ["mkts", "Αγορές με μια ματιά", "Γενικός Δείκτης, S&P 500, Bitcoin και άλλες"], ["fng", "Fear & Greed", "Η διάθεση της αγοράς crypto και η κυριαρχία του BTC"], ["cmov", "Crypto: άνοδοι & πτώσεις", "Οι μεγαλύτερες κινήσεις 24ω στα 500 του CoinMarketCap"]];
   var DS_ = [["gstrip", "Παγκόσμιες αγορές (λωρίδα πάνω)"], ["stats", "Σύνοψη αγοράς"], ["movers", "Κορυφαίες κινήσεις"], ["sectors", "Κλάδοι"], ["allsec", "Όλες οι μετοχές"], ["divsec", "Ημερολόγιο μερισμάτων"]];
   var HOME = lsGet("agora-home", null);
   function normHome(h) {
@@ -6127,6 +6174,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     DS_.forEach(function (d) { if (s.indexOf(d[0]) < 0) s.push(d[0]); });
     var on = h.on && typeof h.on === "object" ? h.on : { pf: true, favs: true, al: true, cal: true, mkts: false, fng: false, gstrip: true, stats: true, movers: true, sectors: true, divsec: true };
     on.allsec = true;
+    if (on.cmov === undefined) on.cmov = true;
     return { w: w, s: s, on: on };
   }
   HOME = normHome(HOME);
@@ -6187,7 +6235,20 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     var v = FNG && FNG[0] ? +FNG[0].value : null, btc = CGLOB && CGLOB.market_cap_percentage ? CGLOB.market_cap_percentage.btc : null;
     return dashCard("fng", "Fear &amp; Greed", '<div class="dwfng">' + (v == null ? "" : gauge(v) + '<div><div class="dwbig" style="color:' + fngColor(v) + '">' + v + '</div><div class="note">' + esc(FNG[0].value_classification || "") + "</div></div>") + (btc == null ? "" : '<div class="dwdom"><span class="note">Κυριαρχία BTC</span><b>' + nf2.format(btc) + '%</b><div class="dombar"><i style="width:' + btc + '%;background:#f7931a"></i></div></div>') + "</div>");
   }
-  var DWF = { pf: dwPf, favs: dwFavs, al: dwAl, cal: dwCal, mkts: dwMkts, fng: dwFng };
+  /* οι μεγαλύτερες κινήσεις 24ω στα 500 crypto του CoinMarketCap (χωρίς stablecoins και με όγκο ≥ 1 εκ.) */
+  var cmovTab = "up";
+  function dwCmov() {
+    if (!CG100 || !CG100.length) { loadCg100(); return dashCard("cmov", "Crypto: άνοδοι &amp; πτώσεις", skel(4)); }
+    return inUsd(function () {
+      var L = CG100.filter(function (x) { return x.price_change_percentage_24h != null && (x.total_volume || 0) >= 1e6 && !/s/.test(x.fl || ""); });
+      L.sort(function (a, b) { return (cmovTab === "up" ? -1 : 1) * (a.price_change_percentage_24h - b.price_change_percentage_24h); });
+      var tabs = '<div class="seg2 dwseg" role="group" aria-label="Άνοδοι ή πτώσεις"><button type="button" data-cmov="up" aria-pressed="' + (cmovTab === "up") + '">Άνοδοι</button><button type="button" data-cmov="down" aria-pressed="' + (cmovTab === "down") + '">Πτώσεις</button></div>';
+      var rows = L.slice(0, 6).map(function (x) { var s = x.symbol.toUpperCase(); return miniRow("c:" + x.id, s, x.name + " · #" + x.market_cap_rank, logoBox(s, x.image), x.current_price, x.price_change_percentage_24h); }).join("");
+      return dashCard("cmov", "Crypto: άνοδοι &amp; πτώσεις", rows + '<p class="note" style="margin:6px 4px 0">24 ώρες · από τα ' + CG100.length + " μεγαλύτερα του " + (CMCDOC ? "CoinMarketCap" : "CoinGecko") + "</p>", tabs);
+    });
+  }
+  document.addEventListener("click", function (e) { var b = e.target.closest("[data-cmov]"); if (!b) return; cmovTab = b.getAttribute("data-cmov"); if (typeof renderDash === "function") renderDash(); });
+  var DWF = { pf: dwPf, favs: dwFavs, al: dwAl, cal: dwCal, mkts: dwMkts, fng: dwFng, cmov: dwCmov };
   function renderDash() {
     var box = document.getElementById("dash"); if (!box) return;
     var ids = HOME.w.filter(function (k) { return HOME.on[k]; });
