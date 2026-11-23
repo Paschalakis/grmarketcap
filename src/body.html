@@ -2148,9 +2148,9 @@ if (LANG === "en") {
   }).observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: TR_ATTRS });
 }
 /* θέμα: φωτεινό / σκοτεινό / σύστημα */
-/* δύο ξεχωριστά θέματα: Αγορές (προεπιλογή φωτεινό) και Χαρτοφυλάκιο (προεπιλογή σκοτεινό) */
+/* δύο ξεχωριστά θέματα: Αγορές (προεπιλογή σκοτεινό) και Χαρτοφυλάκιο (προεπιλογή σκοτεινό) */
 function thLoad(k, d) { try { var t = localStorage.getItem(k); if (t === "light" || t === "dark" || t === "system") return t; } catch (e) {} return d; }
-var THEME = thLoad("agora-theme-mk", "light"), THEME_PF = thLoad("agora-theme-pf", "dark");
+var THEME = thLoad("agora-theme-mk2", "dark"), THEME_PF = thLoad("agora-theme-pf", "dark");
 var CUR_CAT = location.hash === "#portfolio" ? "pf" : "mk";
 function applyTheme() {
   var t = CUR_CAT === "pf" ? THEME_PF : THEME;
@@ -5181,7 +5181,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     document.getElementById("setCur").addEventListener("click", function (e) { var x = e.target.closest("button"); if (!x || x.disabled || x.getAttribute("data-v") === CUR) return; try { localStorage.setItem("agora-cur", x.getAttribute("data-v")); } catch (er) {} location.reload(); });
     document.getElementById("setTheme").addEventListener("click", function (e) {
       var x = e.target.closest("button"); if (!x) return;
-      THEME = x.getAttribute("data-v"); try { localStorage.setItem("agora-theme-mk", THEME); } catch (er) {}
+      THEME = x.getAttribute("data-v"); try { localStorage.setItem("agora-theme-mk2", THEME); } catch (er) {}
       applyTheme(); refresh();
       if (!drawer.hidden && cur && chartKind === "tv") paint();
     });
