@@ -98,7 +98,8 @@ class Prices:
                     for row in doc.get("c") or []:
                         slug = row[1]
                         if slug in want and row[5] is not None:
-                            self.cg[slug] = {"eur": float(row[5]), "c": row[7], "w": row[8], "s": row[2], "n": row[3], "usd": float(row[5]) * self.usd}
+                            isusd = doc.get("cur") == "USD"; px = float(row[5])
+                            self.cg[slug] = {"eur": px / self.usd if isusd else px, "c": row[7], "w": row[8], "s": row[2], "n": row[3], "usd": px if isusd else px * self.usd}
                     c = [x for x in c if x not in self.cg]
                     print("CoinMarketCap:", len(self.cg), "νομίσματα · από CoinGecko:", len(c))
             except Exception as e: print("CoinMarketCap:", e)

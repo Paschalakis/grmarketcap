@@ -7,8 +7,8 @@
 Το site διαβάζει το έγγραφο site/crypto του Firestore (δημόσιο για ανάγνωση).
 
 CoinMarketCap endpoints:
-  GET /v1/cryptocurrency/listings/latest?limit=500&convert=EUR   (2 μονάδες)
-  GET /v1/global-metrics/quotes/latest?convert=EUR               (1 μονάδα, ανά ώρα)
+  GET /v1/cryptocurrency/listings/latest?limit=500&convert=USD   (2 μονάδες)
+  GET /v1/global-metrics/quotes/latest?convert=USD               (1 μονάδα, ανά ώρα)
   GET /v3/fear-and-greed/historical?limit=31                     (1 μονάδα, ανά ώρα)
   GET /v1/key/info                                               (χωρίς χρέωση)
 Χωρίς κλειδί χρησιμοποιεί τη δοκιμαστική διαδρομή /public-api (μόνο για δοκιμές).
@@ -80,12 +80,12 @@ def interval_sec():
 
 
 def coins():
-    d = api("/v1/cryptocurrency/listings/latest", start=1, limit=LIMIT, convert="EUR", sort="market_cap")
+    d = api("/v1/cryptocurrency/listings/latest", start=1, limit=LIMIT, convert="USD", sort="market_cap")
     if not d:
         return None
     out = []
     for c in d:
-        q = (c.get("quote") or {}).get("EUR") or {}
+        q = (c.get("quote") or {}).get("USD") or {}
         if q.get("price") is None:
             continue
         out.append([c["id"], c.get("slug"), c.get("symbol"), c.get("name"), c.get("cmc_rank"), sig(q.get("price")),
@@ -96,10 +96,10 @@ def coins():
 
 
 def glob():
-    g = api("/v1/global-metrics/quotes/latest", convert="EUR")
+    g = api("/v1/global-metrics/quotes/latest", convert="USD")
     if not g:
         return None
-    q = (g.get("quote") or {}).get("EUR") or {}
+    q = (g.get("quote") or {}).get("USD") or {}
     return {"mc": int(q.get("total_market_cap") or 0), "vol": int(q.get("total_volume_24h") or 0),
             "mcch": r2(q.get("total_market_cap_yesterday_percentage_change")), "btc": r2(g.get("btc_dominance")),
             "eth": r2(g.get("eth_dominance")), "n": g.get("active_cryptocurrencies")}
@@ -174,7 +174,7 @@ def main():
         if cs:
             if not G or t0 - gAt > 3600:
                 G = glob() or G; F = fng() or F; gAt = t0
-            doc = {"src": "CoinMarketCap", "updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            doc = {"src": "CoinMarketCap", "cur": "USD", "updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
                    "every": every, "cols": ["id", "slug", "sym", "name", "rank", "p", "h1", "h24", "d7", "mc", "vol", "circ"],
                    "c": cs, "g": G, "fng": F}
             body = json.dumps(doc, ensure_ascii=False, separators=(",", ":"))

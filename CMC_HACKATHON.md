@@ -35,7 +35,7 @@ so users never see an empty page.
 GitHub Actions (every 15 min, each run stays ~14 min)
   └─ scripts/fetch_cmc.py
        ├─ GET /v1/key/info                          → plan limits, picks a safe refresh interval
-       ├─ GET /v1/cryptocurrency/listings/latest    → top 500 in EUR (every 1–10 min)
+       ├─ GET /v1/cryptocurrency/listings/latest    → top 500 in USD (every 1–10 min)
        ├─ GET /v1/global-metrics/quotes/latest      → market cap, volume, dominance (hourly)
        └─ GET /v3/fear-and-greed/historical         → last 31 days (hourly)
             │
@@ -62,8 +62,8 @@ When fewer than 8% of the month's credits are left, it slows down to every 30 mi
 
 ## CMC API endpoints used
 
-- `GET /v1/cryptocurrency/listings/latest?start=1&limit=500&convert=EUR&sort=market_cap`
-- `GET /v1/global-metrics/quotes/latest?convert=EUR`
+- `GET /v1/cryptocurrency/listings/latest?start=1&limit=500&convert=USD&sort=market_cap`
+- `GET /v1/global-metrics/quotes/latest?convert=USD`
 - `GET /v3/fear-and-greed/historical?limit=31` (fallback: `/v3/fear-and-greed/latest`)
 - `GET /v1/key/info`
 - Coin logos: `https://s2.coinmarketcap.com/static/img/coins/64x64/{id}.png`
