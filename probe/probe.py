@@ -1,10 +1,8 @@
-import subprocess, os
-subprocess.run(["pip","install","-q","firebase-admin","requests"],capture_output=True)
-env=dict(os.environ, CMC_RUN_MIN="0.2")
-r=subprocess.run(["python3","scripts/fetch_cmc.py"],cwd="probe",env=env,capture_output=True,text=True,timeout=300)
-print(r.stdout[-3000:]); print(r.stderr[-3000:])
-import json
+import json, urllib.request, subprocess, time
+time.sleep(60)
+u="https://firestore.googleapis.com/v1/projects/agora-athinon/databases/(default)/documents/site/crypto?key=AIzaSyDd3-HyjHU6Cji1DwPtZ6epuJxFUT6luws"
 try:
-  d=json.load(open("probe/crypto.json")); print("coins",len(d["c"]),"g",d["g"],"fng",(d["fng"] or [])[:2], "slugs", [c[1] for c in d["c"][:40]])
-  s=json.load(open("probe/cspark.json")); print("spark n",len(s["d"]),"len btc",len(s["d"]["bitcoin"]), "size", len(json.dumps(s,separators=(',',':')))//1024,"KB")
-except Exception as e: print("ERR",e)
+    j=json.load(urllib.request.urlopen(u,timeout=30)); d=json.loads(j["fields"]["c"]["stringValue"])
+    print("firestore: updated",d["updated"],"cur",d.get("cur"),"every",d.get("every"),"coins",len(d["c"]),"BTC",d["c"][0][5],"g",d.get("g"),"fng",(d.get("fng") or [])[:2])
+except Exception as e: print("firestore ERR",e)
+r=subprocess.run(["node","probe/tv.js"],capture_output=True,text=True,timeout=200);print(r.stdout[-2500:]);print(r.stderr[-800:])
