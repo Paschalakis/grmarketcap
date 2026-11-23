@@ -1233,12 +1233,12 @@ tr.txrow > td { padding: 0 10px 14px !important; background: transparent !import
   </section>
   <section class="stats" aria-label="Σύνοψη αγοράς" id="stats"></section>
 
-  <div class="sechead" id="mvhead"><div><h2>Κορυφαίες κινήσεις</h2><p class="secdesc">Οι μετοχές που ανέβηκαν και έπεσαν περισσότερο σήμερα, και οι μεγαλύτερες εταιρείες.</p></div><button type="button" class="btn sm" data-sgo="heat">Χάρτης αγοράς <span aria-hidden="true">→</span></button></div>
-  <div class="seg2 mvtabs" id="mvtabs" role="group" aria-label="Κορυφαίες κινήσεις"><button type="button" data-mv="0" aria-pressed="true">Άνοδοι</button><button type="button" data-mv="1" aria-pressed="false">Πτώσεις</button><button type="button" data-mv="2" aria-pressed="false">Μεγαλύτερες</button></div>
+  <div class="sechead" id="mvhead"><div><h2>Κορυφαίες κινήσεις</h2><p class="secdesc">Οι μεγαλύτερες εταιρείες, και οι μετοχές που ανέβηκαν και έπεσαν περισσότερο σήμερα.</p></div><button type="button" class="btn sm" data-sgo="heat">Χάρτης αγοράς <span aria-hidden="true">→</span></button></div>
+  <div class="seg2 mvtabs" id="mvtabs" role="group" aria-label="Κορυφαίες κινήσεις"><button type="button" data-mv="0" aria-pressed="true">Μεγαλύτερες</button><button type="button" data-mv="1" aria-pressed="false">Άνοδοι</button><button type="button" data-mv="2" aria-pressed="false">Πτώσεις</button></div>
   <section class="movers" id="movers" data-mv="0" aria-label="Κορυφαίες κινήσεις">
-    <div class="panel"><h2>Κορυφαίες άνοδοι (αξία από 50 εκ. €)</h2><div id="gainers"></div></div>
-    <div class="panel"><h2>Κορυφαίες πτώσεις (αξία από 50 εκ. €)</h2><div id="losers"></div></div>
     <div class="panel"><h2>Μεγαλύτερες εταιρείες</h2><div id="biggest"></div></div>
+    <div class="panel"><h2>Κορυφαίες άνοδοι</h2><div id="gainers"></div></div>
+    <div class="panel"><h2>Κορυφαίες πτώσεις</h2><div id="losers"></div></div>
   </section>
 
   <section style="display:flex;flex-direction:column;gap:10px" aria-label="Κλάδοι" id="secsec">
@@ -1965,7 +1965,7 @@ var EN_EXACT = {
   "Όλο το ημερολόγιο": "Full calendar",
   "Ελληνικές και αμερικανικές μετοχές, crypto και το χαρτοφυλάκιό σου, με ζωντανές τιμές, ειδοποιήσεις και εργαλεία ανάλυσης.": "Greek and US stocks, crypto and your portfolio, with live prices, alerts and analysis tools.",
   "Τα αγαπημένα σου, οι ειδοποιήσεις και ό,τι έρχεται για τις μετοχές σου, με μια ματιά.": "Your favourites, alerts and what's coming up for your stocks, at a glance.",
-  "Οι μετοχές που ανέβηκαν και έπεσαν περισσότερο σήμερα, και οι μεγαλύτερες εταιρείες.": "Today's biggest gainers and losers, and the largest companies.",
+  "Οι μεγαλύτερες εταιρείες, και οι μετοχές που ανέβηκαν και έπεσαν περισσότερο σήμερα.": "The largest companies, and today's biggest gainers and losers.",
   "Πώς πάει σήμερα κάθε κλάδος, με βάρος την κεφαλαιοποίηση των εταιρειών του.": "How each sector is doing today, weighted by market cap.",
   "Οι επόμενες και οι πρόσφατες αποκοπές μερισμάτων στο Χρηματιστήριο Αθηνών.": "Upcoming and recent ex-dividend dates on the Athens Exchange.",
   "Κάθε μετοχή του Χ.Α. με τιμή, μεταβολή, κεφαλαιοποίηση και πορεία 7 ημερών.": "Every Athens stock with price, change, market cap and 7-day trend.",
@@ -2060,6 +2060,8 @@ var EN_EXACT = {
   "Φόρτωση ημερολογίου…": "Loading calendar…"
 };
 Object.assign(EN_EXACT, {
+"Κορυφαίες άνοδοι": "Top gainers",
+"Κορυφαίες πτώσεις": "Top losers",
 "Οι τιμές καθυστερούν. Πάτα για λεπτομέρειες": "Prices are delayed. Tap for details",
 "Οι τιμές καθυστερούν": "Prices are delayed",
 "Όρισε μια τιμή-στόχο και θα σε ειδοποιήσουμε όταν τη φτάσει.": "Set a target price and we'll notify you when it's reached.",
