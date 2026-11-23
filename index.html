@@ -729,7 +729,12 @@ th[aria-sort] button { color: var(--accent); }
 .scrcount .scrcov { display: block; margin-top: 4px; font-size: 12.5px; }
 .scrwhy { margin: 2px 0 0; padding: 10px 14px; border-radius: 14px; font-size: 13.5px; line-height: 1.5; color: var(--fg); background: color-mix(in srgb, var(--accent) 10%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); }
 .scrwhy b { color: var(--accent); }
-.scrtab th.xcol, .scrtab td.xcol { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+.scrtab th.xcol, .scrtab td.xcol { background: color-mix(in srgb, var(--accent) 12%, transparent); box-shadow: inset 1px 0 0 color-mix(in srgb, var(--accent) 35%, transparent), inset -1px 0 0 color-mix(in srgb, var(--accent) 35%, transparent); }
+.scrtab th.xcol { color: var(--accent); background: color-mix(in srgb, var(--accent) 22%, transparent); box-shadow: inset 1px 0 0 color-mix(in srgb, var(--accent) 45%, transparent), inset -1px 0 0 color-mix(in srgb, var(--accent) 45%, transparent), inset 0 2px 0 var(--accent); }
+.scrtab th.xcol button { color: inherit; font-weight: 700; }
+.scrtab tbody tr:last-child td.xcol { box-shadow: inset 1px 0 0 color-mix(in srgb, var(--accent) 35%, transparent), inset -1px 0 0 color-mix(in srgb, var(--accent) 35%, transparent), inset 0 -2px 0 color-mix(in srgb, var(--accent) 55%, transparent); }
+.scrtab td.xcol { font-weight: 700; animation: xcolin .5s ease-out; }
+@keyframes xcolin { from { background: color-mix(in srgb, var(--accent) 40%, transparent); } }
 .scrtab th button { white-space: nowrap; }
 .scrtab td .who span { max-width: 210px; }
 @media (max-width: 640px) { .scrtab td .who span { max-width: 110px; } .scrgrid { grid-template-columns: 1fr 1fr; padding: 12px; gap: 10px; } }
@@ -5824,13 +5829,18 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     if (SF.sec && !secs[SF.sec]) SF.sec = "";
     var list = scrList(), anyF = SF.sec || SF.cap || Object.keys(SF.f).some(function (k) { var r = SF.f[k]; return r && (r[0] != null || r[1] != null); });
     var xc = Object.keys(SXCOL).filter(function (k) { var r = SF.f[k]; return r && (r[0] != null || r[1] != null); });
-    var th = function (k, t, c) { return '<th' + (c ? ' class="' + c + '"' : "") + ' data-sk="' + k + '" aria-sort="' + (SF.k === k ? (SF.d > 0 ? "ascending" : "descending") : "none") + '"><button type="button">' + t + "</button></th>"; };
+    /* οι στήλες που χρησιμοποιεί το ενεργό φίλτρο φωτίζονται (και φαίνονται και στο κινητό) */
+    var act = {}; Object.keys(SF.f).forEach(function (k) { var r = SF.f[k]; if (r && (r[0] != null || r[1] != null)) act[k] = 1; });
+    var anyAct = Object.keys(act).length > 0;
+    /* στο κινητό, όταν φωτίζεται άλλη στήλη, κρύβονται τα P/E και Μέρ. % για να χωρά */
+    var cc = function (k, base) { if (anyAct && !act[k] && (k === "pe" || k === "dy")) base += " hide-s"; return act[k] ? base.replace("hide-s", "").trim() + " xcol" : base; };
+    var th = function (k, t, c) { c = cc(k, c || "").trim(); return '<th' + (c ? ' class="' + c + '"' : "") + ' data-sk="' + k + '" aria-sort="' + (SF.k === k ? (SF.d > 0 ? "ascending" : "descending") : "none") + '"><button type="button">' + t + "</button></th>"; };
     var rowsH = list.slice(0, scrShown).map(function (it) {
       var o = it.o;
       return '<tr tabindex="0" data-open="' + esc(it.key) + '"><td class="l"><div class="who">' + itemLogo(it) + "<div><b>" + esc(it.lab) + "</b><span>" + esc(it.n || "") + "</span></div></div></td>" +
         '<td class="num" data-pk="' + esc(it.key) + '" data-pv="' + it.p + '">' + (it.p == null ? "—" : fmtP(it.p)) + '</td><td class="hide-s">' + (it.c == null ? "—" : chgHtml(it.c)) + '</td><td class="num hide-s">' + (it.m ? money(it.m) : "—") + "</td>" +
         xc.map(function (k) { return '<td class="num xcol">' + (o[k] == null ? "—" : SXCOL[k][1](o[k])) + "</td>"; }).join("") +
-        '<td class="num">' + (o.pe == null || o.pe <= 0 ? "—" : n1(o.pe)) + '</td><td class="num">' + (o.dy ? n1(o.dy, 2) + "%" : "—") + '</td><td class="num hide-s">' + (o.roe == null ? "—" : n1(o.roe) + "%") + '</td><td class="hide-s">' + (o.y == null ? "—" : chgHtml(o.y)) + '</td><td class="num hide-s">' + (o.rsi == null ? "—" : rsiTag(o.rsi)) + "</td></tr>";
+        '<td class="' + cc("pe", "num") + '">' + (o.pe == null || o.pe <= 0 ? "—" : n1(o.pe)) + '</td><td class="' + cc("dy", "num") + '">' + (o.dy ? n1(o.dy, 2) + "%" : "—") + '</td><td class="' + cc("roe", "num hide-s") + '">' + (o.roe == null ? "—" : n1(o.roe) + "%") + '</td><td class="' + cc("y", "hide-s") + '">' + (o.y == null ? "—" : chgHtml(o.y)) + '</td><td class="' + cc("rsi", "num hide-s") + '">' + (o.rsi == null ? "—" : rsiTag(o.rsi)) + "</td></tr>";
     }).join("");
     box.innerHTML =
       '<div class="scrtop"><div class="seg2" role="group" aria-label="Αγορά" id="scrMkt"><button type="button" data-v="gr" aria-pressed="' + (SF.m === "gr") + '">Ελλάδα</button><button type="button" data-v="us" aria-pressed="' + (SF.m === "us") + '">ΗΠΑ · 500</button></div>' +
