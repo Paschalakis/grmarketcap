@@ -564,6 +564,7 @@ body.pfhide .sens { filter: blur(9px); user-select: none; }
   .xadd { width: 26px; height: 26px; font-size: 16px; }
   .mktsw { align-self: stretch; } .mktsw button { flex: 1; padding: 7px 4px; font-size: 13px; }
   .mktsw .t100 { display: none; }
+  .mktsw button[data-mkt="us"] { line-height: 1.15; font-size: 13px; }
   .mktrow .mktsw { flex: 1; }
   .cmpbtn span { display: none; } .cmpbtn { width: 40px; padding: 0; justify-content: center; }
 }
@@ -1174,6 +1175,7 @@ body[data-cat="pf"] #view-portfolio .phead h2 { background: linear-gradient(90de
 :root[data-ui="light"] body[data-cat="pf"] #view-portfolio .phead h2 { background: linear-gradient(90deg, #1b1d5c 0%, #4b4dff 60%, #2398ab 100%); -webkit-background-clip: text; background-clip: text; color: transparent !important; }
 :root[data-ui="light"] body[data-cat="pf"] .btn.primary { box-shadow: 0 6px 20px rgba(75, 77, 255, .35); }
 :root[data-ui="light"] body[data-cat="pf"] .bgfx .pv { opacity: .45; }
+.mktsw .nw { white-space: nowrap; } .mktsw .mkl { display: block; text-align: center; }
 /* κουμπί αναζήτησης με περιστρεφόμενο φωτεινό περίγραμμα */
 .brandsub { display: inline-flex; align-items: center; align-self: center; }
 .aisearch { position: relative; isolation: isolate; overflow: hidden; border: 0; padding: 1.6px; border-radius: 999px; background: rgba(150, 160, 255, .22); cursor: pointer; margin-left: 14px; box-shadow: 0 0 18px rgba(124, 132, 255, .28), 0 0 34px rgba(255, 105, 64, .10); transition: transform .15s, box-shadow .2s; font: inherit; }
@@ -1365,7 +1367,7 @@ tr.txrow > td { padding: 0 10px 14px !important; background: transparent !import
     <div class="herostat"><div><b id="heroN">290+</b><span>μετοχές του Χ.Α.</span></div><div><b>500</b><span>μετοχές ΗΠΑ</span></div><div><b>100</b><span>κορυφαία crypto</span></div></div>
   </section>
   <section class="dashsec" id="dashsec" aria-label="Ο πίνακάς μου" hidden><div class="sechead"><div><h2>Ο πίνακάς μου</h2><p class="secdesc">Τα αγαπημένα σου, οι ειδοποιήσεις και ό,τι έρχεται για τις μετοχές σου, με μια ματιά.</p></div><button type="button" class="btn sm" id="dashCu">Προσαρμογή</button></div><div class="dash" id="dash"></div></section>
-  <div class="mktrow"><div class="seg2 mktsw" id="mktsw" role="group" aria-label="Αγορά"><button type="button" data-mkt="gr" aria-pressed="true">Ελλάδα</button><button type="button" data-mkt="us" aria-pressed="false"><span>ΗΠΑ</span><span class="t100"> · Top 100</span></button><button type="button" data-mkt="c" aria-pressed="false">Crypto<span class="t100"> · Top 100</span></button></div><button type="button" class="btn cmpbtn" id="cmpOpen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-5 4 3 9-9"/><path d="M3 9l5 3 4-5 9 6" opacity=".55"/></svg> <span>Σύγκριση</span></button><button type="button" class="btn dkicon" id="cuOpen" title="Προσαρμογή αρχικής" aria-label="Προσαρμογή αρχικής"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/></svg></button></div>
+  <div class="mktrow"><div class="seg2 mktsw" id="mktsw" role="group" aria-label="Αγορά"><button type="button" data-mkt="gr" aria-pressed="true">Ελλάδα</button><button type="button" data-mkt="us" aria-pressed="false" aria-label="Nasdaq &amp; S&amp;P 500"><span class="mkl"><span class="nw">Nasdaq&nbsp;&amp;</span> <span class="nw">S&amp;P&nbsp;500</span></span></button><button type="button" data-mkt="c" aria-pressed="false">Cryptos</button></div><button type="button" class="btn cmpbtn" id="cmpOpen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-5 4 3 9-9"/><path d="M3 9l5 3 4-5 9 6" opacity=".55"/></svg> <span>Σύγκριση</span></button><button type="button" class="btn dkicon" id="cuOpen" title="Προσαρμογή αρχικής" aria-label="Προσαρμογή αρχικής"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/></svg></button></div>
   <section id="xlist" class="xlist" hidden>
     <div class="phead"><div><h2 id="xtitle"></h2><div class="storage" id="xnote"></div></div>
       <input type="search" class="search" id="xq" placeholder="Αναζήτηση" aria-label="Αναζήτηση στη λίστα" autocomplete="off"></div>
