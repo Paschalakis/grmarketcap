@@ -25,6 +25,10 @@ limited to the top 100 coins, fetched live from each visitor's browser, which of
 | 7-day sparklines | — | Built from our own CMC snapshots (one point every 4 h, kept for 7 days) |
 | Price alerts | Crypto prices from another source | The alert job reads the CMC snapshot first |
 | Search | Remote search | Instant local search over the 500 coins (symbol or name) |
+| Crypto risk score | — | Portfolio panel scoring 0–5 from each holding's **CMC rank**, with stablecoins and meme coins detected from **CMC tags** (`stablecoin`, `memes`) |
+| Gainers & losers | — | Home-screen widget: biggest 24h moves among the CMC top 500 (volume ≥ $1M, stablecoins excluded) |
+| Market-indicator alerts | — | Push alerts when **CMC Fear & Greed** or **BTC dominance** crosses a level the user sets |
+| English | Partial | Full English UI (switch with the globe button), English push alerts |
 
 If the CMC data is missing or older than 3 hours, the site falls back automatically to the previous source,
 so users never see an empty page.
@@ -62,7 +66,7 @@ When fewer than 8% of the month's credits are left, it slows down to every 30 mi
 
 ## CMC API endpoints used
 
-- `GET /v1/cryptocurrency/listings/latest?start=1&limit=500&convert=USD&sort=market_cap`
+- `GET /v1/cryptocurrency/listings/latest?start=1&limit=500&convert=USD&sort=market_cap` (incl. `tags` for stablecoin / meme flags)
 - `GET /v1/global-metrics/quotes/latest?convert=USD`
 - `GET /v3/fear-and-greed/historical?limit=31` (fallback: `/v3/fear-and-greed/latest`)
 - `GET /v1/key/info`
@@ -80,6 +84,8 @@ Code: [`scripts/fetch_cmc.py`](scripts/fetch_cmc.py) · Workflow: [`.github/work
   (Firestore) in between.
 - Logos are available as image URLs by coin id, but the id → logo mapping is not part of the listings response.
 - `error_code` is a number in v1 responses and a string in v3 responses.
+- CMC AI (`/v5/cmc-ai/*`) and the trending endpoints (`gainers-losers`, `trending/latest`, `most-visited`)
+  return 403 on the Basic plan, so gainers/losers are computed from the listings snapshot instead.
 
 ## Files
 
