@@ -1156,6 +1156,38 @@ tr.txrow > td { padding: 0 10px 14px !important; background: transparent !import
   .txtab th:nth-child(2), .txtab td:nth-child(2) { padding-left: 2px !important; padding-right: 2px !important; }
 }
 @media (max-width: 640px) { .txoh, .txoc { width: 34px !important; padding-right: 8px !important; } #view-portfolio .dktable td:first-child .who span { max-width: 96px; } }
+
+/* ===== Νέα δομή: ενιαίο μενού, συμπτυγμένος πίνακας, chips ===== */
+.xtra { text-shadow: none !important; box-shadow: none !important; background: var(--dk-head) !important; border-color: var(--dk-line) !important; color: var(--fg) !important; }
+.xtra .vi svg { filter: none !important; color: #ff8a1a; }
+.xtra:hover { border-color: #ff8a1a !important; }
+.xtra[aria-pressed="true"] { background: var(--accent) !important; color: var(--on-accent) !important; border-color: transparent !important; }
+.xtra[aria-pressed="true"] .vi svg { color: inherit; }
+.dashsec .dashtg { display: inline-flex; align-items: center; gap: 6px; }
+.dashsec.collapsed .dash, .dashsec.collapsed .secdesc { display: none; }
+.dashsec.collapsed .sechead { margin-bottom: 0; }
+.dashsec > .sechead { flex-wrap: nowrap; align-items: center; }
+.dashsec > .sechead > .btn { flex: none; }
+@media (max-width: 640px) { #dashCu { display: none; } .dashsec:not(.collapsed) #dashCu { display: inline-flex; } }
+.secchips { position: sticky; top: 0; z-index: 12; display: flex; gap: 6px; overflow-x: auto; padding: 8px 0; background: color-mix(in srgb, var(--bg) 72%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); scrollbar-width: none; }
+.secchips::-webkit-scrollbar { display: none; }
+.secchips button { flex: none; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--dk-line); background: var(--dk-head); color: var(--fg); font: 600 13px var(--font-body); cursor: pointer; }
+.secchips button:hover { border-color: var(--accent); }
+#view-market[data-mkt="us"] .secchips, #view-market[data-mkt="c"] .secchips { display: none; }
+@media (max-width: 640px) {
+  .navrow { position: fixed; left: 0; right: 0; bottom: 0; z-index: 16; display: flex; gap: 2px; padding: 6px max(6px, env(safe-area-inset-left, 0px)) calc(6px + env(safe-area-inset-bottom, 0px)); background: var(--surface); border-top: 1px solid var(--line); box-shadow: 0 -8px 26px rgba(0, 0, 0, .3); }
+  .navrow .cats, .navrow .extras, body[data-cat="pf"] .navrow .extras { display: contents !important; }
+  .navrow .cats { position: static; padding: 0; background: none; border: 0; box-shadow: none; }
+  .navrow .cat, .navrow .xtra { order: 2; flex: 1 1 0; min-width: 0; width: auto; flex-direction: column; justify-content: center; gap: 3px; padding: 6px 2px 4px; border: 0 !important; border-radius: 12px; background: none !important; box-shadow: none !important; font: 600 10.5px var(--font-body); color: var(--muted) !important; text-shadow: none; }
+  .navrow .cat[data-cat="mk"] { order: 1; } .navrow #tab-heat { order: 2; } .navrow #tab-favs { order: 3; } .navrow #tab-tools { order: 4; } .navrow .cat[data-cat="pf"] { order: 5; }
+  .navrow .cat .ci { width: 24px; height: 24px; line-height: 0; background: none !important; box-shadow: none !important; color: inherit !important; }
+  .navrow .cat .ci svg, .navrow .xtra .vi svg { width: 22px; height: 22px; color: inherit; }
+  .navrow .cat .ct > span { display: none; }
+  .navrow .cat b { font: 600 10.5px var(--font-body); color: inherit; }
+  .navrow .cat[aria-pressed="true"], .navrow .xtra[aria-pressed="true"] { color: var(--accent) !important; background: var(--accent-soft) !important; }
+  .navrow .cat[aria-pressed="true"] .ci, .navrow .xtra[aria-pressed="true"] .vi svg { color: var(--accent) !important; }
+  .navrow .xtra .cnt { right: 18% !important; top: 0 !important; }
+}
 </style>
 
 <div class="demo demo-band"><p id="banner"><strong>Στιγμιότυπο.</strong> Οι τιμές προέρχονται από το capital.gr (καθυστέρηση 15 λεπτών) και η κεφαλαιοποίηση με τα ονόματα από το euro2day.gr (23/10/2026, 12:58). Τα στοιχεία δεν ενημερώνονται αυτόματα και δεν αποτελούν επενδυτική πληροφόρηση.</p></div>
@@ -1224,6 +1256,7 @@ tr.txrow > td { padding: 0 10px 14px !important; background: transparent !import
   </section>
   <section class="dashsec" id="dashsec" aria-label="Ο πίνακάς μου" hidden><div class="sechead"><div><h2>Ο πίνακάς μου</h2><p class="secdesc">Τα αγαπημένα σου, οι ειδοποιήσεις και ό,τι έρχεται για τις μετοχές σου, με μια ματιά.</p></div><button type="button" class="btn sm" id="dashCu">Προσαρμογή</button></div><div class="dash" id="dash"></div></section>
   <div class="mktrow"><div class="seg2 mktsw" id="mktsw" role="group" aria-label="Αγορά"><button type="button" data-mkt="gr" aria-pressed="true">Ελλάδα</button><button type="button" data-mkt="us" aria-pressed="false" aria-label="Nasdaq &amp; S&amp;P 500"><span class="mkl"><span class="nw">Nasdaq&nbsp;&amp;</span> <span class="nw">S&amp;P&nbsp;500</span></span></button><button type="button" data-mkt="c" aria-pressed="false">Cryptos</button></div><button type="button" class="btn cmpbtn" id="cmpOpen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-5 4 3 9-9"/><path d="M3 9l5 3 4-5 9 6" opacity=".55"/></svg> <span>Σύγκριση</span></button><button type="button" class="btn dkicon" id="cuOpen" title="Προσαρμογή αρχικής" aria-label="Προσαρμογή αρχικής"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/></svg></button></div>
+  <nav class="secchips" id="secchips" aria-label="Συντομεύσεις ενοτήτων"><button type="button" data-jump="stats">Επισκόπηση</button><button type="button" data-jump="mvhead">Κορυφαίες κινήσεις</button><button type="button" data-jump="secsec">Κλάδοι</button><button type="button" data-jump="allsec">Όλες οι μετοχές</button><button type="button" data-jump="divsec">Μερίσματα</button></nav>
   <section id="xlist" class="xlist" hidden>
     <div class="phead"><div><h2 id="xtitle"></h2><div class="storage" id="xnote"></div></div>
       <input type="search" class="search" id="xq" placeholder="Αναζήτηση" aria-label="Αναζήτηση στη λίστα" autocomplete="off"></div>
@@ -2059,6 +2092,7 @@ var EN_EXACT = {
   "Φόρτωση στοιχείων…": "Loading data…",
   "Φόρτωση ημερολογίου…": "Loading calendar…"
 };
+Object.assign(EN_EXACT, {"Επισκόπηση":"Overview","Μερίσματα":"Dividends","Σύμπτυξη ▴":"Collapse ▴","Άνοιγμα ▾":"Expand ▾","Συντομεύσεις ενοτήτων":"Section shortcuts"});
 Object.assign(EN_EXACT, {
 "Ρίσκο μετοχών": "Stock risk",
 "με μέγεθος εταιρείας, beta και συγκέντρωση": "using company size, beta and concentration",
@@ -2636,7 +2670,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
   }
 
   /* table */
-  var PAGE = 50;
+  var PAGE = 25;
   var state = { f: "all", q: "", sector: "", key: "mcap", dir: -1, shown: PAGE, active: HAS_VOL };
   var tabsEl = document.getElementById("tabs");
   function tabsHtml() {
@@ -2695,7 +2729,7 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     });
   });
   var moreBtn = document.getElementById("more");
-  moreBtn.addEventListener("click", function () { state.shown += PAGE; render(); });
+  moreBtn.addEventListener("click", function () { state.shown += 50; render(); });
 
   function render() {
     var list = rows.filter(function (r) {
@@ -6510,6 +6544,25 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
     box.innerHTML = ids.map(function (k) { try { return DWF[k](); } catch (e) { return ""; } }).join("");
   }
   window.__dashRefresh = renderDash;
+
+  (function () {
+    var KEY = "ax_dash_open";
+    function open() { try { return localStorage.getItem(KEY) === "1"; } catch (e) { return false; } }
+    function apply() {
+      var sec = document.getElementById("dashsec"); if (!sec) return;
+      var tg = document.getElementById("dashTg");
+      if (!tg) { var cu = document.getElementById("dashCu"); if (!cu) return; tg = document.createElement("button"); tg.type = "button"; tg.className = "btn sm dashtg"; tg.id = "dashTg"; cu.parentNode.insertBefore(tg, cu);
+        tg.addEventListener("click", function () { try { localStorage.setItem(KEY, open() ? "0" : "1"); } catch (e) {} apply(); }); }
+      var o = open(); sec.classList.toggle("collapsed", !o); tg.textContent = o ? "Σύμπτυξη ▴" : "Άνοιγμα ▾"; tg.setAttribute("aria-expanded", o);
+    }
+    var _rd = renderDash; renderDash = function () { _rd(); apply(); }; window.__dashRefresh = renderDash; apply();
+    document.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-jump]"); if (!b) return;
+      var t = document.getElementById(b.getAttribute("data-jump")); if (!t) return;
+      var bar = document.getElementById("secchips"), off = (bar ? bar.offsetHeight : 0) + 6;
+      window.scrollTo({ top: t.getBoundingClientRect().top + window.pageYOffset - off, behavior: "smooth" });
+    });
+  })();
   function applySections() {
     var vm = document.getElementById("view-market"), anchor = null;
     HOME.s.forEach(function (k) {
