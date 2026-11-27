@@ -1858,6 +1858,7 @@ var EN_EXACT = {
   "Είσοδος": "Entry",
   "Αξία θέσης": "Position value",
   "Μόχλευση": "Leverage",
+  "Περιθώριο": "Margin",
   "Ρευστοποίηση": "Liq. price",
   "Κ/Ζ (ROE)": "PnL (ROE)",
   "Αφαίρεση": "Remove",
@@ -3625,11 +3626,12 @@ function start(QUOTE_LINES, META, HIST, INTRA) {
         if (!ps.length) return '<div class="pw">' + head + k + '<p class="note">Καμία ανοιχτή θέση perpetual αυτή τη στιγμή.</p>' + tail + "</div>";
         var rowsH = ps.sort(function (a, b) { return Math.abs(+b.positionValue) - Math.abs(+a.positionValue); }).map(function (p) {
           var sz = +p.szi, long = sz > 0, mark = +(HLMID[p.coin] || 0) || (Math.abs(+p.positionValue) / Math.abs(sz)), pnl = +p.unrealizedPnl || 0, roe = (+p.returnOnEquity || 0) * 100;
-          var lev = p.leverage ? (p.leverage.value + "x " + (p.leverage.type === "isolated" ? "isolated" : "cross")) : "—";
+          var mu = +p.marginUsed || 0, pv2 = Math.abs(+p.positionValue) || 0, mPct = pv2 ? mu / pv2 * 100 : 0;
+          var lev = p.leverage ? (p.leverage.value + "x " + (p.leverage.type === "isolated" ? "isolated" : "cross") + (mPct ? " · " + nf0.format(mPct) + "%" : "")) : "—";
           var fpos = F && F.by[p.coin] != null ? F.by[p.coin] : null;
-          return '<tr><td class="l"><b>' + esc(p.coin) + '</b> <span class="lsb ' + (long ? "long" : "short") + '">' + (long ? "LONG" : "SHORT") + '</span></td><td class="num hide-s sens">' + nfQ.format(Math.abs(sz)) + '</td><td class="num hide-s">' + fmtC(+p.entryPx * u) + '</td><td class="num">' + fmtC(mark * u) + '</td><td class="num hide-s sens">' + eur(Math.abs(+p.positionValue) * u) + '</td><td class="num hide-s">' + esc(lev) + '</td><td class="num hide-s">' + (p.liquidationPx ? fmtC(+p.liquidationPx * u) : "—") + '</td><td class="num"><span class="sens chg ' + cls(pnl) + '">' + sgn(pnl) + nf2.format(Math.abs(pnl * u) * RATE) + CS + '</span><span class="sub2 chg ' + cls(roe) + '">' + sgn(roe) + nf2.format(Math.abs(roe)) + "%</span>" + (fpos != null && Math.abs(fpos) >= 0.005 ? '<span class="sub2 note sens">funding 30ημ ' + sgn(fpos) + nf2.format(Math.abs(fpos * u) * RATE) + CS + "</span>" : "") + "</td></tr>";
+          return '<tr><td class="l"><b>' + esc(p.coin) + '</b> <span class="lsb ' + (long ? "long" : "short") + '">' + (long ? "LONG" : "SHORT") + '</span></td><td class="num hide-s sens">' + nfQ.format(Math.abs(sz)) + '</td><td class="num hide-s">' + fmtC(+p.entryPx * u) + '</td><td class="num">' + fmtC(mark * u) + '</td><td class="num hide-s sens">' + eur(Math.abs(+p.positionValue) * u) + '</td><td class="num hide-s">' + esc(lev) + '</td><td class="num hide-s sens">' + eur(mu * u) + '</td><td class="num hide-s">' + (p.liquidationPx ? fmtC(+p.liquidationPx * u) : "—") + '</td><td class="num"><span class="sens chg ' + cls(pnl) + '">' + sgn(pnl) + nf2.format(Math.abs(pnl * u) * RATE) + CS + '</span><span class="sub2 chg ' + cls(roe) + '">' + sgn(roe) + nf2.format(Math.abs(roe)) + "%</span>" + (fpos != null && Math.abs(fpos) >= 0.005 ? '<span class="sub2 note sens">funding 30ημ ' + sgn(fpos) + nf2.format(Math.abs(fpos * u) * RATE) + CS + "</span>" : "") + "</td></tr>";
         }).join("");
-        return '<div class="pw">' + head + k + '<h4 class="pwh">Θέσεις perpetual</h4><table><thead><tr><th class="l">Συμβόλαιο</th><th class="hide-s">Μέγεθος</th><th class="hide-s">Είσοδος</th><th>Τιμή</th><th class="hide-s">Αξία θέσης</th><th class="hide-s">Μόχλευση</th><th class="hide-s">Ρευστοποίηση</th><th>Κ/Ζ (ROE)</th></tr></thead><tbody>' + rowsH + "</tbody></table>" + tail + "</div>";
+        return '<div class="pw">' + head + k + '<h4 class="pwh">Θέσεις perpetual</h4><table><thead><tr><th class="l">Συμβόλαιο</th><th class="hide-s">Μέγεθος</th><th class="hide-s">Είσοδος</th><th>Τιμή</th><th class="hide-s">Αξία θέσης</th><th class="hide-s">Μόχλευση</th><th class="hide-s">Περιθώριο</th><th class="hide-s">Ρευστοποίηση</th><th>Κ/Ζ (ROE)</th></tr></thead><tbody>' + rowsH + "</tbody></table>" + tail + "</div>";
       }).join("") + "</div>";
   }
   (function () {
